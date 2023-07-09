@@ -8,7 +8,7 @@ export default async function HomePage() {
   const res = await fetch(
     "https://api.jikan.moe/v4/top/anime?filter=airing&limit=6"
   )
-  const { data: topAiringAnime }: { data: TopAiring } = await res.json()
+  const { data: topAiringAnime }: { data: TopAiring[] } = await res.json()
   return (
     <>
       <Header variant="transparent" />

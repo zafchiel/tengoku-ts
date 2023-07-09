@@ -125,4 +125,4 @@ export type TopAiring = {
       url: string
     }
   ]
-}[]
+}
