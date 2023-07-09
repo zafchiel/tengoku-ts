@@ -1,4 +1,4 @@
-import Carousel from "@/components/mianPage/carousel"
+import MainCarousel from "@/components/mianPage/carousel"
 import MainHeading from "@/components/mianPage/heading"
 import TrailerPlayer from "@/components/mianPage/trailerPlayer"
 import Header from "@/components/ui/header"
@@ -12,10 +12,10 @@ export default async function HomePage() {
   return (
     <>
       <Header variant="transparent" />
-      <TrailerPlayer topAiringAnime={topAiringAnime} />
-      <main className="flex flex-col lg:flex-row h-screen w-full ">
+      {/* <TrailerPlayer topAiringAnime={topAiringAnime} /> */}
+      <main className="flex flex-col lg:flex-row h-screen w-full p-10">
         <MainHeading />
-        <Carousel topAiringAnime={topAiringAnime} />
+        <MainCarousel topAiringAnime={topAiringAnime} />
       </main>
     </>
   )

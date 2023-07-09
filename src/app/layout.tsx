@@ -20,9 +20,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={nohemi.className}>
-        <main className="container mt-14">{children}</main>
-      </body>
+      <body className={nohemi.className}>{children}</body>
     </html>
   )
 }
