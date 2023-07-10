@@ -44,8 +44,16 @@ export default function MainCarousel({
     <Carousel
       afterChange={(previousSlide, { currentSlide }): void => {
         if (previousSlide > currentSlide) {
+          if (currentIndex == 0) {
+            setCurrentIndex(5)
+            return
+          }
           setCurrentIndex((prev) => prev - 1)
         } else {
+          if (currentIndex == 5) {
+            setCurrentIndex(0)
+            return
+          }
           setCurrentIndex((prev) => prev + 1)
         }
       }}
@@ -56,7 +64,7 @@ export default function MainCarousel({
       responsive={responsive}
       infinite={true}
       autoPlay={true}
-      autoPlaySpeed={1000}
+      autoPlaySpeed={4000}
       keyBoardControl={true}
       transitionDuration={500}
       containerClass="carousel-container"
