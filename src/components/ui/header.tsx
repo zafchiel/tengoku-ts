@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 import Link from "next/link"
 import React from "react"
+import SearchBar from "./search"
 
 const headerVariants = cva(
   "fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between p-3 ",
@@ -35,7 +36,7 @@ function Header({ variant }: HeaderProps) {
       </div>
 
       <nav className="relative flex items-center justify-around gap-3 text-xl font-medium text-white/75">
-        {/* <Search /> */}
+        <SearchBar />
       </nav>
     </header>
   )
