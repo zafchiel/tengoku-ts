@@ -104,3 +104,10 @@ iframe {
 .react-multi-carousel-item--active:first-of-type {
   border: 2px solid white;
 }
+
+.dropdown .dropdown-content {
+  display: none;
+}
+.dropdown:focus-within .dropdown-content {
+  display: block;
+}

@@ -128,15 +128,9 @@ export type TopAiring = {
 }
 
 export type SearchResult = {
-  currentPage: number
-  hasNextPage: boolean
-  results: [
-    {
-      id: string
-      title: string
-      image: string
-      releaseDate: string | null
-      subOrDub: "sub" | "dub"
-    }
-  ]
+  id: string
+  title: string
+  image: string
+  releaseDate: string | null
+  subOrDub: "sub" | "dub"
 }

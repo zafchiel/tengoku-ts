@@ -5,6 +5,7 @@ import { Search } from "lucide-react"
 import axios from "axios"
 import AwesomeDebouncePromise from "awesome-debounce-promise"
 import { SearchResult } from "@/types"
+import SearchResults from "./searchResults"
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -21,6 +22,7 @@ export default function SearchBar() {
     }: { data: { results: SearchResult[] } } = await fetchDebounced(
       e.target.value
     )
+    if (!results) setSearchResults([])
     setSearchResults(results)
   }
 
@@ -39,7 +41,7 @@ export default function SearchBar() {
           />
         </form>
       </div>
-      {/* <SearchResults searchResults={searchResults} loading={loading} /> */}
+      <SearchResults searchResults={searchResults} loading={false} />
     </div>
   )
 }
