@@ -1,21 +1,22 @@
 "use client"
 
-import { useState, ChangeEvent } from "react"
+import { useState, ChangeEvent, FormEvent } from "react"
 import { Search } from "lucide-react"
-import { useDebounce } from "@/hooks/useDebounce"
+import axios from "axios"
+import AwesomeDebouncePromise from "awesome-debounce-promise"
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("")
-  const [deboundecSearchterm, setDeboundecSearchterm] = useState("")
+  const [searchResults, setSearchResults] = useState({})
 
-  const debouncedInput = useDebounce<ChangeEvent<HTMLInputElement>>(
-    (e) => setDeboundecSearchterm(e.target.value),
-    1000
-  )
+  const fetchPreview = (term: string) =>
+    axios.get(`https://api.consumet.org/anime/gogoanime/${term}`)
+  const fetchDebounced = AwesomeDebouncePromise(fetchPreview, 1000)
 
-  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInput = async (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
-    debouncedInput(e)
+    const data = await fetchDebounced(e.target.value)
+    setSearchResults(data.data)
   }
 
   return (
