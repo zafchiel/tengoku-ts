@@ -41,7 +41,7 @@ export default function SearchBar() {
           />
         </form>
       </div>
-      <SearchResults searchResults={searchResults} loading={false} />
+      <SearchResults searchResults={searchResults} />
     </div>
   )
 }
