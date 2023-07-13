@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, ChangeEvent, FormEvent } from "react"
+import { useState, ChangeEvent } from "react"
 import { Search } from "lucide-react"
 import axios from "axios"
 import AwesomeDebouncePromise from "awesome-debounce-promise"

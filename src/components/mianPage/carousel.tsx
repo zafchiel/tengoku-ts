@@ -63,13 +63,14 @@ export default function MainCarousel({
       showDots={false}
       responsive={responsive}
       infinite={true}
-      autoPlay={false}
+      autoPlay={true}
       autoPlaySpeed={4000}
       keyBoardControl={true}
       transitionDuration={500}
       containerClass="carousel-container"
       removeArrowOnDeviceType={["tablet", "mobile"]}
       ssr={true}
+      partialVisbile={false}
     >
       {topAiringAnime.map((anime) => (
         <div key={anime.mal_id} className="relative aspect-[4/5]">
