@@ -134,3 +134,25 @@ export type SearchResult = {
   releaseDate: string | null
   subOrDub: "sub" | "dub"
 }
+
+export type AnimeInfo = {
+  id: string
+  title: string
+  url: string
+  image: string
+  releaseDate: string | null
+  description: string | null
+  genres: string[]
+  subOrDub: string
+  type: string | null
+  status: string
+  otherName: string | null
+  totalEpisodes: number
+  episodes: [
+    {
+      id: string
+      number: number
+      url: string
+    }
+  ]
+}

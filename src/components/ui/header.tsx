@@ -9,7 +9,7 @@ const headerVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-[#222527]",
+        default: "bg-[#040217]",
         transparent:
           "bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm",
       },
