@@ -41,11 +41,11 @@ export default async function DetailsPage({
             className="aspect-[4/5] md:static md:h-auto fixed inset-0 -z-20 object-cover h-screen w-full"
           />
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
-            <div className="flex mb-2">
+            <div className="flex">
               <h1 className="text-4xl font-bold uppercase">{anime.title}</h1>
               <p className="ml-1">{anime.releaseDate}</p>
             </div>
-            <p className="opacity-60">{anime.otherName}</p>
+            <p className="opacity-60 mb-2">{anime.otherName}</p>
             {anime.description && <Description paragraph={anime.description} />}
 
             <div className="flex opacity-70 gap-3">
