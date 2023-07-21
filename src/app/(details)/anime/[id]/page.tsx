@@ -11,6 +11,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import Link from "next/link"
+import Description from "@/components/detailsPage/Description"
 
 export default async function DetailsPage({
   params: { id },
@@ -31,21 +32,22 @@ export default async function DetailsPage({
     <main className="w-full">
       <section className="container flex flex-col items-center">
         <div className="flex h-full">
+          <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
           <Image
             src={anime.image}
             width={400}
             height={500}
             alt={anime.title}
-            className="aspect-[4/5]"
+            className="aspect-[4/5] md:static md:h-auto fixed inset-0 -z-20 object-cover h-screen w-full"
           />
-          <div className="flex flex-col justify-start p-4">
+          <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
               <h1 className="text-4xl font-bold uppercase">{anime.title}</h1>
               <p className="ml-1">{anime.releaseDate}</p>
             </div>
-            <p className="opacity-70">{anime.otherName}</p>
+            <p className="opacity-60">{anime.otherName}</p>
+            {anime.description && <Description paragraph={anime.description} />}
 
-            <p className="mt-2">{anime.description}</p>
             <div className="flex opacity-70 gap-3">
               {anime.genres.map((obj) => (
                 <p key={obj}>{obj}</p>
