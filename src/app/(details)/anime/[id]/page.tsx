@@ -18,9 +18,15 @@ export default async function DetailsPage({
 }: {
   params: { id: string }
 }) {
+  // Search anime by slug
+  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${id}`, {
+    cache: "no-store",
+  })
+  const searchResults = await search.json()
+
+  // Fetch detailed info of first record found
   const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${id}`,
-    { cache: "no-store" }
+    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`
   )
   const anime: AnimeInfo = await res.json()
 
