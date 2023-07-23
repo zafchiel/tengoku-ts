@@ -3,24 +3,37 @@
 import { useState } from "react"
 import YouTube from "react-youtube"
 import Image from "next/image"
-import { useAtom } from "jotai/react"
+import { useAtomValue } from "jotai/react"
 import { currentAnimeAtom } from "./mainCarousel"
 
 const randomVideoStartSecond = Math.floor(Math.random() * 40)
 
 export default function TrailerPlayer() {
   const [videoLoaded, setVideoLoaded] = useState(false)
-  const [currentAnime] = useAtom(currentAnimeAtom)
+  const currentAnime = useAtomValue(currentAnimeAtom)
 
   const handleLoadedVideo = () => {
     setVideoLoaded(true)
   }
 
+  if (Object.keys(currentAnime).length === 0) {
+    return (
+      <Image
+        src="/bg_placeholder.webp"
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        alt="image"
+        className="-z-30 h-full w-full object-cover"
+      />
+    )
+  }
+
   return (
     <>
       <div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
+
       <YouTube
-        videoId={currentAnime.trailer?.youtube_id}
+        videoId={currentAnime.trailer.youtube_id}
         iframeClassName={`absolute w-full h-screen -z-20 ${
           !videoLoaded && "hidden"
         }`}
