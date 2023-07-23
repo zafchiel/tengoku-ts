@@ -77,6 +77,8 @@
   }
 }
 
+/* -------------------- Trailer Frame ------------------ */
+
 @media (min-aspect-ratio: 16/9) {
   iframe {
     /* height = 100 * (9 / 16) = 56.25 */
@@ -97,9 +99,25 @@ iframe {
   transform: translate(-50%, -50%);
 }
 
+/* ---------------- Search bar ----------------- */
 .dropdown .dropdown-content {
   display: none;
 }
 .dropdown:focus-within .dropdown-content {
   display: block;
+}
+
+/* -------------- Swiper ----------------- */
+.swiper-slide-active {
+  padding: 2px;
+}
+
+.swiper-slide-active div:first-child {
+  border-radius: 0.375rem;
+  border: 2px solid white;
+}
+
+.swiper-slide div:first-child:hover img {
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
 }

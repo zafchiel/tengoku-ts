@@ -9,6 +9,7 @@ import Image from "next/image"
 import { atom, useAtom, useSetAtom } from "jotai"
 
 import "swiper/css"
+import slugify from "@/lib/utils"
 
 export const currentAnimeAtom = atom({} as TopAiring)
 
@@ -26,7 +27,7 @@ export default function MainCarousel({
   }, [])
 
   return (
-    <section className="z-50  h-full w-full p-14 lg:w-3/5">
+    <section className="z-50  h-full w-full lg:w-3/5">
       <Swiper
         onSlideChange={(S) => {
           setCurrentAnime(topAiringAnime[S.realIndex])
@@ -58,25 +59,27 @@ export default function MainCarousel({
       >
         {topAiringAnime.map((obj) => (
           <SwiperSlide key={obj.mal_id}>
-            <div className="relative h-full w-full overflow-hidden rounded-md shadow-md">
-              <Image
-                width={300}
-                height={400}
-                src={obj.images.webp.large_image_url}
-                alt={obj.title}
-                className="aspect-[3/4] rounded-lg "
-              />
-              <div className="absolute bottom-0  left-0 w-full rounded-b-lg bg-black/50 p-3">
-                <h1 className="z-10 text-xl font-medium text-white">
-                  {obj.title.replaceAll('"', "")}
-                </h1>
-                <div className="flex gap-2 text-gray-300">
-                  {obj.genres.map((e, index) => (
-                    <p key={index}>{e.name}</p>
-                  ))}
+            <Link href={`/anime/${slugify(obj.title)}`}>
+              <div className="relative h-full w-full overflow-hidden rounded-md shadow-md">
+                <Image
+                  width={300}
+                  height={400}
+                  src={obj.images.webp.large_image_url}
+                  alt={obj.title}
+                  className="aspect-[3/4] rounded-lg "
+                />
+                <div className="absolute bottom-0  left-0 w-full rounded-b-lg bg-black/50 p-3">
+                  <h1 className="z-10 text-xl font-medium text-white">
+                    {obj.title.replaceAll('"', "")}
+                  </h1>
+                  <div className="flex gap-2 text-gray-300">
+                    {obj.genres.map((e, index) => (
+                      <p key={index}>{e.name}</p>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
