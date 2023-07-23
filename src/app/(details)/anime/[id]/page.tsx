@@ -19,9 +19,7 @@ export default async function DetailsPage({
   params: { id: string }
 }) {
   // Search anime by slug
-  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${id}`, {
-    cache: "no-store",
-  })
+  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${id}`)
   const searchResults = await search.json()
 
   // Fetch detailed info of first record found
@@ -64,7 +62,7 @@ export default async function DetailsPage({
         <SheetTrigger asChild>
           <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent className="overflow-scroll">
           <SheetHeader>
             <SheetTitle>Pick your poison</SheetTitle>
             <SheetDescription>
