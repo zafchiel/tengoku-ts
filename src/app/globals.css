@@ -97,14 +97,6 @@ iframe {
   transform: translate(-50%, -50%);
 }
 
-.react-multi-carousel-item {
-  margin: 0 10px;
-}
-
-.react-multi-carousel-item--active:first-of-type {
-  border: 2px solid white;
-}
-
 .dropdown .dropdown-content {
   display: none;
 }

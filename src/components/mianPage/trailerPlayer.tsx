@@ -1,19 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { TopAiring } from "@/types"
 import YouTube from "react-youtube"
 import Image from "next/image"
+import { useAtom } from "jotai/react"
+import { currentAnimeAtom } from "./mainCarousel"
 
-const regex = /\/embed\/([a-zA-Z0-9_-]+)\?/
 const randomVideoStartSecond = Math.floor(Math.random() * 40)
 
-export default function TrailerPlayer({
-  topAiringAnime,
-}: {
-  topAiringAnime: TopAiring[]
-}) {
+export default function TrailerPlayer() {
   const [videoLoaded, setVideoLoaded] = useState(false)
+  const [currentAnime] = useAtom(currentAnimeAtom)
 
   const handleLoadedVideo = () => {
     setVideoLoaded(true)
@@ -23,7 +20,7 @@ export default function TrailerPlayer({
     <>
       <div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
       <YouTube
-        videoId={topAiringAnime[0].trailer.youtube_id}
+        videoId={currentAnime.trailer?.youtube_id}
         iframeClassName={`absolute w-full h-screen -z-20 ${
           !videoLoaded && "hidden"
         }`}
@@ -44,7 +41,7 @@ export default function TrailerPlayer({
         }}
       />
       <Image
-        src={`https://img.youtube.com/vi/${topAiringAnime[0].trailer.youtube_id}/maxresdefault.jpg`}
+        src={`https://img.youtube.com/vi/${currentAnime.trailer.youtube_id}/maxresdefault.jpg`}
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         alt="image"
