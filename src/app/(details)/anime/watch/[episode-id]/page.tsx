@@ -1,5 +1,7 @@
+"use client"
+
 import Player from "@/components/episodePage/player"
-import React from "react"
+import Hls from "hls.js"
 
 export default function EpisodePage() {
   return (
@@ -7,13 +9,19 @@ export default function EpisodePage() {
       <Player
         option={{
           container: ".artplayer-app",
-          url: "https://artplayer.org/assets/sample/video.mp4",
+          url: "https://www013.vipanicdn.net/streamhls/1715c2c8077bd3e9be2a448731b0de77/ep.1.1677608728.360.m3u8",
+          customType: {
+            m3u8: function (video: any, url: string) {
+              let hls = new Hls()
+              hls.loadSource(url)
+              hls.attachMedia(video)
+              if (!video.src) {
+                video.src = url
+              }
+            },
+          },
         }}
-        style={{
-          width: "600px",
-          height: "400px",
-          margin: "60px auto 0",
-        }}
+        className="w-full h-full"
       />
     </div>
   )
