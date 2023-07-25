@@ -112,7 +112,7 @@ iframe {
   padding: 2px;
 }
 
-.swiper-slide-active div:first-child {
+.swiper-slide-active div:first-child img {
   border-radius: 0.375rem;
   border: 2px solid white;
 }

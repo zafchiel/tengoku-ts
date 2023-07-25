@@ -12,7 +12,7 @@ export default async function HomePage() {
   return (
     <>
       <TrailerPlayer />
-      <main className="flex flex-col lg:flex-row h-screen w-full p-10">
+      <main className="flex flex-col lg:flex-row h-screen w-full p-10 items-center justify-center">
         <MainHeading />
         <MainCarousel topAiringAnime={topAiringAnime} />
       </main>

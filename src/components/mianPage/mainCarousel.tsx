@@ -27,7 +27,7 @@ export default function MainCarousel({
   }, [])
 
   return (
-    <section className="z-50  h-full w-full lg:w-3/5">
+    <section className="z-50 lg:pt-52 w-full lg:w-3/5">
       <Swiper
         onSlideChange={(S) => {
           setCurrentAnime(topAiringAnime[S.realIndex])
