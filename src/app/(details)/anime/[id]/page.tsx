@@ -36,13 +36,15 @@ export default async function DetailsPage({
     <main className="w-full flex flex-col items-center">
       <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
       <div className="md:flex h-full">
-        <Image
-          src={anime.image}
-          width={400}
-          height={500}
-          alt={anime.title}
-          className="aspect-[4/5] md:static md:h-auto fixed inset-0 -z-20 object-cover h-screen w-full"
-        />
+        <div className="w-1/3 h-full">
+          <Image
+            src={anime.image}
+            width={400}
+            height={500}
+            alt={anime.title}
+            className="md:static md:h-auto fixed inset-0 -z-20 object-cover"
+          />
+        </div>
         <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
           <div className="flex">
             <h1 className="text-4xl font-bold uppercase">{anime.title}</h1>
