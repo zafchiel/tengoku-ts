@@ -33,6 +33,7 @@ export default function Player({urls}: {urls: SourceList[]}){
   return (
     <ArtPlayer
         option={{
+          url: urls.filter((obj) => obj.quality === '720p')[0].url,
           customType: {
             m3u8: function (video: HTMLMediaElement, url: string) {
               let hls = new Hls()
