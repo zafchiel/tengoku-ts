@@ -32,11 +32,11 @@ export default function EpisodeList({episodeList}: {episodeList: EpisodeList}){
           </SheetHeader>
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
             {episodeList.map((obj) => {
-              const isActive = pathname.startsWith(`${params.id}/watch/${obj.id}`)
+              const isActive = pathname.startsWith(`/${params.id}/watch/${obj.id}`)
               return (
 
               <Link
-                href={`${params.id}/watch/${obj.id}`}
+                href={`/${params.id}/watch/${obj.id}`}
                 key={obj.id}
                 className={cn('p-4 p-4 border flex justify-center items-center rounded-lg hover:bg-secondary', {
                   ['bg-secondary']: isActive

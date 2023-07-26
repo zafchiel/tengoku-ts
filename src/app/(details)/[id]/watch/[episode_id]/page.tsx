@@ -1,9 +1,18 @@
 import Player from "@/components/episodePage/player"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
+import type { AnimeInfo } from "@/types"
 
-export default function EpisodePage({params: {id, episode-id}}: {params: {id: string, episode-id: string}}) {
+type Props = {
+  params: {
+    id: string
+    episode_id: string
+  }
+}
+
+
+export default async function EpisodePage({params}: Props) {
   // Search anime by slug
-  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${id}`)
+  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${params.id}`)
   const searchResults = await search.json()
 
   // Fetch detailed info of first record found
@@ -12,13 +21,10 @@ export default function EpisodePage({params: {id, episode-id}}: {params: {id: st
   )
   const anime: AnimeInfo = await res.json()
 
-  if (Object.keys(anime).length === 1) {
-    redirect("http://localhost:3000")
-  }
   return (
     <div className="flex items-center justify-center h-screen w-full">
       <Player />
-      <EpisodeList />
+      <EpisodeList episodeList={anime.episodes} />
     </div>
   )
 }
