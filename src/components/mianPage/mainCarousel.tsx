@@ -60,13 +60,13 @@ export default function MainCarousel({
         {topAiringAnime.map((obj) => (
           <SwiperSlide key={obj.mal_id}>
             <Link href={`/${slugify(obj.title)}`}>
-              <div className="relative h-full w-full overflow-hidden rounded-md shadow-md">
+              <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
                 <Image
                   width={300}
                   height={400}
                   src={obj.images.webp.large_image_url}
                   alt={obj.title}
-                  className="aspect-[3/4] rounded-lg "
+                  className="w-full h-full rounded-lg"
                 />
                 <div className="absolute bottom-0  left-0 w-full rounded-b-lg bg-black/50 p-3">
                   <h1 className="z-10 text-xl font-medium text-white">

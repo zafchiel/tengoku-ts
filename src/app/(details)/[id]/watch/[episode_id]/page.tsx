@@ -22,7 +22,7 @@ export default async function EpisodePage({params}: Props) {
   const anime: AnimeInfo = await res.json()
 
   return (
-    <div className="flex items-center justify-center h-screen w-full">
+    <div className="flex items-center justify-center w-full h-80">
       <Player />
       <EpisodeList episodeList={anime.episodes} />
     </div>
