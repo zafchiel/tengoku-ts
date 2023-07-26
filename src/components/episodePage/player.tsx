@@ -7,7 +7,7 @@ import { type Option } from "artplayer/types/option"
 import { EpisodeUrls } from "@/types"
 
 type Props = {
-  option: Option
+  option: Omit<Option, 'container'>
 }
 
 export function ArtPlayer({ option, ...rest }: Props) {
