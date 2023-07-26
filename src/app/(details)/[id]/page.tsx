@@ -1,8 +1,6 @@
 import { redirect } from "next/navigation"
 import type { AnimeInfo } from "@/types"
 import Image from "next/image"
-
-import Link from "next/link"
 import Description from "@/components/detailsPage/Description"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 

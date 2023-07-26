@@ -59,7 +59,7 @@ export default function MainCarousel({
       >
         {topAiringAnime.map((obj) => (
           <SwiperSlide key={obj.mal_id}>
-            <Link href={`/anime/${slugify(obj.title)}`}>
+            <Link href={`/${slugify(obj.title)}`}>
               <div className="relative h-full w-full overflow-hidden rounded-md shadow-md">
                 <Image
                   width={300}
