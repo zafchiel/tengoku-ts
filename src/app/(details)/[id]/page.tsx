@@ -33,7 +33,7 @@ export default async function DetailsPage({
             width={400}
             height={500}
             alt={anime.title}
-            className="md:static md:h-auto fixed inset-0 -z-20 object-cover"
+            className="md:static md:h-auto fixed inset-0 h-screen w-full -z-20 object-cover"
           />
         </div>
         <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
