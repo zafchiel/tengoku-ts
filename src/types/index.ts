@@ -156,3 +156,9 @@ export type AnimeInfo = {
     }
   ]
 }
+
+export type EpisodeList = {
+  id: string
+  number: number
+  url: string
+}[]

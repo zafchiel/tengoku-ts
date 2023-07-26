@@ -51,7 +51,7 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      <EpisodeList episodeList={anime} />
+      <EpisodeList episodeList={anime.episodes} />
     </main>
   )
 }
