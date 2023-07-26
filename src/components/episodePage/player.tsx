@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react"
 import Artplayer from "artplayer"
 import Hls from "hls.js"
 import { type Option } from "artplayer/types/option"
+import { EpisodeUrls } from "@/types"
 
 type Props = {
   option: Option
@@ -28,14 +29,13 @@ export function ArtPlayer({ option, ...rest }: Props) {
   return <div ref={artRef} {...rest}></div>
 }
 
-export default function Player(){
+export default function Player({urls}: {urls: EpisodeUrls[]}){
   return (
     <ArtPlayer
         option={{
-          container: ".artplayer-app",
-          url: "https://www013.vipanicdn.net/streamhls/1715c2c8077bd3e9be2a448731b0de77/ep.1.1677608728.360.m3u8",
+          url: urls[0].url,
           customType: {
-            m3u8: function (video: any, url: string) {
+            m3u8: function (video: HTMLMediaElement, url: string) {
               let hls = new Hls()
               hls.loadSource(url)
               hls.attachMedia(video)
@@ -45,6 +45,7 @@ export default function Player(){
             },
           },
         }}
+
         className="w-full h-full"
       />
   )
