@@ -108,8 +108,12 @@ iframe {
 }
 
 /* -------------- Swiper ----------------- */
+.swiper-slide {
+  padding: 10px;
+}
+
 .swiper-slide-active {
-  padding: 2px;
+  padding: 0;
 }
 
 .swiper-slide-active div:first-child img {
