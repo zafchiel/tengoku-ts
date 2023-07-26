@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react"
 import Artplayer from "artplayer"
 import Hls from "hls.js"
 import { type Option } from "artplayer/types/option"
-import { EpisodeUrls } from "@/types"
+import { SourceList } from "@/types"
 
 type Props = {
   option: Omit<Option, 'container'>
@@ -29,7 +29,7 @@ export function ArtPlayer({ option, ...rest }: Props) {
   return <div ref={artRef} {...rest}></div>
 }
 
-export default function Player({urls}: {urls: EpisodeUrls[]}){
+export default function Player({urls}: {urls: SourceList[]}){
   return (
     <ArtPlayer
         option={{

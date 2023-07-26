@@ -163,7 +163,7 @@ export type EpisodeList = {
   url: string
 }[]
 
-export type EpisodeUrls = {
+export type SourceList = {
     url: string
     isM3U8: boolean
     quality: string

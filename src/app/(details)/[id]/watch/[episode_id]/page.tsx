@@ -1,6 +1,6 @@
 import Player from "@/components/episodePage/player"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
-import type { AnimeInfo, EpisodeUrls } from "@/types"
+import type { AnimeInfo, SourceList } from "@/types"
 
 type Props = {
   params: {
@@ -25,7 +25,7 @@ export default async function EpisodePage({params}: Props) {
   // Fetch episode urls
   const response = await fetch(`https://api.consumet.org/anime/gogoanime/watch/${params.episode_id}`)
   const data = await response.json()
-  const episode: EpisodeUrls[] = data.sources
+  const episode: SourceList[] = data.sources
 
   return (
     <div className="flex flex-col items-center justify-center w-full h-full">
