@@ -1,17 +1,10 @@
 import { redirect } from "next/navigation"
 import type { AnimeInfo } from "@/types"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+
 import Link from "next/link"
 import Description from "@/components/detailsPage/Description"
+import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 
 export default async function DetailsPage({
   params: { id },
@@ -60,30 +53,7 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      <Sheet>
-        <SheetTrigger asChild>
-          <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
-        </SheetTrigger>
-        <SheetContent className="overflow-scroll">
-          <SheetHeader>
-            <SheetTitle>Pick your poison</SheetTitle>
-            <SheetDescription>
-              choosing will redirect you to episode page
-            </SheetDescription>
-          </SheetHeader>
-          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
-            {anime.episodes.map((obj) => (
-              <Link
-                href={`/anime/watch/${obj.id}`}
-                key={obj.id}
-                className="p-4 border flex justify-center items-center rounded-lg hover:bg-secondary"
-              >
-                {obj.number}
-              </Link>
-            ))}
-          </div>
-        </SheetContent>
-      </Sheet>
+      <EpisodeList episodeList={anime} />
     </main>
   )
 }
