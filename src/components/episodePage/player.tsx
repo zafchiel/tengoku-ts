@@ -33,7 +33,6 @@ export default function Player({urls}: {urls: EpisodeUrls[]}){
   return (
     <ArtPlayer
         option={{
-          url: urls[0].url,
           customType: {
             m3u8: function (video: HTMLMediaElement, url: string) {
               let hls = new Hls()
@@ -44,6 +43,11 @@ export default function Player({urls}: {urls: EpisodeUrls[]}){
               }
             },
           },
+          quality: urls.map((obj) => ({
+            default: obj.quality === '720p',
+            html: obj.quality,
+            url: obj.url
+          }))
         }}
 
         className="w-full h-full"
