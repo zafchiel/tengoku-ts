@@ -24,7 +24,10 @@ export default function slugify(str: string) {
   return slug
 }
 
-export async function FetchAnimeInfo(params: {id: string, episode_id?: string}){
+export async function FetchAnimeInfo(params: {
+  id: string
+  episode_id?: string
+}) {
   // Search anime by slug
   const res = await fetch(
     `https://api.consumet.org/anime/gogoanime/${params.id}`
@@ -37,7 +40,7 @@ export async function FetchAnimeInfo(params: {id: string, episode_id?: string}){
   )
   const animeInfo: AnimeInfo = await res2.json()
 
-  if(params.episode_id){
+  if (params.episode_id) {
     // Fetch episode urls
     const res3 = await fetch(
       `https://api.consumet.org/anime/gogoanime/watch/${params.episode_id}`
@@ -46,9 +49,21 @@ export async function FetchAnimeInfo(params: {id: string, episode_id?: string}){
     const episodeSources: SourceList[] = data.sources
 
     return {
-      animeInfo, episodeSources
+      animeInfo,
+      episodeSources,
     }
   }
 
   return animeInfo
+}
+
+export function extractEpisodeNumber(episode_id: string) {
+  const segments = episode_id.trim().split("-")
+  const lastSegment = segments[segments.length - 1]
+
+  const epNumber = parseInt(lastSegment)
+
+  if (!isNaN(epNumber)) return epNumber
+
+  return "String does not contain number as the last segment"
 }

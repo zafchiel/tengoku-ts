@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import Player from "@/components/episodePage/player"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import type { SourceList } from "@/types"
+import NavBar from "@/components/episodePage/navBar"
 
 type Props = {
   params: {
@@ -21,6 +22,7 @@ export default async function EpisodePage({ params }: Props) {
   return (
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
+      <NavBar />
       <EpisodeList>
         <Button className="fixed bottom-2 w-full md:static">Episodes</Button>
       </EpisodeList>
