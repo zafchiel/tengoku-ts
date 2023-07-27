@@ -1,29 +1,44 @@
 "use client"
 
-import { useState, ChangeEvent } from "react"
+import { useState, ChangeEvent, useEffect } from "react"
 import { Search } from "lucide-react"
 import axios from "axios"
-import AwesomeDebouncePromise from "awesome-debounce-promise"
 import { SearchResult } from "@/types"
 import SearchResults from "./searchResults"
+import { debounce } from "@/lib/utils"
 
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [searchResults, setSearchResults] = useState<SearchResult[] | []>([])
+  const [searchText, setSearchText] = useState("")
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([])
+  const [loading, setLoading] = useState(false)
 
-  const fetchPreview = (term: string) =>
-    axios.get(`https://api.consumet.org/anime/gogoanime/${term}`)
-  const fetchDebounced = AwesomeDebouncePromise(fetchPreview, 1000)
+  useEffect(() => {
+    if (searchText.length < 3) setSearchResults([])
+    const fetchDataDebounced = debounce(fetchData, 1000)
+    fetchDataDebounced(searchText)
+  }, [searchText])
 
-  const handleInput = async (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value)
-    const {
-      data: { results },
-    }: { data: { results: SearchResult[] } } = await fetchDebounced(
-      e.target.value
-    )
-    if (!results) setSearchResults([])
-    setSearchResults(results)
+  const fetchData = async (searchTerm: string) => {
+    if (searchTerm.length < 3) {
+      return
+    }
+
+    try {
+      const { data } = await axios.get(
+        `https://api.consumet.org/anime/gogoanime/${searchTerm}`
+      )
+      setSearchResults(data.results)
+    } catch (error) {
+      setSearchResults([])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setSearchText(value)
+    setLoading(true)
   }
 
   return (
@@ -35,13 +50,13 @@ export default function SearchBar() {
           </button>
           <input
             type="text"
-            value={searchTerm}
-            onChange={handleInput}
+            value={searchText}
+            onChange={handleInputChange}
             className="h-9 w-9 cursor-pointer border-white bg-transparent pr-7 outline-none duration-500 ease-in-out focus:w-40 focus:rounded-none focus:border-b"
           />
         </form>
       </div>
-      <SearchResults searchResults={searchResults} />
+      <SearchResults searchResults={searchResults} isLoading={loading} />
     </div>
   )
 }

@@ -32,7 +32,7 @@ export default function MainCarousel({
   if (!isMounted) return <Skeleton className="h-80 w-52" />
 
   return (
-    <section className="z-50 lg:pt-52 w-full lg:w-3/5">
+    <section className="lg:pt-52 w-full lg:w-3/5">
       <Progressbar barWidth={progressBarWidth} />
       <Swiper
         onAutoplayTimeLeft={(S, timeleft, percentage) =>
