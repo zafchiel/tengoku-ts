@@ -63,7 +63,5 @@ export function extractEpisodeNumber(episode_id: string) {
 
   const epNumber = parseInt(lastSegment)
 
-  if (!isNaN(epNumber)) return epNumber
-
-  return "String does not contain number as the last segment"
+  return epNumber
 }

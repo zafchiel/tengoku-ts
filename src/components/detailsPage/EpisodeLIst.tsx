@@ -14,9 +14,10 @@ import { useParams } from "next/navigation"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ReactNode, useEffect } from "react"
-import { atom, useAtom } from "jotai"
+import { atomWithStorage } from "jotai/utils"
+import { useAtom } from "jotai"
 
-export const episodeListAtom = atom([] as EpisodeListType)
+export const episodeListAtom = atomWithStorage("epList", [] as EpisodeListType)
 
 type Props = {
   episodeList?: EpisodeListType
@@ -31,7 +32,7 @@ export default function EpisodeList({ episodeList, children }: Props) {
 
   useEffect(() => {
     if (episodeList) setApArr(episodeList)
-  }, [])
+  }, [epArr, episodeList, setApArr])
 
   return (
     <Sheet>
