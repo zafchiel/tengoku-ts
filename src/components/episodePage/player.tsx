@@ -27,11 +27,7 @@ export function ArtPlayer({ option, ...rest }: Props) {
   }, [])
 
   return (
-    <div
-      ref={artRef}
-      className="aspect-[16/9] w-screen px-2 md:pb-10"
-      {...rest}
-    ></div>
+    <div ref={artRef} className="aspect-[16/9] w-screen px-2" {...rest}></div>
   )
 }
 
@@ -68,7 +64,7 @@ export default function Player({ urls }: { urls: SourceList[] }) {
         playsInline: true,
         autoPlayback: true,
         airplay: true,
-        theme: '#fff'
+        theme: "#fff",
       }}
     />
   )

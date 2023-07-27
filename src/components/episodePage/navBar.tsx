@@ -20,8 +20,9 @@ export default function NavBar() {
     episode_id.slice(0, -epNumber.toString().length) + (epNumber - 1)
 
   return (
-    <div className="fixed flex bottom-0 inset-x-0 h-20 bg-primary-foreground">
+    <div className="flex w-full h-20 justify-around items-center">
       <StepBack
+        size={34}
         onClick={() => router.push(`/${id}/watch/${prevEp}`)}
         className={cn("cursor-pointer", {
           "text-muted pointer-events-none":
@@ -29,9 +30,12 @@ export default function NavBar() {
         })}
       />
       <EpisodeList>
-        <Button>Episodes</Button>
+        <Button variant="ghost" className="text-xl">
+          Episodes
+        </Button>
       </EpisodeList>
       <StepForward
+        size={34}
         onClick={() => router.push(`/${id}/watch/${nextEp}`)}
         className={cn("cursor-pointer", {
           "text-muted pointer-events-none":

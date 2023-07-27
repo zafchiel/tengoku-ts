@@ -23,9 +23,6 @@ export default async function EpisodePage({ params }: Props) {
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
       <NavBar />
-      <EpisodeList>
-        <Button className="fixed bottom-2 w-full md:static">Episodes</Button>
-      </EpisodeList>
     </div>
   )
 }
