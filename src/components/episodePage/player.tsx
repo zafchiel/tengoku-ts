@@ -65,6 +65,7 @@ export default function Player({ urls }: { urls: SourceList[] }) {
         autoPlayback: true,
         airplay: true,
         theme: "#fff",
+        controls: [],
       }}
     />
   )

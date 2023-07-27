@@ -125,3 +125,7 @@ iframe {
   transform: scale(1.1);
   transition: 0.2s ease-in-out;
 }
+
+.art-video-player {
+  z-index: 1;
+}
