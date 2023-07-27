@@ -1,17 +1,20 @@
 "use client"
 
 import { cn, extractEpisodeNumber } from "@/lib/utils"
-import EpisodeList, { episodeListAtom } from "../detailsPage/EpisodeLIst"
-import { useAtomValue } from "jotai"
+import EpisodeList from "../detailsPage/EpisodeLIst"
 import { StepBack, StepForward } from "lucide-react"
-import { useParams, usePathname, useRouter } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { Button } from "../ui/button"
+import { EpisodeListType } from "@/types"
 
-export default function NavBar() {
+type Props = {
+  episodeList: EpisodeListType
+}
+
+export default function NavBar({ episodeList }: Props) {
   const { id, episode_id } = useParams()
   const router = useRouter()
 
-  const epArr = useAtomValue(episodeListAtom)
   const epNumber = extractEpisodeNumber(episode_id)
 
   const nextEp =
@@ -26,10 +29,10 @@ export default function NavBar() {
         onClick={() => router.push(`/${id}/watch/${prevEp}`)}
         className={cn("cursor-pointer", {
           "text-muted pointer-events-none":
-            -1 === epArr.findIndex((element) => element.id === prevEp),
+            -1 === episodeList.findIndex((element) => element.id === prevEp),
         })}
       />
-      <EpisodeList>
+      <EpisodeList episodeList={episodeList}>
         <Button variant="ghost" className="text-xl">
           Episodes
         </Button>
@@ -39,7 +42,7 @@ export default function NavBar() {
         onClick={() => router.push(`/${id}/watch/${nextEp}`)}
         className={cn("cursor-pointer", {
           "text-muted pointer-events-none":
-            -1 === epArr.findIndex((element) => element.id === nextEp),
+            -1 === episodeList.findIndex((element) => element.id === nextEp),
         })}
       />
     </div>

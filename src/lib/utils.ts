@@ -1,4 +1,4 @@
-import { AnimeInfo, SourceList } from "@/types"
+import { AnimeInfo, SearchResult, SourceList } from "@/types"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -24,13 +24,10 @@ export default function slugify(str: string) {
   return slug
 }
 
-export async function FetchAnimeInfo(params: {
-  id: string
-  episode_id?: string
-}) {
+export async function fetchAnimeInfo(anime_id: string, episode_id?: string) {
   // Search anime by slug
   const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/${params.id}`
+    `https://api.consumet.org/anime/gogoanime/${anime_id}`
   )
   const searchResults = await res.json()
 
@@ -39,20 +36,6 @@ export async function FetchAnimeInfo(params: {
     `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`
   )
   const animeInfo: AnimeInfo = await res2.json()
-
-  if (params.episode_id) {
-    // Fetch episode urls
-    const res3 = await fetch(
-      `https://api.consumet.org/anime/gogoanime/watch/${params.episode_id}`
-    )
-    const data = await res3.json()
-    const episodeSources: SourceList[] = data.sources
-
-    return {
-      animeInfo,
-      episodeSources,
-    }
-  }
 
   return animeInfo
 }

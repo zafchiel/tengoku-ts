@@ -4,6 +4,7 @@ import Image from "next/image"
 import Description from "@/components/detailsPage/Description"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import { Button } from "@/components/ui/button"
+import { fetchAnimeInfo } from "@/lib/utils"
 
 export default async function DetailsPage({
   params: { id },
@@ -11,14 +12,7 @@ export default async function DetailsPage({
   params: { id: string }
 }) {
   // Search anime by slug
-  const search = await fetch(`https://api.consumet.org/anime/gogoanime/${id}`)
-  const searchResults = await search.json()
-
-  // Fetch detailed info of first record found
-  const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`
-  )
-  const anime: AnimeInfo = await res.json()
+  const anime = await fetchAnimeInfo(id)
 
   if (Object.keys(anime).length === 1) {
     redirect("http://localhost:3000")

@@ -1,8 +1,7 @@
-import { Button } from "@/components/ui/button"
 import Player from "@/components/episodePage/player"
-import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import type { SourceList } from "@/types"
 import NavBar from "@/components/episodePage/navBar"
+import { fetchAnimeInfo } from "@/lib/utils"
 
 type Props = {
   params: {
@@ -19,10 +18,13 @@ export default async function EpisodePage({ params }: Props) {
   const data = await response.json()
   const epSources: SourceList[] = data.sources
 
+  // Fetch anime info for episode list (request cached)
+  const anime = await fetchAnimeInfo(params.id)
+
   return (
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
-      <NavBar />
+      <NavBar episodeList={anime.episodes} />
     </div>
   )
 }
