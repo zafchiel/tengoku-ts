@@ -7,7 +7,7 @@ import { type Option } from "artplayer/types/option"
 import { SourceList } from "@/types"
 
 type Props = {
-  option: Omit<Option, 'container'>
+  option: Omit<Option, "container">
 }
 
 export function ArtPlayer({ option, ...rest }: Props) {
@@ -29,42 +29,41 @@ export function ArtPlayer({ option, ...rest }: Props) {
   return <div ref={artRef} {...rest}></div>
 }
 
-export default function Player({urls}: {urls: SourceList[]}){
+export default function Player({ urls }: { urls: SourceList[] }) {
   return (
     <ArtPlayer
-        option={{
-          url: urls.filter((obj) => obj.quality === '720p')[0].url,
-          customType: {
-            m3u8: function (video: HTMLMediaElement, url: string) {
-              let hls = new Hls()
-              hls.loadSource(url)
-              hls.attachMedia(video)
-              if (!video.src) {
-                video.src = url
-              }
-            },
+      option={{
+        url: urls.filter((obj) => obj.quality === "720p")[0].url,
+        customType: {
+          m3u8: function (video: HTMLMediaElement, url: string) {
+            let hls = new Hls()
+            hls.loadSource(url)
+            hls.attachMedia(video)
+            if (!video.src) {
+              video.src = url
+            }
           },
-          quality: urls.map((obj) => ({
-            default: obj.quality === '720p',
-            html: obj.quality,
-            url: obj.url
-          })),
-          autoplay: false,
-          autoOrientation: true,
-          pip: true,
-          autoSize: true,
-          autoMini: false,
-          setting: true,
-          playbackRate: true,
-          fullscreen: true,
-          miniProgressBar: true,
-          backdrop: true,
-          playsInline: true,
-          autoPlayback: true,
-          airplay: true,
-        }}
-
-        className="aspect-[16/9] w-full p-2"
-      />
+        },
+        quality: urls.map((obj) => ({
+          default: obj.quality === "720p",
+          html: obj.quality,
+          url: obj.url,
+        })),
+        autoplay: false,
+        autoOrientation: true,
+        pip: true,
+        autoSize: true,
+        autoMini: false,
+        setting: true,
+        playbackRate: true,
+        fullscreen: true,
+        miniProgressBar: true,
+        backdrop: true,
+        playsInline: true,
+        autoPlayback: true,
+        airplay: true,
+      }}
+      className="aspect-[16/9] md:static p-2"
+    />
   )
 }

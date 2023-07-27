@@ -24,7 +24,7 @@ export default function EpisodeList({episodeList, children}: {episodeList: Episo
         <SheetTrigger asChild>
           {children}
         </SheetTrigger>
-        <SheetContent className="overflow-scroll">
+        <SheetContent className="overflow-y-scroll z-50">
           <SheetHeader>
             <SheetTitle>Pick your poison</SheetTitle>
             <SheetDescription>
@@ -39,7 +39,7 @@ export default function EpisodeList({episodeList, children}: {episodeList: Episo
               <Link
                 href={`/${params.id}/watch/${obj.id}`}
                 key={obj.id}
-                className={cn('p-4 p-4 border flex justify-center items-center rounded-lg hover:bg-secondary', {
+                className={cn('p-4 border flex justify-center items-center rounded-lg hover:bg-secondary', {
                   ['bg-secondary']: isActive
                 })}
               >

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay } from "swiper/modules"
+import { Autoplay, Navigation, Keyboard } from "swiper/modules"
 import type { TopAiring } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
@@ -19,12 +19,16 @@ export default function MainCarousel({
 }: {
   topAiringAnime: TopAiring[]
 }) {
+  const [isMounted, setIsMounted] = useState(false)
   const [progressBarWidth, setProgressBarWidth] = useState(0)
   const setCurrentAnime = useSetAtom(currentAnimeAtom)
 
   useEffect(() => {
     setCurrentAnime(topAiringAnime[0])
+    setIsMounted(true)
   }, [])
+
+  if(!isMounted) return <div>Loading...</div>
 
   return (
     <section className="z-50 lg:pt-52 w-full lg:w-3/5">
@@ -40,7 +44,11 @@ export default function MainCarousel({
           delay: 7000,
           disableOnInteraction: false,
         }}
-        modules={[Autoplay]}
+        keyboard={{
+          enabled: true
+        }}
+        navigation={true}
+        modules={[Autoplay, Navigation, Keyboard]}
         slidesPerView={1}
         breakpoints={{
           480: {

@@ -8,7 +8,7 @@ export default function MainPageLayout({
   return (
     <>
       <Header variant="transparent" />
-      <div className="pt-14">{children}</div>
+      <main>{children}</main>
     </>
   )
 }

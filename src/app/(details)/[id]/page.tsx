@@ -25,7 +25,7 @@ export default async function DetailsPage({
   }
 
   return (
-    <main className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center pt-14">
       <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
       <div className="md:flex h-full">
         <div className="w-1/3 h-full">
@@ -56,6 +56,6 @@ export default async function DetailsPage({
       <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
 
       </EpisodeList>
-    </main>
+    </div>
   )
 }

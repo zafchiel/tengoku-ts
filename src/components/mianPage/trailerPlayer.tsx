@@ -20,7 +20,8 @@ export default function TrailerPlayer() {
     return (
       <Image
         src="/bg_placeholder.webp"
-        fill
+        height={900}
+        width={1600}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         alt="image"
         className="-z-30 h-full w-full object-cover"
