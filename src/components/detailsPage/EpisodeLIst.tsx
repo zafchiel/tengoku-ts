@@ -1,7 +1,6 @@
 'use client'
 
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
@@ -10,15 +9,30 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { EpisodeList } from "@/types"
+import { EpisodeListType } from "@/types"
 import { useParams } from "next/navigation"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
+import { atom, useAtom } from "jotai"
 
-export default function EpisodeList({episodeList, children}: {episodeList: EpisodeList, children: ReactNode}){
+export const episodeListAtom = atom([] as EpisodeListType)
+
+type Props = {
+  episodeList?: EpisodeListType,
+  children: ReactNode
+}
+
+export default function EpisodeList({episodeList, children}: Props){
+  const [epArr, setApArr] = useAtom(episodeListAtom)
+  
   const params = useParams()
   const pathname = usePathname()
+
+  useEffect(() => {
+    if(episodeList) setApArr(episodeList)
+  }, [])
+  
     return (
         <Sheet>
         <SheetTrigger asChild>
@@ -32,7 +46,7 @@ export default function EpisodeList({episodeList, children}: {episodeList: Episo
             </SheetDescription>
           </SheetHeader>
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
-            {episodeList.map((obj) => {
+            {epArr.map((obj) => {
               const isActive = pathname.startsWith(`/${params.id}/watch/${obj.id}`)
               return (
 

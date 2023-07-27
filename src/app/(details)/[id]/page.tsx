@@ -52,9 +52,8 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      <EpisodeList episodeList={anime.episodes} >
-      <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
-
+      <EpisodeList episodeList={anime.episodes}>
+        <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
       </EpisodeList>
     </div>
   )

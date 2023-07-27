@@ -11,29 +11,17 @@ type Props = {
 }
 
 export default async function EpisodePage({ params }: Props) {
-  // Search anime by slug
-  const search = await fetch(
-    `https://api.consumet.org/anime/gogoanime/${params.id}`
-  )
-  const searchResults = await search.json()
-
-  // Fetch detailed info of first record found
-  const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`
-  )
-  const anime: AnimeInfo = await res.json()
-
   // Fetch episode urls
   const response = await fetch(
     `https://api.consumet.org/anime/gogoanime/watch/${params.episode_id}`
   )
   const data = await response.json()
-  const episode: SourceList[] = data.sources
+  const epSources: SourceList[] = data.sources
 
   return (
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
-      <Player urls={episode} />
-      <EpisodeList episodeList={anime.episodes}>
+      <Player urls={epSources} />
+      <EpisodeList>
         <Button className="fixed bottom-2 w-full md:static">Episodes</Button>
       </EpisodeList>
     </div>

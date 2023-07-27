@@ -23,7 +23,7 @@ export type TopAiring = {
     {
       type: string
       title: string
-    }
+    },
   ]
   title: string
   title_english: string
@@ -75,7 +75,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   licensors: [
     {
@@ -83,7 +83,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   studios: [
     {
@@ -91,7 +91,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   genres: [
     {
@@ -99,7 +99,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   explicit_genres: [
     {
@@ -107,7 +107,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   themes: [
     {
@@ -115,7 +115,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
   demographics: [
     {
@@ -123,7 +123,7 @@ export type TopAiring = {
       type: string
       name: string
       url: string
-    }
+    },
   ]
 }
 
@@ -153,18 +153,18 @@ export type AnimeInfo = {
       id: string
       number: number
       url: string
-    }
+    },
   ]
 }
 
-export type EpisodeList = {
+export type EpisodeListType = {
   id: string
   number: number
   url: string
 }[]
 
 export type SourceList = {
-    url: string
-    isM3U8: boolean
-    quality: string
+  url: string
+  isM3U8: boolean
+  quality: string
 }
