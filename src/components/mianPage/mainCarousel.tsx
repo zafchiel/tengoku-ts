@@ -18,12 +18,10 @@ export default function MainCarousel({
 }: {
   topAiringAnime: TopAiring[]
 }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
   const setCurrentAnime = useSetAtom(currentAnimeAtom)
 
   useEffect(() => {
-    setCurrentAnime(topAiringAnime[currentIndex])
+    setCurrentAnime(topAiringAnime[0])
   }, [])
 
   return (
