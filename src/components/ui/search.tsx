@@ -27,7 +27,7 @@ export default function SearchBar() {
       const { data } = await axios.get(
         `https://api.consumet.org/anime/gogoanime/${searchTerm}`
       )
-      setSearchResults(data.results)
+      setSearchResults(data.results.slice(0, 6))
     } catch (error) {
       setSearchResults([])
     } finally {
