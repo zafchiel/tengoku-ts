@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import Link from "next/link"
 import {
@@ -19,50 +19,56 @@ import { atom, useAtom } from "jotai"
 export const episodeListAtom = atom([] as EpisodeListType)
 
 type Props = {
-  episodeList?: EpisodeListType,
+  episodeList?: EpisodeListType
   children: ReactNode
 }
 
-export default function EpisodeList({episodeList, children}: Props){
+export default function EpisodeList({ episodeList, children }: Props) {
   const [epArr, setApArr] = useAtom(episodeListAtom)
-  
+
   const params = useParams()
   const pathname = usePathname()
 
   useEffect(() => {
-    if(episodeList) setApArr(episodeList)
+    if (episodeList) setApArr(episodeList)
   }, [])
-  
-    return (
-        <Sheet>
-        <SheetTrigger asChild>
-          {children}
-        </SheetTrigger>
-        <SheetContent className="overflow-y-scroll z-50">
-          <SheetHeader>
-            <SheetTitle>Pick your poison</SheetTitle>
-            <SheetDescription>
-              choosing will redirect you to episode page
-            </SheetDescription>
-          </SheetHeader>
+
+  return (
+    <Sheet>
+      <SheetTrigger asChild>{children}</SheetTrigger>
+      <SheetContent className="overflow-y-scroll z-50">
+        <SheetHeader>
+          <SheetTitle>Pick your poison</SheetTitle>
+          <SheetDescription>
+            choosing will redirect you to episode page
+          </SheetDescription>
+        </SheetHeader>
+        {epArr.length === 0 ? (
+          <p>There are no episodes yet, Come back later!</p>
+        ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
             {epArr.map((obj) => {
-              const isActive = pathname.startsWith(`/${params.id}/watch/${obj.id}`)
-              return (
-
-              <Link
-                href={`/${params.id}/watch/${obj.id}`}
-                key={obj.id}
-                className={cn('p-4 border flex justify-center items-center rounded-lg hover:bg-secondary', {
-                  ['bg-secondary']: isActive
-                })}
-              >
-                {obj.number}
-              </Link>
+              const isActive = pathname.startsWith(
+                `/${params.id}/watch/${obj.id}`
               )
-})}
+              return (
+                <Link
+                  href={`/${params.id}/watch/${obj.id}`}
+                  key={obj.id}
+                  className={cn(
+                    "p-4 border flex justify-center items-center rounded-lg hover:bg-secondary",
+                    {
+                      ["bg-secondary"]: isActive,
+                    }
+                  )}
+                >
+                  {obj.number}
+                </Link>
+              )
+            })}
           </div>
-        </SheetContent>
-      </Sheet>
-    )
+        )}
+      </SheetContent>
+    </Sheet>
+  )
 }
