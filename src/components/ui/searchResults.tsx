@@ -13,7 +13,7 @@ export default function SearchResults({ searchResults = [] }: Props) {
       <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-gray-500 duration-300 ease-linear">
         <div className="flex flex-col  ">
           {searchResults.map((result) => (
-            <Link href={`/anime/${result.id}`} key={result.id}>
+            <Link href={`/${result.id}`} key={result.id}>
               <div className="flex h-24 w-72 gap-2  border-b border-dashed bg-[#33353c] p-4">
                 <Image
                   width={40}
