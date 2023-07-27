@@ -68,6 +68,7 @@ export default function Player({ urls }: { urls: SourceList[] }) {
         playsInline: true,
         autoPlayback: true,
         airplay: true,
+        theme: '#fff'
       }}
     />
   )

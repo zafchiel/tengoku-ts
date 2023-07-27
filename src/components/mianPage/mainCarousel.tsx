@@ -11,6 +11,7 @@ import { atom, useSetAtom } from "jotai"
 import "swiper/css"
 import slugify from "@/lib/utils"
 import Progressbar from "./progressBar"
+import { Skeleton } from "../ui/skeleton"
 
 export const currentAnimeAtom = atom({} as TopAiring)
 
@@ -28,13 +29,15 @@ export default function MainCarousel({
     setIsMounted(true)
   }, [])
 
-  if(!isMounted) return <div>Loading...</div>
+  if (!isMounted) return <Skeleton className="h-80 w-52" />
 
   return (
     <section className="z-50 lg:pt-52 w-full lg:w-3/5">
       <Progressbar barWidth={progressBarWidth} />
       <Swiper
-      onAutoplayTimeLeft={(S, timeleft, percentage) => setProgressBarWidth(100 - percentage * 100)}
+        onAutoplayTimeLeft={(S, timeleft, percentage) =>
+          setProgressBarWidth(100 - percentage * 100)
+        }
         onSlideChange={(S) => {
           setCurrentAnime(topAiringAnime[S.realIndex])
         }}
@@ -45,7 +48,7 @@ export default function MainCarousel({
           disableOnInteraction: false,
         }}
         keyboard={{
-          enabled: true
+          enabled: true,
         }}
         navigation={true}
         modules={[Autoplay, Navigation, Keyboard]}

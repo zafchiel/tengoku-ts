@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Player from "@/components/episodePage/player"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
-import type { AnimeInfo, SourceList } from "@/types"
+import type { SourceList } from "@/types"
 
 type Props = {
   params: {
