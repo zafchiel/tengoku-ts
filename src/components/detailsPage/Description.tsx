@@ -7,7 +7,7 @@ export default function Description({ paragraph }: { paragraph: string }) {
 
   if (!isOpen) {
     return (
-      <>
+      <div className="grow">
         <p>{paragraph.slice(0, 100)}...</p>
         <button
           onClick={() => setIsOpen((prev) => !prev)}
@@ -15,15 +15,15 @@ export default function Description({ paragraph }: { paragraph: string }) {
         >
           show more
         </button>
-      </>
+      </div>
     )
   }
   return (
-    <>
+    <div className="grow">
       <p>{paragraph}</p>
       <button onClick={() => setIsOpen((prev) => !prev)} className="opacity-40">
         show less
       </button>
-    </>
+    </div>
   )
 }
