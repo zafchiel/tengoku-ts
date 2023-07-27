@@ -31,10 +31,10 @@ export default async function EpisodePage({ params }: Props) {
   const episode: SourceList[] = data.sources
 
   return (
-    <div className="flex flex-col items-center justify-center w-full py-14">
+    <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={episode} />
       <EpisodeList episodeList={anime.episodes}>
-        <Button className="fixed bottom-2 md:static">Episodes</Button>
+        <Button className="fixed bottom-2 w-full md:static">Episodes</Button>
       </EpisodeList>
     </div>
   )
