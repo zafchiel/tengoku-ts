@@ -3,6 +3,7 @@ import type { AnimeInfo } from "@/types"
 import Image from "next/image"
 import Description from "@/components/detailsPage/Description"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
+import { Button } from "@/components/ui/button"
 
 export default async function DetailsPage({
   params: { id },
@@ -51,7 +52,10 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      <EpisodeList episodeList={anime.episodes} />
+      <EpisodeList episodeList={anime.episodes} >
+      <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
+
+      </EpisodeList>
     </main>
   )
 }

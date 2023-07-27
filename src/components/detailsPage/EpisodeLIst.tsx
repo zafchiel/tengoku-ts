@@ -14,14 +14,15 @@ import { EpisodeList } from "@/types"
 import { useParams } from "next/navigation"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { ReactNode } from "react"
 
-export default function EpisodeList({episodeList}: {episodeList: EpisodeList}){
+export default function EpisodeList({episodeList, children}: {episodeList: EpisodeList, children: ReactNode}){
   const params = useParams()
   const pathname = usePathname()
     return (
         <Sheet>
         <SheetTrigger asChild>
-          <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
+          {children}
         </SheetTrigger>
         <SheetContent className="overflow-scroll">
           <SheetHeader>

@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import Player from "@/components/episodePage/player"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import type { AnimeInfo, SourceList } from "@/types"
@@ -28,12 +29,14 @@ export default async function EpisodePage({params}: Props) {
   const episode: SourceList[] = data.sources
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full overflow-hidden">
       <div className="w-screen h-screen">
-
-      <Player urls={episode} />
+        <Player urls={episode} />
       </div>
-      <EpisodeList episodeList={anime.episodes} />
+
+      <EpisodeList episodeList={anime.episodes}>
+        <Button className="fixed bottom-2">Episodes</Button>
+      </EpisodeList>
     </div>
   )
 }

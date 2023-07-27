@@ -49,32 +49,22 @@ export default function Player({urls}: {urls: SourceList[]}){
             html: obj.quality,
             url: obj.url
           })),
-          volume: 1,
-          isLive: false,
-          muted: false,
           autoplay: false,
           autoOrientation: true,
           pip: true,
-          autoSize: false,
+          autoSize: true,
           autoMini: false,
-          screenshot: true,
           setting: true,
-          loop: false,
-          flip: true,
           playbackRate: true,
-          aspectRatio: true,
           fullscreen: true,
-          fullscreenWeb: false,
-          subtitleOffset: false,
           miniProgressBar: true,
-          mutex: true,
           backdrop: true,
           playsInline: true,
           autoPlayback: true,
           airplay: true,
         }}
 
-        className="w-full h-full"
+        className="aspect-[16/9] w-full p-2"
       />
   )
 }
