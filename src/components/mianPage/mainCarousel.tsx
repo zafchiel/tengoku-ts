@@ -1,15 +1,16 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay } from "swiper/modules"
 import type { TopAiring } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
-import { atom, useAtom, useSetAtom } from "jotai"
+import { atom, useSetAtom } from "jotai"
 
 import "swiper/css"
 import slugify from "@/lib/utils"
+import Progressbar from "./progressBar"
 
 export const currentAnimeAtom = atom({} as TopAiring)
 
@@ -18,6 +19,7 @@ export default function MainCarousel({
 }: {
   topAiringAnime: TopAiring[]
 }) {
+  const [progressBarWidth, setProgressBarWidth] = useState(0)
   const setCurrentAnime = useSetAtom(currentAnimeAtom)
 
   useEffect(() => {
@@ -26,14 +28,16 @@ export default function MainCarousel({
 
   return (
     <section className="z-50 lg:pt-52 w-full lg:w-3/5">
+      <Progressbar barWidth={progressBarWidth} />
       <Swiper
+      onAutoplayTimeLeft={(S, timeleft, percentage) => setProgressBarWidth(100 - percentage * 100)}
         onSlideChange={(S) => {
           setCurrentAnime(topAiringAnime[S.realIndex])
         }}
         spaceBetween={5}
         loop={true}
         autoplay={{
-          delay: 3000,
+          delay: 7000,
           disableOnInteraction: false,
         }}
         modules={[Autoplay]}
