@@ -26,6 +26,14 @@ export default function MainCarousel({
   const [progressBarWidth, setProgressBarWidth] = useState(0)
   const setCurrentAnime = useSetAtom(currentAnimeAtom)
 
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52" />
+
   return (
     <section className="lg:pt-52 w-full lg:w-3/5">
       <Progressbar barWidth={progressBarWidth} />
