@@ -14,6 +14,9 @@ import Progressbar from "./progressBar"
 import { Skeleton } from "../ui/skeleton"
 
 import "swiper/css"
+import "swiper/css/autoplay"
+import "swiper/css/keyboard"
+import "swiper/css/navigation"
 
 export const currentAnimeAtom = atomWithStorage("currentAnime", {} as TopAiring)
 
@@ -49,6 +52,7 @@ export default function MainCarousel({
         autoplay={{
           delay: 7000,
           disableOnInteraction: false,
+          pauseOnMouseEnter: true,
         }}
         keyboard={{
           enabled: true,
@@ -87,7 +91,7 @@ export default function MainCarousel({
                   alt={obj.title}
                   className="w-full h-full rounded-lg"
                 />
-                <div className="absolute bottom-0  left-0 w-full rounded-b-lg bg-black/50 p-3">
+                <div className="absolute bottom-0 left-0 w-full rounded-b-lg bg-black/50 p-3">
                   <h1 className="z-10 text-xl font-medium text-white">
                     {obj.title.replaceAll('"', "")}
                   </h1>
