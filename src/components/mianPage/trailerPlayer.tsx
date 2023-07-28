@@ -4,29 +4,24 @@ import { useState } from "react"
 import YouTube from "react-youtube"
 import Image from "next/image"
 import { useAtomValue } from "jotai/react"
+import { useHydrateAtoms } from "jotai/utils"
 import { currentAnimeAtom } from "./mainCarousel"
+import { TopAiring } from "@/types"
 
 const randomVideoStartSecond = Math.floor(Math.random() * 40)
 
-export default function TrailerPlayer() {
+type Props = {
+  topAiringAnime: TopAiring[]
+}
+
+export default function TrailerPlayer({ topAiringAnime }: Props) {
+  useHydrateAtoms([[currentAnimeAtom, topAiringAnime[0]]])
+
   const [videoLoaded, setVideoLoaded] = useState(false)
   const currentAnime = useAtomValue(currentAnimeAtom)
 
   const handleLoadedVideo = () => {
     setVideoLoaded(true)
-  }
-
-  if (Object.keys(currentAnime).length === 0) {
-    return (
-      <Image
-        src="/bg_placeholder.webp"
-        height={900}
-        width={1600}
-        // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        alt="image"
-        className="-z-30 h-screen w-screen object-cover"
-      />
-    )
   }
 
   return (

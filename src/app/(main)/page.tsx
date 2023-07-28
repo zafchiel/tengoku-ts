@@ -13,11 +13,9 @@ export default async function HomePage() {
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json()
   return (
     <>
-      <TrailerPlayer />
+      <TrailerPlayer topAiringAnime={topAiringAnime} />
       <main className="flex flex-col lg:flex-row h-screen w-full p-10 items-center justify-center">
-        {/* <Suspense fallback={<Skeleton className="w-80 h-80" />}> */}
         <MainHeading topAiringAnime={topAiringAnime} />
-        {/* </Suspense> */}
         <MainCarousel topAiringAnime={topAiringAnime} />
       </main>
     </>
