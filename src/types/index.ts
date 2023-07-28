@@ -168,3 +168,18 @@ export type SourceList = {
   isM3U8: boolean
   quality: string
 }
+
+export type RecentEpisode = {
+  id: string
+  episodeId: string
+  episodeNumber: number
+  title: string
+  image: string
+  url: string
+}
+
+export type RecentEpisodesResponseSchema = {
+  currentPage: number
+  hasNextPage: boolean
+  results: RecentEpisode[]
+}
