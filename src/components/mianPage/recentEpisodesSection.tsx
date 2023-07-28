@@ -13,18 +13,18 @@ type Props = {
 
 export default function RecentEpisodesSection({ episodes }: Props) {
   const [recentEpisodes, setRecentEpisodes] = useState(episodes.results)
-  const [currentPage, setCurrentPage] = useState(2)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const [{ data, loading, error }] = useAxios({
     url: "https://api.consumet.org/anime/gogoanime/recent-episodes",
-    params: { page: currentPage },
+    params: { page: currentPage + 1 },
   })
 
   useEffect(() => {
     if (data === undefined) return
 
     setRecentEpisodes((prev) => [...prev, ...data.results])
-  }, [currentPage])
+  }, [currentPage, data])
 
   return (
     <>
@@ -35,21 +35,24 @@ export default function RecentEpisodesSection({ episodes }: Props) {
           <RecentEpisodeCard key={obj.episodeId} ep={obj} />
         ))}
       </section>
-      <Button
-        disabled={loading}
-        onClick={() => {
-          if (data.hasNextPage) setCurrentPage((prev) => prev + 1)
-        }}
-      >
-        {loading ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Loading
-          </>
-        ) : (
-          <p>Load More</p>
-        )}
-      </Button>
+      <div className="p-3">
+        <Button
+          disabled={loading}
+          onClick={() => {
+            setCurrentPage((prev) => prev + 1)
+          }}
+          className="w-full "
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Loading
+            </>
+          ) : (
+            <p>Load More</p>
+          )}
+        </Button>
+      </div>
     </>
   )
 }

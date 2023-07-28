@@ -25,6 +25,7 @@ export default async function EpisodePage({ params }: Props) {
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
       <NavBar episodeList={anime.episodes} />
+      <h3>{params.episode_id.replaceAll("-", " ").toUpperCase()}</h3>
     </div>
   )
 }

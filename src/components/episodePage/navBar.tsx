@@ -33,7 +33,7 @@ export default function NavBar({ episodeList }: Props) {
         })}
       />
       <EpisodeList episodeList={episodeList}>
-        <Button variant="ghost" className="text-xl">
+        <Button variant="ghost" className="text-xl font-semibold uppercase">
           Episodes
         </Button>
       </EpisodeList>
