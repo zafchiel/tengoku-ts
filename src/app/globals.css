@@ -126,6 +126,14 @@ iframe {
   transition: 0.2s ease-in-out;
 }
 
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  color: white;
+  background-color: #02081770;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+
 .star {
   clip-path: polygon(
     50% 0,
