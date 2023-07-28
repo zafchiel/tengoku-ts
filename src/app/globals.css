@@ -126,6 +126,21 @@ iframe {
   transition: 0.2s ease-in-out;
 }
 
+.star {
+  clip-path: polygon(
+    50% 0,
+    68% 26%,
+    99% 36%,
+    78% 63%,
+    83% 100%,
+    51% 79%,
+    20% 100%,
+    27% 63%,
+    0 36%,
+    32% 25%
+  );
+}
+
 .art-video-player {
   z-index: 1;
 }

@@ -77,6 +77,9 @@ export default function MainCarousel({
           <SwiperSlide key={obj.mal_id}>
             <Link href={`/${slugify(obj.title)}`}>
               <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
+                <div className="star absolute h-16 w-16 top-3 right-3 bg-background/80 z-50 p-3 flex justify-center items-center">
+                  <p className="text-sm">{obj.score}</p>
+                </div>
                 <Image
                   width={300}
                   height={400}
