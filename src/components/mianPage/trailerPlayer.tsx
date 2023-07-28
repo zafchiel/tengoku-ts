@@ -22,9 +22,9 @@ export default function TrailerPlayer() {
         src="/bg_placeholder.webp"
         height={900}
         width={1600}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         alt="image"
-        className="-z-30 h-full w-full object-cover"
+        className="-z-30 h-screen w-screen object-cover"
       />
     )
   }

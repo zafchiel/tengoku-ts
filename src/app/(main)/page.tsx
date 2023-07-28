@@ -4,6 +4,7 @@ import MainHeading from "@/components/mianPage/heading"
 import TrailerPlayer from "@/components/mianPage/trailerPlayer"
 import { TopAiring } from "@/types"
 import { Suspense } from "react"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default async function HomePage() {
   const res = await fetch(
@@ -14,8 +15,10 @@ export default async function HomePage() {
     <>
       <TrailerPlayer />
       <main className="flex flex-col lg:flex-row h-screen w-full p-10 items-center justify-center">
-          <MainHeading />
-          <MainCarousel topAiringAnime={topAiringAnime} />
+        {/* <Suspense fallback={<Skeleton className="w-80 h-80" />}> */}
+        <MainHeading topAiringAnime={topAiringAnime} />
+        {/* </Suspense> */}
+        <MainCarousel topAiringAnime={topAiringAnime} />
       </main>
     </>
   )

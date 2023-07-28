@@ -1,10 +1,17 @@
 "use client"
 
 import { useAtomValue } from "jotai/react"
+import { useHydrateAtoms } from "jotai/utils"
 import { currentAnimeAtom } from "./mainCarousel"
+import { TopAiring } from "@/types"
 
-export default function MainHeading() {
+type Props = {
+  topAiringAnime: TopAiring[]
+}
+
+export default function MainHeading({ topAiringAnime }: Props) {
   const currentAnime = useAtomValue(currentAnimeAtom)
+  useHydrateAtoms([[currentAnimeAtom, topAiringAnime[0]]])
 
   return (
     <section className="z-20 mt-20 flex h-3/5 w-full flex-col items-center justify-center p-5 lg:h-full lg:w-2/5">

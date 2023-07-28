@@ -7,29 +7,24 @@ import type { TopAiring } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
 import { atom, useSetAtom } from "jotai"
-
-import "swiper/css"
+import { useHydrateAtoms } from "jotai/utils"
+import { atomWithStorage } from "jotai/utils"
 import slugify from "@/lib/utils"
 import Progressbar from "./progressBar"
 import { Skeleton } from "../ui/skeleton"
 
-export const currentAnimeAtom = atom({} as TopAiring)
+import "swiper/css"
+
+export const currentAnimeAtom = atomWithStorage("currentAnime", {} as TopAiring)
 
 export default function MainCarousel({
   topAiringAnime,
 }: {
   topAiringAnime: TopAiring[]
 }) {
-  const [isMounted, setIsMounted] = useState(false)
+  useHydrateAtoms([[currentAnimeAtom, topAiringAnime[0]]])
   const [progressBarWidth, setProgressBarWidth] = useState(0)
   const setCurrentAnime = useSetAtom(currentAnimeAtom)
-
-  useEffect(() => {
-    setCurrentAnime(topAiringAnime[0])
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) return <Skeleton className="h-80 w-52" />
 
   return (
     <section className="lg:pt-52 w-full lg:w-3/5">
