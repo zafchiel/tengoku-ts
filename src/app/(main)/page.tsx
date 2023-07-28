@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   // Fetch recently added episodes
   const res2 = await fetch(
-    "https://api.consumet.org/anime/gogoanime/recent-episodes?type=1"
+    "https://api.consumet.org/anime/gogoanime/recent-episodes"
   )
   const recentEpisodes: RecentEpisodesResponseSchema = await res2.json()
 

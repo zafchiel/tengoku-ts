@@ -51,7 +51,7 @@ export default function MainCarousel({
         spaceBetween={5}
         loop={true}
         autoplay={{
-          delay: 7000,
+          delay: 10000,
           disableOnInteraction: false,
           pauseOnMouseEnter: true,
         }}
