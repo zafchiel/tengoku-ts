@@ -17,7 +17,6 @@ export default function RecentEpisodesSection({ episodes }: Props) {
   const [loading, setLoading] = useState(false)
   const [hasNextPage, setHasNextPage] = useState(true)
 
-  const [inView, setInView] = useState(false)
   const ref = useRef<HTMLButtonElement | null>(null)
 
   const observerOptions = {
@@ -48,7 +47,6 @@ export default function RecentEpisodesSection({ episodes }: Props) {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const [entry] = entries
-      setInView(entry.isIntersecting)
       if(entry.isIntersecting === true && loading === false) fetchMoreEpisodes()
     }, observerOptions)
 
@@ -65,7 +63,7 @@ export default function RecentEpisodesSection({ episodes }: Props) {
       <h1 className="text-3xl p-5 font-bold">Recently added episodes</h1>
 
       <section  className="w-full p-5 flex flex-wrap">
-        {recentEpisodes.map((obj, index) => (
+        {recentEpisodes.map((obj) => (
           <RecentEpisodeCard key={obj.episodeId} ep={obj} />
         ))}
       </section>
@@ -73,9 +71,7 @@ export default function RecentEpisodesSection({ episodes }: Props) {
         <Button
         ref={ref}
           disabled={loading}
-          onClick={() => {
-            setCurrentPage((prev) => prev + 1)
-          }}
+          onClick={() => fetchMoreEpisodes()}
           className="w-full"
         >
           {loading ? (
