@@ -3,9 +3,9 @@
 import { RecentEpisodesResponseSchema } from "@/types"
 import RecentEpisodeCard from "./recentEpisodeCard"
 import { useState, useEffect } from "react"
-import useAxios from "axios-hooks"
 import { Button } from "../ui/button"
 import { Loader2 } from "lucide-react"
+import axios from "axios"
 
 type Props = {
   episodes: RecentEpisodesResponseSchema
@@ -13,18 +13,23 @@ type Props = {
 
 export default function RecentEpisodesSection({ episodes }: Props) {
   const [recentEpisodes, setRecentEpisodes] = useState(episodes.results)
-  const [currentPage, setCurrentPage] = useState(1)
-
-  const [{ data, loading, error }] = useAxios({
-    url: "https://api.consumet.org/anime/gogoanime/recent-episodes",
-    params: { page: currentPage + 1 },
-  })
+  const [currentPage, setCurrentPage] = useState(2)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (data === undefined) return
-
-    setRecentEpisodes((prev) => [...prev, ...data.results])
-  }, [currentPage, data])
+    const fetchMoreEpisodes = async () => {
+      setLoading(true)
+      try {
+        const {data} = await axios.get('https://api.consumet.org/anime/gogoanime/recent-episodes', {params: {page: currentPage}})
+        setRecentEpisodes((prev) => [...prev, ...data.results])
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchMoreEpisodes()
+  }, [currentPage])
 
   return (
     <>
@@ -41,7 +46,7 @@ export default function RecentEpisodesSection({ episodes }: Props) {
           onClick={() => {
             setCurrentPage((prev) => prev + 1)
           }}
-          className="w-full "
+          className="w-full"
         >
           {loading ? (
             <>
