@@ -5,8 +5,6 @@ import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import { Button } from "@/components/ui/button"
 import { fetchAnimeInfo } from "@/lib/utils"
 
-import { getPlaiceholder } from "plaiceholder"
-
 export default async function DetailsPage({
   params: { id },
 }: {
@@ -14,23 +12,6 @@ export default async function DetailsPage({
 }) {
   // Search anime by slug
   const anime = await fetchAnimeInfo(id)
-
-  let blurImage
-
-  try {
-    const src = anime.image;
-   
-    const buffer = await fetch(src).then(async (res) =>
-      Buffer.from(await res.arrayBuffer())
-    );
-   
-    const { base64 } = await getPlaiceholder(buffer);
-    blurImage = base64
-   
-    console.log(base64)
-  } catch (err) {
-    console.log(err)
-  }
 
   if (Object.keys(anime).length === 1) {
     redirect("http://localhost:3000")
@@ -42,8 +23,6 @@ export default async function DetailsPage({
       <div className="md:flex h-full">
         <div className="w-1/3 h-full">
           <Image
-          placeholder="blur"
-          blurDataURL={blurImage}
             src={anime.image}
             width={400}
             height={500}

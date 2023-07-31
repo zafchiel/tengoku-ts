@@ -8,7 +8,7 @@ type Props = {
 
 export default function RecentEpisodeCard({ ep }: Props) {
   return (
-    <div className="relative h-full aspect-[4/5] w-1/2 p-2 sm:w-40 overflow-hidden rounded-md shadow-md">
+    <div className="relative h-full aspect-[4/5] w-full p-2 overflow-hidden rounded-md shadow-md">
       <Link href={`/${ep.id}/watch/${ep.episodeId}`}>
         <div className="flex absolute top-0 inset-x-0 bg-background/70 p-2 justify-center items-center">
           Episode:&nbsp;<p>{ep.episodeNumber}</p>

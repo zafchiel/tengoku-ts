@@ -2,7 +2,7 @@
 
 import { RecentEpisodesResponseSchema } from "@/types"
 import RecentEpisodeCard from "./recentEpisodeCard"
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "../ui/button"
 import { Loader2 } from "lucide-react"
 import axios from "axios"
@@ -21,22 +21,24 @@ export default function RecentEpisodesSection({ episodes }: Props) {
 
   const observerOptions = {
     root: null,
-    rootMargin: '0px',
+    rootMargin: "0px",
     threshold: 0.7,
   }
 
-  
   const fetchMoreEpisodes = async () => {
     setLoading(true)
-    if(!hasNextPage) {
-      console.log('No More :3')
+    if (!hasNextPage) {
+      console.log("No More :3")
       return
     }
     try {
-      const {data} = await axios.get('https://api.consumet.org/anime/gogoanime/recent-episodes', {params: {page: currentPage}})
+      const { data } = await axios.get(
+        "https://api.consumet.org/anime/gogoanime/recent-episodes",
+        { params: { page: currentPage } }
+      )
       setRecentEpisodes((prev) => [...prev, ...data.results])
       setCurrentPage((prev) => prev + 1)
-      if(!data.hasNextPage) setHasNextPage(false)
+      if (!data.hasNextPage) setHasNextPage(false)
     } catch (error) {
       console.log(error)
     } finally {
@@ -47,29 +49,29 @@ export default function RecentEpisodesSection({ episodes }: Props) {
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       const [entry] = entries
-      if(entry.isIntersecting === true && loading === false) fetchMoreEpisodes()
+      if (entry.isIntersecting === true && loading === false)
+        fetchMoreEpisodes()
     }, observerOptions)
 
-    if(ref.current) observer.observe(ref.current)
+    if (ref.current) observer.observe(ref.current)
 
     return () => {
-      if(ref.current) observer.unobserve(ref.current)
+      if (ref.current) observer.unobserve(ref.current)
     }
-  }, [ref, observerOptions])
-
+  }, [ref, observerOptions, loading])
 
   return (
     <>
       <h1 className="text-3xl p-5 font-bold">Recently added episodes</h1>
 
-      <section  className="w-full p-5 flex flex-wrap">
+      <section className="w-full p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
         {recentEpisodes.map((obj) => (
           <RecentEpisodeCard key={obj.episodeId} ep={obj} />
         ))}
       </section>
       <div className="p-3">
         <Button
-        ref={ref}
+          ref={ref}
           disabled={loading}
           onClick={() => fetchMoreEpisodes()}
           className="w-full"
