@@ -9,10 +9,10 @@ type Props = {
 }
 
 export default function SearchResults({
-  searchResults = [],
+  searchResults,
   isLoading,
 }: Props) {
-  if (searchResults.length > 0) {
+
     if (isLoading)
       return (
         <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover w-60 h-80">
@@ -30,9 +30,10 @@ export default function SearchResults({
           </div>
         </div>
       )
+
     return (
       <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover duration-300 ease-linear">
-        <div className="flex flex-col  ">
+        <div className="flex flex-col">
           {searchResults.map((result) => (
             <Link href={`/${result.id}`} key={result.id}>
               <div className="flex h-24 w-72 gap-2  border-b border-dashed p-4">
@@ -54,10 +55,4 @@ export default function SearchResults({
         </div>
       </div>
     )
-  }
-  return (
-    <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover duration-300 ease-linear p-5">
-      <p>No matches</p>
-    </div>
-  )
 }

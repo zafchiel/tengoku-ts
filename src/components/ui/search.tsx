@@ -56,7 +56,17 @@ export default function SearchBar() {
           />
         </form>
       </div>
-      <SearchResults searchResults={searchResults} isLoading={loading} />
+      {searchResults.length !== 0 
+      ? (
+        <SearchResults searchResults={searchResults} isLoading={loading} />
+        ) 
+      : searchText.length === 0
+      ? null 
+      : (
+        <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover duration-300 ease-linear p-5">
+          <p>No matches</p>
+        </div>
+      )}
     </div>
   )
 }
