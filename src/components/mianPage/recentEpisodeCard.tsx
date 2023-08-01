@@ -8,11 +8,8 @@ type Props = {
 
 export default function RecentEpisodeCard({ ep }: Props) {
   return (
-    <div className="relative h-full aspect-[4/5] w-full p-2 overflow-hidden rounded-md shadow-md">
+    <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
       <Link href={`/${ep.id}/watch/${ep.episodeId}`}>
-        <div className="flex absolute top-0 inset-x-0 bg-background/70 p-2 justify-center items-center">
-          Episode:&nbsp;<p className="font-bold">{ep.episodeNumber}</p>
-        </div>
         <Image
           width={400}
           height={500}
@@ -20,8 +17,11 @@ export default function RecentEpisodeCard({ ep }: Props) {
           alt={ep.title}
           className="w-full h-full rounded-lg"
         />
-        <div className="absolute inset-x-0 bottom-0 z-10 bg-background/70 px-3 py-1">
+        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <p className="font-semibold">{ep.title}</p>
+          <div className="flex text-gray-300">
+            <p>EP:&nbsp;<span>{ep.episodeNumber}</span></p>
+          </div>
         </div>
       </Link>
     </div>

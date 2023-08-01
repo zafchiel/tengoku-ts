@@ -21,7 +21,7 @@ export default function SwiperSlideCard({ obj }: Props) {
           alt={obj.title}
           className="w-full h-full rounded-lg"
         />
-        <div className="absolute bottom-0 left-0 w-full rounded-b-lg bg-black/50 p-3">
+        <div className="absolute bottom-0 inset-x-0 rounded-b-lg bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <h1 className="z-10 text-xl font-medium text-white">
             {obj.title.replaceAll('"', "")}
           </h1>

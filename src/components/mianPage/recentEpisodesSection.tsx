@@ -64,7 +64,7 @@ export default function RecentEpisodesSection({ episodes }: Props) {
     <>
       <h1 className="text-3xl p-5 font-bold">Recently added episodes</h1>
 
-      <section className="w-full p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7">
+      <section className="w-full p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {recentEpisodes.map((obj) => (
           <RecentEpisodeCard key={obj.episodeId} ep={obj} />
         ))}
