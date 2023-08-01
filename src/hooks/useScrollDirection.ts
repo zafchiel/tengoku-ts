@@ -13,7 +13,7 @@ export default function useScrollDirection() {
       const direction = scrollY > lastScrollY ? "down" : "up"
       if (
         direction !== scrollDirection &&
-        (scrollY - lastScrollY > 5 || scrollY - lastScrollY < -5)
+        (scrollY - lastScrollY > 10 || scrollY - lastScrollY < -10)
       ) {
         setScrollDirection(direction)
       }
