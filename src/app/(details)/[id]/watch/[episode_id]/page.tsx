@@ -24,10 +24,10 @@ export default async function EpisodePage({ params }: Props) {
   const { name, episode } = extractNameAndEpisode(params.episode_id)
 
   return (
-    <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
+    <div className="flex items-center flex-col justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
       <NavBar episodeList={anime.episodes} />
-      <div className="mt-3 p-2">
+      <div className="mt-3 p-2 w-full">
         <h3 className="text-2xl uppercase font-semibold">{name}</h3>
         <p>EP:&nbsp;{episode}</p>
       </div>
