@@ -11,6 +11,7 @@ const nohemi = localFont({
 export const metadata: Metadata = {
   title: "Tengoku - anime web app",
   description: "",
+  manifest: "/manifest.json",
 }
 
 export default function RootLayout({
