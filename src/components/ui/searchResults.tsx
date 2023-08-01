@@ -9,15 +9,15 @@ type Props = {
 }
 
 export default function SearchResults({
-  searchResults = [],
+  searchResults,
   isLoading,
 }: Props) {
-  if (searchResults.length > 0) {
+
     if (isLoading)
       return (
-        <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-gray-500 duration-300 ease-linear">
-          <div className="w-60 h-80 flex justify-center items-center">
-            <svg className="h-10 w-10 animate-spin" viewBox="3 3 18 18">
+        <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover w-60 h-80">
+          <div className="w-full h-full flex justify-center items-center">
+            <svg className="h-16 w-16 animate-spin" viewBox="3 3 18 18">
               <path
                 className="fill-transparent"
                 d="M12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5ZM3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12Z"
@@ -30,12 +30,13 @@ export default function SearchResults({
           </div>
         </div>
       )
+
     return (
-      <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-gray-500 duration-300 ease-linear">
-        <div className="flex flex-col  ">
+      <div className="dropdown-content absolute right-0 z-50 overflow-hidden bg-popover duration-300 ease-linear">
+        <div className="flex flex-col">
           {searchResults.map((result) => (
             <Link href={`/${result.id}`} key={result.id}>
-              <div className="flex h-24 w-72 gap-2  border-b border-dashed bg-[#33353c] p-4">
+              <div className="flex h-24 w-72 gap-2  border-b border-dashed p-4">
                 <Image
                   width={40}
                   height={55}
@@ -54,6 +55,4 @@ export default function SearchResults({
         </div>
       </div>
     )
-  }
-  return null
 }
