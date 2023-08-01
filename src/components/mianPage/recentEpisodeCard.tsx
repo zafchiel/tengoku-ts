@@ -15,9 +15,9 @@ export default function RecentEpisodeCard({ ep }: Props) {
           height={500}
           src={ep.image}
           alt={ep.title}
-          className="w-full h-full rounded-lg"
+          className="w-full h-full rounded-lg hover:scale-125 duration-200 ease-linear"
         />
-        <div className="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <p className="font-semibold">{ep.title}</p>
           <div className="flex text-gray-300">
             <p>EP:&nbsp;<span>{ep.episodeNumber}</span></p>

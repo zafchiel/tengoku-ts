@@ -121,11 +121,6 @@ iframe {
   border: 2px solid white;
 }
 
-.swiper-slide div:first-child:hover img {
-  transform: scale(1.1);
-  transition: 0.2s ease-in-out;
-}
-
 .swiper-button-prev::after,
 .swiper-button-next::after {
   color: white;

@@ -19,9 +19,9 @@ export default function SwiperSlideCard({ obj }: Props) {
           height={400}
           src={obj.images.webp.large_image_url}
           alt={obj.title}
-          className="w-full h-full rounded-lg"
+          className="w-full h-full rounded-lg hover:scale-125 duration-200 ease-linear"
         />
-        <div className="absolute bottom-0 inset-x-0 rounded-b-lg bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
+        <div className="pointer-events-none absolute bottom-0 inset-x-0 rounded-b-lg bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <h1 className="z-10 text-xl font-medium text-white">
             {obj.title.replaceAll('"', "")}
           </h1>
