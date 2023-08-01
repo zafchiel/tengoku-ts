@@ -6,10 +6,9 @@ export default function MainPageLayout({
 }: {
   children: React.ReactNode
 }) {
-  ;<Header variant="transparent" />
   return (
     <JotaiProvider>
-      <Header variant="transparent" />
+      <Header />
       {children}
     </JotaiProvider>
   )

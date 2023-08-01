@@ -53,10 +53,12 @@ export default function RecentEpisodesSection({ episodes }: Props) {
         fetchMoreEpisodes()
     }, observerOptions)
 
-    if (ref.current) observer.observe(ref.current)
+    const refElement = ref.current
+
+    if (refElement) observer.observe(refElement)
 
     return () => {
-      if (ref.current) observer.unobserve(ref.current)
+      if (refElement) observer.unobserve(refElement)
     }
   }, [ref, observerOptions, loading])
 
