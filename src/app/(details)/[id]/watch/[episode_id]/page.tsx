@@ -1,7 +1,7 @@
 import Player from "@/components/episodePage/player"
 import type { SourceList } from "@/types"
 import NavBar from "@/components/episodePage/navBar"
-import { fetchAnimeInfo } from "@/lib/utils"
+import { extractNameAndEpisode, fetchAnimeInfo } from "@/lib/utils"
 
 type Props = {
   params: {
@@ -21,11 +21,16 @@ export default async function EpisodePage({ params }: Props) {
   // Fetch anime info for episode list (request cached)
   const anime = await fetchAnimeInfo(params.id)
 
+  const { name, episode } = extractNameAndEpisode(params.episode_id)
+
   return (
     <div className="flex flex-col items-center justify-center w-full py-14 overflow-x-hidden">
       <Player urls={epSources} />
       <NavBar episodeList={anime.episodes} />
-      <h3>{params.episode_id.replaceAll("-", " ").toUpperCase()}</h3>
+      <div className="mt-3 p-2">
+        <h3 className="text-2xl uppercase font-semibold">{name}</h3>
+        <p>EP:&nbsp;{episode}</p>
+      </div>
     </div>
   )
 }

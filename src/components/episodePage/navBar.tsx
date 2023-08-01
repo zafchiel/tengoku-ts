@@ -23,7 +23,7 @@ export default function NavBar({ episodeList }: Props) {
     episode_id.slice(0, -epNumber.toString().length) + (epNumber - 1)
 
   return (
-    <div className="flex w-full h-20 justify-around items-center">
+    <div className="flex fixed bottom-0 inset-x-0 md:static w-full h-20 justify-around items-center">
       <StepBack
         size={34}
         onClick={() => router.push(`/${id}/watch/${prevEp}`)}
