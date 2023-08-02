@@ -26,11 +26,14 @@ function Header() {
           </h1>
         </Link>
       </div>
-      <ProfileButton />
 
-      <nav className="relative flex items-center justify-around gap-3 text-xl font-medium text-white/75">
-        <SearchBar />
-      </nav>
+      <div className="flex gap-2">
+        <nav className="relative flex items-center justify-around gap-3 text-xl font-medium text-white/75">
+          <SearchBar />
+        </nav>
+
+        <ProfileButton />
+      </div>
     </header>
   )
 }
