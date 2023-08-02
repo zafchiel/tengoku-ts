@@ -1,4 +1,4 @@
-import Header from "@/components/ui/header"
+import GlobalProviders from "@/components/global/GlobalProviders"
 import "./globals.css"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
@@ -21,7 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={nohemi.className}>{children}</body>
+      <body className={nohemi.className}>
+        <GlobalProviders>{children}</GlobalProviders>
+      </body>
     </html>
   )
 }

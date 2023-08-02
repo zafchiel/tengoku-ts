@@ -5,6 +5,7 @@ import Link from "next/link"
 import React from "react"
 import SearchBar from "./search"
 import useScrollDirection from "@/hooks/useScrollDirection"
+import ProfileButton from "./profileButton"
 
 function Header() {
   const direction = useScrollDirection()
@@ -25,6 +26,7 @@ function Header() {
           </h1>
         </Link>
       </div>
+      <ProfileButton />
 
       <nav className="relative flex items-center justify-around gap-3 text-xl font-medium text-white/75">
         <SearchBar />
