@@ -20,7 +20,9 @@ export default function RecentEpisodeCard({ ep }: Props) {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <p className="font-semibold">{ep.title}</p>
           <div className="flex text-gray-300">
-            <p>EP:&nbsp;<span>{ep.episodeNumber}</span></p>
+            <p>
+              EP:&nbsp;<span className="font-semibold">{ep.episodeNumber}</span>
+            </p>
           </div>
         </div>
       </Link>

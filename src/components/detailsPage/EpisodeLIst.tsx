@@ -47,9 +47,9 @@ export default function EpisodeList({ episodeList, children }: Props) {
                   href={`/${params.id}/watch/${obj.id}`}
                   key={obj.id}
                   className={cn(
-                    "p-4 border flex justify-center items-center rounded-lg hover:bg-secondary",
+                    "p-4 border flex justify-center items-center rounded-lg hover:bg-foreground hover:text-background bg-background visited:bg-muted",
                     {
-                      ["bg-secondary"]: isActive,
+                      ["!bg-foreground !text-background"]: isActive,
                     }
                   )}
                 >
