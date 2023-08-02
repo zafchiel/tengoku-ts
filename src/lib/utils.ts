@@ -49,6 +49,14 @@ export function extractEpisodeNumber(episode_id: string) {
   return epNumber
 }
 
+export function extractNameAndEpisode(episode_id: string) {
+  const segments = episode_id.trim().split("-")
+  const episode = parseInt(segments[segments.length - 1])
+  const name = segments.slice(0, -2).join(" ")
+
+  return { name, episode }
+}
+
 export const debounce = (fn: Function, delay: number) => {
   let timerId: NodeJS.Timeout
   return (...args: any[]) => {

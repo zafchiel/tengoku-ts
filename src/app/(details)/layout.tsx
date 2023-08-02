@@ -7,7 +7,7 @@ export default function MainPageLayout({
 }) {
   return (
     <>
-      <Header variant="transparent" />
+      <Header />
       <main>{children}</main>
     </>
   )
