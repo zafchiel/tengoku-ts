@@ -1,3 +1,4 @@
+import Link from "next/link"
 import Player from "@/components/episodePage/player"
 import type { SourceList } from "@/types"
 import NavBar from "@/components/episodePage/navBar"
@@ -28,7 +29,9 @@ export default async function EpisodePage({ params }: Props) {
       <Player urls={epSources} />
       <NavBar episodeList={anime.episodes} />
       <div className="mt-3 p-2 w-full">
-        <h3 className="text-2xl uppercase font-semibold">{name}</h3>
+        <h3 className="text-2xl uppercase font-semibold">
+          <Link href={`/${name}`}>{name}</Link>
+        </h3>
         <p>EP:&nbsp;{episode}</p>
       </div>
     </div>
