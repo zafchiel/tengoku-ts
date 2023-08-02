@@ -2,6 +2,7 @@ import GlobalProviders from "@/components/global/GlobalProviders"
 import "./globals.css"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import Header from "@/components/ui/header"
 
 const nohemi = localFont({
   src: "./fonts/Nohemi-VF.ttf",
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={nohemi.className}>
-        <GlobalProviders>{children}</GlobalProviders>
+        <GlobalProviders>
+          <Header />
+          {children}
+        </GlobalProviders>
       </body>
     </html>
   )

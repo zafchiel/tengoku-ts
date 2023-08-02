@@ -3,7 +3,7 @@ import NextAuth from "next-auth/next"
 import RedditProvider from "next-auth/providers/reddit"
 import GoogleProvider from "next-auth/providers/google"
 
-const authConfig: AuthOptions = {
+export const authConfig: AuthOptions = {
   providers: [
     RedditProvider({
       clientId: process.env.REDDIT_CLIENT_ID as string,
