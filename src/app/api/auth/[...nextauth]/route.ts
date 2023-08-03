@@ -35,13 +35,6 @@ export const authConfig: AuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    session({ session, user }) {
-      // @ts-ignore
-      session.user.currentlyWatching = user.currentlyWatching
-      return session
-    },
-  },
   adapter: MongoDBAdapter(clientPromise) as Adapter,
 }
 
