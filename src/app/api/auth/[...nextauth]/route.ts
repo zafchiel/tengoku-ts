@@ -20,12 +20,19 @@ export const authConfig: AuthOptions = {
       // @ts-ignore
       profile(profile: GoogleProfile) {
         return {
-          ...profile,
-          currentlyWatching: null
+          name: profile.name,
+          email: profile.email,
+          currentlyWatching: null,
         }
-      }
+      },
     }),
   ],
+  callbacks: {
+    session({ session, user }) {
+      session.user.currentlyWatching = user.currentlyWatching
+      return session
+    },
+  },
   adapter: MongoDBAdapter(clientPromise) as Adapter,
 }
 
