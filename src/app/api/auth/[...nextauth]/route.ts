@@ -2,7 +2,7 @@ import { AuthOptions } from "next-auth"
 import NextAuth from "next-auth/next"
 
 import RedditProvider from "next-auth/providers/reddit"
-import GoogleProvider from "next-auth/providers/google"
+import GoogleProvider, { GoogleProfile } from "next-auth/providers/google"
 
 import { MongoDBAdapter } from "@auth/mongodb-adapter"
 import clientPromise from "@/mongodb/client"
@@ -17,6 +17,13 @@ export const authConfig: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      // @ts-ignore
+      profile(profile: GoogleProfile) {
+        return {
+          ...profile,
+          currentlyWatching: null
+        }
+      }
     }),
   ],
   adapter: MongoDBAdapter(clientPromise) as Adapter,
