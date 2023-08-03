@@ -13,35 +13,12 @@ export const authConfig: AuthOptions = {
     RedditProvider({
       clientId: process.env.REDDIT_CLIENT_ID as string,
       clientSecret: process.env.REDDIT_CLIENT_SECRET as string,
-      // @ts-ignore
-      profile(profile){
-        return {
-          name: profile.name,
-          email: profile.email,
-          currentlyWatching: null,
-        }
-      }
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      // @ts-ignore
-      profile(profile: GoogleProfile) {
-        return {
-          name: profile.name,
-          email: profile.email,
-          currentlyWatching: null,
-        }
-      },
     }),
   ],
-  callbacks: {
-    session({ session, user }) {
-      // @ts-ignore
-      session.user.currentlyWatching = user.currentlyWatching
-      return session
-    },
-  },
   adapter: MongoDBAdapter(clientPromise) as Adapter,
 }
 
