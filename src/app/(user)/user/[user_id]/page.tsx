@@ -2,7 +2,6 @@ import { redirect } from "next/navigation"
 import { authConfig } from "@/app/api/auth/[...nextauth]/route"
 import { getServerSession } from "next-auth"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import Image from "next/image"
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig)
