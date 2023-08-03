@@ -20,8 +20,6 @@ const nextConfig = {
 
 module.exports = withPWA(nextConfig)
 
-
-
 // WITHOUT PWA
 
 // /** @type {import('next').NextConfig} */

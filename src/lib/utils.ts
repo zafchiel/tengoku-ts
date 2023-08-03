@@ -1,4 +1,4 @@
-import { AnimeInfo, SearchResult, SourceList } from "@/types"
+import { AnimeInfo } from "@/types"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -33,7 +33,8 @@ export async function fetchAnimeInfo(anime_id: string, episode_id?: string) {
 
   // Fetch detailed info of first record found
   const res2 = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`
+    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`,
+    { cache: "no-store" }
   )
   const animeInfo: AnimeInfo = await res2.json()
 

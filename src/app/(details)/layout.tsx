@@ -1,5 +1,3 @@
-import Header from "@/components/ui/header"
-
 export default function MainPageLayout({
   children,
 }: {
@@ -7,7 +5,6 @@ export default function MainPageLayout({
 }) {
   return (
     <>
-      <Header />
       <main>{children}</main>
     </>
   )
