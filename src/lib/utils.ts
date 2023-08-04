@@ -1,4 +1,4 @@
-import { AnimeInfo } from "@/types"
+import { AnimeInfo, SourceList } from "@/types"
 import axios from "axios"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
@@ -71,5 +71,5 @@ export const fetchSource = async (episode_id: string) => {
   const { data } = await axios.get(
     `https://api.consumet.org/anime/gogoanime/watch/${episode_id}`
   )
-  return data.sources
+  return data.sources as SourceList[]
 }
