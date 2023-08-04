@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation"
-import { authConfig } from "@/app/api/auth/[...nextauth]/route"
+import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { getServerSession } from "next-auth"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 

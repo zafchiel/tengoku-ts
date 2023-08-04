@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://dominik-mordaka-s-workspace-5neb9b.eu-west-1.xata.sh/db/tengokuDB",
+  "codegen": {
+    "output": "src/xata/xata.ts"
+  }
+}

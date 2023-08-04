@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^1.0.0",
+    "@auth/xata-adapter": "^0.1.0",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-slot": "^1.0.2",
@@ -26,8 +27,6 @@
     "hls.js": "^1.4.10",
     "jotai": "^2.2.2",
     "lucide-react": "^0.259.0",
-    "mongodb": "^5.7.0",
-    "mongoose": "^7.4.1",
     "next": "13.4.9",
     "next-auth": "^4.22.3",
     "next-pwa": "^5.6.0",
