@@ -3,19 +3,36 @@ import Image from "next/image"
 import Description from "@/components/detailsPage/Description"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import { Button } from "@/components/ui/button"
-import { fetchAnimeInfo } from "@/lib/utils"
+import { fetchAnimeInfo, fetchSource } from "@/lib/utils"
+import { getXataClient } from "@/xata/xata"
 
 export default async function DetailsPage({
   params: { id },
 }: {
   params: { id: string }
 }) {
+  const xata = getXataClient()
+
+  const animeDB = await xata.db.animes.read(id)
+
   // Search anime by slug
   const anime = await fetchAnimeInfo(id)
-
-  if (Object.keys(anime).length === 1) {
-    redirect("http://localhost:3000")
+  if (!animeDB) {
+    const { episodes, ...rest } = anime
+    const eps = episodes.map((ep) => ({ anime_id: anime.id, ...ep }))
+    await xata.db.animes.create({ ...rest })
+    const epsArr = await xata.db.episodes.create([...eps])
+    epsArr.map((ep) => {
+      fetchSource(ep.id).then((res) => {
+        res.map(
+          async (srcObj) =>
+            await xata.db.sources.create({ episode_id: ep.id, ...srcObj })
+        )
+      })
+    })
   }
+
+  if (!anime) redirect("/")
 
   return (
     <div className="w-full flex flex-col items-center pt-14">
@@ -45,9 +62,9 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      <EpisodeList episodeList={anime.episodes}>
+      {/* <EpisodeList episodeList={anime.episodes}>
         <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
-      </EpisodeList>
+      </EpisodeList> */}
     </div>
   )
 }

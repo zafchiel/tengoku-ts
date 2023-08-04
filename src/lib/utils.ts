@@ -1,4 +1,5 @@
 import { AnimeInfo } from "@/types"
+import axios from "axios"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -64,4 +65,11 @@ export const debounce = (fn: Function, delay: number) => {
     clearTimeout(timerId)
     timerId = setTimeout(() => fn(...args), delay)
   }
+}
+
+export const fetchSource = async (episode_id: string) => {
+  const { data } = await axios.get(
+    `https://api.consumet.org/anime/gogoanime/watch/${episode_id}`
+  )
+  return data.sources
 }

@@ -1,0 +1,16 @@
+{
+  "id": "mig_cj6jqm145he2dg23jksg",
+  "parentID": "mig_cj6jqj945he2dg23jkrg",
+  "checksum": "1:c6b46c4b005723aa41d8627340a7d9cc8a1b1ae4b00a519d30b5b77c58e6a179",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "quality",
+          "type": "string"
+        },
+        "table": "sources"
+      }
+    }
+  ]
+}

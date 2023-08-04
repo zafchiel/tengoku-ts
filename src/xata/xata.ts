@@ -70,6 +70,40 @@ const tables = [
     ],
     revLinks: [{ column: "session", table: "nextauth_users_sessions" }],
   },
+  {
+    name: "animes",
+    columns: [
+      { name: "title", type: "string" },
+      { name: "url", type: "string" },
+      { name: "image", type: "string" },
+      { name: "releaseDate", type: "string" },
+      { name: "description", type: "string" },
+      { name: "genres", type: "multiple" },
+      { name: "subOrDub", type: "string" },
+      { name: "type", type: "string" },
+      { name: "status", type: "string" },
+      { name: "otherName", type: "string" },
+      { name: "totalEpisodes", type: "int" },
+    ],
+    revLinks: [{ column: "anime_id", table: "episodes" }],
+  },
+  {
+    name: "episodes",
+    columns: [
+      { name: "anime_id", type: "link", link: { table: "animes" } },
+      { name: "number", type: "int" },
+      { name: "url", type: "string" },
+    ],
+    revLinks: [{ column: "episode_id", table: "sources" }],
+  },
+  {
+    name: "sources",
+    columns: [
+      { name: "episode_id", type: "link", link: { table: "episodes" } },
+      { name: "isM3U8", type: "bool" },
+      { name: "quality", type: "string" },
+    ],
+  },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -95,6 +129,15 @@ export type NextauthUsersSessionsRecord = NextauthUsersSessions & XataRecord;
 export type NextauthSessions = InferredTypes["nextauth_sessions"];
 export type NextauthSessionsRecord = NextauthSessions & XataRecord;
 
+export type Animes = InferredTypes["animes"];
+export type AnimesRecord = Animes & XataRecord;
+
+export type Episodes = InferredTypes["episodes"];
+export type EpisodesRecord = Episodes & XataRecord;
+
+export type Sources = InferredTypes["sources"];
+export type SourcesRecord = Sources & XataRecord;
+
 export type DatabaseSchema = {
   nextauth_users: NextauthUsersRecord;
   nextauth_accounts: NextauthAccountsRecord;
@@ -102,6 +145,9 @@ export type DatabaseSchema = {
   nextauth_users_accounts: NextauthUsersAccountsRecord;
   nextauth_users_sessions: NextauthUsersSessionsRecord;
   nextauth_sessions: NextauthSessionsRecord;
+  animes: AnimesRecord;
+  episodes: EpisodesRecord;
+  sources: SourcesRecord;
 };
 
 const DatabaseClient = buildClient();
