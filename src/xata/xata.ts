@@ -102,6 +102,7 @@ const tables = [
       { name: "episode_id", type: "link", link: { table: "episodes" } },
       { name: "isM3U8", type: "bool" },
       { name: "quality", type: "string" },
+      { name: "url", type: "string" },
     ],
   },
 ] as const;

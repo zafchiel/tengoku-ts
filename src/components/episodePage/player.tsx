@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react"
 import Artplayer from "artplayer"
 import Hls from "hls.js"
 import { type Option } from "artplayer/types/option"
-import { SourceList } from "@/types"
+import { SourcesRecord } from "@/xata/xata"
 
 type Props = {
   option: Omit<Option, "container">
@@ -31,11 +31,11 @@ export function ArtPlayer({ option, ...rest }: Props) {
   )
 }
 
-export default function Player({ urls }: { urls: SourceList[] }) {
+export default function Player({ urls }: { urls: SourcesRecord[] }) {
   return (
     <ArtPlayer
       option={{
-        url: urls.filter((obj) => obj.quality === "720p")[0].url,
+        url: urls.filter((obj) => obj.quality === "720p")[0].url!,
         customType: {
           m3u8: function (video: HTMLMediaElement, url: string) {
             let hls = new Hls()
@@ -47,9 +47,9 @@ export default function Player({ urls }: { urls: SourceList[] }) {
           },
         },
         quality: urls.map((obj) => ({
-          default: obj.quality === "720p",
-          html: obj.quality,
-          url: obj.url,
+          default: obj.quality === "720p"!,
+          html: obj.quality!,
+          url: obj.url!,
         })),
         autoplay: false,
         autoOrientation: true,

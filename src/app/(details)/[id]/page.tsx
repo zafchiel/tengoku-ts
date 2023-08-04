@@ -6,18 +6,20 @@ import { Button } from "@/components/ui/button"
 import { fetchAnimeInfo, fetchSource } from "@/lib/utils"
 import { getXataClient } from "@/xata/xata"
 
-export default async function DetailsPage({
-  params: { id },
-}: {
-  params: { id: string }
-}) {
+type Props = {
+  params: {
+    id: string
+  }
+}
+
+export default async function DetailsPage({ params }: Props) {
   const xata = getXataClient()
 
-  const animeDB = await xata.db.animes.read(id)
+  const animeDB = await xata.db.animes.read(params.id)
 
   // Search anime by slug
-  const anime = await fetchAnimeInfo(id)
-  if (!animeDB) {
+  const anime = await fetchAnimeInfo(params.id)
+  if (animeDB === null) {
     const { episodes, ...rest } = anime
     const eps = episodes.map((ep) => ({ anime_id: anime.id, ...ep }))
     await xata.db.animes.create({ ...rest })
@@ -62,9 +64,9 @@ export default async function DetailsPage({
           </div>
         </div>
       </div>
-      {/* <EpisodeList episodeList={anime.episodes}>
+      <EpisodeList episodeList={anime.episodes}>
         <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
-      </EpisodeList> */}
+      </EpisodeList>
     </div>
   )
 }

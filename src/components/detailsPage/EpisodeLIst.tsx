@@ -14,9 +14,10 @@ import { useParams } from "next/navigation"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { ReactNode } from "react"
+import { EpisodesRecord } from "@/xata/xata"
 
 type Props = {
-  episodeList: EpisodeListType
+  episodeList: EpisodeListType | EpisodesRecord[]
   children: ReactNode
 }
 

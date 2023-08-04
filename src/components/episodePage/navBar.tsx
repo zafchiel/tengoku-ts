@@ -7,9 +7,10 @@ import { StepBack, StepForward } from "lucide-react"
 import { useParams, useRouter } from "next/navigation"
 import { Button } from "../ui/button"
 import { EpisodeListType } from "@/types"
+import { EpisodesRecord } from "@/xata/xata"
 
 type Props = {
-  episodeList: EpisodeListType
+  episodeList: EpisodeListType | EpisodesRecord[]
 }
 
 export default function NavBar({ episodeList }: Props) {

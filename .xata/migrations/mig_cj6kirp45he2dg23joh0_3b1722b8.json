@@ -1,0 +1,16 @@
+{
+  "id": "mig_cj6kirp45he2dg23joh0",
+  "parentID": "mig_cj6kikp45he2dg23jog0",
+  "checksum": "1:3b1722b8ac3a3ba52daab83ad6df71cff19785eecc1c365cbcb05653040fff84",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "url",
+          "type": "string"
+        },
+        "table": "sources"
+      }
+    }
+  ]
+}
