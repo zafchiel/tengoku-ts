@@ -11,21 +11,21 @@ type Props = {
 }
 
 export default function RecentEpisodeCard({ ep }: Props) {
-  const [imgSrc, setImgSrc] = useState("")
-  const [isMounted, setIsMounted] = useState(false)
-  useEffect(() => {
-    const fetchImage = async () => {
-      const { data } = await axios.post("api/getImage", {
-        img: ep.image,
-      })
-      setImgSrc(data)
-      setIsMounted(true)
-    }
+  // const [imgSrc, setImgSrc] = useState("")
+  // const [isMounted, setIsMounted] = useState(false)
+  // useEffect(() => {
+  //   const fetchImage = async () => {
+  //     const { data } = await axios.post("api/getImage", {
+  //       img: ep.image,
+  //     })
+  //     setImgSrc(data)
+  //     setIsMounted(true)
+  //   }
 
-    fetchImage()
-  }, [ep.image])
+  //   // fetchImage()
+  // }, [ep.image])
 
-  if (!isMounted) return <Skeleton className="w-full aspect-[4/5]" />
+  // if (!isMounted) return <Skeleton className="w-full aspect-[4/5]" />
 
   return (
     <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
@@ -34,8 +34,8 @@ export default function RecentEpisodeCard({ ep }: Props) {
           width={400}
           height={500}
           src={ep.image}
-          placeholder="blur"
-          blurDataURL={imgSrc}
+          // placeholder="blur"
+          // blurDataURL={imgSrc}
           alt={ep.title}
           className="w-full h-full rounded-lg hover:scale-125 duration-200 ease-linear"
         />

@@ -5,6 +5,7 @@ import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import { Button } from "@/components/ui/button"
 import { fetchAnimeInfo, fetchSource } from "@/lib/utils"
 import { getXataClient } from "@/xata/xata"
+import getBase64 from "@/lib/getBase64Image"
 
 type Props = {
   params: {
@@ -34,6 +35,8 @@ export default async function DetailsPage({ params }: Props) {
     })
   }
 
+  const imgBase64 = await getBase64(anime.image)
+
   if (!anime) redirect("/")
 
   return (
@@ -43,6 +46,8 @@ export default async function DetailsPage({ params }: Props) {
         <div className="w-full h-full">
           <Image
             src={anime.image}
+            placeholder="blur"
+            blurDataURL={imgBase64}
             width={400}
             height={500}
             alt={anime.title}
