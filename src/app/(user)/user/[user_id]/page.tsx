@@ -22,7 +22,7 @@ export default async function ProfilePage() {
     <main className="container flex flex-col">
       <div className="w-full pt-14 flex justify-between">
         <section>
-          <h1 className="text-6xl">{session.user?.name}</h1>
+          <h1 className="text-6xl font-bold">{session.user?.name}</h1>
           <p className="text-muted-foreground">{session.user?.email}</p>
         </section>
         {session.user?.image && (
@@ -35,12 +35,12 @@ export default async function ProfilePage() {
       </div>
       <div>
         <section>
-          <h3 className="text-3xl">Currenlty watching</h3>
+          <h3 className="text-3xl font-bold">Currenlty watching</h3>
           <div className="flex flex-col">
             {(await progress).map((obj) => (
               <div key={obj.id} className="flex gap-2">
                 <p className="font-semibold">{obj.anime?.title}</p>
-                <p>
+                <p className="text-sm">
                   Progress: {obj.progress}/{obj.anime?.totalEpisodes}
                 </p>
               </div>
