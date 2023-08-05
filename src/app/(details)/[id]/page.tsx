@@ -44,7 +44,7 @@ export default async function DetailsPage({ params }: Props) {
   const imgBase64 = await getBase64(anime.image)
 
   const session = await getServerSession(authConfig)
-  let progress
+  let progress = []
   if (session && session.user) {
     progress = await xata.db.progress
       .filter({ anime: params.id, user: session?.user?.id })
@@ -87,7 +87,7 @@ export default async function DetailsPage({ params }: Props) {
           <Button className="w-full">Watch Now</Button>
         </EpisodeList>
         <FollowButton
-          disabled={!!progress}
+          disabled={progress?.length !== 0}
           session={session}
           animeId={params.id}
         />
