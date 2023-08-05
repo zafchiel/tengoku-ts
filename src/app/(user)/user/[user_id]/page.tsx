@@ -2,11 +2,21 @@ import { redirect } from "next/navigation"
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { getServerSession } from "next-auth"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
+import { getXataClient } from "@/xata/xata"
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig)
 
   if (!session) redirect(`/api/auth/signin`)
+
+  const xata = getXataClient()
+  const progress = xata.db.progress
+    .filter({
+      user: session.user?.id,
+    })
+    .getMany()
+  console.log(progress)
+
   return (
     <main className="w-full container pt-14 flex justify-between">
       <section>

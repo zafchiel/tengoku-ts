@@ -20,6 +20,7 @@ const tables = [
       { column: "user", table: "nextauth_users_accounts" },
       { column: "user", table: "nextauth_users_sessions" },
       { column: "user", table: "nextauth_sessions" },
+      { column: "user", table: "progress" },
     ],
   },
   {
@@ -85,7 +86,10 @@ const tables = [
       { name: "otherName", type: "string" },
       { name: "totalEpisodes", type: "int" },
     ],
-    revLinks: [{ column: "anime_id", table: "episodes" }],
+    revLinks: [
+      { column: "anime_id", table: "episodes" },
+      { column: "anime", table: "progress" },
+    ],
   },
   {
     name: "episodes",
@@ -103,6 +107,15 @@ const tables = [
       { name: "isM3U8", type: "bool" },
       { name: "quality", type: "string" },
       { name: "url", type: "string" },
+    ],
+  },
+  {
+    name: "progress",
+    columns: [
+      { name: "user", type: "link", link: { table: "nextauth_users" } },
+      { name: "anime", type: "link", link: { table: "animes" } },
+      { name: "is_completed", type: "bool", defaultValue: "false" },
+      { name: "progress", type: "int", defaultValue: "0" },
     ],
   },
 ] as const;
@@ -139,6 +152,9 @@ export type EpisodesRecord = Episodes & XataRecord;
 export type Sources = InferredTypes["sources"];
 export type SourcesRecord = Sources & XataRecord;
 
+export type Progress = InferredTypes["progress"];
+export type ProgressRecord = Progress & XataRecord;
+
 export type DatabaseSchema = {
   nextauth_users: NextauthUsersRecord;
   nextauth_accounts: NextauthAccountsRecord;
@@ -149,6 +165,7 @@ export type DatabaseSchema = {
   animes: AnimesRecord;
   episodes: EpisodesRecord;
   sources: SourcesRecord;
+  progress: ProgressRecord;
 };
 
 const DatabaseClient = buildClient();

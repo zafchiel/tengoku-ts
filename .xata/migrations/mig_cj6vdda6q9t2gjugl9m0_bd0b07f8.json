@@ -1,0 +1,17 @@
+{
+  "id": "mig_cj6vdda6q9t2gjugl9m0",
+  "parentID": "mig_cj6vd9p45he2dg23krtg",
+  "checksum": "1:bd0b07f824ea94f52fdf273578666561d16b034a3462500fbf376cf356050059",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "progress",
+          "type": "int",
+          "defaultValue": "0"
+        },
+        "table": "progress"
+      }
+    }
+  ]
+}

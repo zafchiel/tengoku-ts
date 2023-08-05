@@ -4,8 +4,11 @@ import Description from "@/components/detailsPage/Description"
 import EpisodeList from "@/components/detailsPage/EpisodeLIst"
 import { Button } from "@/components/ui/button"
 import { fetchAnimeInfo, fetchSource } from "@/lib/utils"
-import { getXataClient } from "@/xata/xata"
+import { ProgressRecord, getXataClient } from "@/xata/xata"
 import getBase64 from "@/lib/getBase64Image"
+import { getServerSession } from "next-auth"
+import { authConfig } from "@/pages/api/auth/[...nextauth]"
+import FollowButton from "@/components/detailsPage/followButton"
 
 type Props = {
   params: {
@@ -20,6 +23,9 @@ export default async function DetailsPage({ params }: Props) {
 
   // Search anime by slug
   const anime = await fetchAnimeInfo(params.id)
+
+  if (!anime) redirect("/")
+
   if (animeDB === null) {
     const { episodes, ...rest } = anime
     const eps = episodes.map((ep) => ({ anime_id: anime.id, ...ep }))
@@ -37,7 +43,14 @@ export default async function DetailsPage({ params }: Props) {
 
   const imgBase64 = await getBase64(anime.image)
 
-  if (!anime) redirect("/")
+  const session = await getServerSession(authConfig)
+  let progress
+  if (session && session.user) {
+    progress = await xata.db.progress
+      .filter({ anime: params.id, user: session?.user?.id })
+      .getMany()
+    console.log(progress)
+  }
 
   return (
     <div className="w-full flex flex-col items-center pt-14">
@@ -69,9 +82,16 @@ export default async function DetailsPage({ params }: Props) {
           </div>
         </div>
       </div>
-      <EpisodeList episodeList={anime.episodes}>
-        <Button className="md:w-3/4 m-4 w-full">Watch Now</Button>
-      </EpisodeList>
+      <div className="flex w-full md:w-3/4 gap-2 p-2">
+        <EpisodeList episodeList={anime.episodes}>
+          <Button className="w-full">Watch Now</Button>
+        </EpisodeList>
+        <FollowButton
+          disabled={!!progress}
+          session={session}
+          animeId={params.id}
+        />
+      </div>
     </div>
   )
 }
