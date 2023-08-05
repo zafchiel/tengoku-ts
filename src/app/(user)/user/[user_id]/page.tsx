@@ -36,7 +36,7 @@ export default async function ProfilePage() {
       <div>
         <section>
           <h3 className="text-3xl">Currenlty watching</h3>
-          <div className="flex">
+          <div className="flex flex-col">
             {(await progress).map((obj) => (
               <div key={obj.id} className="flex gap-2">
                 <p className="font-semibold">{obj.anime?.title}</p>

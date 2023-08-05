@@ -25,7 +25,7 @@ export default function slugify(str: string) {
   return slug
 }
 
-export async function fetchAnimeInfo(anime_id: string, episode_id?: string) {
+export async function fetchAnimeInfo(anime_id: string) {
   // Search anime by slug
   const res = await fetch(
     `https://api.consumet.org/anime/gogoanime/${anime_id}`

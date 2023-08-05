@@ -18,11 +18,10 @@ type Props = {
 
 export default async function DetailsPage({ params }: Props) {
   const xata = getXataClient()
-
-  const animeDB = await xata.db.animes.read(params.id)
-
   // Search anime by slug
   const anime = await fetchAnimeInfo(params.id)
+
+  const animeDB = await xata.db.animes.read(anime.id)
 
   if (!anime) redirect("/")
 
@@ -33,10 +32,13 @@ export default async function DetailsPage({ params }: Props) {
     const epsArr = await xata.db.episodes.create([...eps])
     epsArr.map((ep) => {
       fetchSource(ep.id).then((res) => {
-        res.map(
-          async (srcObj) =>
+        res.map(async (srcObj) => {
+          try {
             await xata.db.sources.create({ episode_id: ep.id, ...srcObj })
-        )
+          } catch (error) {
+            console.log(error)
+          }
+        })
       })
     })
   }
@@ -49,7 +51,6 @@ export default async function DetailsPage({ params }: Props) {
     progress = await xata.db.progress
       .filter({ anime: params.id, user: session?.user?.id })
       .getMany()
-    console.log(progress)
   }
 
   return (
