@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation"
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { getServerSession } from "next-auth"
-import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { getXataClient } from "@/xata/xata"
+import Link from "next/link"
+import EditSheet from "@/components/profilePage/editSheet"
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig)
@@ -10,39 +11,39 @@ export default async function ProfilePage() {
   if (!session) redirect(`/api/auth/signin`)
 
   const xata = getXataClient()
-  const progress = xata.db.progress
+  const progress = await xata.db.progress
     .filter({
       user: session.user?.id,
     })
     .select(["*", "anime.title", "anime.totalEpisodes"])
     .getMany()
-  console.log(progress)
 
   return (
-    <main className="container flex flex-col">
-      <div className="w-full pt-14 flex justify-between">
+    <main className="p-3 flex flex-col">
+      <div className="w-full pt-14 text-right">
         <section>
           <h1 className="text-6xl font-bold">{session.user?.name}</h1>
           <p className="text-muted-foreground">{session.user?.email}</p>
         </section>
-        {session.user?.image && (
-          <section>
-            <Avatar className="w-80 h-80">
-              <AvatarImage src={session.user?.image} />
-            </Avatar>
-          </section>
-        )}
       </div>
       <div>
-        <section>
+        <section className="mt-5">
           <h3 className="text-3xl font-bold">Currenlty watching</h3>
-          <div className="flex flex-col">
-            {(await progress).map((obj) => (
-              <div key={obj.id} className="flex gap-2">
-                <p className="font-semibold">{obj.anime?.title}</p>
-                <p className="text-sm">
-                  Progress: {obj.progress}/{obj.anime?.totalEpisodes}
-                </p>
+          <div className="flex flex-col gap-5">
+            {progress.map((record) => (
+              <div
+                key={record.id}
+                className="flex items-center justify-around gap-2 border rounded-sm p-2"
+              >
+                <Link href={`/${record.anime?.id}`} className="font-semibold">
+                  {record.anime?.title}
+                </Link>
+                <div className="flex flex-col">
+                  <p className="text-sm w-24">
+                    Progress: {record.progress}/{record.anime?.totalEpisodes}
+                  </p>
+                  <EditSheet />
+                </div>
               </div>
             ))}
           </div>
