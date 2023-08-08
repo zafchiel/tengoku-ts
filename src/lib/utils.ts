@@ -71,5 +71,11 @@ export const fetchSource = async (episode_id: string) => {
   const { data } = await axios.get(
     `https://api.consumet.org/anime/gogoanime/watch/${episode_id}`
   )
-  return data.sources as SourceList[]
+  const bestQuality = data.sources.filter(
+    (obj) =>
+      obj.quality === "480p" ||
+      obj.quality === "720p" ||
+      obj.quality === "1080p"
+  )
+  return bestQuality as SourceList[]
 }

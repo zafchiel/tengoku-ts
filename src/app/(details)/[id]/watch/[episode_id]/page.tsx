@@ -4,6 +4,8 @@ import NavBar from "@/components/episodePage/navBar"
 import { extractNameAndEpisode } from "@/lib/utils"
 import { EpisodesRecord, SourcesRecord, getXataClient } from "@/xata/xata"
 import { redirect } from "next/navigation"
+import { insertNewAnime } from "@/xata/anime"
+import { fetchAnimeInfo } from "@/lib/utils"
 
 type Props = {
   params: {
@@ -13,10 +15,21 @@ type Props = {
 }
 
 export default async function EpisodePage({ params }: Props) {
+  // Fetch anime info for episode list
+  const anime = await fetchAnimeInfo(params.id)
+
   const xata = getXataClient()
+  const animeDB = await xata.db.animes.read(anime.id)
+
+  if (!animeDB) {
+    await insertNewAnime(anime)
+  }
+
   const srcs = await xata.db.sources
     .filter({ episode_id: params.episode_id })
     .getMany()
+
+  const { name, episode } = extractNameAndEpisode(params.episode_id)
 
   const sources = srcs.map((obj) => ({
     isM3U8: obj.isM3U8,
@@ -32,18 +45,6 @@ export default async function EpisodePage({ params }: Props) {
     id: obj.id,
     number: obj.number,
   }))
-
-  // Fetch episode urls
-  // const response = await fetch(
-  //   `https://api.consumet.org/anime/gogoanime/watch/${params.episode_id}`
-  // )
-  // const data = await response.json()
-  // const epSources: SourceList[] = data.sources
-
-  // Fetch anime info for episode list (request cached)
-  // const anime = await fetchAnimeInfo(params.id)
-
-  const { name, episode } = extractNameAndEpisode(params.episode_id)
 
   if (srcs === null) redirect(`/${params.id}`)
 

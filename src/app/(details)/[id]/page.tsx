@@ -9,6 +9,7 @@ import getBase64 from "@/lib/getBase64Image"
 import { getServerSession } from "next-auth"
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import FollowButton from "@/components/detailsPage/followButton"
+import { insertNewAnime } from "@/xata/anime"
 
 type Props = {
   params: {
@@ -26,21 +27,7 @@ export default async function DetailsPage({ params }: Props) {
   if (!anime) redirect("/")
 
   if (animeDB === null) {
-    const { episodes, ...rest } = anime
-    const eps = episodes.map((ep) => ({ anime_id: anime.id, ...ep }))
-    await xata.db.animes.create({ ...rest })
-    const epsArr = await xata.db.episodes.create([...eps])
-    epsArr.map((ep) => {
-      fetchSource(ep.id).then((res) => {
-        res.map(async (srcObj) => {
-          try {
-            await xata.db.sources.create({ episode_id: ep.id, ...srcObj })
-          } catch (error) {
-            console.log(error)
-          }
-        })
-      })
-    })
+    await insertNewAnime(anime)
   }
 
   const imgBase64 = await getBase64(anime.image)
