@@ -5,13 +5,15 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { Button } from "../ui/button"
-import FormComponment from "./form"
+} from "@/components/ui/sheet";
+import { Button } from "../ui/button";
+import FormComponment from "./form";
 
-type Props = {}
+type Props<T> = {
+  record: T;
+};
 
-export default function EditSheet({}: Props) {
+export default function EditSheet<T>({ record }: Props<T>) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -29,5 +31,5 @@ export default function EditSheet({}: Props) {
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

@@ -1,22 +1,22 @@
-import { redirect } from "next/navigation"
-import { authConfig } from "@/pages/api/auth/[...nextauth]"
-import { getServerSession } from "next-auth"
-import { getXataClient } from "@/xata/xata"
-import Link from "next/link"
-import EditSheet from "@/components/profilePage/editSheet"
+import { redirect } from "next/navigation";
+import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import { getXataClient } from "@/xata/xata";
+import Link from "next/link";
+import EditSheet from "@/components/profilePage/editSheet";
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authConfig)
+  const session = await getServerSession(authConfig);
 
-  if (!session) redirect(`/api/auth/signin`)
+  if (!session) redirect(`/api/auth/signin`);
 
-  const xata = getXataClient()
+  const xata = getXataClient();
   const progress = await xata.db.progress
     .filter({
       user: session.user?.id,
     })
     .select(["*", "anime.title", "anime.totalEpisodes"])
-    .getMany()
+    .getMany();
 
   return (
     <main className="p-3 flex flex-col">
@@ -42,7 +42,7 @@ export default async function ProfilePage() {
                   <p className="text-sm w-24">
                     Progress: {record.progress}/{record.anime?.totalEpisodes}
                   </p>
-                  <EditSheet />
+                  <EditSheet record={progress} />
                 </div>
               </div>
             ))}
@@ -50,5 +50,5 @@ export default async function ProfilePage() {
         </section>
       </div>
     </main>
-  )
+  );
 }
