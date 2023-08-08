@@ -5,6 +5,7 @@ import Link from "next/link"
 import EditSheet from "@/components/profilePage/editSheet"
 import { getUserProgress } from "@/xata/progress"
 import { ProgressRecord } from "@/xata/xata"
+import Image from "next/image"
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig)
@@ -24,20 +25,30 @@ export default async function ProfilePage() {
       <div>
         <section className="mt-5">
           <h3 className="text-3xl font-bold">Currenlty watching</h3>
-          <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-5 md:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {progress.map((record) => (
               <div
                 key={record.id}
-                className="flex items-center justify-around gap-2 border rounded-sm p-2"
+                className="flex justify-between gap-2 w-full h-full border rounded-sm p-2"
               >
-                <Link href={`/${record.anime?.id}`} className="font-semibold">
-                  {record.anime?.title}
-                </Link>
-                <div className="flex flex-col">
-                  <p className="text-sm w-24">
-                    Progress: {record.progress}/{record.anime?.totalEpisodes}
-                  </p>
-                  <EditSheet record={record} />
+                <div>
+                  <Image
+                    src={record.anime?.image!}
+                    width={400}
+                    height={500}
+                    alt="Anime Image"
+                  />
+                </div>
+                <div className="flex flex-col justify-between">
+                  <Link href={`/${record.anime?.id}`} className="font-semibold">
+                    {record.anime?.title}
+                  </Link>
+                  <div className="flex flex-col">
+                    <p className="text-sm w-24">
+                      Progress: {record.progress}/{record.anime?.totalEpisodes}
+                    </p>
+                    <EditSheet record={record} />
+                  </div>
                 </div>
               </div>
             ))}
