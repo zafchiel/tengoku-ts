@@ -9,11 +9,7 @@ import {
 import { Button } from "../ui/button";
 import FormComponment from "./form";
 
-type Props<T> = {
-  record: T;
-};
-
-export default function EditSheet<T>({ record }: Props<T>) {
+export default function EditSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>

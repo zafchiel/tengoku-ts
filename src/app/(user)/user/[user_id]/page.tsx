@@ -1,22 +1,16 @@
 import { redirect } from "next/navigation";
 import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
-import { getXataClient } from "@/xata/xata";
 import Link from "next/link";
 import EditSheet from "@/components/profilePage/editSheet";
+import { getUserProgress } from "@/types/progress";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authConfig);
 
-  if (!session) redirect(`/api/auth/signin`);
+  if (!session || !session.user) redirect(`/api/auth/signin`);
 
-  const xata = getXataClient();
-  const progress = await xata.db.progress
-    .filter({
-      user: session.user?.id,
-    })
-    .select(["*", "anime.title", "anime.totalEpisodes"])
-    .getMany();
+  const progress = await getUserProgress(session.user?.id);
 
   return (
     <main className="p-3 flex flex-col">
@@ -42,7 +36,7 @@ export default async function ProfilePage() {
                   <p className="text-sm w-24">
                     Progress: {record.progress}/{record.anime?.totalEpisodes}
                   </p>
-                  <EditSheet record={progress} />
+                  <EditSheet />
                 </div>
               </div>
             ))}
