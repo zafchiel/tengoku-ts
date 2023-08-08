@@ -4,7 +4,6 @@ import { useAtomValue } from "jotai/react"
 import { useHydrateAtoms } from "jotai/utils"
 import { currentAnimeAtom } from "./mainCarousel"
 import { TopAiring } from "@/types"
-import { Skeleton } from "../ui/skeleton"
 
 type Props = {
   topAiringAnime: TopAiring[]

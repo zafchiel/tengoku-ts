@@ -1,0 +1,18 @@
+{
+  "id": "mig_cj97dolo38b96nfi44e0",
+  "parentID": "mig_cj97djto38b96nfi44d0",
+  "checksum": "1:36b0de04dcae83ab033a73a396b73b746b289f44427300afab5eaf1924d3b9fd",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "status",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "Watching"
+        },
+        "table": "progress"
+      }
+    }
+  ]
+}

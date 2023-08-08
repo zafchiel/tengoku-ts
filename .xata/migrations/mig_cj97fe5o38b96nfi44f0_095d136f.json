@@ -1,0 +1,17 @@
+{
+  "id": "mig_cj97fe5o38b96nfi44f0",
+  "parentID": "mig_cj97dolo38b96nfi44e0",
+  "checksum": "1:095d136f53d43afc311a1b1d438de5346f5d301b4c15bfae3374da5729478369",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "score",
+          "type": "int",
+          "defaultValue": "0"
+        },
+        "table": "progress"
+      }
+    }
+  ]
+}

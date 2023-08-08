@@ -5,11 +5,16 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet";
-import { Button } from "../ui/button";
-import FormComponment from "./form";
+} from "@/components/ui/sheet"
+import { Button } from "../ui/button"
+import FormComponment from "./form"
+import Image from "next/image"
 
-export default function EditSheet() {
+type Props = {
+  record: any
+}
+
+export default function EditSheet({ record }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -20,12 +25,19 @@ export default function EditSheet() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Edit your progress</SheetTitle>
-          <SheetDescription>:3</SheetDescription>
+          <SheetDescription>{record.anime?.title}</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col w-full">
-          <FormComponment />
+          <FormComponment record={record} />
+          <Image
+            src={record.anime?.image}
+            width={400}
+            height={500}
+            alt="Anime image"
+            className="mt-3 w-full rounded-sm"
+          />
         </div>
       </SheetContent>
     </Sheet>
-  );
+  )
 }

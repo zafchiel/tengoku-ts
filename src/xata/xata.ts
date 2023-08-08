@@ -114,8 +114,14 @@ const tables = [
     columns: [
       { name: "user", type: "link", link: { table: "nextauth_users" } },
       { name: "anime", type: "link", link: { table: "animes" } },
-      { name: "is_completed", type: "bool", defaultValue: "false" },
       { name: "progress", type: "int", defaultValue: "0" },
+      {
+        name: "status",
+        type: "string",
+        notNull: true,
+        defaultValue: "Watching",
+      },
+      { name: "score", type: "int", defaultValue: "0" },
     ],
   },
 ] as const;

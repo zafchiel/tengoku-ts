@@ -1,16 +1,17 @@
-import { redirect } from "next/navigation";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
-import EditSheet from "@/components/profilePage/editSheet";
-import { getUserProgress } from "@/types/progress";
+import { redirect } from "next/navigation"
+import { authConfig } from "@/pages/api/auth/[...nextauth]"
+import { getServerSession } from "next-auth"
+import Link from "next/link"
+import EditSheet from "@/components/profilePage/editSheet"
+import { getUserProgress } from "@/xata/progress"
+import { ProgressRecord } from "@/xata/xata"
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authConfig);
+  const session = await getServerSession(authConfig)
 
-  if (!session || !session.user) redirect(`/api/auth/signin`);
+  if (!session || !session.user) redirect(`/api/auth/signin`)
 
-  const progress = await getUserProgress(session.user?.id);
+  const progress = await getUserProgress(session.user?.id)
 
   return (
     <main className="p-3 flex flex-col">
@@ -36,7 +37,7 @@ export default async function ProfilePage() {
                   <p className="text-sm w-24">
                     Progress: {record.progress}/{record.anime?.totalEpisodes}
                   </p>
-                  <EditSheet />
+                  <EditSheet record={record} />
                 </div>
               </div>
             ))}
@@ -44,5 +45,5 @@ export default async function ProfilePage() {
         </section>
       </div>
     </main>
-  );
+  )
 }
