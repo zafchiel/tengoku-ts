@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   try {
     requestSchema.parse(body);
   } catch (error) {
-    console.log(error);
+    return NextResponse.json(error);
   }
 
   const img = await getBase64(body.img);
