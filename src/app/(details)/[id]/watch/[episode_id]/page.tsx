@@ -4,7 +4,7 @@ import NavBar from "@/components/episodePage/navBar"
 import { extractNameAndEpisode } from "@/lib/utils"
 import { EpisodesRecord, SourcesRecord, getXataClient } from "@/xata/xata"
 import { redirect } from "next/navigation"
-import { insertNewAnime } from "@/xata/anime"
+import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime"
 import { fetchAnimeInfo } from "@/lib/utils"
 
 type Props = {
@@ -20,6 +20,15 @@ export default async function EpisodePage({ params }: Props) {
 
   const xata = getXataClient()
   const animeDB = await xata.db.animes.read(anime.id)
+
+  if (animeDB) {
+    const episodesInDB = await xata.db.episodes
+      .filter({ anime_id: anime.id })
+      .getMany()
+    if (episodesInDB.length !== anime.totalEpisodes) {
+      await updateEpisodesInDb(anime, animeDB.totalEpisodes!)
+    }
+  }
 
   if (!animeDB) {
     await insertNewAnime(anime)
