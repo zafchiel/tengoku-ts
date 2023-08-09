@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 import {
   Sheet,
   SheetContent,
@@ -8,22 +8,22 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { EpisodeListType } from "@/types"
-import { useParams } from "next/navigation"
-import { usePathname } from "next/navigation"
-import { cn } from "@/lib/utils"
-import { ReactNode } from "react"
-import { EpisodesRecord } from "@/xata/xata"
+} from "@/components/ui/sheet";
+import { EpisodeListType } from "@/types";
+import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
+import { EpisodesRecord } from "@/xata/xata";
 
 type Props = {
-  episodeList: EpisodeListType | EpisodesRecord[]
-  children: ReactNode
-}
+  episodeList: EpisodeListType | EpisodesRecord[];
+  children: ReactNode;
+};
 
 export default function EpisodeList({ episodeList, children }: Props) {
-  const params = useParams()
-  const pathname = usePathname()
+  const params = useParams();
+  const pathname = usePathname();
 
   return (
     <Sheet>
@@ -40,12 +40,12 @@ export default function EpisodeList({ episodeList, children }: Props) {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
             {episodeList.map((obj) => {
-              const isActive = pathname.startsWith(
-                `/${params.id}/watch/${obj.id}`
-              )
+              const isActive = pathname!.startsWith(
+                `/${params!.id}/watch/${obj.id}`
+              );
               return (
                 <Link
-                  href={`/${params.id}/watch/${obj.id}`}
+                  href={`/${params!.id}/watch/${obj.id}`}
                   key={obj.id}
                   className={cn(
                     "p-4 border flex justify-center items-center rounded-lg hover:bg-foreground hover:text-background bg-background visited:bg-muted",
@@ -56,11 +56,11 @@ export default function EpisodeList({ episodeList, children }: Props) {
                 >
                   {obj.number}
                 </Link>
-              )
+              );
             })}
           </div>
         )}
       </SheetContent>
     </Sheet>
-  )
+  );
 }
