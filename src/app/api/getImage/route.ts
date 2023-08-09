@@ -16,5 +16,7 @@ export async function POST(request: Request) {
 
   const img = await getBase64(body.img);
 
+  if (!img) return NextResponse.json({ message: "Couldn't process the image" });
+
   return NextResponse.json(img);
 }
