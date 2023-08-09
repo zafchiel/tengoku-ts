@@ -5,16 +5,22 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-import { Button } from "../ui/button"
-import FormComponment from "./form"
-import Image from "next/image"
+} from "@/components/ui/sheet";
+import { Button } from "../ui/button";
+import FormComponment from "./form";
+import Image from "next/image";
+import { getXataClient } from "@/xata/xata";
 
 type Props = {
-  record: any
-}
+  record: any;
+};
 
-export default function EditSheet({ record }: Props) {
+export default async function EditSheet({ record }: Props) {
+  const handleDeleteProgress = async () => {
+    const xata = getXataClient();
+    await xata.db.progress.delete(record.id);
+  };
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -29,6 +35,13 @@ export default function EditSheet({ record }: Props) {
         </SheetHeader>
         <div className="flex flex-col w-full">
           <FormComponment record={record} />
+          <Button
+            variant="destructive"
+            onClick={handleDeleteProgress}
+            className="w-full"
+          >
+            Delete
+          </Button>
           <Image
             src={record.anime?.image}
             width={400}
@@ -39,5 +52,5 @@ export default function EditSheet({ record }: Props) {
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }
