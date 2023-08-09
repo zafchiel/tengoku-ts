@@ -66,75 +66,96 @@ export default function FormComponment({ record }: Props) {
       console.log(error)
     }
   }
+
+  const handleDeleteProgress = async () => {
+    try {
+      const { data } = await axios.post("/api/anime/deleteProgress", {
+        recordId: record.id,
+      })
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue="Watching">
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue="Watching">
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="State of progress" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Completed">Completed</SelectItem>
+                    <SelectItem value="Watching">Watching</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="score"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Score</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="State of progress" />
-                  </SelectTrigger>
+                  <Input
+                    placeholder="Score"
+                    type="number"
+                    min={1}
+                    max={10}
+                    required={false}
+                    {...field}
+                  />
                 </FormControl>
-                <SelectContent>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="Watching">Watching</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="score"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Score</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Score"
-                  type="number"
-                  min={1}
-                  max={10}
-                  required={false}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="progress"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Progress</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Progress"
+                    type="number"
+                    min={0}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="progress"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Progress</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="Progress"
-                  type="number"
-                  min={0}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit" className="w-full">
-          Save
-        </Button>
-      </form>
-    </Form>
+          <Button type="submit" className="w-full">
+            Save
+          </Button>
+        </form>
+      </Form>
+      <Button
+        variant="destructive"
+        onClick={handleDeleteProgress}
+        className="w-full mt-2"
+      >
+        Delete
+      </Button>
+    </>
   )
 }
