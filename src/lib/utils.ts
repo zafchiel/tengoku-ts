@@ -1,81 +1,82 @@
-import { AnimeInfo, SourceList } from "@/types"
-import axios from "axios"
-import { type ClassValue, clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { AnimeInfo, SourceList } from "@/types";
+import axios from "axios";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export default function slugify(str: string) {
-  let slug = str.trim().toLowerCase()
+  let slug = str.trim().toLowerCase();
 
-  const accents = "àáäâèéëêìíïîòóöôùúüûñç"
-  const nonAccents = "aaaaeeeeiiiioooouuuunc"
+  const accents = "àáäâèéëêìíïîòóöôùúüûñç";
+  const nonAccents = "aaaaeeeeiiiioooouuuunc";
 
   for (let i = 0; i < accents.length; i++) {
-    slug = slug.replace(new RegExp(accents[i], "g"), nonAccents[i])
+    slug = slug.replace(new RegExp(accents[i], "g"), nonAccents[i]);
   }
 
   slug = slug
     .replace(/[^a-z0-9 -]/g, "")
     .replace(/\s+/g, "-")
-    .replace(/-+/g, "-")
+    .replace(/-+/g, "-");
 
-  return slug
+  return slug;
 }
 
 export async function fetchAnimeInfo(anime_id: string) {
   // Search anime by slug
   const res = await fetch(
     `https://api.consumet.org/anime/gogoanime/${anime_id}`
-  )
-  const searchResults = await res.json()
+  );
+  const searchResults = await res.json();
 
   // Fetch detailed info of first record found
   const res2 = await fetch(
     `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`,
     { cache: "no-store" }
-  )
-  const animeInfo: AnimeInfo = await res2.json()
+  );
+  const animeInfo: AnimeInfo = await res2.json();
 
-  return animeInfo
+  return animeInfo;
 }
 
 export function extractEpisodeNumber(episode_id: string) {
-  const segments = episode_id.trim().split("-")
-  const lastSegment = segments[segments.length - 1]
+  const segments = episode_id.trim().split("-");
+  const lastSegment = segments[segments.length - 1];
 
-  const epNumber = parseInt(lastSegment)
+  const epNumber = parseInt(lastSegment);
 
-  return epNumber
+  return epNumber;
 }
 
 export function extractNameAndEpisode(episode_id: string) {
-  const segments = episode_id.trim().split("-")
-  const episode = parseInt(segments[segments.length - 1])
-  const name = segments.slice(0, -2).join(" ")
+  const segments = episode_id.trim().split("-");
+  const episode = parseInt(segments[segments.length - 1]);
+  const name = segments.slice(0, -2).join(" ");
 
-  return { name, episode }
+  return { name, episode };
 }
 
 export const debounce = (fn: Function, delay: number) => {
-  let timerId: NodeJS.Timeout
+  let timerId: NodeJS.Timeout;
   return (...args: any[]) => {
-    clearTimeout(timerId)
-    timerId = setTimeout(() => fn(...args), delay)
-  }
-}
+    clearTimeout(timerId);
+    timerId = setTimeout(() => fn(...args), delay);
+  };
+};
 
 export const fetchSource = async (episode_id: string) => {
   const { data } = await axios.get(
     `https://api.consumet.org/anime/gogoanime/watch/${episode_id}`
-  )
-  const bestQuality = data.sources.filter(
+  );
+  const sourcesArr: SourceList[] = data.sources;
+  const bestQuality = sourcesArr.filter(
     (obj) =>
       obj.quality === "480p" ||
       obj.quality === "720p" ||
       obj.quality === "1080p"
-  )
-  return bestQuality as SourceList[]
-}
+  );
+  return bestQuality as SourceList[];
+};
