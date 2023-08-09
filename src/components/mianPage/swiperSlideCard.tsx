@@ -2,6 +2,7 @@ import { TopAiring } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
 import slugify from "@/lib/utils"
+import ScoreBadge from "./scoreBadge"
 
 type Props = {
   obj: TopAiring
@@ -11,9 +12,9 @@ export default function SwiperSlideCard({ obj }: Props) {
   return (
     <Link href={`/${slugify(obj.title)}`}>
       <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
-        <div className="star absolute h-16 w-16 top-3 right-3 bg-background/80 z-50 p-3 flex justify-center items-center">
-          <p className="text-sm">{obj.score}</p>
-        </div>
+        <section className="absolute top-3 right-3 z-50 border-none">
+          <ScoreBadge score={obj.score} />
+        </section>
         <Image
           width={300}
           height={400}
@@ -25,7 +26,7 @@ export default function SwiperSlideCard({ obj }: Props) {
           <h1 className="z-10 text-xl font-medium text-white">
             {obj.title.replaceAll('"', "")}
           </h1>
-          <div className="flex gap-2 text-gray-300">
+          <div className="flex gap-2 text-muted-foreground">
             {obj.genres.map((e, index) => (
               <p key={index}>{e.name}</p>
             ))}

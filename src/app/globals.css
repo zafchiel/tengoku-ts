@@ -117,7 +117,7 @@ iframe {
 }
 
 .swiper-slide-active div:first-child {
-  border-radius: 0.375rem;
+  border-radius: 0.5rem;
   border: 2px solid white;
 }
 
@@ -127,21 +127,6 @@ iframe {
   background-color: #02081770;
   padding: 0.5rem;
   border-radius: 0.5rem;
-}
-
-.star {
-  clip-path: polygon(
-    50% 0,
-    68% 26%,
-    99% 36%,
-    78% 63%,
-    83% 100%,
-    51% 79%,
-    20% 100%,
-    27% 63%,
-    0 36%,
-    32% 25%
-  );
 }
 
 /* -------------- Episode video pLayer ------------------ */
