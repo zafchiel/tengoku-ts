@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -26,7 +25,8 @@ import axios from "axios"
 import { ProgressType } from "./progressSection"
 import { useToast } from "../ui/use-toast"
 import { Dispatch } from "react"
-import { SetStateAction } from "jotai"
+import type { SetStateAction } from "react"
+import { useRouter } from "next/navigation"
 
 type Props = {
   record: ProgressType
@@ -35,6 +35,7 @@ type Props = {
 
 export default function FormComponment({ record, setProgressArray }: Props) {
   const { toast } = useToast()
+  const router = useRouter()
 
   const formSchema = z.object({
     status: z.string(),
@@ -91,9 +92,15 @@ export default function FormComponment({ record, setProgressArray }: Props) {
       const { data } = await axios.post("/api/anime/deleteProgress", {
         recordId: record.id,
       })
-      console.log(data)
+      router.refresh()
+      toast({
+        description: "Successfully deleted record",
+      })
     } catch (error) {
-      console.log(error)
+      toast({
+        variant: "destructive",
+        description: "Something went wrong, try again later",
+      })
     }
   }
 
