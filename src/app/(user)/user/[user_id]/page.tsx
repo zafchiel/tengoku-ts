@@ -1,18 +1,17 @@
-import { redirect } from "next/navigation"
-import { authConfig } from "@/pages/api/auth/[...nextauth]"
-import { getServerSession } from "next-auth"
-import Link from "next/link"
-import EditSheet from "@/components/profilePage/editSheet"
-import { getUserProgress } from "@/xata/progress"
-import { ProgressRecord } from "@/xata/xata"
-import Image from "next/image"
+import { redirect } from "next/navigation";
+import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import EditSheet from "@/components/profilePage/editSheet";
+import { getUserProgress } from "@/xata/progress";
+import Image from "next/image";
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authConfig)
+  const session = await getServerSession(authConfig);
 
-  if (!session || !session.user) redirect(`/api/auth/signin`)
+  if (!session || !session.user) redirect(`/api/auth/signin`);
 
-  const progress = await getUserProgress(session.user?.id)
+  const progress = await getUserProgress(session.user?.id);
 
   return (
     <main className="p-3 flex flex-col">
@@ -32,12 +31,14 @@ export default async function ProfilePage() {
                 className="flex justify-between gap-2 w-full h-full border rounded-sm p-2"
               >
                 <div>
-                  <Image
-                    src={record.anime?.image!}
-                    width={400}
-                    height={500}
-                    alt="Anime Image"
-                  />
+                  {record.anime?.image && (
+                    <Image
+                      src={record.anime.image}
+                      width={400}
+                      height={500}
+                      alt="Anime Image"
+                    />
+                  )}
                 </div>
                 <div className="flex flex-col justify-between">
                   <Link href={`/${record.anime?.id}`} className="font-semibold">
@@ -56,5 +57,5 @@ export default async function ProfilePage() {
         </section>
       </div>
     </main>
-  )
+  );
 }
