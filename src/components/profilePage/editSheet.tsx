@@ -7,14 +7,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Button } from "../ui/button"
-import FormComponment from "./form"
-import Image from "next/image"
+import { ReactNode } from "react"
 
 type Props = {
-  record: any
+  title: string
+  children: ReactNode
 }
 
-export default function EditSheet({ record }: Props) {
+export default function EditSheet({ title, children }: Props) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -25,19 +25,9 @@ export default function EditSheet({ record }: Props) {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Edit your progress</SheetTitle>
-          <SheetDescription>{record.anime?.title}</SheetDescription>
+          <SheetDescription>{title}</SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col w-full">
-          <FormComponment record={record} />
-
-          <Image
-            src={record.anime?.image}
-            width={400}
-            height={500}
-            alt="Anime image"
-            className="mt-3 h-full rounded-sm"
-          />
-        </div>
+        {children}
       </SheetContent>
     </Sheet>
   )

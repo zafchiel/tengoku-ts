@@ -23,12 +23,19 @@ import {
 } from "@/components/ui/select"
 import { Input } from "../ui/input"
 import axios from "axios"
+import { ProgressType } from "./progressSection"
+import { useToast } from "../ui/use-toast"
+import { Dispatch } from "react"
+import { SetStateAction } from "jotai"
 
 type Props = {
-  record: any
+  record: ProgressType
+  setProgressArray: Dispatch<SetStateAction<ProgressType[]>>
 }
 
-export default function FormComponment({ record }: Props) {
+export default function FormComponment({ record, setProgressArray }: Props) {
+  const { toast } = useToast()
+
   const formSchema = z.object({
     status: z.string(),
     score: z.coerce
@@ -39,31 +46,43 @@ export default function FormComponment({ record }: Props) {
       .min(0)
       .max(10)
       .optional(),
-    progress: z.coerce.number().min(0).max(record.anime.totalEpisodes),
+    progress: z.coerce
+      .number()
+      .min(0)
+      .max(record.anime?.totalEpisodes!),
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       status: record.status,
-      score: record.score,
-      progress: record.progress,
+      score: record.score!,
+      progress: record.progress!,
     },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({
-      ...values,
-      recordId: record.id,
-    })
     try {
-      const res = await axios.post("/api/anime/updateProgress", {
+      const { data } = await axios.post("/api/anime/updateProgress", {
         ...values,
         recordId: record.id,
       })
-      console.log(res)
+      setProgressArray((prev) => {
+        const foundIndex = prev.findIndex((el) => el.id === data.id)
+        const newState = [...prev]
+        newState[foundIndex].status = data.status
+        newState[foundIndex].score = data.score
+        newState[foundIndex].progress = data.progress
+        return newState
+      })
+      toast({
+        description: "Your progress has been saved",
+      })
     } catch (error) {
-      console.log(error)
+      toast({
+        variant: "destructive",
+        description: "Something went wrong, try again later",
+      })
     }
   }
 
