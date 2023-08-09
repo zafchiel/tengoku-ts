@@ -1,19 +1,15 @@
 "use client"
 
-import { RecentEpisodesResponseSchema } from "@/types"
+import { RecentEpisode } from "@/types"
 import RecentEpisodeCard from "./recentEpisodeCard"
 import { useState, useEffect, useRef } from "react"
 import { Button } from "../ui/button"
 import { Loader2 } from "lucide-react"
 import axios from "axios"
 
-type Props = {
-  episodes: RecentEpisodesResponseSchema
-}
-
-export default function RecentEpisodesSection({ episodes }: Props) {
-  const [recentEpisodes, setRecentEpisodes] = useState(episodes.results)
-  const [currentPage, setCurrentPage] = useState(2)
+export default function RecentEpisodesSection() {
+  const [recentEpisodes, setRecentEpisodes] = useState<RecentEpisode[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
   const [loading, setLoading] = useState(false)
   const [hasNextPage, setHasNextPage] = useState(true)
 

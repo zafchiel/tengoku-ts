@@ -12,12 +12,6 @@ export default async function HomePage() {
   )
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json()
 
-  // Fetch recently added episodes
-  const res2 = await fetch(
-    "https://api.consumet.org/anime/gogoanime/recent-episodes"
-  )
-  const recentEpisodes: RecentEpisodesResponseSchema = await res2.json()
-
   return (
     <>
       <TrailerPlayer topAiringAnime={topAiringAnime} />
@@ -25,7 +19,7 @@ export default async function HomePage() {
         <MainHeading topAiringAnime={topAiringAnime} />
         <MainCarousel topAiringAnime={topAiringAnime} />
       </main>
-      <RecentEpisodesSection episodes={recentEpisodes} />
+      <RecentEpisodesSection />
     </>
   )
 }
