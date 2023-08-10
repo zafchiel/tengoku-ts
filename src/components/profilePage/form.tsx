@@ -26,7 +26,7 @@ import { ProgressType } from "./progressSection"
 import { useToast } from "../ui/use-toast"
 import { Dispatch } from "react"
 import type { SetStateAction } from "react"
-import { useRouter } from "next/navigation"
+import DeleteButton from "./deleteButton"
 
 type Props = {
   record: ProgressType
@@ -35,7 +35,6 @@ type Props = {
 
 export default function FormComponment({ record, setProgressArray }: Props) {
   const { toast } = useToast()
-  const router = useRouter()
 
   const formSchema = z.object({
     status: z.string(),
@@ -78,23 +77,6 @@ export default function FormComponment({ record, setProgressArray }: Props) {
       })
       toast({
         description: "Your progress has been saved",
-      })
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        description: "Something went wrong, try again later",
-      })
-    }
-  }
-
-  const handleDeleteProgress = async () => {
-    try {
-      const { data } = await axios.post("/api/anime/deleteProgress", {
-        recordId: record.id,
-      })
-      router.refresh()
-      toast({
-        description: "Successfully deleted record",
       })
     } catch (error) {
       toast({
@@ -175,13 +157,7 @@ export default function FormComponment({ record, setProgressArray }: Props) {
           </Button>
         </form>
       </Form>
-      <Button
-        variant="destructive"
-        onClick={handleDeleteProgress}
-        className="w-full mt-2"
-      >
-        Delete
-      </Button>
+      <DeleteButton recordId={record.id} />
     </>
   )
 }
