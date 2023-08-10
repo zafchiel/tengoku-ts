@@ -3,6 +3,7 @@ import NextAuth from "next-auth/next"
 
 import RedditProvider from "next-auth/providers/reddit"
 import GoogleProvider from "next-auth/providers/google"
+import DiscordProvider from "next-auth/providers/discord"
 
 import { XataAdapter } from "@auth/xata-adapter"
 import { XataClient } from "@/xata/xata"
@@ -20,6 +21,10 @@ export const authConfig: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    }),
+    DiscordProvider({
+      clientId: process.env.DISCORD_CLIENT_ID as string,
+      clientSecret: process.env.DISCORD_CLIENT_SECRET as string,
     }),
   ],
   callbacks: {
