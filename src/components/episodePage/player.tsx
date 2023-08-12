@@ -32,6 +32,7 @@ export function ArtPlayer({ option, ...rest }: Props) {
 }
 
 export default function Player({ urls }: { urls: SourcesRecord[] }) {
+  console.log(urls)
   return (
     <ArtPlayer
       option={{
