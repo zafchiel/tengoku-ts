@@ -1,10 +1,11 @@
 "use client"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import Artplayer from "artplayer"
 import Hls from "hls.js"
 import { type Option } from "artplayer/types/option"
 import { SourcesRecord } from "@/xata/xata"
+import axios from "axios"
 
 type Props = {
   option: Omit<Option, "container">
@@ -17,6 +18,14 @@ export function ArtPlayer({ option, ...rest }: Props) {
     const art = new Artplayer({
       ...option,
       container: artRef.current as HTMLDivElement,
+    })
+
+    art.on("video:timeupdate", ({ target }) => {
+      // @ts-ignore
+      const progress = parseInt((target.currentTime / target.duration) * 100)
+      if (progress > 66) {
+        art.off("video:timeupdate")
+      }
     })
 
     return () => {
@@ -32,7 +41,6 @@ export function ArtPlayer({ option, ...rest }: Props) {
 }
 
 export default function Player({ urls }: { urls: SourcesRecord[] }) {
-  console.log(urls)
   return (
     <ArtPlayer
       option={{

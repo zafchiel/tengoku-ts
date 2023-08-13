@@ -6,6 +6,8 @@ import { EpisodesRecord, SourcesRecord, getXataClient } from "@/xata/xata"
 import { redirect } from "next/navigation"
 import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime"
 import { fetchAnimeInfo } from "@/lib/utils"
+import { getServerSession } from "next-auth"
+import { authConfig } from "@/pages/api/auth/[...nextauth]"
 
 type Props = {
   params: {

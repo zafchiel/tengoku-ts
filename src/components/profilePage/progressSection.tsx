@@ -28,8 +28,10 @@ export default function ProgressSection({ user }: Props) {
     const fetchProgress = async () => {
       if (!user?.id) return
       try {
-        const { data } = await axios.post("/api/user/getProgress", {
-          user_id: user.id,
+        const { data } = await axios.get("/api/user/getProgress", {
+          params: {
+            user_id: user.id,
+          },
         })
         setProgressArray(data)
       } catch (error) {
