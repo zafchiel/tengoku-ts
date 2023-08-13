@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation"
 
 export default function Error({
   error,
@@ -10,6 +11,8 @@ export default function Error({
   error: Error
   reset: () => void
 }) {
+  const router = useRouter()
+
   useEffect(() => {
     // Log the error to an error reporting service
     console.error(error)
@@ -21,7 +24,7 @@ export default function Error({
       <Button
         onClick={
           // Attempt to recover by trying to re-render the segment
-          () => reset()
+          () => router.refresh()
         }
       >
         Try again
