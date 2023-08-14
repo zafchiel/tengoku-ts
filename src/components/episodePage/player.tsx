@@ -95,7 +95,7 @@ export default function Player({
           },
         },
         quality: urls.map((obj) => ({
-          default: obj.quality === "720p"!,
+          default: obj.quality === "1080p"!,
           html: obj.quality!,
           url: obj.url!,
         })),
