@@ -42,13 +42,18 @@ export function ArtPlayer({
       // @ts-ignore
       const progress = parseInt((target.currentTime / target.duration) * 100)
       if (progress > 66) {
-        await axios.patch(`/api/user/updateExisitngProgress`, {
-          user_id: session?.user?.id,
-          anime_id,
-          progress: epNumber,
-          status: epNumber === animeLength ? "Completed" : "Watching",
-        })
-        art.off("video:timeupdate")
+        try {
+          await axios.patch(`/api/user/updateExisitngProgress`, {
+            user_id: session?.user?.id,
+            anime_id,
+            progress: epNumber,
+            status: epNumber === animeLength ? "Completed" : "Watching",
+          })
+        } catch (error) {
+          console.log(error)
+        } finally {
+          art.off("video:timeupdate")
+        }
       }
     })
 
