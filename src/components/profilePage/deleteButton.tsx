@@ -1,32 +1,34 @@
-import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover"
-import { Button } from "../ui/button"
-import axios from "axios"
-import { useToast } from "../ui/use-toast"
-import { useRouter } from "next/navigation"
+import { Popover, PopoverTrigger, PopoverContent } from "../ui/popover";
+import { Button } from "../ui/button";
+import axios from "axios";
+import { useToast } from "../ui/use-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
-  recordId: string
-}
+  recordId: string;
+};
 
 export default function DeleteButton({ recordId }: Props) {
-  const { toast } = useToast()
-  const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
   const handleDeleteProgress = async () => {
     try {
-      const { data } = await axios.post("/api/anime/deleteProgress", {
-        recordId,
-      })
-      router.refresh()
+      const { data } = await axios.delete("/api/anime/deleteProgress", {
+        data: {
+          recordId,
+        },
+      });
+      router.refresh();
       toast({
         description: "Successfully deleted record",
-      })
+      });
     } catch (error) {
       toast({
         variant: "destructive",
         description: "Something went wrong, try again later",
-      })
+      });
     }
-  }
+  };
 
   return (
     <Popover>
@@ -48,5 +50,5 @@ export default function DeleteButton({ recordId }: Props) {
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

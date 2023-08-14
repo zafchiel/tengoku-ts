@@ -17,7 +17,7 @@ export default function ProfileButton() {
             <AvatarFallback>{session.user?.name?.slice(0, 2)}</AvatarFallback>
           </Avatar>
         </Link>
-        <Button size="sm" onClick={() => signOut()}>
+        <Button variant="outline" size="sm" onClick={() => signOut()}>
           Sign out
         </Button>
       </div>
@@ -25,7 +25,7 @@ export default function ProfileButton() {
   }
   return (
     <div>
-      <Button size="sm" onClick={() => signIn()}>
+      <Button variant="secondary" size="sm" onClick={() => signIn()}>
         Sign in
       </Button>
     </div>
