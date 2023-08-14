@@ -1,30 +1,37 @@
-import { RecentEpisode } from "@/types"
-import axios from "axios"
-import Image from "next/image"
-import Link from "next/link"
-import { useEffect, useState } from "react"
-import { Skeleton } from "../ui/skeleton"
+import { RecentEpisode } from "@/types";
+import axios from "axios";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
-  ep: RecentEpisode
-}
+  ep: RecentEpisode;
+};
 
 export default function RecentEpisodeCard({ ep }: Props) {
-  const [imgSrc, setImgSrc] = useState("")
-  const [isMounted, setIsMounted] = useState(false)
+  const [imgSrc, setImgSrc] = useState("");
+  const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
     const fetchImage = async () => {
-      const { data } = await axios.post("api/getImage", {
-        img: ep.image,
-      })
-      setImgSrc(data)
-      setIsMounted(true)
-    }
+      try {
+        const { data } = await axios.get("api/getImage", {
+          params: {
+            img: ep.image,
+          },
+        });
+        setImgSrc(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsMounted(true);
+      }
+    };
 
-    fetchImage()
-  }, [ep.image])
+    fetchImage();
+  }, [ep.image]);
 
-  if (!isMounted) return <Skeleton className="w-full aspect-[4/5]" />
+  if (!isMounted) return <Skeleton className="w-full aspect-[4/5]" />;
 
   return (
     <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
@@ -48,5 +55,5 @@ export default function RecentEpisodeCard({ ep }: Props) {
         </div>
       </Link>
     </div>
-  )
+  );
 }

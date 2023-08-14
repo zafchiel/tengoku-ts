@@ -1,22 +1,17 @@
 import getBase64 from "@/lib/getBase64Image";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 
-const requestSchema = z.object({
-  img: z.string().url(),
-});
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const img = searchParams.get("img");
 
-export async function POST(request: Request) {
-  const body = await request.json();
-  try {
-    requestSchema.parse(body);
-  } catch (error) {
-    return NextResponse.json(error);
+  if (!img) {
+    return NextResponse.json({ message: "Provide img param" });
   }
 
-  const img = await getBase64(body.img);
+  const base64IMG = await getBase64(img);
 
-  if (!img) return NextResponse.json({ message: "Couldn't process the image" });
-
-  return NextResponse.json(img);
+  if (!base64IMG)
+    return NextResponse.json({ message: "Couldn't process the image" });
+  return NextResponse.json(base64IMG);
 }
