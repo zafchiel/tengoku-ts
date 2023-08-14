@@ -3,14 +3,10 @@
 import { cn, extractEpisodeNumber } from "@/lib/utils"
 import Link from "next/link"
 import EpisodeList from "../detailsPage/EpisodeLIst"
-import { CheckSquare, StepBack, StepForward } from "lucide-react"
+import { StepBack, StepForward } from "lucide-react"
 import { Button } from "../ui/button"
 import { EpisodeListType, UserProgressData } from "@/types"
 import { EpisodesRecord } from "@/xata/xata"
-import { useState } from "react"
-import { useSession } from "next-auth/react"
-import { useToast } from "../ui/use-toast"
-import axios from "axios"
 import MarkAsWatchedButton from "./markAsWatchedButton"
 
 type Props = {
@@ -45,12 +41,12 @@ export default function NavBar({ userProgress, episodeList, params }: Props) {
         <StepBack size={34} />
       </Link>
 
-      <MarkAsWatchedButton
+      {/* <MarkAsWatchedButton
         animeLength={episodeList.length}
         anime_id={params.id}
         epNumber={epNumber}
         userProgress={userProgress}
-      />
+      /> */}
 
       <EpisodeList episodeList={episodeList}>
         <Button variant="ghost" className="text-xl font-semibold uppercase">

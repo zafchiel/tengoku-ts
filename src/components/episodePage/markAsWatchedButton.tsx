@@ -51,13 +51,14 @@ export default function MarkAsWatchedButton({
   }
   return (
     <Button
+      variant="outline"
       disabled={markedAsWatched}
       onClick={handleButtonClick}
-      className={cn({
+      className={cn("w-full p-4 uppercase font-semibold", {
         "bg-muted-foreground": markedAsWatched,
       })}
     >
-      <CheckSquare />
+      Mark as watched to this point
     </Button>
   )
 }

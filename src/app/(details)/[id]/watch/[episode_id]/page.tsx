@@ -10,6 +10,7 @@ import EpPageHeader from "@/components/episodePage/epPageHeader"
 import { getServerSession } from "next-auth"
 import { authConfig } from "@/pages/api/auth/[...nextauth]"
 import { UserProgressData } from "@/types"
+import MarkAsWatchedButton from "@/components/episodePage/markAsWatchedButton"
 
 type Props = {
   params: {
@@ -70,12 +71,20 @@ export default async function EpisodePage({ params }: Props) {
           episodeList={anime.episodes}
           params={params}
         />
-        <div className="mt-3 p-2 w-full">
+        <section className="mt-3 p-2 w-full">
           <h3 className="text-2xl uppercase font-semibold">
             <Link href={`/${params.id}`}>{name}</Link>
           </h3>
           <p>EP:&nbsp;{episode}</p>
-        </div>
+        </section>
+        <section>
+          <MarkAsWatchedButton
+            animeLength={anime.totalEpisodes}
+            anime_id={anime.id}
+            epNumber={episode}
+            userProgress={userProgress}
+          />
+        </section>
       </div>
     </>
   )
