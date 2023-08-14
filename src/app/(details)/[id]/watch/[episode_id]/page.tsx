@@ -40,7 +40,7 @@ export default async function EpisodePage({ params }: Props) {
   }
 
   const sourcesArray = await fetchSource(params.episode_id)
-  if (sourcesArray === null) redirect(`/${params.id}`)
+  if (!sourcesArray) redirect(`/${params.id}`)
 
   const { name, episode } = extractNameAndEpisode(params.episode_id)
 
