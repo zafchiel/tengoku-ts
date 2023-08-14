@@ -22,6 +22,7 @@ export default function FollowButton({
 }: Props) {
   const [isFollowedState, setIsFollowedState] = useState(isFollowed)
   const { toast } = useToast()
+
   const handleClick = async () => {
     if (!session) return
     try {

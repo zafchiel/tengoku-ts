@@ -1,15 +1,15 @@
-"use client";
+"use client"
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import React, { Suspense } from "react";
-import SearchBar from "./search";
-import useScrollDirection from "@/hooks/useScrollDirection";
-import ProfileButton from "./profileButton";
-import { Skeleton } from "./skeleton";
+import { cn } from "@/lib/utils"
+import Link from "next/link"
+import React, { Suspense } from "react"
+import SearchBar from "./search"
+import useScrollDirection from "@/hooks/useScrollDirection"
+import ProfileButton from "./profileButton"
+import { Skeleton } from "./skeleton"
 
 function Header() {
-  const direction = useScrollDirection();
+  const direction = useScrollDirection()
 
   return (
     <header
@@ -20,7 +20,7 @@ function Header() {
         }
       )}
     >
-      <div className="invisible md:visible">
+      <div>
         <Link href="/">
           <h1 className=" text-xl md:text-4xl font-bold ">TENGOKU</h1>
         </Link>
@@ -35,7 +35,7 @@ function Header() {
         </nav>
       </div>
     </header>
-  );
+  )
 }
 
-export default Header;
+export default Header

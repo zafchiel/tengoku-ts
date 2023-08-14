@@ -183,3 +183,10 @@ export type RecentEpisodesResponseSchema = {
   hasNextPage: boolean
   results: RecentEpisode[]
 }
+
+export type UserProgressData = {
+  progress_id: string
+  user_id: string
+  progress: number
+  status: string
+}
