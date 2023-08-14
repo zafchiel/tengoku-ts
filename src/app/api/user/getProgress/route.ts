@@ -8,7 +8,6 @@ export async function GET(request: Request) {
 
   try {
     const progress = await getUserProgress(user_id)
-    console.log(progress)
     return NextResponse.json(progress)
   } catch (error) {
     return NextResponse.json(error)
