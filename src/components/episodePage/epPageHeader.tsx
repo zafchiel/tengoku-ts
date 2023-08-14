@@ -3,24 +3,24 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import SearchBar from "./search";
+import SearchBar from "../ui/search";
 import useScrollDirection from "@/hooks/useScrollDirection";
-import ProfileButton from "./profileButton";
-import { Skeleton } from "./skeleton";
+import ProfileButton from "../ui/profileButton";
+import { Skeleton } from "@/components/ui/skeleton";
 
-function Header() {
+export default function EpPageHeader() {
   const direction = useScrollDirection();
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 md:top-0 bottom-0 z-30 flex h-14 items-center justify-between p-5 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
+        "fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between p-5 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
         {
-          "md:-top-14 -bottom-14": direction === "down",
+          "md:-top-14": direction === "down",
         }
       )}
     >
-      <div className="invisible md:visible">
+      <div>
         <Link href="/">
           <h1 className=" text-xl md:text-4xl font-bold ">TENGOKU</h1>
         </Link>
@@ -37,5 +37,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

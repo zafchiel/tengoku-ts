@@ -40,9 +40,7 @@ export default function EpisodeList({ episodeList, children }: Props) {
         ) : (
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
             {episodeList.map((obj) => {
-              const isActive = pathname!.startsWith(
-                `/${params!.id}/watch/${obj.id}`
-              );
+              const isActive = pathname === `/${params!.id}/watch/${obj.id}`;
               return (
                 <Link
                   href={`/${params!.id}/watch/${obj.id}`}
