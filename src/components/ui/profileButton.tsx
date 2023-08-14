@@ -1,13 +1,10 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-import { Button } from "./button"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
-import Link from "next/link"
-import { Skeleton } from "./skeleton"
+import { useSession, signIn, signOut } from "next-auth/react";
+import { Button } from "./button";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import Link from "next/link";
 
 export default function ProfileButton() {
-  const { data: session, status } = useSession()
-
-  if (status === "loading") return <Skeleton className="w-14 h-full" />
+  const { data: session, status } = useSession();
 
   if (session) {
     return (
@@ -24,7 +21,7 @@ export default function ProfileButton() {
           Sign out
         </Button>
       </div>
-    )
+    );
   }
   return (
     <div>
@@ -32,5 +29,5 @@ export default function ProfileButton() {
         Sign in
       </Button>
     </div>
-  )
+  );
 }
