@@ -14,27 +14,25 @@ function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-30 flex h-14 items-center justify-between p-3 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
+        "fixed inset-x-0 md:top-0 bottom-0 z-30 flex h-14 items-center justify-between p-3 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
         {
-          "-top-14": direction === "down",
+          "md:-top-14 -bottom-14": direction === "down",
         }
       )}
     >
-      <div>
+      <div className="invisible md:visible">
         <Link href="/">
-          <h1 className="bg-gradient-to-r from-stone-500 via-neutral-200 to-stone-500 bg-clip-text text-4xl font-bold text-transparent">
-            TENGOKU
-          </h1>
+          <h1 className=" text-xl md:text-4xl font-bold ">TENGOKU</h1>
         </Link>
       </div>
 
       <div className="flex gap-2">
-        <nav className="relative flex items-center justify-around gap-3 text-xl font-medium text-white/75">
-          <SearchBar />
-        </nav>
         <Suspense fallback={<Skeleton className="h-full w-10" />}>
           <ProfileButton />
         </Suspense>
+        <nav className="flex items-center justify-around gap-3 text-xl font-medium text-white/75">
+          <SearchBar />
+        </nav>
       </div>
     </header>
   );

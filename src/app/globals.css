@@ -99,14 +99,6 @@ iframe {
   transform: translate(-50%, -50%);
 }
 
-/* ---------------- Search bar ----------------- */
-.dropdown .dropdown-content {
-  display: none;
-}
-.dropdown:focus-within .dropdown-content {
-  display: block;
-}
-
 /* -------------- Swiper ----------------- */
 .swiper-slide {
   padding: 10px;
