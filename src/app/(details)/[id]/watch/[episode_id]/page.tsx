@@ -29,7 +29,7 @@ export default async function EpisodePage({ params }: Props) {
   if (animeDB) {
     const episodesInDB = await xata.db.episodes
       .filter({ anime_id: anime.id })
-      .getMany()
+      .getAll()
     if (episodesInDB.length !== anime.totalEpisodes) {
       await updateEpisodesInDb(anime, animeDB.totalEpisodes!)
     }
@@ -70,7 +70,7 @@ export default async function EpisodePage({ params }: Props) {
           anime_id={anime.id}
           epNumber={episode}
           userProgress={userProgress}
-          urls={sourcesArray as SourcesRecord[]}
+          urls={sourcesArray}
         />
         <NavBar
           userProgress={userProgress}

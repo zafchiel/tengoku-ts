@@ -7,7 +7,7 @@ import { type Option } from "artplayer/types/option"
 import { SourcesRecord } from "@/xata/xata"
 import axios from "axios"
 import { useSession } from "next-auth/react"
-import { UserProgressData } from "@/types"
+import { SourceList, UserProgressData } from "@/types"
 
 type ArtPlayerDeepProps = {
   option: Omit<Option, "container">
@@ -70,7 +70,7 @@ export function ArtPlayer({
 }
 
 type PlayerProps = {
-  urls: SourcesRecord[]
+  urls: SourceList[]
 } & Omit<ArtPlayerDeepProps, "option">
 
 export default function Player({
