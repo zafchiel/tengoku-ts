@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { UserProgressData } from "@/types"
 import { useToast } from "../ui/use-toast"
 import axios from "axios"
+import { useSession } from "next-auth/react"
 
 type Props = {
   userProgress: UserProgressData | null
@@ -24,9 +25,10 @@ export default function MarkAsWatchedButton({
     epNumber <= userProgress?.progress!
   )
   const { toast } = useToast()
+  const { data: session } = useSession()
 
   const handleButtonClick = async () => {
-    if (!userProgress?.user_id) {
+    if (!session?.user?.id) {
       toast({
         description: "You need to be logged in to mark episodes as watched",
       })
@@ -35,7 +37,7 @@ export default function MarkAsWatchedButton({
     // API call to fetch progress and update it
     try {
       const { data } = await axios.patch(`/api/user/markAsWatched`, {
-        user_id: userProgress.user_id,
+        user_id: session?.user?.id,
         progress_id: userProgress?.progress_id,
         anime_id,
         progress: epNumber,

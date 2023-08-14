@@ -6,12 +6,26 @@ import Hls from "hls.js"
 import { type Option } from "artplayer/types/option"
 import { SourcesRecord } from "@/xata/xata"
 import axios from "axios"
+import { useSession } from "next-auth/react"
+import { UserProgressData } from "@/types"
 
-type Props = {
+type ArtPlayerDeepProps = {
   option: Omit<Option, "container">
+  userProgress: UserProgressData | null
+  anime_id: string
+  epNumber: number
+  animeLength: number
 }
 
-export function ArtPlayer({ option, ...rest }: Props) {
+export function ArtPlayer({
+  option,
+  userProgress,
+  anime_id,
+  epNumber,
+  animeLength,
+  ...rest
+}: ArtPlayerDeepProps) {
+  const { data: session } = useSession()
   const artRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -20,10 +34,20 @@ export function ArtPlayer({ option, ...rest }: Props) {
       container: artRef.current as HTMLDivElement,
     })
 
-    art.on("video:timeupdate", ({ target }) => {
+    art.on("video:timeupdate", async ({ target }) => {
+      if (!session?.user) {
+        art.off("video:timeupdate")
+        return
+      }
       // @ts-ignore
       const progress = parseInt((target.currentTime / target.duration) * 100)
       if (progress > 66) {
+        await axios.patch(`/api/user/updateExisitngProgress`, {
+          user_id: session?.user?.id,
+          anime_id,
+          progress: epNumber,
+          status: epNumber === animeLength ? "Completed" : "Watching",
+        })
         art.off("video:timeupdate")
       }
     })
@@ -40,11 +64,21 @@ export function ArtPlayer({ option, ...rest }: Props) {
   )
 }
 
-export default function Player({ urls }: { urls: SourcesRecord[] }) {
+type PlayerProps = {
+  urls: SourcesRecord[]
+} & Omit<ArtPlayerDeepProps, "option">
+
+export default function Player({
+  urls,
+  userProgress,
+  anime_id,
+  epNumber,
+  animeLength,
+}: PlayerProps) {
   return (
     <ArtPlayer
       option={{
-        url: urls.filter((obj) => obj.quality === "720p")[0].url!,
+        url: urls.filter((obj) => obj.quality === "1080p")[0].url!,
         customType: {
           m3u8: function (video: HTMLMediaElement, url: string) {
             let hls = new Hls()
@@ -76,6 +110,10 @@ export default function Player({ urls }: { urls: SourcesRecord[] }) {
         theme: "#fff",
         controls: [],
       }}
+      anime_id={anime_id}
+      epNumber={epNumber}
+      userProgress={userProgress}
+      animeLength={animeLength}
     />
   )
 }

@@ -65,7 +65,13 @@ export default async function EpisodePage({ params }: Props) {
     <>
       <EpPageHeader />
       <div className="flex items-center flex-col justify-center w-full py-14 overflow-x-hidden">
-        <Player urls={sourcesArray as SourcesRecord[]} />
+        <Player
+          animeLength={anime.totalEpisodes}
+          anime_id={anime.id}
+          epNumber={episode}
+          userProgress={userProgress}
+          urls={sourcesArray as SourcesRecord[]}
+        />
         <NavBar
           userProgress={userProgress}
           episodeList={anime.episodes}
