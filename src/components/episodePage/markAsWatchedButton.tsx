@@ -1,56 +1,77 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "../ui/button"
-import { CheckSquare } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { UserProgressData } from "@/types"
-import { useToast } from "../ui/use-toast"
-import axios from "axios"
-import { useSession } from "next-auth/react"
+import { useState } from "react";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+import { useToast } from "../ui/use-toast";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 type Props = {
-  userProgress: UserProgressData | null
-  anime_id: string
-  epNumber: number
-  animeLength: number
-}
+  anime_id: string;
+  epNumber: number;
+  animeLength: number;
+};
 export default function MarkAsWatchedButton({
-  userProgress,
   anime_id,
   epNumber,
   animeLength,
 }: Props) {
-  const [markedAsWatched, setMarkedAsWatched] = useState(
-    epNumber <= userProgress?.progress!
-  )
-  const { toast } = useToast()
-  const { data: session } = useSession()
+  const [markedAsWatched, setMarkedAsWatched] = useState(false);
+  const { toast } = useToast();
+  const { data: session } = useSession();
 
   const handleButtonClick = async () => {
     if (!session?.user?.id) {
       toast({
         description: "You need to be logged in to mark episodes as watched",
-      })
-      return
+      });
+      return;
     }
     // API call to fetch progress and update it
     try {
-      const { data } = await axios.patch(`/api/user/markAsWatched`, {
-        user_id: session?.user?.id,
-        progress_id: userProgress?.progress_id,
-        anime_id,
-        progress: epNumber,
-        status: epNumber === animeLength ? "Completed" : "Watching",
-      })
-      setMarkedAsWatched(true)
-      toast({
-        description: "Episode marked as watched",
-      })
+      const { data } = await axios.get("/api/user/getProgress", {
+        params: {
+          anime_id,
+          user_id: session.user.id,
+        },
+      });
+      // If progress record doesn't exist - create new one
+      if (!data) {
+        await axios.patch(`/api/user/markAsWatched`, {
+          user_id: session.user.id,
+          anime_id,
+          progress: epNumber,
+          status: epNumber === animeLength ? "Completed" : "Watching",
+        });
+        setMarkedAsWatched(true);
+        toast({
+          description: "Episode marked as watched",
+        });
+      }
+
+      // Porgress record exist - update
+      if (data) {
+        await axios.patch(`/api/user/markAsWatched`, {
+          user_id: session.user.id,
+          anime_id,
+          progress_id: data.id,
+          progress: epNumber,
+          status: epNumber === animeLength ? "Completed" : "Watching",
+        });
+        setMarkedAsWatched(true);
+        toast({
+          description: "Episode marked as watched",
+        });
+      }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      toast({
+        variant: "destructive",
+        description: "Something went wrong",
+      });
     }
-  }
+  };
   return (
     <Button
       variant="outline"
@@ -62,5 +83,5 @@ export default function MarkAsWatchedButton({
     >
       Mark as watched to this point
     </Button>
-  )
+  );
 }

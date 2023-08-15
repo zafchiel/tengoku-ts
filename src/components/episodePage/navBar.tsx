@@ -1,30 +1,29 @@
-"use client"
+"use client";
 
-import { cn, extractEpisodeNumber } from "@/lib/utils"
-import Link from "next/link"
-import EpisodeList from "../detailsPage/EpisodeLIst"
-import { StepBack, StepForward } from "lucide-react"
-import { Button } from "../ui/button"
-import { EpisodeListType, UserProgressData } from "@/types"
-import { EpisodesRecord } from "@/xata/xata"
-import MarkAsWatchedButton from "./markAsWatchedButton"
+import { cn, extractEpisodeNumber } from "@/lib/utils";
+import Link from "next/link";
+import EpisodeList from "../detailsPage/EpisodeLIst";
+import { StepBack, StepForward } from "lucide-react";
+import { Button } from "../ui/button";
+import { EpisodeListType, UserProgressData } from "@/types";
+import { EpisodesRecord } from "@/xata/xata";
+import MarkAsWatchedButton from "./markAsWatchedButton";
 
 type Props = {
-  userProgress: UserProgressData | null
-  episodeList: EpisodeListType | EpisodesRecord[]
+  episodeList: EpisodeListType | EpisodesRecord[];
   params: {
-    id: string
-    episode_id: string
-  }
-}
+    id: string;
+    episode_id: string;
+  };
+};
 
-export default function NavBar({ userProgress, episodeList, params }: Props) {
-  const epNumber = extractEpisodeNumber(params.episode_id)
+export default function NavBar({ episodeList, params }: Props) {
+  const epNumber = extractEpisodeNumber(params.episode_id);
 
   const nextEp =
-    params.episode_id.slice(0, -epNumber.toString().length) + (epNumber + 1)
+    params.episode_id.slice(0, -epNumber.toString().length) + (epNumber + 1);
   const prevEp =
-    params.episode_id.slice(0, -epNumber.toString().length) + (epNumber - 1)
+    params.episode_id.slice(0, -epNumber.toString().length) + (epNumber - 1);
 
   return (
     <div className="flex fixed bottom-0 inset-x-0 md:static w-full h-20 justify-around items-center">
@@ -40,13 +39,6 @@ export default function NavBar({ userProgress, episodeList, params }: Props) {
       >
         <StepBack size={34} />
       </Link>
-
-      {/* <MarkAsWatchedButton
-        animeLength={episodeList.length}
-        anime_id={params.id}
-        epNumber={epNumber}
-        userProgress={userProgress}
-      /> */}
 
       <EpisodeList episodeList={episodeList}>
         <Button variant="ghost" className="text-xl font-semibold uppercase">
@@ -66,5 +58,5 @@ export default function NavBar({ userProgress, episodeList, params }: Props) {
         <StepForward size={34} />
       </Link>
     </div>
-  )
+  );
 }
