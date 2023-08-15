@@ -1,6 +1,5 @@
 "use client";
 
-import { ProgressRecord } from "@/xata/xata";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
 import { Session } from "next-auth";

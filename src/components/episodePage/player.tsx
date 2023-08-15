@@ -4,7 +4,6 @@ import { useRef, useEffect, useState } from "react";
 import Artplayer from "artplayer";
 import Hls from "hls.js";
 import { type Option } from "artplayer/types/option";
-import { SourcesRecord } from "@/xata/xata";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { SourceList, UserProgressData } from "@/types";

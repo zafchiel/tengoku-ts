@@ -1,44 +1,44 @@
-import { redirect } from "next/navigation"
-import Image from "next/image"
-import Description from "@/components/detailsPage/Description"
-import EpisodeList from "@/components/detailsPage/EpisodeLIst"
-import { Button } from "@/components/ui/button"
-import { fetchAnimeInfo, fetchSource } from "@/lib/utils"
-import { ProgressRecord, getXataClient } from "@/xata/xata"
-import getBase64 from "@/lib/getBase64Image"
-import { getServerSession } from "next-auth"
-import { authConfig } from "@/pages/api/auth/[...nextauth]"
-import FollowButton from "@/components/detailsPage/followButton"
-import { insertNewAnime } from "@/xata/anime"
-import Header from "@/components/ui/header"
+import { redirect } from "next/navigation";
+import Image from "next/image";
+import Description from "@/components/detailsPage/Description";
+import EpisodeList from "@/components/detailsPage/EpisodeLIst";
+import { Button } from "@/components/ui/button";
+import { fetchAnimeInfo } from "@/lib/utils";
+import { getXataClient } from "@/xata/xata";
+import getBase64 from "@/lib/getBase64Image";
+import { getServerSession } from "next-auth";
+import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import FollowButton from "@/components/detailsPage/followButton";
+import { insertNewAnime } from "@/xata/anime";
+import Header from "@/components/ui/header";
 
 type Props = {
   params: {
-    id: string
-  }
-}
+    id: string;
+  };
+};
 
 export default async function DetailsPage({ params }: Props) {
-  const xata = getXataClient()
+  const xata = getXataClient();
   // Search anime by slug
-  const anime = await fetchAnimeInfo(params.id)
+  const anime = await fetchAnimeInfo(params.id);
 
-  const animeDB = await xata.db.animes.read(anime.id)
+  const animeDB = await xata.db.animes.read(anime.id);
 
-  if (!anime) redirect("/")
+  if (!anime) redirect("/");
 
   if (animeDB === null) {
-    await insertNewAnime(anime)
+    await insertNewAnime(anime);
   }
 
-  const imgBase64 = await getBase64(anime.image)
+  const imgBase64 = await getBase64(anime.image);
 
-  const session = await getServerSession(authConfig)
-  let progress = null
+  const session = await getServerSession(authConfig);
+  let progress = null;
   if (session?.user) {
     progress = await xata.db.progress
       .filter({ anime: params.id, user: session?.user?.id })
-      .getFirst()
+      .getFirst();
   }
 
   return (
@@ -85,5 +85,5 @@ export default async function DetailsPage({ params }: Props) {
         </div>
       </div>
     </>
-  )
+  );
 }
