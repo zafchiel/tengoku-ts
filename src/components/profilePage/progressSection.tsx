@@ -60,7 +60,7 @@ export default function ProgressSection({ user }: Props) {
             "text-muted-foreground": displayCompleted,
           })}
         >
-          Currenlty watching
+          Currently watching
         </h3>
 
         <h3
