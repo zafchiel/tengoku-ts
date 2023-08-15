@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,29 +12,31 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Input } from "../ui/input"
-import axios from "axios"
-import { ProgressType } from "./progressSection"
-import { useToast } from "../ui/use-toast"
-import { Dispatch } from "react"
-import type { SetStateAction } from "react"
-import DeleteButton from "./deleteButton"
+} from "@/components/ui/select";
+import { Input } from "../ui/input";
+import axios from "axios";
+import { ProgressType } from "./progressSection";
+import { useToast } from "../ui/use-toast";
+import { Dispatch } from "react";
+import type { SetStateAction } from "react";
+import DeleteButton from "./deleteButton";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type Props = {
-  record: ProgressType
-  setProgressArray: Dispatch<SetStateAction<ProgressType[]>>
-}
+  record: ProgressType;
+  setProgressArray: Dispatch<SetStateAction<ProgressType[]>>;
+};
 
 export default function FormComponment({ record, setProgressArray }: Props) {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const formSchema = z.object({
     status: z.string(),
@@ -50,7 +52,7 @@ export default function FormComponment({ record, setProgressArray }: Props) {
       .number()
       .min(0)
       .max(record.anime?.totalEpisodes!),
-  })
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -59,30 +61,30 @@ export default function FormComponment({ record, setProgressArray }: Props) {
       score: record.score!,
       progress: record.progress!,
     },
-  })
+  });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const { data } = await axios.post("/api/anime/updateProgress", {
         ...values,
         recordId: record.id,
-      })
+      });
       setProgressArray((prev) => {
-        const foundIndex = prev.findIndex((el) => el.id === data.id)
-        const newState = [...prev]
-        newState[foundIndex].status = data.status
-        newState[foundIndex].score = data.score
-        newState[foundIndex].progress = data.progress
-        return newState
-      })
+        const foundIndex = prev.findIndex((el) => el.id === data.id);
+        const newState = [...prev];
+        newState[foundIndex].status = data.status;
+        newState[foundIndex].score = data.score;
+        newState[foundIndex].progress = data.progress;
+        return newState;
+      });
       toast({
         description: "Your progress has been saved",
-      })
+      });
     } catch (error) {
       toast({
         variant: "destructive",
         description: "Something went wrong, try again later",
-      })
+      });
     }
   }
 
@@ -152,12 +154,21 @@ export default function FormComponment({ record, setProgressArray }: Props) {
             )}
           />
 
-          <Button type="submit" className="w-full">
+          <Button
+            disabled={form.formState.isSubmitting}
+            type="submit"
+            className="w-full"
+          >
+            <Loader2
+              className={cn("mr-2 h-4 w-4 animate-spin", {
+                hidden: !form.formState.isSubmitting,
+              })}
+            />
             Save
           </Button>
         </form>
       </Form>
       <DeleteButton recordId={record.id} />
     </>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-import { Button, buttonVariants } from "./button"
-import { Avatar, AvatarFallback, AvatarImage } from "./avatar"
-import Link from "next/link"
-import { PopoverContent, Popover, PopoverTrigger } from "./popover"
-import { Separator } from "@radix-ui/react-select"
+import { useSession, signIn, signOut } from "next-auth/react";
+import { Button, buttonVariants } from "./button";
+import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import Link from "next/link";
+import { PopoverContent, Popover, PopoverTrigger } from "./popover";
+import { Separator } from "@radix-ui/react-select";
 
 export default function ProfileButton() {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
 
   if (session) {
     return (
@@ -23,18 +23,23 @@ export default function ProfileButton() {
           <div className="flex flex-col gap-2 items-center justify-center">
             <Link
               href={`/user/${session.user?.name}`}
-              className={buttonVariants({ size: "sm" })}
+              className={buttonVariants({ size: "sm", className: "w-full" })}
             >
               Profile
             </Link>
             <Separator />
-            <Button variant="outline" size="sm" onClick={() => signOut()}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => signOut()}
+              className="w-full"
+            >
               Sign out
             </Button>
           </div>
         </PopoverContent>
       </Popover>
-    )
+    );
   }
   return (
     <div>
@@ -42,5 +47,5 @@ export default function ProfileButton() {
         Sign in
       </Button>
     </div>
-  )
+  );
 }
