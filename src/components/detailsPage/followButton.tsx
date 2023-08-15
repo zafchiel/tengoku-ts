@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { Heart } from "lucide-react";
+import { Heart, Loader2 } from "lucide-react";
 import { Session } from "next-auth";
 import axios from "axios";
 import { ButtonHTMLAttributes, useState } from "react";
@@ -20,6 +20,8 @@ export default function FollowButton({
   ...rest
 }: Props) {
   const [isFollowedState, setIsFollowedState] = useState(isFollowed);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { toast } = useToast();
 
   const handleClick = async () => {
@@ -30,6 +32,7 @@ export default function FollowButton({
       });
       return;
     }
+    setIsLoading(true);
     try {
       const { data } = await axios.post("/api/anime/follow", {
         user: session.user?.id,
@@ -46,16 +49,18 @@ export default function FollowButton({
         variant: "destructive",
         description: "Something went wrong, try again later",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
     <Button
       variant="secondary"
       onClick={handleClick}
-      disabled={isFollowedState}
+      disabled={isFollowedState || isLoading}
       {...rest}
     >
-      <Heart />
+      {isLoading ? <Loader2 className="mr-2 animate-spin" /> : <Heart />}
     </Button>
   );
 }

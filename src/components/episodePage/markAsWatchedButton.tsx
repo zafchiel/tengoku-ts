@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 
 type Props = {
   anime_id: string;
@@ -20,6 +21,7 @@ export default function MarkAsWatchedButton({
   const [markedAsWatched, setMarkedAsWatched] = useState(false);
   const [isFollowed, setIsFollowed] = useState(false);
   const [userProgress, setUserProgess] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { toast } = useToast();
   const { data: session } = useSession();
@@ -32,6 +34,7 @@ export default function MarkAsWatchedButton({
       return;
     }
     // API call to fetch progress and update it
+    setIsLoading(true);
     try {
       const { data } = await axios.get("/api/user/getProgress", {
         params: {
@@ -73,6 +76,8 @@ export default function MarkAsWatchedButton({
         variant: "destructive",
         description: "Something went wrong",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -81,6 +86,7 @@ export default function MarkAsWatchedButton({
       if (!session?.user?.id) {
         return;
       }
+      setIsLoading(true);
       try {
         const { data } = await axios.get("/api/user/getProgress", {
           params: {
@@ -94,6 +100,8 @@ export default function MarkAsWatchedButton({
         }
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     checkIfAnimeIsFollowed();
@@ -109,6 +117,7 @@ export default function MarkAsWatchedButton({
     }
     if (userProgress) return;
 
+    setIsLoading(true);
     try {
       const { data } = await axios.post("/api/anime/follow", {
         anime: anime_id,
@@ -122,6 +131,8 @@ export default function MarkAsWatchedButton({
         variant: "destructive",
         description: "Something went wrong",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,14 +140,19 @@ export default function MarkAsWatchedButton({
     <div className="flex">
       <Button
         variant="secondary"
-        disabled={markedAsWatched}
+        disabled={markedAsWatched || isLoading}
         onClick={handleButtonClick}
         className={cn("w-full p-4 uppercase font-semibold rounded-r-none")}
       >
+        <Loader2
+          className={cn("mr-2 h-4 w-4 animate-spin", {
+            hidden: !isLoading,
+          })}
+        />
         Mark as watched to this point
       </Button>
       <Button
-        disabled={isFollowed}
+        disabled={isFollowed || isLoading}
         onClick={handleFollow}
         className="rounded-l-none"
       >
