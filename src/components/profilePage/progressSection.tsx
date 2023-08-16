@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { AnimesRecord, ProgressRecord } from "@/xata/xata";
 import EditSheet from "./editSheet";
-import FormComponment from "./form";
+import FormComponent from "./form";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -56,7 +56,7 @@ export default function ProgressSection({ user }: Props) {
       <div className="w-full flex gap-3 justify-between items-center">
         <h3
           onClick={() => setDisplayCompleted(false)}
-          className={cn("text-xl font-bold cursor-pointer uppercase", {
+          className={cn("text-xl md:text-3xl font-bold cursor-pointer uppercase", {
             "text-muted-foreground": displayCompleted,
           })}
         >
@@ -65,7 +65,7 @@ export default function ProgressSection({ user }: Props) {
 
         <h3
           onClick={() => setDisplayCompleted(true)}
-          className={cn("text-xl font-bold cursor-pointer uppercase", {
+          className={cn("text-xl md:text-3xl font-bold cursor-pointer uppercase", {
             "text-muted-foreground": !displayCompleted,
           })}
         >
@@ -99,15 +99,18 @@ export default function ProgressSection({ user }: Props) {
                   <Link href={`/${record.anime?.id}`} className="font-semibold">
                     {record.anime?.title}
                   </Link>
-                  <div className="flex flex-col">
-                    <p className="text-sm w-24">
+                  <div className="flex flex-col text-sm text-muted-foreground uppercase">
+                    {record.score !== 0  && (
+                        <p>Score: {record.score} </p>
+                    )}
+                    <p className="">
                       Progress: {record.progress}/{record.anime?.totalEpisodes}
                     </p>
                   </div>
                 </div>
                 <EditSheet title={record.anime?.title!}>
                   <div className="flex flex-col w-full">
-                    <FormComponment
+                    <FormComponent
                       record={record}
                       setProgressArray={setProgressArray}
                     />
