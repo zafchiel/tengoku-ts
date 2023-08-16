@@ -22,7 +22,7 @@ export default function ProfileButton() {
         <PopoverContent className="w-fit">
           <div className="flex flex-col gap-2 items-center justify-center">
             <Link
-              href={`/user/${session.user?.name}`}
+              href="/user"
               className={buttonVariants({ size: "sm", className: "w-full" })}
             >
               Profile
