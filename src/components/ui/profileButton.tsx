@@ -6,7 +6,7 @@ import { PopoverContent, Popover, PopoverTrigger } from "./popover";
 import { Separator } from "@radix-ui/react-select";
 
 export default function ProfileButton() {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   if (session) {
     return (
@@ -16,7 +16,7 @@ export default function ProfileButton() {
             {session.user?.image && (
               <AvatarImage src={session.user?.image} alt="Profile image" />
             )}
-            <AvatarFallback>{session.user?.name?.slice(0, 2)}</AvatarFallback>
+            <AvatarFallback>{session.user?.name?.slice(0, 2) ?? session.user?.email?.slice(0,2)}</AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-fit">
