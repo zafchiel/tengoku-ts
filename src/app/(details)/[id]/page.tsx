@@ -43,7 +43,6 @@ export default async function DetailsPage({ params }: Props) {
 
   return (
     <>
-      <Header />
       <div className="w-full flex flex-col items-center md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
