@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Artplayer from "artplayer";
 import Hls from "hls.js";
 import { type Option } from "artplayer/types/option";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import { SourceList, UserProgressData } from "@/types";
+import { SourceList } from "@/types";
 
 type ArtPlayerDeepProps = {
   option: Omit<Option, "container">;
@@ -40,7 +40,7 @@ export function ArtPlayer({
       const progress = parseInt((target.currentTime / target.duration) * 100);
       if (progress > 66) {
         try {
-          await axios.patch(`/api/user/updateExisitngProgress`, {
+          await axios.patch(`/api/user/updateExistingProgress`, {
             user_id: session?.user?.id,
             anime_id,
             progress: epNumber,
@@ -53,6 +53,21 @@ export function ArtPlayer({
         }
       }
     });
+
+    art.controls.add({
+        name: "SkipOPButton",
+        position: "left",
+        html: "Skip OP",
+        tooltip: "Fast forward 85 seconds",
+        style: {
+            padding: "1rem"
+        },
+        click() {
+            art.currentTime = art.currentTime + 85
+            art.controls.remove("SkipOPButton");
+        }
+    })
+
 
     return () => {
       if (art && art.destroy) {
@@ -77,7 +92,7 @@ export default function Player({
   animeLength,
 }: PlayerProps) {
   const defaultQuality = urls.filter(
-    (obj) => obj.quality === "1080p" || "720p"
+    (obj) => obj.quality === "1080p"
   )[0].url;
   return (
     <ArtPlayer
@@ -112,7 +127,6 @@ export default function Player({
         autoPlayback: true,
         airplay: true,
         theme: "#fff",
-        controls: [],
       }}
       anime_id={anime_id}
       epNumber={epNumber}
