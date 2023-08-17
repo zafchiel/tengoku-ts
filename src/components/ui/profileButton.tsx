@@ -1,12 +1,17 @@
+"use client";
+
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Button, buttonVariants } from "./button";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import Link from "next/link";
 import { PopoverContent, Popover, PopoverTrigger } from "./popover";
 import { Separator } from "@radix-ui/react-select";
+import { Skeleton } from "./skeleton";
 
 export default function ProfileButton() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") return <Skeleton className="h-9 w-20" />;
 
   if (session) {
     return (
@@ -16,7 +21,10 @@ export default function ProfileButton() {
             {session.user?.image && (
               <AvatarImage src={session.user?.image} alt="Profile image" />
             )}
-            <AvatarFallback>{session.user?.name?.slice(0, 2) ?? session.user?.email?.slice(0,2)}</AvatarFallback>
+            <AvatarFallback>
+              {session.user?.name?.slice(0, 2) ??
+                session.user?.email?.slice(0, 2)}
+            </AvatarFallback>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent className="w-fit">

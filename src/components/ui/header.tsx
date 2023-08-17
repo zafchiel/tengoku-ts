@@ -1,15 +1,13 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import React, { Suspense } from "react"
-import SearchBar from "./search"
-import useScrollDirection from "@/hooks/useScrollDirection"
-import ProfileButton from "./profileButton"
-import { Skeleton } from "./skeleton"
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import SearchBar from "./search";
+import useScrollDirection from "@/hooks/useScrollDirection";
+import ProfileButton from "./profileButton";
 
 function Header() {
-  const direction = useScrollDirection()
+  const direction = useScrollDirection();
 
   return (
     <header
@@ -27,15 +25,13 @@ function Header() {
       </div>
 
       <div className="flex gap-2">
-        <Suspense fallback={<Skeleton className="h-full w-10" />}>
-          <ProfileButton />
-        </Suspense>
+        <ProfileButton />
         <nav className="flex items-center justify-around gap-3 text-xl font-medium text-white/75">
           <SearchBar />
         </nav>
       </div>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;
