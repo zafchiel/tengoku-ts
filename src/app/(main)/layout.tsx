@@ -1,15 +1,9 @@
-import JotaiProvider from "@/components/mianPage/jotaiProvider"
-import Header from "@/components/ui/header"
+import JotaiProvider from "@/components/mianPage/jotaiProvider";
 
 export default function MainPageLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  return (
-    <JotaiProvider>
-      <Header />
-      {children}
-    </JotaiProvider>
-  )
+  return <JotaiProvider>{children}</JotaiProvider>;
 }
