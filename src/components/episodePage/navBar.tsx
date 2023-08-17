@@ -5,9 +5,8 @@ import Link from "next/link";
 import EpisodeList from "../detailsPage/EpisodeLIst";
 import { StepBack, StepForward } from "lucide-react";
 import { Button } from "../ui/button";
-import { EpisodeListType, UserProgressData } from "@/types";
+import { EpisodeListType } from "@/types";
 import { EpisodesRecord } from "@/xata/xata";
-import MarkAsWatchedButton from "./markAsWatchedButton";
 
 type Props = {
   episodeList: EpisodeListType | EpisodesRecord[];

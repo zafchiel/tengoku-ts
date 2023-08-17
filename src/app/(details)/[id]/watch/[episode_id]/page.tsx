@@ -6,7 +6,6 @@ import { getXataClient } from "@/xata/xata";
 import { redirect } from "next/navigation";
 import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime";
 import { fetchAnimeInfo } from "@/lib/utils";
-import EpPageHeader from "@/components/episodePage/epPageHeader";
 import MarkAsWatchedButton from "@/components/episodePage/markAsWatchedButton";
 
 type Props = {

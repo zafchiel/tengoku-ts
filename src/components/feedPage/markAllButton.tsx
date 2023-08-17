@@ -27,11 +27,14 @@ export default function MarkAllButton({
   const handleMarkEpisodeAsWatched = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.patch("/api/user/markAsWatched", {
+      await axios.patch("/api/user/markAsWatched", {
         user_id,
         progress_id,
         progress: totalEpisodes,
         status: anime_status === "Ongoing" ? "Watching" : "Completed",
+      });
+      toast({
+        description: "Successfully marked episodes as watched",
       });
     } catch (error) {
       toast({
