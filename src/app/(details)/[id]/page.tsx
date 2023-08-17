@@ -80,7 +80,7 @@ export default async function DetailsPage({ params }: Props) {
           <FollowButton
             isFollowed={progress !== null}
             session={session}
-            animeId={params.id}
+            animeId={anime.id}
           />
         </div>
       </div>

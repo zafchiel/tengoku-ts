@@ -72,7 +72,7 @@ export default async function FeedPage() {
                         "p-4 w-12 h-12 border flex justify-center items-center rounded-lg hover:bg-foreground hover:text-background bg-background",
                         {
                           "bg-foreground text-background":
-                            i <= record.progress!,
+                            i + 1 <= record.progress!,
                         },
                       )}
                     >

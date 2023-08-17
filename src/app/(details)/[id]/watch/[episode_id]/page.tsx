@@ -42,7 +42,7 @@ export default async function EpisodePage({ params }: Props) {
 
   return (
     <>
-      <div className="flex items-center flex-col justify-center w-full py-14 overflow-x-hidden">
+      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden">
         <Player
           animeLength={anime.totalEpisodes}
           anime_id={anime.id}
