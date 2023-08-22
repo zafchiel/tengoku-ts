@@ -2,6 +2,10 @@ import SignInButton from "@/components/signInPage/signInButton";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authConfig } from "@/pages/api/auth/[...nextauth]";
+import EmailInput from "@/components/signInPage/emailInput";
+import GoogleIcon from "@/components/signInPage/googleIcon";
+import IconRedditCircle from "@/components/signInPage/iconReddit";
+import IconDiscord from "@/components/signInPage/iconDiscrod";
 
 export default async function SignInPage() {
   const session = await getServerSession(authConfig);
@@ -21,18 +25,27 @@ export default async function SignInPage() {
           provider="google"
           className="flex w-full items-center justify-center gap-2"
         >
+          <GoogleIcon height="1.75em" width="1.75em" />
           Sign-In with Google
         </SignInButton>
         <SignInButton
           provider="reddit"
           className="flex w-full items-center justify-center gap-2"
         >
+          <IconRedditCircle height="1.75em" width="1.75em" />
           Sign-In with Reddit
         </SignInButton>
-        {/* <div className="flex w-full items-center justify-evenly gap-3 before:block before:h-px before:w-auto before:grow before:bg-primary after:block after:h-px after:w-auto after:grow after:bg-primary">
+        <SignInButton
+          provider="discord"
+          className="flex w-full items-center justify-center gap-2"
+        >
+          <IconDiscord height="1.75em" width="1.75em" />
+          Sign-In with Discord
+        </SignInButton>
+        <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
           OR
         </div>
-        <SignInEmail /> */}
+        <EmailInput />
       </section>
     </main>
   );
