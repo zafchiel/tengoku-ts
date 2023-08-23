@@ -38,7 +38,7 @@ export default async function FeedPage() {
             key={record.id}
             className="border flex flex-col rounded-md p-2 max-h-96 overflow-y-scroll"
           >
-            <div>
+            <div className="pb-2">
               <Link href={`/${record.anime?.id}`}>
                 <h4 className="text-xl font-semibold">
                   {record.anime?.title}{" "}
