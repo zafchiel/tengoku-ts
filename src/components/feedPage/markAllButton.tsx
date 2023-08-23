@@ -51,7 +51,7 @@ export default function MarkAllButton({
       variant="outline"
       disabled={isLoading}
       onClick={handleMarkEpisodeAsWatched}
-      className="w-full mt-2"
+      className="w-full mt-auto"
     >
       <Loader2
         className={cn("mr-2 h-4 w-4 animate-spin", {
