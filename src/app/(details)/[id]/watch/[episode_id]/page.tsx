@@ -19,21 +19,21 @@ export default async function EpisodePage({ params }: Props) {
   // Fetch anime info for episode list
   const anime = await fetchAnimeInfo(params.id);
 
-  const xata = getXataClient();
-  const animeDB = await xata.db.animes.read(anime.id);
-
-  if (animeDB) {
-    const episodesInDB = await xata.db.episodes
-      .filter({ anime_id: anime.id })
-      .getAll();
-    if (episodesInDB.length !== anime.totalEpisodes) {
-      await updateEpisodesInDb(anime, animeDB.totalEpisodes!);
-    }
-  }
-
-  if (!animeDB) {
-    await insertNewAnime(anime);
-  }
+  // const xata = getXataClient();
+  // const animeDB = await xata.db.animes.read(anime.id);
+  //
+  // if (animeDB) {
+  //   const episodesInDB = await xata.db.episodes
+  //     .filter({ anime_id: anime.id })
+  //     .getAll();
+  //   if (episodesInDB.length !== anime.totalEpisodes) {
+  //     await updateEpisodesInDb(anime, animeDB.totalEpisodes!);
+  //   }
+  // }
+  //
+  // if (!animeDB) {
+  //   await insertNewAnime(anime);
+  // }
 
   const sourcesArray = await fetchSource(params.episode_id);
   if (!sourcesArray) redirect(`/${params.id}`);

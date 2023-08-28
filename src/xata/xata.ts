@@ -87,26 +87,8 @@ const tables = [
       { name: "totalEpisodes", type: "int" },
     ],
     revLinks: [
-      { column: "anime_id", table: "episodes" },
       { column: "anime", table: "progress" },
-    ],
-  },
-  {
-    name: "episodes",
-    columns: [
-      { name: "anime_id", type: "link", link: { table: "animes" } },
-      { name: "number", type: "int" },
-      { name: "url", type: "string" },
-    ],
-    revLinks: [{ column: "episode_id", table: "sources" }],
-  },
-  {
-    name: "sources",
-    columns: [
-      { name: "episode_id", type: "link", link: { table: "episodes" } },
-      { name: "isM3U8", type: "bool" },
-      { name: "quality", type: "string" },
-      { name: "url", type: "string" },
+      { column: "anime_id", table: "episodes" },
     ],
   },
   {
@@ -122,6 +104,15 @@ const tables = [
         defaultValue: "Watching",
       },
       { name: "score", type: "int", defaultValue: "0" },
+    ],
+  },
+  {
+    name: "episodes",
+    columns: [
+      { name: "number", type: "int" },
+      { name: "url", type: "string" },
+      { name: "sources", type: "string" },
+      { name: "anime_id", type: "link", link: { table: "animes" } },
     ],
   },
 ] as const;
@@ -152,14 +143,11 @@ export type NextauthSessionsRecord = NextauthSessions & XataRecord;
 export type Animes = InferredTypes["animes"];
 export type AnimesRecord = Animes & XataRecord;
 
-export type Episodes = InferredTypes["episodes"];
-export type EpisodesRecord = Episodes & XataRecord;
-
-export type Sources = InferredTypes["sources"];
-export type SourcesRecord = Sources & XataRecord;
-
 export type Progress = InferredTypes["progress"];
 export type ProgressRecord = Progress & XataRecord;
+
+export type Episodes = InferredTypes["episodes"];
+export type EpisodesRecord = Episodes & XataRecord;
 
 export type DatabaseSchema = {
   nextauth_users: NextauthUsersRecord;
@@ -169,9 +157,8 @@ export type DatabaseSchema = {
   nextauth_users_sessions: NextauthUsersSessionsRecord;
   nextauth_sessions: NextauthSessionsRecord;
   animes: AnimesRecord;
-  episodes: EpisodesRecord;
-  sources: SourcesRecord;
   progress: ProgressRecord;
+  episodes: EpisodesRecord;
 };
 
 const DatabaseClient = buildClient();

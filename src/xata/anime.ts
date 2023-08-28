@@ -7,23 +7,21 @@ export async function insertNewAnime(anime: AnimeInfo) {
 
   const { episodes, ...rest } = anime;
   // Create anime record
+  console.log({ ...rest });
   await xata.db.animes.create({ ...rest });
 
   // Create episodes records
-  const eps = episodes.map((ep) => ({ anime_id: anime.id, ...ep }));
-  const epsArr = await xata.db.episodes.create([...eps]);
-
-  // Create sources records
-  epsArr.map((ep) => {
-    fetchSource(ep.id).then((res) => {
-      res.map(async (srcObj) => {
-        try {
-          await xata.db.sources.create({ episode_id: ep.id, ...srcObj });
-        } catch (error) {
-          console.log(error);
-        }
-      });
+  const eps = episodes.map((ep) => {
+    const res = fetch(
+      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`,
+    ).then((res) => {
+      return res.json();
     });
+    return {
+      anime_id: anime.id,
+      sources: res,
+      ...ep,
+    };
   });
 }
 
@@ -44,17 +42,4 @@ export async function updateEpisodesInDb(
     .slice(currentEpisodesNumber - 1)
     .map((ep) => ({ anime_id: anime.id, ...ep }));
   const epsArr = await xata.db.episodes.create([...eps]);
-
-  // Create sources records
-  epsArr.map((ep) => {
-    fetchSource(ep.id).then((res) => {
-      res.map(async (srcObj) => {
-        try {
-          await xata.db.sources.create({ episode_id: ep.id, ...srcObj });
-        } catch (error) {
-          console.log(error);
-        }
-      });
-    });
-  });
 }

@@ -11,6 +11,7 @@ import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Header from "@/components/ui/header";
+import { ANIME } from "@consumet/extensions";
 
 type Props = {
   params: {
@@ -20,18 +21,23 @@ type Props = {
 
 export default async function DetailsPage({ params }: Props) {
   const xata = getXataClient();
-  // Search anime by slug
-  const anime = await fetchAnimeInfo(params.id);
+  // // Search anime by slug
+  // const anime = await fetchAnimeInfo(params.id);
+  //
+  // const animeDB = await xata.db.animes.read(anime.id);
+  //
+  // if (!anime) redirect("/");
+  //
+  // if (animeDB === null) {
+  //   await insertNewAnime(anime);
+  // }
 
-  const animeDB = await xata.db.animes.read(anime.id);
+  const gogoanime = new ANIME.Gogoanime();
+  const anime = await gogoanime.fetchAnimeInfo(params.id);
 
   if (!anime) redirect("/");
 
-  if (animeDB === null) {
-    await insertNewAnime(anime);
-  }
-
-  const imgBase64 = await getBase64(anime.image);
+  const imgBase64 = await getBase64(anime.image!);
 
   const session = await getServerSession(authConfig);
   let progress = null;
@@ -48,12 +54,12 @@ export default async function DetailsPage({ params }: Props) {
         <div className="md:flex h-full">
           <div className="w-full h-full">
             <Image
-              src={anime.image}
+              src={anime.image!}
               placeholder="blur"
               blurDataURL={imgBase64}
               width={400}
               height={500}
-              alt={anime.title}
+              alt={"Anime image"}
               className="md:static md:h-auto fixed inset-0 h-screen w-full -z-20 object-cover"
             />
           </div>
@@ -66,14 +72,14 @@ export default async function DetailsPage({ params }: Props) {
             {anime.description && <Description paragraph={anime.description} />}
 
             <div className="grid grid-cols-4 md:flex flex-wrap items-center justify-center opacity-70 gap-3">
-              {anime.genres.map((obj) => (
+              {anime.genres!.map((obj) => (
                 <p key={obj}>{obj}</p>
               ))}
             </div>
           </div>
         </div>
         <div className="flex w-full md:w-3/4 gap-2 p-2">
-          <EpisodeList episodeList={anime.episodes}>
+          <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
           </EpisodeList>
           <FollowButton
