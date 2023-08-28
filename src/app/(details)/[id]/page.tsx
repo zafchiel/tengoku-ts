@@ -65,7 +65,9 @@ export default async function DetailsPage({ params }: Props) {
           </div>
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
-              <h1 className="text-4xl font-bold uppercase">{anime.title}</h1>
+              <h1 className="text-4xl font-bold uppercase">
+                {anime.title as string}
+              </h1>
               <p className="ml-1">{anime.releaseDate}</p>
             </div>
             <p className="opacity-60 mb-2">{anime.otherName}</p>
