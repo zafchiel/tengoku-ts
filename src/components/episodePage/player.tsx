@@ -55,19 +55,18 @@ export function ArtPlayer({
     });
 
     art.controls.add({
-        name: "SkipOPButton",
-        position: "left",
-        html: "Skip OP",
-        tooltip: "Fast forward 85 seconds",
-        style: {
-            padding: "1rem"
-        },
-        click() {
-            art.currentTime = art.currentTime + 85
-            art.controls.remove("SkipOPButton");
-        }
-    })
-
+      name: "SkipOPButton",
+      position: "left",
+      html: "Skip OP",
+      tooltip: "Fast forward 85 seconds",
+      style: {
+        padding: "1rem",
+      },
+      click() {
+        art.currentTime = art.currentTime + 85;
+        art.controls.remove("SkipOPButton");
+      },
+    });
 
     return () => {
       if (art && art.destroy) {
@@ -92,7 +91,8 @@ export default function Player({
   animeLength,
 }: PlayerProps) {
   const defaultQuality = urls.filter(
-    (obj) => obj.quality === "1080p"
+    (obj) =>
+      obj.quality === "1080p" || "720p" || "480p" || "default" || "backup"
   )[0].url;
   return (
     <ArtPlayer
