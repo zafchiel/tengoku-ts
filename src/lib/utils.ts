@@ -74,9 +74,7 @@ export const fetchSource = async (episode_id: string) => {
   const sourcesArr: SourceList[] = data.sources;
   const bestQuality = sourcesArr.filter(
     (obj) =>
-      obj.quality === "480p" ||
-      obj.quality === "720p" ||
-      obj.quality === "1080p"
+      obj.quality === "480p" || "720p" || "1080p" || "default" || "backup"
   );
   return bestQuality as SourceList[];
 };
