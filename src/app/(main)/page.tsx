@@ -4,13 +4,16 @@ import MainHeading from "@/components/mianPage/heading";
 import TrailerPlayer from "@/components/mianPage/trailerPlayer";
 import { TopAiring } from "@/types";
 import RecentEpisodesSection from "@/components/mianPage/recentEpisodesSection";
+import { scrapeAnime } from "@/scrape";
 
 export default async function HomePage() {
   // Fetch top airing anime
   const res = await fetch(
-    "https://api.jikan.moe/v4/top/anime?filter=airing&limit=6"
+    "https://api.jikan.moe/v4/top/anime?filter=airing&limit=6",
   );
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json();
+
+  await scrapeAnime();
 
   return (
     <>
