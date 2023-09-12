@@ -1,0 +1,12 @@
+{
+  "id": "mig_cjm44psf52bm5gp42ki0",
+  "parentID": "mig_cjm42ncf52bm5gp42kgg",
+  "checksum": "1:8804cdb24e0da3f8272134e76649adba8d96df5382034a9f8ee361c377d3b820",
+  "operations": [
+    {
+      "addTable": {
+        "table": "episodes"
+      }
+    }
+  ]
+}
