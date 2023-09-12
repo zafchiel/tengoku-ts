@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime";
 import { fetchAnimeInfo } from "@/lib/utils";
 import MarkAsWatchedButton from "@/components/episodePage/markAsWatchedButton";
+import HLSPlayer from "@/components/episodePage/hslPlayer";
 
 type Props = {
   params: {
@@ -38,16 +39,25 @@ export default async function EpisodePage({ params }: Props) {
   const sourcesArray = await fetchSource(params.episode_id);
   if (sourcesArray.length < 1) redirect(`/${params.id}`);
 
+  const defaultQualitySource = sourcesArray.filter(
+    (source) => source.quality === "default",
+  )[0];
+
   const { name, episode } = extractNameAndEpisode(params.episode_id);
 
   return (
     <>
-      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden">
-        <Player
-          animeLength={anime.totalEpisodes}
-          anime_id={anime.id}
-          epNumber={episode}
-          urls={sourcesArray}
+      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden md:pt-14">
+        {/*<Player*/}
+        {/*  animeLength={anime.totalEpisodes}*/}
+        {/*  anime_id={anime.id}*/}
+        {/*  epNumber={episode}*/}
+        {/*  urls={sourcesArray}*/}
+        {/*/>*/}
+        <HLSPlayer
+          title={anime.title}
+          poster={anime.title}
+          src={defaultQualitySource.url}
         />
         <NavBar episodeList={anime.episodes} params={params} />
         <section className="mt-3 p-2 w-full">
