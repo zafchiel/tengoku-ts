@@ -40,14 +40,14 @@ export default async function EpisodePage({ params }: Props) {
   if (sourcesArray.length < 1) redirect(`/${params.id}`);
 
   const defaultQualitySource = sourcesArray.filter(
-    (source) => source.quality === "default",
+    (source) => source.quality === "default"
   )[0];
 
   const { name, episode } = extractNameAndEpisode(params.episode_id);
 
   return (
     <>
-      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden md:pt-14">
+      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden md:pt-14 px-1 md:px-4">
         {/*<Player*/}
         {/*  animeLength={anime.totalEpisodes}*/}
         {/*  anime_id={anime.id}*/}
@@ -56,7 +56,7 @@ export default async function EpisodePage({ params }: Props) {
         {/*/>*/}
         <HLSPlayer
           title={anime.title}
-          poster={anime.title}
+          poster={anime.image}
           src={defaultQualitySource.url}
         />
         <NavBar episodeList={anime.episodes} params={params} />
