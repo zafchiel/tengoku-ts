@@ -1,7 +1,11 @@
 import Link from "next/link";
 import Player from "@/components/episodePage/player";
 import NavBar from "@/components/episodePage/navBar";
-import { extractNameAndEpisode, fetchSource } from "@/lib/utils";
+import {
+  extractEpisodeNumber,
+  extractNameAndEpisode,
+  fetchSource,
+} from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import { redirect } from "next/navigation";
 import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime";
@@ -43,6 +47,10 @@ export default async function EpisodePage({ params }: Props) {
     (source) => source.quality === "default"
   )[0];
 
+  if (!defaultQualitySource) redirect(`/${params.id}`);
+
+  const epNumber = extractEpisodeNumber(params.episode_id);
+
   const { name, episode } = extractNameAndEpisode(params.episode_id);
 
   return (
@@ -55,7 +63,7 @@ export default async function EpisodePage({ params }: Props) {
         {/*  urls={sourcesArray}*/}
         {/*/>*/}
         <HLSPlayer
-          title={anime.title}
+          title={anime.title + " - Ep: " + epNumber}
           poster={anime.image}
           src={defaultQualitySource.url}
         />
