@@ -149,7 +149,7 @@ export default function MarkAsWatchedButton({
             hidden: !isLoading,
           })}
         />
-        Mark as watched to this point
+        {markedAsWatched ? "Marked" : "Mark"} as watched to this point
       </Button>
       <Button
         disabled={isFollowed || isLoading}
