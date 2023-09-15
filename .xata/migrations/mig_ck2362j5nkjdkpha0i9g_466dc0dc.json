@@ -1,0 +1,14 @@
+{
+  "id": "mig_ck2362j5nkjdkpha0i9g",
+  "parentID": "mig_ck111coeka5mjm6069tg",
+  "checksum": "1:466dc0dca354ec95a04c0781b83253ac45c616d03e18628890648daa50e8bfda",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "anime",
+        "oldName": "anime_id",
+        "table": "episodes"
+      }
+    }
+  ]
+}

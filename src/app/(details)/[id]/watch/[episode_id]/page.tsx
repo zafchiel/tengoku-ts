@@ -28,7 +28,7 @@ export default async function EpisodePage({ params }: Props) {
 
   if (animeRecordInDB) {
     const episodesInDB = await xata.db.episodes
-      .filter({ anime_id: anime.id })
+      .filter({ anime: anime.id })
       .getAll();
     if (episodesInDB.length !== anime.totalEpisodes) {
       await updateEpisodesInDb(anime, animeRecordInDB.totalEpisodes!);
