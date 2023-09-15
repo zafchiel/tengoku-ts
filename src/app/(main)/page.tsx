@@ -9,11 +9,11 @@ import { scrapeAnime } from "@/scrape";
 export default async function HomePage() {
   // Fetch top airing anime
   const res = await fetch(
-    "https://api.jikan.moe/v4/top/anime?filter=airing&limit=6",
+    "https://api.jikan.moe/v4/top/anime?filter=airing&limit=6"
   );
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json();
 
-  await scrapeAnime();
+  // await scrapeAnime();
 
   return (
     <>

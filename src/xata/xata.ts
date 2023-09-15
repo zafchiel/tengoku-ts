@@ -88,7 +88,7 @@ const tables = [
     ],
     revLinks: [
       { column: "anime", table: "progress" },
-      { column: "anime_id", table: "episodes" },
+      { column: "anime", table: "episodes" },
     ],
   },
   {
@@ -111,8 +111,8 @@ const tables = [
     columns: [
       { name: "number", type: "int" },
       { name: "url", type: "string" },
-      { name: "sources", type: "string" },
-      { name: "anime_id", type: "link", link: { table: "animes" } },
+      { name: "anime", type: "link", link: { table: "animes" } },
+      { name: "source", type: "string" },
     ],
   },
 ] as const;

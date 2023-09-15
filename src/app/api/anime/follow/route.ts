@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     .object({ anime: z.string(), user: z.string() })
     .parse(body);
   const xata = getXataClient();
-  console.log(anime);
   const progress = await xata.db.progress.create({ user, anime });
   return NextResponse.json(progress);
 }
