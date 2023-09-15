@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Player from "@/components/episodePage/player";
 import NavBar from "@/components/episodePage/navBar";
 import {
   extractEpisodeNumber,
@@ -24,21 +23,21 @@ export default async function EpisodePage({ params }: Props) {
   // Fetch anime info for episode list
   const anime = await fetchAnimeInfo(params.id);
 
-  // const xata = getXataClient();
-  // const animeDB = await xata.db.animes.read(anime.id);
-  //
-  // if (animeDB) {
-  //   const episodesInDB = await xata.db.episodes
-  //     .filter({ anime_id: anime.id })
-  //     .getAll();
-  //   if (episodesInDB.length !== anime.totalEpisodes) {
-  //     await updateEpisodesInDb(anime, animeDB.totalEpisodes!);
-  //   }
-  // }
-  //
-  // if (!animeDB) {
-  //   await insertNewAnime(anime);
-  // }
+  const xata = getXataClient();
+  const animeRecordInDB = await xata.db.animes.read(anime.id);
+
+  if (animeRecordInDB) {
+    const episodesInDB = await xata.db.episodes
+      .filter({ anime_id: anime.id })
+      .getAll();
+    if (episodesInDB.length !== anime.totalEpisodes) {
+      await updateEpisodesInDb(anime, animeRecordInDB.totalEpisodes!);
+    }
+  }
+
+  if (!animeRecordInDB) {
+    await insertNewAnime(anime);
+  }
 
   const sourcesArray = await fetchSource(params.episode_id);
   if (sourcesArray.length < 1) redirect(`/${params.id}`);
@@ -56,12 +55,6 @@ export default async function EpisodePage({ params }: Props) {
   return (
     <>
       <div className="flex items-center flex-col justify-center w-full overflow-x-hidden md:pt-14 px-1 md:px-4">
-        {/*<Player*/}
-        {/*  animeLength={anime.totalEpisodes}*/}
-        {/*  anime_id={anime.id}*/}
-        {/*  epNumber={episode}*/}
-        {/*  urls={sourcesArray}*/}
-        {/*/>*/}
         <HLSPlayer
           title={anime.title + " - Ep: " + epNumber}
           poster={anime.image}

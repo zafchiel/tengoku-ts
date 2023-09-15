@@ -10,7 +10,6 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
-import Header from "@/components/ui/header";
 import { ANIME } from "@consumet/extensions";
 
 type Props = {
@@ -21,21 +20,20 @@ type Props = {
 
 export default async function DetailsPage({ params }: Props) {
   const xata = getXataClient();
-  // // Search anime by slug
-  // const anime = await fetchAnimeInfo(params.id);
-  //
-  // const animeDB = await xata.db.animes.read(anime.id);
-  //
-  // if (!anime) redirect("/");
-  //
-  // if (animeDB === null) {
-  //   await insertNewAnime(anime);
-  // }
-
-  const gogoanime = new ANIME.Gogoanime();
-  const anime = await gogoanime.fetchAnimeInfo(params.id);
+  // Search anime by slug
+  const anime = await fetchAnimeInfo(params.id);
 
   if (!anime) redirect("/");
+
+  const animeRecordInDB = await xata.db.animes.read(anime.id);
+
+  if (animeRecordInDB === null) {
+    await insertNewAnime(anime);
+  }
+
+  // const gogoanime = new ANIME.Gogoanime();
+  // const anime = await gogoanime.fetchAnimeInfo(params.id);
+  // if (!anime) redirect("/");
 
   const imgBase64 = await getBase64(anime.image!);
 

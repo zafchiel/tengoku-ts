@@ -1,5 +1,5 @@
 import { getXataClient } from "./xata";
-import { AnimeInfo } from "@/types";
+import { AnimeInfo, SourceList } from "@/types";
 import { fetchSource } from "@/lib/utils";
 
 export async function insertNewAnime(anime: AnimeInfo) {
@@ -7,27 +7,32 @@ export async function insertNewAnime(anime: AnimeInfo) {
 
   const { episodes, ...rest } = anime;
   // Create anime record
-  console.log({ ...rest });
   await xata.db.animes.create({ ...rest });
 
   // Create episodes records
-  const eps = episodes.map((ep) => {
-    const res = fetch(
-      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`,
-    ).then((res) => {
-      return res.json();
-    });
+  const eps = episodes.map(async (ep) => {
+    const res = await fetch(
+      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+    );
+    const { sources } = await res.json();
+    const defaultSource = sources.filter(
+      (s: SourceList) => s.quality === "default"
+    )[0];
+
     return {
-      anime_id: anime.id,
-      sources: res,
+      anime: anime.id,
+      source: defaultSource.url,
       ...ep,
     };
+  });
+  Promise.all(eps).then((episodesArray) => {
+    xata.db.episodes.create(episodesArray);
   });
 }
 
 export async function updateEpisodesInDb(
   anime: AnimeInfo,
-  currentEpisodesNumber: number = 0,
+  currentEpisodesNumber: number = 0
 ) {
   const xata = getXataClient();
 
