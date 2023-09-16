@@ -10,7 +10,6 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
-import { ANIME } from "@consumet/extensions";
 
 type Props = {
   params: {
@@ -30,10 +29,6 @@ export default async function DetailsPage({ params }: Props) {
   if (animeRecordInDB === null) {
     await insertNewAnime(anime);
   }
-
-  // const gogoanime = new ANIME.Gogoanime();
-  // const anime = await gogoanime.fetchAnimeInfo(params.id);
-  // if (!anime) redirect("/");
 
   const imgBase64 = await getBase64(anime.image!);
 
