@@ -17,7 +17,7 @@ export default async function SignInPage() {
       <div className="p-4 text-left w-full">
         <h1 className="text-6xl font-bold uppercase">Welcome!</h1>
         <p className="text-muted-foreground">
-          use your favorite provider to login
+          use your favourite provider to login
         </p>
       </div>
       <section className="flex w-52 flex-col items-center justify-center gap-5 md:w-full md:max-w-2xl">
