@@ -26,7 +26,7 @@ export default async function DetailsPage({ params }: Props) {
 
   const animeRecordInDB = await xata.db.animes.read(anime.id);
 
-  if (animeRecordInDB === null) {
+  if (!animeRecordInDB) {
     await insertNewAnime(anime);
   }
 

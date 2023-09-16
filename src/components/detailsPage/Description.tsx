@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
 export default function Description({ paragraph }: { paragraph: string }) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   if (!isOpen) {
     return (
       <div className="grow">
-        <p>{paragraph.slice(0, 100)}...</p>
-        <button
-          onClick={() => setIsOpen((prev) => !prev)}
-          className="opacity-40"
-        >
-          show more
-        </button>
+        <p>
+          {paragraph.slice(0, 100)}
+          {paragraph.length > 100 ? "..." : ""}
+        </p>
+        {paragraph.length > 100 && (
+          <button
+            onClick={() => setIsOpen((prev) => !prev)}
+            className="opacity-40"
+          >
+            show more
+          </button>
+        )}
       </div>
-    )
+    );
   }
   return (
     <div className="grow">
@@ -25,5 +30,5 @@ export default function Description({ paragraph }: { paragraph: string }) {
         show less
       </button>
     </div>
-  )
+  );
 }
