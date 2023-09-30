@@ -43,8 +43,24 @@ export async function updateEpisodesInDb(
   });
 
   // Update episodes records
-  const eps = anime.episodes
-    .slice(currentEpisodesNumber - 1)
-    .map((ep) => ({ anime_id: anime.id, ...ep }));
-  const epsArr = await xata.db.episodes.create([...eps]);
+  const eps = anime.episodes.slice(currentEpisodesNumber - 1);
+
+  eps.map(async (ep) => {
+    const res = await fetch(
+      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+    );
+    const { sources } = await res.json();
+    const defaultSource = sources.filter(
+      (s: SourceList) => s.quality === "default"
+    )[0];
+
+    return {
+      anime: anime.id,
+      source: defaultSource.url,
+      ...ep,
+    };
+  });
+  Promise.all(eps).then((episodesArray) => {
+    xata.db.episodes.create(episodesArray);
+  });
 }
