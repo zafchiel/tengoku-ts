@@ -15,10 +15,9 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 import { EpisodesRecord } from "@/xata/xata";
-import { IAnimeEpisode } from "@consumet/extensions";
 
 type Props = {
-  episodeList: EpisodeListType | EpisodesRecord[] | IAnimeEpisode[];
+  episodeList: EpisodeListType | EpisodesRecord[];
   children: ReactNode;
 };
 
@@ -50,7 +49,7 @@ export default function EpisodeList({ episodeList, children }: Props) {
                     "p-4 border flex justify-center items-center rounded-lg hover:bg-foreground hover:text-background bg-background visited:bg-muted",
                     {
                       ["!bg-foreground !text-background"]: isActive,
-                    },
+                    }
                   )}
                 >
                   {obj.number}
