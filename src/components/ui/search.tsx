@@ -63,7 +63,11 @@ export default function SearchBar() {
       </div>
       {searchResults.length !== 0 ? (
         <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()}>
-          <SearchResults searchResults={searchResults} isLoading={loading} />
+          <SearchResults
+            searchResults={searchResults}
+            isLoading={loading}
+            clearInput={() => setSearchText("")}
+          />
         </PopoverContent>
       ) : searchText.length === 0 ? null : (
         <PopoverContent onOpenAutoFocus={(e) => e.preventDefault()}>
