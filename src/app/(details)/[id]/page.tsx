@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
 import EpisodeList from "@/components/detailsPage/EpisodeLIst";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { fetchAnimeInfo } from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import getBase64 from "@/lib/getBase64Image";
@@ -10,6 +10,7 @@ import { getServerSession } from "next-auth";
 import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -74,6 +75,12 @@ export default async function DetailsPage({ params }: Props) {
           </div>
         </div>
         <div className="flex w-full md:w-3/4 gap-2 p-2">
+          <Link
+            href={`/${params.id}/pics`}
+            className={buttonVariants({ variant: "outline", className: "p-2" })}
+          >
+            Pics
+          </Link>
           <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
           </EpisodeList>
