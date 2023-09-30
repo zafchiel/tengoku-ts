@@ -26,7 +26,7 @@ export default async function EpisodePage({ params }: Props) {
   const xata = getXataClient();
   const animeRecordInDB = await xata.db.animes.read(anime.id);
 
-  if (animeRecordInDB) {
+  if (animeRecordInDB && anime.status !== "Completed") {
     const episodesInDB = await xata.db.episodes
       .filter({ anime: anime.id })
       .getAll();
