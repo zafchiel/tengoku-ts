@@ -29,8 +29,8 @@ export default async function PicsPage({ params }: Props) {
           <div key={obj.id}>
             <Image
               src={obj.file_url}
-              width={500}
-              height={500}
+              width={400}
+              height={400}
               alt="img"
               className="w-full h-96"
             />
