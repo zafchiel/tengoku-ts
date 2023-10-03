@@ -12,7 +12,7 @@ export default async function ProfilePage() {
   return (
     <main className={cn("p-3 flex flex-col md:pt-14")}>
       <section className="w-full text-right">
-        <h1 className="text-6xl font-bold">{session.user?.name}</h1>
+        <h1 className="text-6xl font-bold">{session.user?.name ?? "WELCOME"}</h1>
         <p className="text-muted-foreground">{session.user?.email}</p>
       </section>
       <div>

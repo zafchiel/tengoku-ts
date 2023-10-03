@@ -1,8 +1,10 @@
 import { getXataClient } from "@/xata/xata";
 import { NextResponse } from "next/server";
+import z from "zod";
 
 export async function DELETE(request: Request) {
-  const { recordId } = await request.json();
+  const body = await request.json();
+  const { recordId } = z.object({ recordId: z.string() }).parse(body);
   const xata = getXataClient();
   try {
     const progress = await xata.db.progress.delete(recordId);

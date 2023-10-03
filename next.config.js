@@ -1,6 +1,6 @@
 // PWA SUPPORT
 
-const withPWAInit = require("next-pwa")
+const withPWAInit = require("next-pwa");
 
 /** @type {import('next-pwa').PWAConfig} */
 const withPWA = withPWAInit({
@@ -9,16 +9,22 @@ const withPWA = withPWAInit({
   register: true,
   // Solution: https://github.com/shadowwalker/next-pwa/issues/424#issuecomment-1399683017
   buildExcludes: ["app-build-manifest.json"],
-})
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["img.youtube.com", "cdn.myanimelist.net", "gogocdn.net"],
+    domains: [
+      "img.youtube.com",
+      "cdn.myanimelist.net",
+      "gogocdn.net",
+      "img3.gelbooru.com",
+      "video-cdn3.gelbooru.com",
+    ],
   },
-}
+};
 
-module.exports = withPWA(nextConfig)
+module.exports = withPWA(nextConfig);
 
 // WITHOUT PWA
 

@@ -1,13 +1,16 @@
 import Link from "next/link";
-import Player from "@/components/episodePage/player";
 import NavBar from "@/components/episodePage/navBar";
-import { extractNameAndEpisode, fetchSource } from "@/lib/utils";
+import {
+  extractEpisodeNumber,
+  extractNameAndEpisode,
+  fetchSource,
+} from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import { redirect } from "next/navigation";
 import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime";
 import { fetchAnimeInfo } from "@/lib/utils";
-import EpPageHeader from "@/components/episodePage/epPageHeader";
 import MarkAsWatchedButton from "@/components/episodePage/markAsWatchedButton";
+import HLSPlayer from "@/components/episodePage/hslPlayer";
 
 type Props = {
   params: {
@@ -21,35 +24,41 @@ export default async function EpisodePage({ params }: Props) {
   const anime = await fetchAnimeInfo(params.id);
 
   const xata = getXataClient();
-  const animeDB = await xata.db.animes.read(anime.id);
+  const animeRecordInDB = await xata.db.animes.read(anime.id);
 
-  if (animeDB) {
+  if (animeRecordInDB && anime.status !== "Completed") {
     const episodesInDB = await xata.db.episodes
-      .filter({ anime_id: anime.id })
+      .filter({ anime: anime.id })
       .getAll();
     if (episodesInDB.length !== anime.totalEpisodes) {
-      await updateEpisodesInDb(anime, animeDB.totalEpisodes!);
+      await updateEpisodesInDb(anime, animeRecordInDB.totalEpisodes!);
     }
   }
 
-  if (!animeDB) {
+  if (!animeRecordInDB) {
     await insertNewAnime(anime);
   }
 
   const sourcesArray = await fetchSource(params.episode_id);
-  if (!sourcesArray) redirect(`/${params.id}`);
+  if (sourcesArray.length < 1) redirect(`/${params.id}`);
+
+  const defaultQualitySource = sourcesArray.filter(
+    (source) => source.quality === "default"
+  )[0];
+
+  if (!defaultQualitySource) redirect(`/${params.id}`);
+
+  const epNumber = extractEpisodeNumber(params.episode_id);
 
   const { name, episode } = extractNameAndEpisode(params.episode_id);
 
   return (
     <>
-      <EpPageHeader />
-      <div className="flex items-center flex-col justify-center w-full py-14 overflow-x-hidden">
-        <Player
-          animeLength={anime.totalEpisodes}
-          anime_id={anime.id}
-          epNumber={episode}
-          urls={sourcesArray}
+      <div className="flex items-center flex-col justify-center w-full overflow-x-hidden md:pt-14 px-1 md:px-4">
+        <HLSPlayer
+          title={anime.title + " - Ep: " + epNumber}
+          poster={anime.image}
+          src={defaultQualitySource.url}
         />
         <NavBar episodeList={anime.episodes} params={params} />
         <section className="mt-3 p-2 w-full">

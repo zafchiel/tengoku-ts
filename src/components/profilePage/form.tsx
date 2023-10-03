@@ -35,7 +35,7 @@ type Props = {
   setProgressArray: Dispatch<SetStateAction<ProgressType[]>>;
 };
 
-export default function FormComponment({ record, setProgressArray }: Props) {
+export default function FormComponent({ record, setProgressArray }: Props) {
   const { toast } = useToast();
 
   const formSchema = z.object({
@@ -124,9 +124,7 @@ export default function FormComponment({ record, setProgressArray }: Props) {
                   <Input
                     placeholder="Score"
                     type="number"
-                    min={1}
                     max={10}
-                    required={false}
                     {...field}
                   />
                 </FormControl>

@@ -5,9 +5,8 @@ import Link from "next/link";
 import EpisodeList from "../detailsPage/EpisodeLIst";
 import { StepBack, StepForward } from "lucide-react";
 import { Button } from "../ui/button";
-import { EpisodeListType, UserProgressData } from "@/types";
+import { EpisodeListType } from "@/types";
 import { EpisodesRecord } from "@/xata/xata";
-import MarkAsWatchedButton from "./markAsWatchedButton";
 
 type Props = {
   episodeList: EpisodeListType | EpisodesRecord[];
@@ -26,7 +25,7 @@ export default function NavBar({ episodeList, params }: Props) {
     params.episode_id.slice(0, -epNumber.toString().length) + (epNumber - 1);
 
   return (
-    <div className="flex fixed bottom-0 inset-x-0 md:static w-full h-20 justify-around items-center">
+    <div className="flex w-full pt-5 justify-around items-center">
       <Link
         href={`/${params.id}/watch/${prevEp}`}
         className={cn(
@@ -34,7 +33,7 @@ export default function NavBar({ episodeList, params }: Props) {
           {
             "text-muted pointer-events-none":
               -1 === episodeList.findIndex((element) => element.id === prevEp),
-          }
+          },
         )}
       >
         <StepBack size={34} />
@@ -52,7 +51,7 @@ export default function NavBar({ episodeList, params }: Props) {
           {
             "text-muted pointer-events-none":
               -1 === episodeList.findIndex((element) => element.id === nextEp),
-          }
+          },
         )}
       >
         <StepForward size={34} />

@@ -1,11 +1,5 @@
-import Header from "@/components/ui/header";
 import { ReactNode } from "react";
 
 export default function ProfileLayout({ children }: { children: ReactNode }) {
-  return (
-    <>
-      <Header />
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }

@@ -6,9 +6,14 @@ import { SearchResult } from "@/types";
 type Props = {
   searchResults: SearchResult[];
   isLoading: boolean;
+  clearInput: () => void;
 };
 
-export default function SearchResults({ searchResults, isLoading }: Props) {
+export default function SearchResults({
+  searchResults,
+  isLoading,
+  clearInput,
+}: Props) {
   if (isLoading)
     return (
       <div className="w-60 h-80">
@@ -30,7 +35,7 @@ export default function SearchResults({ searchResults, isLoading }: Props) {
   return (
     <div className="flex flex-col">
       {searchResults.map((result) => (
-        <Link href={`/${result.id}`} key={result.id}>
+        <Link href={`/${result.id}`} key={result.id} onClick={clearInput}>
           <div className="flex h-24 w-72 gap-2  border-b border-dashed p-4">
             <Image
               width={40}

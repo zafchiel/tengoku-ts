@@ -1,0 +1,19 @@
+{
+  "id": "mig_cjm47t4f52bm5gp42lr0",
+  "parentID": "mig_cjm45ocf52bm5gp42kk0",
+  "checksum": "1:a89f16e01972067135dca045c21a7ff9651e3d6c5a57d8d3f89ac12d89c7e4f1",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "anime_id",
+          "type": "link",
+          "link": {
+            "table": "animes"
+          }
+        },
+        "table": "episodes"
+      }
+    }
+  ]
+}
