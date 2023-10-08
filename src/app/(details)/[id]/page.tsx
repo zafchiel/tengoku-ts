@@ -12,6 +12,7 @@ import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import axios from "axios";
+import { Separator } from "@/components/ui/separator";
 
 type Props = {
   params: {
@@ -44,6 +45,7 @@ export default async function DetailsPage({ params }: Props) {
 
   // Fetch more detailed info from jikan
   let animeMalID: number;
+  let detailedAnimeInfo: any;
   let animePics = [];
   let relatedAnime = [];
   try {
@@ -54,26 +56,26 @@ export default async function DetailsPage({ params }: Props) {
       },
     });
     if (data.data) {
-      animeMalID = data.data[0].mal_id;
+      detailedAnimeInfo = data.data[0];
 
       // Fetch anime posters
       const {
         data: { data: animePicturesData },
       } = await axios.get(
-        `https://api.jikan.moe/v4/anime/${animeMalID}/pictures`,
+        `https://api.jikan.moe/v4/anime/${detailedAnimeInfo.mal_id}/pictures`,
       );
       animePics = animePicturesData;
 
       // Fetch anime relations
-      const {
-        data: { data: animeRelations },
-      } = await axios.get(
-        `https://api.jikan.moe/v4/anime/${animeMalID}/relations`,
-      );
-      relatedAnime = animeRelations
-        .filter((obj: any) => obj.relation !== "Adaptation")
-        .map((obj: any) => obj.entry);
-      console.log(relatedAnime[0].name);
+      // const {
+      //   data: { data: animeRelations },
+      // } = await axios.get(
+      //   `https://api.jikan.moe/v4/anime/${animeMalID}/relations`,
+      // );
+      // relatedAnime = animeRelations
+      //   .filter((obj: any) => obj.relation !== "Adaptation")
+      //   .map((obj: any) => obj.entry);
+      // console.log(relatedAnime[0].name);
     }
   } catch (error) {
     console.log(error);
@@ -128,19 +130,51 @@ export default async function DetailsPage({ params }: Props) {
           />
         </div>
         <section className="w-full flex gap-3">
-          {animePics.length > 1 && (
-            <div className="outline p-2 rounded-md">
-              <h2 className="text-3xl font-bold uppercase">Posters</h2>
-              <div className="flex flex-col gap-2">
-                {animePics?.map((obj: any) => (
-                  <Image
-                    key={obj.webp.large_image_url}
-                    src={obj.webp.large_image_url}
-                    width={300}
-                    height={500}
-                    alt="image"
-                  />
-                ))}
+          {detailedAnimeInfo && (
+            <div className="flex p-2 w-full min-h-full rounded-md shadow-sm">
+              {animePics.length > 1 && (
+                <>
+                  <div className="flex flex-col">
+                    <h2 className="text-3xl font-bold uppercase">Posters</h2>
+                    <div className="flex flex-col gap-2">
+                      {animePics?.map((obj: any) => (
+                        <Image
+                          key={obj.webp.large_image_url}
+                          src={obj.webp.large_image_url}
+                          width={300}
+                          height={500}
+                          alt="image"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <Separator orientation="vertical" className="mx-4" />
+                </>
+              )}
+
+              <div className="relative text-3xl">
+                <p className="text-9xl absolute top-32 left-52 font-extrabold text-muted-foreground -z-10 opacity-30">
+                  {detailedAnimeInfo.title_japanese}
+                </p>
+                <div className="">
+                  <span className="text-muted-foreground">rating:</span>{" "}
+                  {detailedAnimeInfo.score}
+                </div>
+                <div className="">
+                  <span className="text-muted-foreground">season:</span>{" "}
+                  {detailedAnimeInfo.season} + {detailedAnimeInfo.year}
+                </div>
+                <div className="">
+                  <span className="text-muted-foreground">episodes:</span>{" "}
+                  {detailedAnimeInfo.episodes}
+                </div>
+                <div className="flex gap-1">
+                  <span className="text-muted-foreground">studios: </span>
+
+                  {detailedAnimeInfo.studios.map((obj: any) => (
+                    <p>{obj.name + ", "}</p>
+                  ))}
+                </div>
               </div>
             </div>
           )}
