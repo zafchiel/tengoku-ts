@@ -3,7 +3,7 @@ import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
 import EpisodeList from "@/components/detailsPage/EpisodeLIst";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { fetchAnimeInfo } from "@/lib/utils";
+import slugify, { fetchAnimeInfo } from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import getBase64 from "@/lib/getBase64Image";
 import { getServerSession } from "next-auth";
@@ -45,6 +45,7 @@ export default async function DetailsPage({ params }: Props) {
   // Fetch more detailed info from jikan
   let animeMalID: number;
   let animePics = [];
+  let relatedAnime = [];
   try {
     const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
       params: {
@@ -69,7 +70,10 @@ export default async function DetailsPage({ params }: Props) {
       } = await axios.get(
         `https://api.jikan.moe/v4/anime/${animeMalID}/relations`,
       );
-      console.log(animeRelations);
+      relatedAnime = animeRelations
+        .filter((obj: any) => obj.relation !== "Adaptation")
+        .map((obj: any) => obj.entry);
+      console.log(relatedAnime[0].name);
     }
   } catch (error) {
     console.log(error);
@@ -123,21 +127,36 @@ export default async function DetailsPage({ params }: Props) {
             animeId={anime.id}
           />
         </div>
-        <section className="w-full">
-          <h2 className="text-3xl uppercase">Posters</h2>
-          <div className="flex gap-2 flex-wrap">
-            {animePics?.map((obj: any) => (
-              <Image
-                key={obj.webp.image_url}
-                src={obj.webp.image_url}
-                width={300}
-                height={500}
-                alt="image"
-              />
-            ))}
-          </div>
-          <h2 className="text-3xl uppercase">Related</h2>
-          <div></div>
+        <section className="w-full flex gap-3">
+          {animePics.length > 1 && (
+            <div className="outline p-2 rounded-md">
+              <h2 className="text-3xl font-bold uppercase">Posters</h2>
+              <div className="flex flex-col gap-2">
+                {animePics?.map((obj: any) => (
+                  <Image
+                    key={obj.webp.large_image_url}
+                    src={obj.webp.large_image_url}
+                    width={300}
+                    height={500}
+                    alt="image"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/*{relatedAnime.length > 0 && (*/}
+          {/*  <div>*/}
+          {/*    <h2 className="text-3xl uppercase">Related</h2>*/}
+          {/*    <div>*/}
+          {/*      {relatedAnime.map((obj: any) => (*/}
+          {/*        <Link key={obj.url} href={slugify(obj.name)}>*/}
+          {/*          {obj.name}*/}
+          {/*        </Link>*/}
+          {/*      ))}*/}
+          {/*    </div>*/}
+          {/*  </div>*/}
+          {/*)}*/}
         </section>
       </div>
     </>
