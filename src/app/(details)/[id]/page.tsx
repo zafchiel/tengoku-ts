@@ -11,6 +11,7 @@ import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
+import axios from "axios";
 
 type Props = {
   params: {
@@ -41,9 +42,41 @@ export default async function DetailsPage({ params }: Props) {
       .getFirst();
   }
 
+  // Fetch more detailed info from jikan
+  let animeMalID: number;
+  let animePics = [];
+  try {
+    const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
+      params: {
+        q: params.id,
+        limit: 1,
+      },
+    });
+    if (data.data) {
+      animeMalID = data.data[0].mal_id;
+
+      // Fetch anime posters
+      const {
+        data: { data: animePicturesData },
+      } = await axios.get(
+        `https://api.jikan.moe/v4/anime/${animeMalID}/pictures`,
+      );
+      animePics = animePicturesData;
+
+      // Fetch anime relations
+      const {
+        data: { data: animeRelations },
+      } = await axios.get(
+        `https://api.jikan.moe/v4/anime/${animeMalID}/relations`,
+      );
+      console.log(animeRelations);
+    }
+  } catch (error) {
+    console.log(error);
+  }
   return (
     <>
-      <div className="w-full flex flex-col items-center md:pt-14">
+      <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
           <div className="w-full h-full">
@@ -90,6 +123,22 @@ export default async function DetailsPage({ params }: Props) {
             animeId={anime.id}
           />
         </div>
+        <section className="w-full">
+          <h2 className="text-3xl uppercase">Posters</h2>
+          <div className="flex gap-2 flex-wrap">
+            {animePics?.map((obj: any) => (
+              <Image
+                key={obj.webp.image_url}
+                src={obj.webp.image_url}
+                width={300}
+                height={500}
+                alt="image"
+              />
+            ))}
+          </div>
+          <h2 className="text-3xl uppercase">Related</h2>
+          <div></div>
+        </section>
       </div>
     </>
   );
