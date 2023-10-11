@@ -25,9 +25,6 @@ export default function HLSPlayer({ src, title, poster }: Props) {
       src={src}
       aspectRatio={16 / 9}
       crossorigin=""
-      onVolumeChange={(e) => {
-        console.log(e.target.volume);
-      }}
     >
       <MediaOutlet>
         <MediaPoster alt={title} />
