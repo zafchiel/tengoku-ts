@@ -25,6 +25,18 @@ export default function HLSPlayer({ src, title, poster }: Props) {
       src={src}
       aspectRatio={16 / 9}
       crossorigin=""
+      onVolumeChange={(e) => {
+        localStorage.setItem(
+          "playerPreferences",
+          JSON.stringify({
+            volume: e.target.volume,
+          })
+        );
+      }}
+      volume={
+        JSON.parse(localStorage.getItem("playerPreferences") ?? '{"volume": 1}')
+          .volume
+      }
     >
       <MediaOutlet>
         <MediaPoster alt={title} />
