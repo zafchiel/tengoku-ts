@@ -62,7 +62,7 @@ export default async function DetailsPage({ params }: Props) {
       const {
         data: { data: animePicturesData },
       } = await axios.get(
-        `https://api.jikan.moe/v4/anime/${detailedAnimeInfo.mal_id}/pictures`,
+        `https://api.jikan.moe/v4/anime/${detailedAnimeInfo.mal_id}/pictures`
       );
       animePics = animePicturesData;
 
@@ -152,8 +152,8 @@ export default async function DetailsPage({ params }: Props) {
                 </>
               )}
 
-              <div className="relative text-3xl">
-                <p className="text-9xl absolute top-32 left-52 font-extrabold text-muted-foreground -z-10 opacity-30">
+              <div className="relative text-3xl overflow-hidden w-full">
+                <p className="text-9xl absolute top-11 left-20 font-extrabold text-muted-foreground -z-10 opacity-30">
                   {detailedAnimeInfo.title_japanese}
                 </p>
                 <div className="">
@@ -172,7 +172,7 @@ export default async function DetailsPage({ params }: Props) {
                   <span className="text-muted-foreground">studios: </span>
 
                   {detailedAnimeInfo.studios.map((obj: any) => (
-                    <p>{obj.name + ", "}</p>
+                    <p key={obj.name}>{obj.name + " "}</p>
                   ))}
                 </div>
               </div>
