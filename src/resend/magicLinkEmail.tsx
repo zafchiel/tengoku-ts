@@ -7,6 +7,7 @@ import {
   Link,
   Preview,
   Text,
+  Img,
 } from "@react-email/components";
 
 export default function MagicLinkEmail({
@@ -16,13 +17,23 @@ export default function MagicLinkEmail({
   url: string;
   host: string;
 }) {
+  const baseUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : "http://localhost:3000";
+
   return (
     <Html>
       <Head />
       <Preview>Log in with this magic link</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Heading style={h1}>Log in to {host}</Heading>
+          <Img
+            src={`${baseUrl}/logo.png`}
+            alt="Logo Image"
+            width="300"
+            height="300"
+          />
+          <Heading style={h1}>Log in to Tengoku</Heading>
 
           <Link
             href={url}
