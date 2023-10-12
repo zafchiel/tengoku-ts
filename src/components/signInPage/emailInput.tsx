@@ -5,12 +5,15 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export default function EmailInput() {
   const [email, setEmail] = useState("");
+  const params = useSearchParams();
+  const callbackUrl = params?.get("callbackUrl");
 
   const handleSend = async () => {
-    signIn("resend", { email });
+    signIn("resend", { email, callbackUrl: callbackUrl ?? "/" });
   };
   return (
     <div className="grid w-full items-center gap-1.5">

@@ -9,9 +9,9 @@ export async function sendVerificationRequest({
   const { host } = new URL(url);
   try {
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "welcome@misiunya.fun",
       to: [identifier],
-      subject: `Log in to ${host}`,
+      subject: `Log in to TENGOKU`,
       text: text({ url, host }),
       react: MagicLinkEmail({ url, host }),
     });
