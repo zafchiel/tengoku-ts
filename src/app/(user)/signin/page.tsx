@@ -45,6 +45,7 @@ export default async function SignInPage() {
         <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
           OR
         </div>
+        <p>Sign in with magic link sent to your email</p>
         <EmailInput />
       </section>
     </main>
