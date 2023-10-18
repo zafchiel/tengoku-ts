@@ -1,17 +1,20 @@
 "use client";
 
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, FormEvent } from "react";
 import { Search } from "lucide-react";
 import axios from "axios";
 import { SearchResult } from "@/types";
 import SearchResults from "./searchResults";
 import { debounce } from "@/lib/utils";
 import { Popover, PopoverTrigger, PopoverContent } from "./popover";
+import { useRouter } from "next/navigation";
 
 export default function SearchBar() {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (searchText.length < 3) setSearchResults([]);
@@ -42,10 +45,15 @@ export default function SearchBar() {
     setLoading(true);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    router.push(`/search?query=${searchText}`);
+  };
+
   return (
     <Popover>
       <div className="relative flex items-center justify-center gap-2">
-        <form>
+        <form onSubmit={handleSubmit}>
           <PopoverTrigger asChild>
             <span>
               <button className="pointer-events-none absolute right-0 flex h-8 w-8 items-center justify-center rounded-full border-none bg-transparent outline-none duration-200 ease-linear ">

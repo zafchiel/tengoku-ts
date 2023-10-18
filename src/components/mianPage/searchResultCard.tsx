@@ -1,15 +1,15 @@
-import { RecentEpisode } from "@/types";
-import axios from "axios";
+import { SearchResult } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import axios from "axios";
 import { Skeleton } from "../ui/skeleton";
 
 type Props = {
-  ep: RecentEpisode;
+  ep: SearchResult;
 };
 
-export default function RecentEpisodeCard({ ep }: Props) {
+export default function SearchResultCard({ ep }: Props) {
   const [imgSrc, setImgSrc] = useState("");
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function RecentEpisodeCard({ ep }: Props) {
 
   return (
     <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
-      <Link href={`/${ep.id}/watch/${ep.episodeId}`}>
+      <Link href={`/${ep.id}`}>
         <Image
           width={400}
           height={500}
@@ -47,10 +47,11 @@ export default function RecentEpisodeCard({ ep }: Props) {
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <p className="font-semibold">{ep.title}</p>
-          <div className="flex text-gray-300">
+          <div className="flex flex-col text-gray-300">
             <p>
-              EP:&nbsp;<span className="font-semibold">{ep.episodeNumber}</span>
+              Type:&nbsp;<span className="font-semibold">{ep.subOrDub}</span>
             </p>
+            <p>{ep.releaseDate}</p>
           </div>
         </div>
       </Link>

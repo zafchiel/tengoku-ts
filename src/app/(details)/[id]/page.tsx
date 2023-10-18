@@ -152,7 +152,7 @@ export default async function DetailsPage({ params }: Props) {
                 </>
               )}
 
-              <div className="relative text-3xl overflow-hidden w-full">
+              <div className="relative text-sm md:text-3xl overflow-hidden w-full">
                 <p className="text-9xl absolute top-11 left-20 font-extrabold text-muted-foreground -z-10 opacity-30">
                   {detailedAnimeInfo.title_japanese}
                 </p>
@@ -162,7 +162,7 @@ export default async function DetailsPage({ params }: Props) {
                 </div>
                 <div className="">
                   <span className="text-muted-foreground">season:</span>{" "}
-                  {detailedAnimeInfo.season} + {detailedAnimeInfo.year}
+                  {detailedAnimeInfo.season} - {detailedAnimeInfo.year}
                 </div>
                 <div className="">
                   <span className="text-muted-foreground">episodes:</span>{" "}
