@@ -10,21 +10,21 @@ type Props = {
 };
 
 export default function DetailsHoverCard({ anime_id, children }: Props) {
-  const fetchDetails = async () => {
-    console.log("Start fetching");
-    try {
-      const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
-        params: { q: anime_id, limit: "1" },
-      });
-      console.log(data.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   const fetchDetails = async () => {
+  //     console.log("Start fetching");
+  //     try {
+  //       const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
+  //         params: { q: anime_id, limit: "1" },
+  //       });
+  //       console.log(data.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
 
   return (
     <HoverCard>
-      <HoverCardTrigger onMouseEnter={fetchDetails}>
+      <HoverCardTrigger onMouseEnter={() => console.log("hi")}>
         {children}
       </HoverCardTrigger>
       <HoverCardContent>nigga cat</HoverCardContent>
