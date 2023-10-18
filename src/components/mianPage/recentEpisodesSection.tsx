@@ -2,7 +2,7 @@
 
 import { RecentEpisode } from "@/types";
 import RecentEpisodeCard from "./recentEpisodeCard";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
@@ -15,13 +15,7 @@ export default function RecentEpisodesSection() {
 
   const ref = useRef<HTMLButtonElement | null>(null);
 
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.7,
-  };
-
-  const fetchMoreEpisodes = async () => {
+  const fetchMoreEpisodes = useCallback(async () => {
     setLoading(true);
     if (!hasNextPage) {
       console.log("No More :3");
@@ -40,14 +34,21 @@ export default function RecentEpisodesSection() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, hasNextPage]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting === true && loading === false)
-        fetchMoreEpisodes();
-    }, observerOptions);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting === true && loading === false)
+          fetchMoreEpisodes();
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.7,
+      }
+    );
 
     const refElement = ref.current;
 
@@ -56,7 +57,7 @@ export default function RecentEpisodesSection() {
     return () => {
       if (refElement) observer.unobserve(refElement);
     };
-  }, [ref, observerOptions, loading]);
+  }, [ref, loading, fetchMoreEpisodes]);
 
   return (
     <>

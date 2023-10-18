@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { SearchResult } from "@/types";
@@ -17,12 +17,6 @@ export default function SearchResultsPage() {
   const ref = useRef<HTMLButtonElement | null>(null);
 
   const router = useRouter();
-
-  const observerOptions = {
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.7,
-  };
 
   const searchParams = useSearchParams()!;
   const query = searchParams.get("query");
@@ -52,20 +46,27 @@ export default function SearchResultsPage() {
     };
 
     fetchSearchResults();
-  }, [query, currentPage]);
+  }, [query, currentPage, hasNextPage, queryController]);
 
-  const navigateToNextPage = () => {
+  const navigateToNextPage = useCallback(() => {
     router.replace(`/search?query=${query}&page=${Number(currentPage)! + 1}`, {
       scroll: false,
     });
-  };
+  }, [query, currentPage, router]);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const [entry] = entries;
-      if (entry.isIntersecting === true && isLoading === false)
-        navigateToNextPage();
-    }, observerOptions);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting === true && isLoading === false)
+          navigateToNextPage();
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.7,
+      }
+    );
 
     const refElement = ref.current;
 
@@ -74,7 +75,7 @@ export default function SearchResultsPage() {
     return () => {
       if (refElement) observer.unobserve(refElement);
     };
-  }, [ref, observerOptions, isLoading]);
+  }, [ref, isLoading, navigateToNextPage]);
 
   return (
     <main>
