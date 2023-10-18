@@ -85,7 +85,7 @@ export default async function DetailsPage({ params }: Props) {
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
-          <div className="w-full h-full">
+          <div>
             <Image
               src={anime.image!}
               placeholder="blur"
@@ -93,7 +93,7 @@ export default async function DetailsPage({ params }: Props) {
               width={400}
               height={500}
               alt={"Anime image"}
-              className="md:static md:h-auto fixed inset-0 h-screen w-full -z-20 object-cover"
+              className="md:static fixed inset-0 h-screen md:h-auto w-full -z-20 object-cover"
             />
           </div>
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
