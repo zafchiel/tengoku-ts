@@ -8,6 +8,7 @@ import { SearchResult } from "@/types";
 import { Button } from "@/components/ui/button";
 import SearchResultCard from "@/components/mianPage/searchResultCard";
 import { Loader2 } from "lucide-react";
+import DetailsHoverCard from "@/components/ui/detailsHoverCard";
 
 export default function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -59,7 +60,9 @@ export default function SearchResultsPage() {
       (entries) => {
         const [entry] = entries;
         if (entry.isIntersecting === true && isLoading === false)
-          navigateToNextPage();
+          if (hasNextPage) {
+            navigateToNextPage();
+          }
       },
       {
         root: null,
@@ -75,13 +78,15 @@ export default function SearchResultsPage() {
     return () => {
       if (refElement) observer.unobserve(refElement);
     };
-  }, [ref, isLoading, navigateToNextPage]);
+  }, [ref, isLoading, navigateToNextPage, hasNextPage]);
 
   return (
     <main>
       <section className="w-full pb-14 md:pb-5 md:pt-14 p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {searchResults.map((e) => (
-          <SearchResultCard key={e.id} ep={e} />
+          <DetailsHoverCard key={e.id} anime_id={e.id}>
+            <SearchResultCard ep={e} />
+          </DetailsHoverCard>
         ))}
       </section>
       <div className="p-3">
