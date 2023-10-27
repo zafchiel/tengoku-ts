@@ -13,6 +13,7 @@ import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import axios from "axios";
 import { Separator } from "@/components/ui/separator";
+import MutedText from "@/components/ui/mutedText";
 
 type Props = {
   params: {
@@ -157,19 +158,17 @@ export default async function DetailsPage({ params }: Props) {
                   {detailedAnimeInfo.title_japanese}
                 </p>
                 <div className="">
-                  <span className="text-muted-foreground">rating:</span>{" "}
-                  {detailedAnimeInfo.score}
+                  <MutedText>rating:</MutedText> {detailedAnimeInfo.score}
                 </div>
                 <div className="">
-                  <span className="text-muted-foreground">season:</span>{" "}
-                  {detailedAnimeInfo.season} - {detailedAnimeInfo.year}
+                  <MutedText>season:</MutedText> {detailedAnimeInfo.season} -{" "}
+                  {detailedAnimeInfo.year}
                 </div>
                 <div className="">
-                  <span className="text-muted-foreground">episodes:</span>{" "}
-                  {detailedAnimeInfo.episodes}
+                  <MutedText>episodes:</MutedText> {detailedAnimeInfo.episodes}
                 </div>
                 <div className="flex gap-1">
-                  <span className="text-muted-foreground">studios: </span>
+                  <MutedText>studios: </MutedText>
 
                   {detailedAnimeInfo.studios.map((obj: any) => (
                     <p key={obj.name}>{obj.name + " "}</p>

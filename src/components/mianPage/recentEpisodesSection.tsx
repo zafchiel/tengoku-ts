@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
+import DetailsHoverCard from "../ui/detailsHoverCard";
 
 export default function RecentEpisodesSection() {
   const [recentEpisodes, setRecentEpisodes] = useState<RecentEpisode[]>([]);
@@ -65,7 +66,9 @@ export default function RecentEpisodesSection() {
 
       <section className="w-full p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {recentEpisodes.map((obj) => (
-          <RecentEpisodeCard key={obj.episodeId} ep={obj} />
+          <DetailsHoverCard anime_id={obj.title} key={obj.episodeId}>
+            <RecentEpisodeCard ep={obj} />
+          </DetailsHoverCard>
         ))}
       </section>
       <div className="p-3">
