@@ -47,7 +47,7 @@ export default function SearchBar() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    router.push(`/search?query=${searchText}`);
+    router.push(`/search?query=${searchText}&page=1`);
   };
 
   return (

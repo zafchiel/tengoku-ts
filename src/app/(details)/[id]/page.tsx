@@ -13,6 +13,7 @@ import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import axios from "axios";
 import { Separator } from "@/components/ui/separator";
+import MutedText from "@/components/ui/mutedText";
 
 type Props = {
   params: {
@@ -85,7 +86,7 @@ export default async function DetailsPage({ params }: Props) {
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
-          <div className="w-full h-full">
+          <div>
             <Image
               src={anime.image!}
               placeholder="blur"
@@ -93,7 +94,7 @@ export default async function DetailsPage({ params }: Props) {
               width={400}
               height={500}
               alt={"Anime image"}
-              className="md:static md:h-auto fixed inset-0 h-screen w-full -z-20 object-cover"
+              className="md:static fixed inset-0 h-screen md:h-auto w-full -z-20 object-cover"
             />
           </div>
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
@@ -157,19 +158,17 @@ export default async function DetailsPage({ params }: Props) {
                   {detailedAnimeInfo.title_japanese}
                 </p>
                 <div className="">
-                  <span className="text-muted-foreground">rating:</span>{" "}
-                  {detailedAnimeInfo.score}
+                  <MutedText>rating:</MutedText> {detailedAnimeInfo.score}
                 </div>
                 <div className="">
-                  <span className="text-muted-foreground">season:</span>{" "}
-                  {detailedAnimeInfo.season} - {detailedAnimeInfo.year}
+                  <MutedText>season:</MutedText> {detailedAnimeInfo.season} -{" "}
+                  {detailedAnimeInfo.year}
                 </div>
                 <div className="">
-                  <span className="text-muted-foreground">episodes:</span>{" "}
-                  {detailedAnimeInfo.episodes}
+                  <MutedText>episodes:</MutedText> {detailedAnimeInfo.episodes}
                 </div>
                 <div className="flex gap-1">
-                  <span className="text-muted-foreground">studios: </span>
+                  <MutedText>studios: </MutedText>
 
                   {detailedAnimeInfo.studios.map((obj: any) => (
                     <p key={obj.name}>{obj.name + " "}</p>
