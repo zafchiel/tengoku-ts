@@ -17,12 +17,8 @@ type Props = {
 };
 
 export default function HLSPlayer({ src, title, poster }: Props) {
-  let volume;
-  if (localStorage && localStorage.getItem("playerPreferences")) {
-    volume = JSON.parse(localStorage.getItem("playerPreferences")!);
-  } else {
-    volume = 1;
-  }
+  const lsKey = "playerPreferences";
+
   return (
     <MediaPlayer
       title={title}
@@ -32,13 +28,17 @@ export default function HLSPlayer({ src, title, poster }: Props) {
       crossorigin=""
       onVolumeChange={(e) => {
         localStorage.setItem(
-          "playerPreferences",
+          lsKey,
           JSON.stringify({
             volume: e.target.volume,
           })
         );
       }}
-      volume={volume}
+      volume={
+        localStorage.getItem(lsKey)
+          ? JSON.parse(localStorage.getItem(lsKey)!).volume
+          : 0.5
+      }
     >
       <MediaOutlet>
         <MediaPoster alt={title} />
