@@ -8,7 +8,6 @@ import {
   MediaOutlet,
   MediaPlayer,
   MediaPoster,
-  MediaPlayerProps,
 } from "@vidstack/react";
 
 type Props = {
@@ -18,6 +17,8 @@ type Props = {
 };
 
 export default function HLSPlayer({ src, title, poster }: Props) {
+  const lsKey = "playerPreferences";
+
   return (
     <MediaPlayer
       title={title}
@@ -27,15 +28,16 @@ export default function HLSPlayer({ src, title, poster }: Props) {
       crossorigin=""
       onVolumeChange={(e) => {
         localStorage.setItem(
-          "playerPreferences",
+          lsKey,
           JSON.stringify({
             volume: e.target.volume,
           })
         );
       }}
       volume={
-        JSON.parse(localStorage.getItem("playerPreferences") ?? '{"volume": 1}')
-          .volume
+        localStorage.getItem(lsKey)
+          ? JSON.parse(localStorage.getItem(lsKey)!).volume
+          : 0.5
       }
     >
       <MediaOutlet>

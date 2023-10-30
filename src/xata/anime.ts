@@ -1,6 +1,5 @@
 import { getXataClient } from "./xata";
 import { AnimeInfo, SourceList } from "@/types";
-import { fetchSource } from "@/lib/utils";
 
 export async function insertNewAnime(anime: AnimeInfo) {
   const xata = getXataClient();
@@ -10,29 +9,30 @@ export async function insertNewAnime(anime: AnimeInfo) {
   await xata.db.animes.create({ ...rest });
 
   // Create episodes records
-  const eps = episodes.map(async (ep) => {
-    const res = await fetch(
-      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
-    );
-    const { sources } = await res.json();
-    const defaultSource = sources.filter(
-      (s: SourceList) => s.quality === "default"
-    )[0];
+  const episodesArray = await Promise.all(
+    episodes.map(async (ep) => {
+      const res = await fetch(
+        `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+      );
+      const { sources } = await res.json();
+      const defaultSource = sources.find(
+        (s: SourceList) => s.quality === "default"
+      );
 
-    return {
-      anime: anime.id,
-      source: defaultSource.url,
-      ...ep,
-    };
-  });
-  Promise.all(eps).then((episodesArray) => {
-    xata.db.episodes.create(episodesArray);
-  });
+      return {
+        anime: anime.id,
+        source: defaultSource.url,
+        ...ep,
+      };
+    })
+  );
+
+  xata.db.episodes.create(episodesArray);
 }
 
 export async function updateEpisodesInDb(
   anime: AnimeInfo,
-  currentEpisodesNumber: number = 0
+  currentEpisodesNumber = 0
 ) {
   const xata = getXataClient();
 
@@ -42,25 +42,26 @@ export async function updateEpisodesInDb(
     status: anime.status,
   });
 
-  // Update episodes records
-  const eps = anime.episodes.slice(currentEpisodesNumber - 1);
+  // Create missing episodes records
+  const episodesCurrentlyNotInDB = anime.episodes.slice(currentEpisodesNumber);
 
-  eps.map(async (ep) => {
-    const res = await fetch(
-      `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
-    );
-    const { sources } = await res.json();
-    const defaultSource = sources.filter(
-      (s: SourceList) => s.quality === "default"
-    )[0];
+  const episodesArray = await Promise.all(
+    episodesCurrentlyNotInDB.map(async (ep) => {
+      const res = await fetch(
+        `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+      );
+      const { sources } = await res.json();
+      const defaultSource = sources.find(
+        (s: SourceList) => s.quality === "default"
+      );
 
-    return {
-      anime: anime.id,
-      source: defaultSource.url,
-      ...ep,
-    };
-  });
-  Promise.all(eps).then((episodesArray) => {
-    xata.db.episodes.create(episodesArray);
-  });
+      return {
+        anime: anime.id,
+        source: defaultSource.url,
+        ...ep,
+      };
+    })
+  );
+
+  xata.db.episodes.create(episodesArray);
 }
