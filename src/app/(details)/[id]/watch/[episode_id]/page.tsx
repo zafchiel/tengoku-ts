@@ -31,7 +31,7 @@ export default async function EpisodePage({ params }: Props) {
       .filter({ anime: animeRecordInDB.id })
       .getAll();
     if (episodesInDB.length !== anime.totalEpisodes) {
-      await updateEpisodesInDb(anime, animeRecordInDB.totalEpisodes!);
+      await updateEpisodesInDb(anime, episodesInDB.length);
     }
   }
 
