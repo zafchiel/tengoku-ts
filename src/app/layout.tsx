@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Header from "@/components/ui/header";
+import { Analytics } from '@vercel/analytics/react'
 
 const nohemi = localFont({
   src: "./fonts/Nohemi-VF.ttf",
@@ -27,6 +28,7 @@ export default function RootLayout({
           <Header />
           {children}
         </GlobalProviders>
+          <Analytics />
       </body>
     </html>
   );
