@@ -4,7 +4,6 @@ import MainHeading from "@/components/mianPage/heading";
 import TrailerPlayer from "@/components/mianPage/trailerPlayer";
 import { TopAiring } from "@/types";
 import RecentEpisodesSection from "@/components/mianPage/recentEpisodesSection";
-import { scrapeAnime } from "@/scrape";
 
 export default async function HomePage() {
   // Fetch top airing anime
