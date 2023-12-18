@@ -14,12 +14,27 @@ const withPWA = withPWAInit({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: [
-      "img.youtube.com",
-      "cdn.myanimelist.net",
-      "gogocdn.net",
-      "img3.gelbooru.com",
-      "video-cdn3.gelbooru.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "img3.gelbooru.com",
+      },
+      {
+        protocol: "https",
+        hostname: "video-cdn3.gelbooru.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.myanimelist.net",
+      },
+      {
+        protocol: "https",
+        hostname: "gogocdn.net",
+      },
     ],
   },
 };
