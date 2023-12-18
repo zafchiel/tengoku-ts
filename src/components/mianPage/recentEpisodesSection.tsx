@@ -5,14 +5,16 @@ import RecentEpisodeCard from "./recentEpisodeCard";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import DetailsHoverCard from "../ui/detailsHoverCard";
 import { API_URL } from "@/lib/apiUrl";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 export default function RecentEpisodesSection() {
   const [recentEpisodes, setRecentEpisodes] = useState<RecentEpisode[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
   const [hasNextPage, setHasNextPage] = useState(true);
 
   const ref = useRef<HTMLButtonElement | null>(null);
@@ -24,15 +26,17 @@ export default function RecentEpisodesSection() {
       return;
     }
     try {
-      const { data } = await axios.get(
-        `${API_URL}/recent-episodes`,
-        { params: { page: currentPage } }
-      );
+      const { data } = await axios.get(`${API_URL}/recent-episodes`, {
+        params: { page: currentPage },
+      });
       setRecentEpisodes((prev) => [...prev, ...data.results]);
       setCurrentPage((prev) => prev + 1);
       if (!data.hasNextPage) setHasNextPage(false);
     } catch (error) {
-      console.log(error);
+      setIsError(true);
+      if (error instanceof AxiosError) {
+        console.log(error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -42,7 +46,11 @@ export default function RecentEpisodesSection() {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting === true && loading === false)
+        if (
+          entry.isIntersecting === true &&
+          loading === false &&
+          isError === false
+        )
           fetchMoreEpisodes();
       },
       {
@@ -59,13 +67,24 @@ export default function RecentEpisodesSection() {
     return () => {
       if (refElement) observer.unobserve(refElement);
     };
-  }, [ref, loading, fetchMoreEpisodes]);
+  }, [ref, loading, fetchMoreEpisodes, isError]);
 
   return (
     <>
-      <h1 className="text-3xl p-5 font-bold">Recently added episodes</h1>
+      <h1 className="text-3xl p-3 font-bold">Recently added episodes</h1>
 
-      <section className="w-full p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
+      {isError && (
+        <div className="px-5">
+          <Alert variant="destructive">
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+              Something went wrong while fetching episodes
+            </AlertDescription>
+          </Alert>
+        </div>
+      )}
+
+      <section className="w-full px-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {recentEpisodes.map((obj) => (
           <DetailsHoverCard anime_id={obj.title} key={obj.episodeId}>
             <RecentEpisodeCard ep={obj} />
