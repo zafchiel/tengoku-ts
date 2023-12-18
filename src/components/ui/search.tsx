@@ -8,6 +8,7 @@ import SearchResults from "./searchResults";
 import { debounce } from "@/lib/utils";
 import { Popover, PopoverTrigger, PopoverContent } from "./popover";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/apiUrl";
 
 export default function SearchBar() {
   const [searchText, setSearchText] = useState("");
@@ -29,7 +30,7 @@ export default function SearchBar() {
 
     try {
       const { data } = await axios.get(
-        `https://api.consumet.org/anime/gogoanime/${searchTerm}`
+        `${API_URL}/${searchTerm}`
       );
       setSearchResults(data.results.slice(0, 6));
     } catch (error) {
