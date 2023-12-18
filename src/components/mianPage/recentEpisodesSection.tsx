@@ -9,6 +9,7 @@ import axios, { AxiosError } from "axios";
 import DetailsHoverCard from "../ui/detailsHoverCard";
 import { API_URL } from "@/lib/apiUrl";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export default function RecentEpisodesSection() {
   const [recentEpisodes, setRecentEpisodes] = useState<RecentEpisode[]>([]);
@@ -29,6 +30,7 @@ export default function RecentEpisodesSection() {
       const { data } = await axios.get(`${API_URL}/recent-episodes`, {
         params: { page: currentPage },
       });
+      setIsError(false);
       setRecentEpisodes((prev) => [...prev, ...data.results]);
       setCurrentPage((prev) => prev + 1);
       if (!data.hasNextPage) setHasNextPage(false);
@@ -75,10 +77,11 @@ export default function RecentEpisodesSection() {
 
       {isError && (
         <div className="px-5">
-          <Alert variant="destructive">
-            <AlertTitle>Error</AlertTitle>
+          <Alert variant="destructive" className="max-w-md text-xl">
+            <AlertCircle className="w-4 h-4"/>
+            <AlertTitle className="font-semibold">Error</AlertTitle>
             <AlertDescription>
-              Something went wrong while fetching episodes
+              Something went wrong while fetching episodes, try again later
             </AlertDescription>
           </Alert>
         </div>
