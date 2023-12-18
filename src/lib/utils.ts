@@ -32,12 +32,16 @@ export async function fetchAnimeInfo(anime_id: string) {
   );
   const searchResults = await res.json();
 
+
   // Fetch detailed info of first record found
   const res2 = await fetch(
     `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`,
     { cache: "no-store" }
   );
   const animeInfo: AnimeInfo = await res2.json();
+
+ 
+  // const animInfo = await gogo.fetchAnimeInfo(response[0].id)
 
   return animeInfo;
 }
