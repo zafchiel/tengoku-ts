@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import SearchResultCard from "@/components/mianPage/searchResultCard";
 import { Loader2 } from "lucide-react";
 import DetailsHoverCard from "@/components/ui/detailsHoverCard";
+import { API_URL } from "@/lib/apiUrl";
 
 export default function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -34,7 +35,7 @@ export default function SearchResultsPage() {
       if (queryController !== query) setSearchResults([]);
       try {
         const { data } = await axios.get(
-          `https://api.consumet.org/anime/gogoanime/${query}?page=${currentPage}`
+          `${API_URL}/${query}?page=${currentPage}`
         );
         setSearchResults((prev) => [...prev, ...data.results]);
         if (!data.hasNextPage) setHasNextPage(false);

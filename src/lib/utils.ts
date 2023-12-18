@@ -2,6 +2,7 @@ import { AnimeInfo, SourceList } from "@/types";
 import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { API_URL } from "./apiUrl";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -28,20 +29,16 @@ export default function slugify(str: string) {
 export async function fetchAnimeInfo(anime_id: string) {
   // Search anime by slug
   const res = await fetch(
-    `https://api.consumet.org/anime/gogoanime/${anime_id}`
+    `${API_URL}/${anime_id}`
   );
   const searchResults = await res.json();
 
-
   // Fetch detailed info of first record found
   const res2 = await fetch(
-    `https://api.consumet.org/anime/gogoanime/info/${searchResults.results[0].id}`,
+    `${API_URL}/info/${searchResults.results[0].id}`,
     { cache: "no-store" }
   );
   const animeInfo: AnimeInfo = await res2.json();
-
- 
-  // const animInfo = await gogo.fetchAnimeInfo(response[0].id)
 
   return animeInfo;
 }
@@ -73,7 +70,7 @@ export const debounce = (fn: Function, delay: number) => {
 
 export const fetchSource = async (episode_id: string) => {
   const { data } = await axios.get(
-    `https://api.consumet.org/anime/gogoanime/watch/${episode_id}`
+    `${API_URL}/watch/${episode_id}`
   );
   const sourcesArr: SourceList[] = data.sources;
   const bestQuality = sourcesArr.filter(
