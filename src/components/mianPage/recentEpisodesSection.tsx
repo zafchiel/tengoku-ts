@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import DetailsHoverCard from "../ui/detailsHoverCard";
+import { ANIME } from "@consumet/extensions";
 
 export default function RecentEpisodesSection() {
   const [recentEpisodes, setRecentEpisodes] = useState<RecentEpisode[]>([]);
@@ -23,10 +24,13 @@ export default function RecentEpisodesSection() {
       return;
     }
     try {
-      const { data } = await axios.get(
-        "https://api.consumet.org/anime/gogoanime/recent-episodes",
-        { params: { page: currentPage } }
-      );
+      // const { data } = await axios.get(
+      //   "https://api.consumet.org/anime/gogoanime/recent-episodes",
+      //   { params: { page: currentPage } }
+      // );
+      const gogo = new ANIME.Gogoanime();
+      const data = await gogo.fetchRecentEpisodes();
+      console.log(data);
       setRecentEpisodes((prev) => [...prev, ...data.results]);
       setCurrentPage((prev) => prev + 1);
       if (!data.hasNextPage) setHasNextPage(false);

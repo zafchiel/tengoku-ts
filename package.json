@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@auth/xata-adapter": "^0.1.0",
+    "@consumet/extensions": "^1.5.4",
     "@hookform/resolvers": "^3.2.0",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-dialog": "^1.0.4",
