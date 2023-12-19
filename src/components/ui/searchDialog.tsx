@@ -1,6 +1,6 @@
 "use client";
 
-import { Search as SearchIcon } from "lucide-react";
+import { Loader2, Search as SearchIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -43,6 +43,7 @@ export default function SearchDialog() {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
+    setLoading(true);
     setSearchText(value);
   };
 
@@ -84,13 +85,14 @@ export default function SearchDialog() {
           </form>
         </DialogHeader>
 
-        <Separator />
-        {searchResults.length > 0 ? (
-          <DisplaySearchResults searchResults={searchResults} />
-        ) : (
-          <div>
-            <p>No luck</p>
+        {(searchResults.length > 0 || loading) && <Separator />}
+
+        {loading ? (
+          <div className="flex justify-center items-center">
+            <Loader2 className="animate-spin w-8 h-8" />
           </div>
+        ) : (
+          <DisplaySearchResults searchResults={searchResults} />
         )}
       </DialogContent>
     </Dialog>

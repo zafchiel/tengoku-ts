@@ -7,6 +7,8 @@ type Props = {
 };
 
 export default function DisplaySearchResults({ searchResults }: Props) {
+  if (searchResults.length === 0) return null;
+
   return (
     <div>
       {searchResults.map((result) => (
