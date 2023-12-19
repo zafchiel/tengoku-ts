@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Separator } from "../ui/separator";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   mal_id: number;
@@ -9,6 +10,7 @@ type Props = {
 
 export default function AnimePosters({ mal_id }: Props) {
   const [animePics, setAnimePics] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchAnimePosters = async () => {
@@ -21,12 +23,16 @@ export default function AnimePosters({ mal_id }: Props) {
         );
         setAnimePics(animePicturesData);
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError) console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchAnimePosters();
   }, [mal_id]);
+
+  if (isLoading) return <Skeleton className="h-80 w-52" />;
 
   if (animePics.length < 1) return null;
 

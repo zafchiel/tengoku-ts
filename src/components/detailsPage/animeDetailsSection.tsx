@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import AnimePosters from "./animePosters";
 import DetailedInfo from "./detailedInfo";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   anime_id: string;
@@ -11,6 +12,7 @@ type Props = {
 
 export default function AnimeDetailsSection({ anime_id }: Props) {
   const [detailedAnimeInfo, setDetailedAnimeInfo] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchAnimeInfo = async () => {
@@ -25,11 +27,15 @@ export default function AnimeDetailsSection({ anime_id }: Props) {
           setDetailedAnimeInfo(data.data[0]);
         }
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError) console.log(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchAnimeInfo();
   }, [anime_id]);
+
+  if (isLoading) return <Skeleton className="w-full h-80 m-5" />;
 
   if (!detailedAnimeInfo) return null;
 

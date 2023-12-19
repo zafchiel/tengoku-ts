@@ -3,7 +3,7 @@ import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
 import EpisodeList from "@/components/detailsPage/EpisodeLIst";
 import { Button, buttonVariants } from "@/components/ui/button";
-import slugify, { fetchAnimeInfo } from "@/lib/utils";
+import { fetchAnimeInfo } from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import getBase64 from "@/lib/getBase64Image";
 import { getServerSession } from "next-auth";
@@ -11,9 +11,6 @@ import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
-import axios from "axios";
-import { Separator } from "@/components/ui/separator";
-import MutedText from "@/components/ui/mutedText";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
 
 type Props = {
@@ -45,32 +42,6 @@ export default async function DetailsPage({ params }: Props) {
       .getFirst();
   }
 
-  // Fetch more detailed info from jikan
-  // let animeMalID: number;
-  // let detailedAnimeInfo: any;
-  // let animePics = [];
-  // let relatedAnime = [];
-  // try {
-  //   const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
-  //     params: {
-  //       q: params.id,
-  //       limit: 1,
-  //     },
-  //   });
-  //   if (data.data) {
-  //     detailedAnimeInfo = data.data[0];
-
-  //     // Fetch anime posters
-  //     const {
-  //       data: { data: animePicturesData },
-  //     } = await axios.get(
-  //       `https://api.jikan.moe/v4/anime/${detailedAnimeInfo.mal_id}/pictures`
-  //     );
-  //     animePics = animePicturesData;
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
   return (
     <>
       <div className="w-full flex flex-col items-center p-4 md:pt-14">

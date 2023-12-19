@@ -37,7 +37,7 @@ export default function SearchDialog() {
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const debouncedSearchText = useDebounce(searchText, 1000);
+  const debouncedSearchText = useDebounce(searchText, 500);
 
   const pathName = usePathname();
 
