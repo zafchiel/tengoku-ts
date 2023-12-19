@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
@@ -35,6 +35,8 @@ export default function MarkAsWatchedButton({
       });
       return;
     }
+
+    if (!isFollowed) handleFollow();
 
     // Check status of anime
     let watchingStatus = "Watching";
@@ -80,7 +82,12 @@ export default function MarkAsWatchedButton({
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: error.message,
+        });
+      }
       toast({
         variant: "destructive",
         description: "Something went wrong",
@@ -108,7 +115,7 @@ export default function MarkAsWatchedButton({
           setIsFollowed(true);
         }
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError) console.log(error.message);
       } finally {
         setIsLoading(false);
       }
