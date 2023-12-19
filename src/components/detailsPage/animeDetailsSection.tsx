@@ -24,23 +24,19 @@ export default function AnimeDetailsSection({ anime_id }: Props) {
         if (data.data) {
           setDetailedAnimeInfo(data.data[0]);
         }
-        console.log(data.data[0]);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAnimeInfo();
-
-    
-    
   }, [anime_id]);
 
-  if(!detailedAnimeInfo) return null;
+  if (!detailedAnimeInfo) return null;
 
   return (
     <section className="w-full flex gap-3">
-        <AnimePosters mal_id={detailedAnimeInfo.mal_id} />
-        <DetailedInfo info={detailedAnimeInfo} />
+      <AnimePosters mal_id={detailedAnimeInfo.mal_id} />
+      <DetailedInfo info={detailedAnimeInfo} />
     </section>
   );
 }

@@ -21,7 +21,7 @@ export default function SearchResultsPage() {
   const router = useRouter();
 
   const searchParams = useSearchParams()!;
-  const query = searchParams.get("query");
+  const query = searchParams.get("q");
   const currentPage = searchParams.get("page");
   const [queryController, setQueryController] = useState(query);
 
@@ -51,7 +51,7 @@ export default function SearchResultsPage() {
   }, [query, currentPage, hasNextPage, queryController]);
 
   const navigateToNextPage = useCallback(() => {
-    router.replace(`/search?query=${query}&page=${Number(currentPage)! + 1}`, {
+    router.replace(`/search?q=${query}&page=${Number(currentPage)! + 1}`, {
       scroll: false,
     });
   }, [query, currentPage, router]);
