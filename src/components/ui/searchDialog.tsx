@@ -19,9 +19,11 @@ import axios, { AxiosError } from "axios";
 import { API_URL } from "@/lib/apiUrl";
 import DisplaySearchResults from "./displaySearchResults";
 import { usePathname } from "next/navigation";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const fetchSearchResults = async (searchTerm: string) => {
   try {
+    console.log("Made request");
     const { data } = await axios.get(`${API_URL}/${searchTerm}`);
     return data.results;
   } catch (error) {
@@ -35,16 +37,24 @@ export default function SearchDialog() {
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
+  const debouncedSearchText = useDebounce(searchText, 1000);
+
   const pathName = usePathname();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
     setSearchText(value);
-
-    fetchSearchResults(value)
-      .then((results) => setSearchResults(results.slice(0, 5)))
-      .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    if (debouncedSearchText) {
+      setLoading(true);
+      fetchSearchResults(debouncedSearchText)
+        .then((results) => setSearchResults(results.slice(0, 5)))
+        .catch((error) => console.log(error))
+        .finally(() => setLoading(false));
+    }
+  }, [debouncedSearchText]);
 
   useEffect(() => {
     setIsDialogOpen(false);
