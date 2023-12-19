@@ -20,7 +20,7 @@ export default async function SignInPage() {
           use your favourite provider to login
         </p>
       </div>
-      <section className="flex w-52 flex-col items-center justify-center gap-5 md:w-full md:max-w-2xl">
+      <section className="flex w-52 flex-col justify-center gap-5 md:w-full md:max-w-2xl">
         <SignInButton
           provider="google"
           className="flex w-full items-center justify-center gap-2"
@@ -45,7 +45,9 @@ export default async function SignInPage() {
         <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
           OR
         </div>
-        <p>Sign in with magic link sent to your email</p>
+        <p className="font-semibold text-xl">
+          Sign in with magic link sent to your email
+        </p>
         <EmailInput />
       </section>
     </main>
