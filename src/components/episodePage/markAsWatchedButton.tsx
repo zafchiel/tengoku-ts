@@ -9,11 +9,13 @@ import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
 type Props = {
+  animeStatus: string;
   anime_id: string;
   epNumber: number;
   animeLength: number;
 };
 export default function MarkAsWatchedButton({
+  animeStatus,
   anime_id,
   epNumber,
   animeLength,
@@ -33,6 +35,13 @@ export default function MarkAsWatchedButton({
       });
       return;
     }
+
+    // Check status of anime
+    let watchingStatus = "Watching";
+    if (animeStatus === "Completed") {
+      if (epNumber === animeLength) watchingStatus = "Completed";
+    }
+
     // API call to fetch progress and update it
     setIsLoading(true);
     try {
@@ -48,7 +57,7 @@ export default function MarkAsWatchedButton({
           user_id: session.user.id,
           anime_id,
           progress: epNumber,
-          status: epNumber === animeLength ? "Completed" : "Watching",
+          status: watchingStatus,
         });
         setMarkedAsWatched(true);
         toast({
@@ -63,7 +72,7 @@ export default function MarkAsWatchedButton({
           anime_id,
           progress_id: data.id,
           progress: epNumber,
-          status: epNumber === animeLength ? "Completed" : "Watching",
+          status: watchingStatus,
         });
         setMarkedAsWatched(true);
         toast({
