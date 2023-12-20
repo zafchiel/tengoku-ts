@@ -19,6 +19,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import TriggerToastComponent from "@/components/detailsPage/triggerToastComponent";
 
 type Props = {
   params: {
@@ -51,6 +52,7 @@ export default async function DetailsPage({ params }: Props) {
 
   return (
     <>
+      <TriggerToastComponent />
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">

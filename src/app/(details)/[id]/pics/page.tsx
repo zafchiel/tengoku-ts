@@ -21,7 +21,7 @@ export default async function PicsPage({ params }: Props) {
     }
   );
 
-  if (!post) redirect(`/${params.id}`);
+  if (!post) redirect(`/${params.id}?notFound=true`);
   return (
     <main className="px-4 pb-14 md:pt-14 md:pb-0">
       <section className="flex flex-wrap gap-3">
