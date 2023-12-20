@@ -12,6 +12,13 @@ import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
+import { AlertCircle } from "lucide-react";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 type Props = {
   params: {
@@ -76,12 +83,25 @@ export default async function DetailsPage({ params }: Props) {
           </div>
         </div>
         <div className="flex w-full md:w-3/4 gap-2 p-2">
-          <Link
-            href={`/${params.id}/pics`}
-            className={buttonVariants({ variant: "outline", className: "p-2" })}
-          >
-            Pics
-          </Link>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href={`/${params.id}/pics`}
+                  className={buttonVariants({
+                    variant: "destructive",
+                    className: "font-light",
+                  })}
+                >
+                  <AlertCircle className="w-8 h-8 mr-2" />
+                  NSFW Pics
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                Random pictures from booru - may contain nudity!
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
           </EpisodeList>
