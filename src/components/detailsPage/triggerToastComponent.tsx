@@ -11,7 +11,7 @@ export default function TriggerToastComponent() {
   useEffect(() => {
     if (params?.get("notFound"))
       toast({
-        title: "Not found any images",
+        title: "Not found any Booru images",
         variant: "destructive",
       });
   }, [params, toast]);
