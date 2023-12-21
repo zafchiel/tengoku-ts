@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import MarkAllButton from "@/components/feedPage/markAllButton";
+import styles from "./styles.module.css";
 
 export default async function FeedPage() {
   const session = await getServerSession(authConfig);
@@ -26,6 +27,7 @@ export default async function FeedPage() {
 
   return (
     <main className="p-4 md:pt-14">
+      <div className={styles.blob}></div>
       <section className="mb-3">
         <h1 className="text-6xl font-bold">feed</h1>
         <p className="text-muted-foreground">
@@ -74,12 +76,12 @@ export default async function FeedPage() {
                           {
                             "bg-foreground text-background":
                               i + 1 <= record.progress!,
-                          },
+                          }
                         )}
                       >
                         {i + 1}
                       </Link>
-                    ),
+                    )
                   ).reverse()}
                 </div>
               </div>
