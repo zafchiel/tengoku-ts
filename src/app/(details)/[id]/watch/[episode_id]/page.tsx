@@ -69,6 +69,7 @@ export default async function EpisodePage({ params }: Props) {
         </section>
         <section>
           <MarkAsWatchedButton
+            animeStatus={anime.status}
             animeLength={anime.totalEpisodes}
             anime_id={anime.id}
             epNumber={episode}

@@ -12,6 +12,7 @@ export default async function HomePage() {
   );
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json();
 
+
   // await scrapeAnime();
 
   return (

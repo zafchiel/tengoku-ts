@@ -4,16 +4,18 @@ import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useToast } from "../ui/use-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 
 type Props = {
+  animeStatus: string;
   anime_id: string;
   epNumber: number;
   animeLength: number;
 };
 export default function MarkAsWatchedButton({
+  animeStatus,
   anime_id,
   epNumber,
   animeLength,
@@ -33,6 +35,15 @@ export default function MarkAsWatchedButton({
       });
       return;
     }
+
+    if (!isFollowed) handleFollow();
+
+    // Check status of anime
+    let watchingStatus = "Watching";
+    if (animeStatus === "Completed") {
+      if (epNumber === animeLength) watchingStatus = "Completed";
+    }
+
     // API call to fetch progress and update it
     setIsLoading(true);
     try {
@@ -48,7 +59,7 @@ export default function MarkAsWatchedButton({
           user_id: session.user.id,
           anime_id,
           progress: epNumber,
-          status: epNumber === animeLength ? "Completed" : "Watching",
+          status: watchingStatus,
         });
         setMarkedAsWatched(true);
         toast({
@@ -63,7 +74,7 @@ export default function MarkAsWatchedButton({
           anime_id,
           progress_id: data.id,
           progress: epNumber,
-          status: epNumber === animeLength ? "Completed" : "Watching",
+          status: watchingStatus,
         });
         setMarkedAsWatched(true);
         toast({
@@ -71,7 +82,12 @@ export default function MarkAsWatchedButton({
         });
       }
     } catch (error) {
-      console.log(error);
+      if (error instanceof AxiosError) {
+        toast({
+          variant: "destructive",
+          description: error.message,
+        });
+      }
       toast({
         variant: "destructive",
         description: "Something went wrong",
@@ -99,7 +115,7 @@ export default function MarkAsWatchedButton({
           setIsFollowed(true);
         }
       } catch (error) {
-        console.log(error);
+        if (error instanceof AxiosError) console.log(error.message);
       } finally {
         setIsLoading(false);
       }

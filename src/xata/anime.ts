@@ -1,3 +1,4 @@
+import { API_URL } from "@/lib/apiUrl";
 import { getXataClient } from "./xata";
 import { AnimeInfo, SourceList } from "@/types";
 
@@ -13,7 +14,7 @@ export async function insertNewAnime(anime: AnimeInfo) {
     const episodesArray = await Promise.all(
       episodes.map(async (ep) => {
         const res = await fetch(
-          `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+          `${API_URL}/watch/${ep.id}`
         );
         const { sources } = await res.json();
         const defaultSource = sources.find(
@@ -55,7 +56,7 @@ export async function updateEpisodesInDb(
     const episodesArray = await Promise.all(
       episodesCurrentlyNotInDB.map(async (ep) => {
         const res = await fetch(
-          `https://api.consumet.org/anime/gogoanime/watch/${ep.id}`
+          `${API_URL}/watch/${ep.id}`
         );
         const { sources } = await res.json();
         const defaultSource = sources.find(

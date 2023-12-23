@@ -6,6 +6,7 @@ import SearchBar from "./search";
 import useScrollDirection from "@/hooks/useScrollDirection";
 import ProfileButton from "./profileButton";
 import { Home, Newspaper } from "lucide-react";
+import SearchDialog from "./searchDialog";
 
 function Header() {
   const direction = useScrollDirection();
@@ -16,7 +17,7 @@ function Header() {
         "fixed inset-x-0 md:top-0 bottom-0 z-30 flex h-14 items-center justify-between p-5 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
         {
           "md:-top-14 -bottom-14": direction === "down",
-        },
+        }
       )}
     >
       <div>
@@ -35,7 +36,8 @@ function Header() {
           <Link href={"/feed"}>
             <Newspaper />
           </Link>
-          <SearchBar />
+          {/* <SearchBar /> */}
+          <SearchDialog />
         </nav>
       </div>
     </header>

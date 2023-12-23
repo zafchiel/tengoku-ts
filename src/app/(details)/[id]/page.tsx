@@ -3,7 +3,7 @@ import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
 import EpisodeList from "@/components/detailsPage/EpisodeLIst";
 import { Button, buttonVariants } from "@/components/ui/button";
-import slugify, { fetchAnimeInfo } from "@/lib/utils";
+import { fetchAnimeInfo } from "@/lib/utils";
 import { getXataClient } from "@/xata/xata";
 import getBase64 from "@/lib/getBase64Image";
 import { getServerSession } from "next-auth";
@@ -11,10 +11,15 @@ import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
-import axios from "axios";
-import { Separator } from "@/components/ui/separator";
-import MutedText from "@/components/ui/mutedText";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
+import { AlertCircle } from "lucide-react";
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import TriggerToastComponent from "@/components/detailsPage/triggerToastComponent";
 
 type Props = {
   params: {
@@ -45,34 +50,9 @@ export default async function DetailsPage({ params }: Props) {
       .getFirst();
   }
 
-  // Fetch more detailed info from jikan
-  // let animeMalID: number;
-  // let detailedAnimeInfo: any;
-  // let animePics = [];
-  // let relatedAnime = [];
-  // try {
-  //   const { data } = await axios.get("https://api.jikan.moe/v4/anime", {
-  //     params: {
-  //       q: params.id,
-  //       limit: 1,
-  //     },
-  //   });
-  //   if (data.data) {
-  //     detailedAnimeInfo = data.data[0];
-
-  //     // Fetch anime posters
-  //     const {
-  //       data: { data: animePicturesData },
-  //     } = await axios.get(
-  //       `https://api.jikan.moe/v4/anime/${detailedAnimeInfo.mal_id}/pictures`
-  //     );
-  //     animePics = animePicturesData;
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
   return (
     <>
+      <TriggerToastComponent />
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
@@ -105,12 +85,25 @@ export default async function DetailsPage({ params }: Props) {
           </div>
         </div>
         <div className="flex w-full md:w-3/4 gap-2 p-2">
-          <Link
-            href={`/${params.id}/pics`}
-            className={buttonVariants({ variant: "outline", className: "p-2" })}
-          >
-            Pics
-          </Link>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href={`/${params.id}/pics`}
+                  className={buttonVariants({
+                    variant: "destructive",
+                    className: "font-light",
+                  })}
+                >
+                  <AlertCircle className="w-8 h-8 mr-2" />
+                  NSFW Pics
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent>
+                Random pictures from booru - may contain nudity!
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
           </EpisodeList>
