@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import SearchBar from "./search";
 import useScrollDirection from "@/hooks/useScrollDirection";
 import ProfileButton from "./profileButton";
 import { Home, Newspaper } from "lucide-react";
@@ -36,7 +35,6 @@ function Header() {
           <Link href={"/feed"}>
             <Newspaper />
           </Link>
-          {/* <SearchBar /> */}
           <SearchDialog />
         </nav>
       </div>
