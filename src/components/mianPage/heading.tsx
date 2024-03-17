@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { TopAiringContext } from "../global/top-airing-context";
 
 export default function MainHeading() {

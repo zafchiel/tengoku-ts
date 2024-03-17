@@ -17,6 +17,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import TriggerToastComponent from "@/components/detailsPage/triggerToastComponent";
+import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import axios from "axios";
+import { AnimeInfo } from "@/types";
 
 type Props = {
   params: {
@@ -26,11 +29,11 @@ type Props = {
 
 export default async function DetailsPage({ params }: Props) {
   // Search anime by slug
-  const anime = await fetchAnimeInfo(params.id);
+  const anime = await axios.get<{data: AnimeInfo}>(JIKAN_API_ANIME_URL + `/${params.id}`).then((res) => res.data.data);
 
   if (!anime) redirect("/");
 
-  const imgBase64 = await getBase64(anime.image!);
+  const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
   // const session = await getServerSession(authConfig);
   // let progress = null;
@@ -48,7 +51,7 @@ export default async function DetailsPage({ params }: Props) {
         <div className="md:flex h-full">
           <div>
             <Image
-              src={anime.image!}
+              src={anime.images.webp.large_image_url}
               placeholder="blur"
               blurDataURL={imgBase64}
               width={400}
@@ -60,16 +63,16 @@ export default async function DetailsPage({ params }: Props) {
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
               <h1 className="text-4xl font-bold uppercase">
-                {anime.title as string}
+                {anime.title}
               </h1>
-              <p className="ml-1">{anime.releaseDate}</p>
+              <p className="ml-1">{anime.year}</p>
             </div>
-            <p className="opacity-60 mb-2">{anime.otherName}</p>
-            {anime.description && <Description paragraph={anime.description} />}
+            <p className="opacity-60 mb-2">{anime.title_japanese}</p>
+            {anime.synopsis && <Description paragraph={anime.synopsis} />}
 
             <div className="grid grid-cols-4 md:flex flex-wrap items-center justify-center opacity-70 gap-3">
-              {anime.genres!.map((obj) => (
-                <p key={obj}>{obj}</p>
+              {anime.genres.map((genre) => (
+                <p key={genre.name}>{genre.name}</p>
               ))}
             </div>
           </div>
@@ -94,16 +97,16 @@ export default async function DetailsPage({ params }: Props) {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <EpisodeList episodeList={anime.episodes!}>
+          {/* <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
-          </EpisodeList>
+          </EpisodeList> */}
           {/* <FollowButton
             isFollowed={progress !== null}
             session={session}
             animeId={anime.id}
           /> */}
         </div>
-        <AnimeDetailsSection anime_id={params.id} />
+        {/* <AnimeDetailsSection anime_id={params.id} /> */}
       </div>
     </>
   );
