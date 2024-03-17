@@ -5,9 +5,7 @@ import {
   extractNameAndEpisode,
   fetchSource,
 } from "@/lib/utils";
-import { getXataClient } from "@/xata/xata";
 import { redirect } from "next/navigation";
-import { insertNewAnime, updateEpisodesInDb } from "@/xata/anime";
 import { fetchAnimeInfo } from "@/lib/utils";
 import MarkAsWatchedButton from "@/components/episodePage/markAsWatchedButton";
 import HLSPlayer from "@/components/episodePage/hslPlayer";
@@ -22,22 +20,6 @@ type Props = {
 export default async function EpisodePage({ params }: Props) {
   // Fetch anime info for episode list
   const anime = await fetchAnimeInfo(params.id);
-
-  const xata = getXataClient();
-  const animeRecordInDB = await xata.db.animes.read(anime.id);
-
-  if (animeRecordInDB && anime.status !== "Completed") {
-    const episodesInDB = await xata.db.episodes
-      .filter({ anime: animeRecordInDB.id })
-      .getAll();
-    if (episodesInDB.length !== anime.totalEpisodes) {
-      await updateEpisodesInDb(anime, episodesInDB.length);
-    }
-  }
-
-  if (!animeRecordInDB) {
-    await insertNewAnime(anime);
-  }
 
   const sourcesArray = await fetchSource(params.episode_id);
   if (sourcesArray.length < 1) redirect(`/${params.id}`);

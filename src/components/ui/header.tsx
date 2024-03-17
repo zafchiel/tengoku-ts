@@ -29,7 +29,7 @@ function Header() {
       </div>
 
       <div className="flex gap-3">
-        <ProfileButton />
+        {/* <ProfileButton /> */}
 
         <nav className="flex items-center justify-around gap-1 text-xl font-medium">
           <Link href={"/feed"}>

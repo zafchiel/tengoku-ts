@@ -4,10 +4,7 @@ import Description from "@/components/detailsPage/Description";
 import EpisodeList from "@/components/detailsPage/EpisodeLIst";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { fetchAnimeInfo } from "@/lib/utils";
-import { getXataClient } from "@/xata/xata";
 import getBase64 from "@/lib/getBase64Image";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import FollowButton from "@/components/detailsPage/followButton";
 import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
@@ -28,27 +25,20 @@ type Props = {
 };
 
 export default async function DetailsPage({ params }: Props) {
-  const xata = getXataClient();
   // Search anime by slug
   const anime = await fetchAnimeInfo(params.id);
 
   if (!anime) redirect("/");
 
-  const animeRecordInDB = await xata.db.animes.read(anime.id);
-
-  if (!animeRecordInDB) {
-    await insertNewAnime(anime);
-  }
-
   const imgBase64 = await getBase64(anime.image!);
 
-  const session = await getServerSession(authConfig);
-  let progress = null;
-  if (session?.user) {
-    progress = await xata.db.progress
-      .filter({ anime: params.id, user: session?.user?.id })
-      .getFirst();
-  }
+  // const session = await getServerSession(authConfig);
+  // let progress = null;
+  // if (session?.user) {
+  //   progress = await xata.db.progress
+  //     .filter({ anime: params.id, user: session?.user?.id })
+  //     .getFirst();
+  // }
 
   return (
     <>
@@ -107,11 +97,11 @@ export default async function DetailsPage({ params }: Props) {
           <EpisodeList episodeList={anime.episodes!}>
             <Button className="w-full">Watch Now</Button>
           </EpisodeList>
-          <FollowButton
+          {/* <FollowButton
             isFollowed={progress !== null}
             session={session}
             animeId={anime.id}
-          />
+          /> */}
         </div>
         <AnimeDetailsSection anime_id={params.id} />
       </div>

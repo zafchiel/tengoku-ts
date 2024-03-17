@@ -1,4 +1,3 @@
-// import MainCarousel from "@/components/mianPage/carousel"
 import MainCarousel from "@/components/mianPage/mainCarousel";
 import MainHeading from "@/components/mianPage/heading";
 import TrailerPlayer from "@/components/mianPage/trailerPlayer";
@@ -12,9 +11,6 @@ export default async function HomePage() {
   );
   const { data: topAiringAnime }: { data: TopAiring[] } = await res.json();
 
-
-  // await scrapeAnime();
-
   return (
     <>
       <TrailerPlayer topAiringAnime={topAiringAnime} />
@@ -22,7 +18,7 @@ export default async function HomePage() {
         <MainHeading topAiringAnime={topAiringAnime} />
         <MainCarousel topAiringAnime={topAiringAnime} />
       </main>
-      <RecentEpisodesSection />
+      {/* <RecentEpisodesSection /> */}
     </>
   );
 }
