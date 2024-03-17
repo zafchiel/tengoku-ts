@@ -14,18 +14,23 @@ import { Input } from "./input";
 import { Label } from "./label";
 import { Separator } from "./separator";
 import { ChangeEvent, useEffect, useState } from "react";
-import type { SearchResult } from "@/types";
+import type { AnimeInfo } from "@/types";
 import axios, { AxiosError } from "axios";
-import { API_URL } from "@/lib/apiUrl";
 import DisplaySearchResults from "./displaySearchResults";
 import { usePathname } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
+import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 
 const fetchSearchResults = async (searchTerm: string) => {
   try {
     console.log("Made request");
-    const { data } = await axios.get(`${API_URL}/${searchTerm}`);
-    return data.results;
+    const response = await axios.get<{data: AnimeInfo[]}>(JIKAN_API_ANIME_URL, {
+      params: {
+        q: searchTerm,
+        limit: 5
+      }
+    });
+    return response.data.data;
   } catch (error) {
     if (error instanceof AxiosError) console.log(error.message);
   }
@@ -33,7 +38,7 @@ const fetchSearchResults = async (searchTerm: string) => {
 
 export default function SearchDialog() {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<AnimeInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -51,7 +56,9 @@ export default function SearchDialog() {
     if (debouncedSearchText) {
       setLoading(true);
       fetchSearchResults(debouncedSearchText)
-        .then((results) => setSearchResults(results.slice(0, 5)))
+        .then((results) => {
+          if(results?.length) setSearchResults(results);
+        })
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
     }
