@@ -57,10 +57,16 @@ export default function SearchDialog() {
       setLoading(true);
       fetchSearchResults(debouncedSearchText)
         .then((results) => {
-          if(results?.length) setSearchResults(results);
+          if(results) {
+            setSearchResults(results);
+          } else {
+            setSearchResults([]);
+          }
         })
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
+    } else {
+      setLoading(false)
     }
   }, [debouncedSearchText]);
 
@@ -74,7 +80,7 @@ export default function SearchDialog() {
         <SearchIcon />
       </DialogTrigger>
 
-      <DialogContent className="pr-10">
+      <DialogContent className="pr-10 top-[10%] left-1/2 translate-y-0">
         <DialogHeader>
           <form action="/search">
             <div className="flex gap-2 items-center">
@@ -84,7 +90,7 @@ export default function SearchDialog() {
               <Input
                 name="q"
                 id="q"
-                placeholder="Anime Title"
+                placeholder="Search for anime title"
                 value={searchText}
                 onChange={handleInputChange}
               />
@@ -98,6 +104,8 @@ export default function SearchDialog() {
           <div className="flex justify-center items-center">
             <Loader2 className="animate-spin w-8 h-8" />
           </div>
+        ) : searchResults.length === 0 ? (
+          <p>Try searching for something else</p>
         ) : (
           <DisplaySearchResults searchResults={searchResults} />
         )}

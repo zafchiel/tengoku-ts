@@ -19,7 +19,7 @@ export default function SwiperSlideCard({ anime }: Props) {
           height={400}
           src={anime.images.webp.large_image_url}
           alt={anime.title}
-          className="w-full h-full rounded-md hover:scale-125 duration-200 ease-linear"
+          className="w-full h-full rounded-md hover:scale-110 duration-200 ease-linear"
         />
         <div className="pointer-events-none absolute bottom-0 inset-x-0 rounded-b-lg bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <h1 className="z-10 text-xl font-medium text-white">
