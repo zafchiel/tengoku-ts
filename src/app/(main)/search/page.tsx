@@ -20,12 +20,12 @@ export default function SearchResultsPage() {
 
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
-  const currentPage = searchParams.get("page");
-  if(!currentPage) router.replace(`/search?q=${query}&page=1`, { scroll: false });
+  const currentPage = searchParams.get("page") ?? 1;
   // const [queryController, setQueryController] = useState(query);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
+      if (!hasNextPage) return;
       setIsLoading(true);
       // if (queryController !== query) setSearchResults([]);
       try {
@@ -33,7 +33,7 @@ export default function SearchResultsPage() {
           params: {
             q: query,
             limit: 5,
-            page: currentPage ?? 1,
+            page: currentPage,
             sfw: true,
           },
         });
@@ -48,10 +48,8 @@ export default function SearchResultsPage() {
       }
     };
 
-    if(hasNextPage) {
-      fetchSearchResults();
-    }
-  }, [query, currentPage, hasNextPage]);
+    fetchSearchResults();
+  }, [query, currentPage]);
 
   const navigateToNextPage = useCallback(() => {
     router.replace(`/search?q=${query}&page=${Number(currentPage)! + 1}`, {
@@ -60,8 +58,14 @@ export default function SearchResultsPage() {
   }, [query, currentPage, router]);
 
   return (
-    <main>
-      <section className="w-full pb-14 md:pb-5 md:pt-14 p-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
+    <main className="md:pt-14 p-5">
+      <h3 className="text-lg text-muted-foreground p-2">
+        search results:
+        <span className="text-3xl text-foreground font-light pl-2">
+          {query}
+        </span>
+      </h3>
+      <section className="w-full pb-14 md:pb-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {searchResults.map((anime, index) => (
           <DetailsHoverCard key={index} anime={anime}>
             <SearchResultCard anime={anime} />

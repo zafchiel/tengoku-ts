@@ -10,7 +10,8 @@ type Props = {
   anime_id: string;
 };
 
-export default function AnimeDetailsSection({ anime_id }: Props) {
+export default function 
+AnimeDetailsSection({ anime_id }: Props) {
   const [detailedAnimeInfo, setDetailedAnimeInfo] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
