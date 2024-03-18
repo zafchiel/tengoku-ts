@@ -2,7 +2,6 @@
 
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { Button, ButtonProps } from "../ui/button";
-import { signIn } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 
@@ -17,7 +16,7 @@ export default function SignInButton({ provider, className, children }: Props) {
   const callbackUrl = searchParams!.get("callbackUrl");
 
   const handleClick = () => {
-    signIn(provider, { callbackUrl: callbackUrl ?? "/" });
+    // signIn(provider, { callbackUrl: callbackUrl ?? "/" });
   };
 
   return (

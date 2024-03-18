@@ -49,7 +49,7 @@ export default function SearchResultsPage() {
     };
 
     fetchSearchResults();
-  }, [query, currentPage]);
+  }, [query, currentPage, hasNextPage]);
 
   const navigateToNextPage = useCallback(() => {
     router.replace(`/search?q=${query}&page=${Number(currentPage)! + 1}`, {

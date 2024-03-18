@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Input } from "../ui/input";
 import { useForm } from "react-hook-form";
@@ -32,7 +31,7 @@ export default function EmailInput() {
   });
 
   const handleSend = async (values: z.infer<typeof formSchema>) => {
-    signIn("resend", { email: values.email, callbackUrl: callbackUrl ?? "/" });
+    // signIn("resend", { email: values.email, callbackUrl: callbackUrl ?? "/" });
   };
   return (
     <div className="grid w-full items-center gap-1.5">

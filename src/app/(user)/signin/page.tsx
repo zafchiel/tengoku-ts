@@ -1,22 +1,17 @@
 import SignInButton from "@/components/signInPage/signInButton";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import EmailInput from "@/components/signInPage/emailInput";
 import GoogleIcon from "@/components/signInPage/googleIcon";
-import IconRedditCircle from "@/components/signInPage/iconReddit";
-import IconDiscord from "@/components/signInPage/iconDiscrod";
 
 export default async function SignInPage() {
-  const session = await getServerSession(authConfig);
+  // const session = await getServerSession(authConfig);
 
-  if (session) redirect("/");
+  // if (session) redirect("/");
 
   return (
     <main className="flex flex-col h-screen mx-auto items-center justify-center max-w-xl">
-      <div className="p-4 text-left w-full">
-        <h1 className="text-6xl font-bold uppercase">Welcome!</h1>
-        <p className="text-muted-foreground">
+      <div className="text-left w-full">
+        <h1 className="text-6xl font-bold uppercase leading-none">Welcome!</h1>
+        <p className="text-muted-foreground leading-none pb-5 pl-3">
           use your favourite provider to login
         </p>
       </div>
@@ -28,25 +23,12 @@ export default async function SignInPage() {
           <GoogleIcon height="1.75em" width="1.75em" />
           Sign-In with Google
         </SignInButton>
-        <SignInButton
-          provider="reddit"
-          className="flex w-full items-center justify-center gap-2"
-        >
-          <IconRedditCircle height="1.75em" width="1.75em" />
-          Sign-In with Reddit
-        </SignInButton>
-        <SignInButton
-          provider="discord"
-          className="flex w-full items-center justify-center gap-2"
-        >
-          <IconDiscord height="1.75em" width="1.75em" />
-          Sign-In with Discord
-        </SignInButton>
+        
         <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
           OR
         </div>
         <p className="font-semibold text-xl">
-          Sign in with magic link sent to your email
+          Continue with email
         </p>
         <EmailInput />
       </section>
