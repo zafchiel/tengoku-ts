@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Keyboard } from "swiper/modules";
 import Progressbar from "./progressBar";
 import { Skeleton } from "../ui/skeleton";
-import { TopAiringContext } from "../global/top-airing-context";
+import { TopAiringContext } from "../providers/top-airing-context";
 
 import "swiper/css";
 import "swiper/css/autoplay";

@@ -3,7 +3,7 @@
 import { useContext, useState } from "react";
 import YouTube from "react-youtube";
 import Image from "next/image";
-import { TopAiringContext } from "../global/top-airing-context";
+import { TopAiringContext } from "../providers/top-airing-context";
 
 const randomVideoStartSecond = Math.floor(Math.random() * 40);
 

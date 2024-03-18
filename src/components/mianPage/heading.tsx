@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from "react";
-import { TopAiringContext } from "../global/top-airing-context";
+import { TopAiringContext } from "../providers/top-airing-context";
 
 export default function MainHeading() {
   const { topAiring, currentAnimeIndex, loading } = useContext(TopAiringContext);

@@ -1,9 +1,6 @@
 import { AnimeInfo } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   anime: AnimeInfo;
@@ -18,10 +15,8 @@ export default function SearchResultCard({ anime }: Props) {
           width={400}
           height={500}
           src={anime.images.webp.large_image_url}
-          // placeholder="blur"
-          // blurDataURL={imgSrc}
           alt={anime.title}
-          className="w-full h-full rounded-lg hover:scale-125 duration-200 ease-linear"
+          className="w-full h-full rounded-lg hover:scale-110 duration-200 ease-linear"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
           <p className="font-semibold">{anime.title}</p>
