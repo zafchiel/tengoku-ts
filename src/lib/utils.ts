@@ -1,8 +1,5 @@
-import { AnimeInfo, SourceList } from "@/types";
-import axios from "axios";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { API_URL } from "./apiUrl";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,56 +23,10 @@ export default function slugify(str: string) {
   return slug;
 }
 
-export async function fetchAnimeInfo(anime_id: string) {
-  // Search anime by slug
-  const res = await fetch(
-    `${API_URL}/${anime_id}`
-  );
-  const searchResults = await res.json();
-
-  // Fetch detailed info of first record found
-  const res2 = await fetch(
-    `${API_URL}/info/${searchResults.results[0].id}`,
-    { cache: "no-store" }
-  );
-  const animeInfo: AnimeInfo = await res2.json();
-
-  return animeInfo;
-}
-
-export function extractEpisodeNumber(episode_id: string) {
-  const segments = episode_id.trim().split("-");
-  const lastSegment = segments[segments.length - 1];
-
-  const epNumber = parseInt(lastSegment);
-
-  return epNumber;
-}
-
-export function extractNameAndEpisode(episode_id: string) {
-  const segments = episode_id.trim().split("-");
-  const episode = parseInt(segments[segments.length - 1]);
-  const name = segments.slice(0, -2).join(" ");
-
-  return { name, episode };
-}
-
 export const debounce = (fn: Function, delay: number) => {
   let timerId: NodeJS.Timeout;
   return (...args: any[]) => {
     clearTimeout(timerId);
     timerId = setTimeout(() => fn(...args), delay);
   };
-};
-
-export const fetchSource = async (episode_id: string) => {
-  const { data } = await axios.get(
-    `${API_URL}/watch/${episode_id}`
-  );
-  const sourcesArr: SourceList[] = data.sources;
-  const bestQuality = sourcesArr.filter(
-    (obj) =>
-      obj.quality === "480p" || "720p" || "1080p" || "default" || "backup"
-  );
-  return bestQuality as SourceList[];
 };

@@ -1,14 +1,14 @@
 import { createContext, useEffect, useState } from "react";
 import { JIKAN_TOP_ANIME_URL } from "@/lib/constants";
-import { TopAiring } from "@/types";
+import { AnimeInfo } from "@/types";
 import axios from "axios";
-import { setupCache } from "axios-cache-interceptor";
+// import { setupCache } from "axios-cache-interceptor";
 
 // const instance = Axios.create();
 // const axios = setupCache(instance);
 
 type TopAiringContext = {
-  topAiring: TopAiring[];
+  topAiring: AnimeInfo[];
   currentAnimeIndex: number;
   setCurrentAnimeIndex: (index: number) => void;
   loading: boolean;
@@ -28,7 +28,7 @@ type TopAiringContextProviderProps = {
 export function TopAiringContextProvider({
   children,
 }: TopAiringContextProviderProps) {
-  const [topAiring, setTopAiring] = useState<TopAiring[]>([]);
+  const [topAiring, setTopAiring] = useState<AnimeInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentAnimeIndex, setCurrentAnimeIndex] = useState(0);
 
