@@ -1,11 +1,18 @@
 import SignInButton from "@/components/signInPage/signInButton";
-import EmailInput from "@/components/signInPage/emailInput";
+// import EmailInput from "@/components/signInPage/emailInput";
 import GoogleIcon from "@/components/signInPage/googleIcon";
+import { Github } from "lucide-react";
+import { validateRequest } from "@/lib/server/auth";
+import { redirect } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export default async function SignInPage() {
-  // const session = await getServerSession(authConfig);
+  const { user } = await validateRequest();
 
-  // if (session) redirect("/");
+  if(user) {
+    redirect("/");
+  }
 
   return (
     <main className="flex flex-col h-screen mx-auto items-center justify-center max-w-xl">
@@ -16,21 +23,21 @@ export default async function SignInPage() {
         </p>
       </div>
       <section className="flex w-52 flex-col justify-center gap-5 md:w-full md:max-w-2xl">
-        <SignInButton
-          provider="google"
-          className="flex w-full items-center justify-center gap-2"
+        <a
+          href="/api/login/github"
+          className={cn(buttonVariants(), "flex items-center justify-center gap-2")}
         >
-          <GoogleIcon height="1.75em" width="1.75em" />
-          Sign-In with Google
-        </SignInButton>
+          <Github height="1.75em" width="1.75em" />
+          Sign-In with GitHub
+        </a>
         
-        <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
+        {/* <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
           OR
         </div>
         <p className="font-semibold text-xl">
           Continue with email
         </p>
-        <EmailInput />
+        <EmailInput /> */}
       </section>
     </main>
   );
