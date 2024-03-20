@@ -3,12 +3,15 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import useScrollDirection from "@/hooks/useScrollDirection";
-import ProfileButton from "./profileButton";
-import { Home, Newspaper } from "lucide-react";
+import { Home } from "lucide-react";
 import SearchDialog from "./searchDialog";
+import { useContext } from "react";
+import { UserInfoContext } from "../providers/user-info-provider";
 
 function Header() {
+  const user = useContext(UserInfoContext);
   const direction = useScrollDirection();
+
 
   return (
     <header
@@ -29,7 +32,11 @@ function Header() {
       </div>
 
       <div className="flex gap-3">
-        <ProfileButton />
+        {user ? (
+          <Link href="/user">Profile</Link>
+        ) : (
+          <Link href="/login">Login</Link>
+        )}
 
         <nav className="flex items-center justify-around gap-1 text-xl font-medium">
           <SearchDialog />

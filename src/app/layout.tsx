@@ -1,4 +1,4 @@
-import GlobalProviders from "@/components/providers/GlobalProviders";
+import GlobalProviders from "@/components/providers/global-providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
