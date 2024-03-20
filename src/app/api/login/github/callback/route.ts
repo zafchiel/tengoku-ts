@@ -26,7 +26,7 @@ export async function GET(request: Request): Promise<Response> {
     });
     const githubUser: GitHubUser = await githubUserResponse.json();
 
-    const existingUser = db
+    const existingUser = await db
       .select()
       .from(userTable)
       .where(eq(userTable.githubId, githubUser.id))
