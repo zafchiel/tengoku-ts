@@ -1,9 +1,13 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("user", {
 	id: text("id").notNull().primaryKey(),
     username: text("username").notNull(),
     githubId: text("github_id").notNull(),
+}, (table) => {
+	return {
+		githubIdIndex: uniqueIndex("github_id_index").on(table.githubId),
+	};
 });
 
 export const sessionTable = sqliteTable("session", {
