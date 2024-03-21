@@ -15,11 +15,12 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={nohemi.className}>

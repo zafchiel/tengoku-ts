@@ -11,13 +11,13 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className={cn("p-3 flex flex-col md:pt-14")}>
+    <main className={cn("p-3 flex flex-col md:pt-14 container")}>
       <section className="w-full text-right">
         <h1 className="text-6xl font-bold">{user.username}</h1>
+          <LogoutButton user={user} />
       </section>
       <div>
         <section className="mt-5">
-          <LogoutButton user={user} />
           {/* <ProgressSection user={session.user} /> */}
         </section>
       </div>

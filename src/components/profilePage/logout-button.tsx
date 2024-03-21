@@ -5,9 +5,12 @@ import { cn } from "@/lib/utils";
 import { User } from "lucia";
 import { useFormStatus } from "react-dom";
 import { logoutAction } from "@/lib/server/actions/auth-actions";
+import { useContext } from "react";
+import { UserInfoContext } from "../providers/user-info-provider";
 
 function Submit() {
   const status = useFormStatus();
+  const { cleanUserInfo } = useContext(UserInfoContext);
 
   return (
     <Button
@@ -15,6 +18,8 @@ function Submit() {
       aria-disabled={status.pending}
       disabled={status.pending}
       loading={status.pending}
+      onClick={() => cleanUserInfo()}
+      className="uppercase tracking-wider"
     >
       Sign Out
     </Button>

@@ -7,9 +7,10 @@ import { Home } from "lucide-react";
 import SearchDialog from "./searchDialog";
 import { useContext } from "react";
 import { UserInfoContext } from "../providers/user-info-provider";
+import { Skeleton } from "./skeleton";
 
 function Header() {
-  const user = useContext(UserInfoContext);
+  const { userInfo, isAuthenticating } = useContext(UserInfoContext);
   const direction = useScrollDirection();
 
 
@@ -32,7 +33,9 @@ function Header() {
       </div>
 
       <div className="flex gap-3">
-        {user ? (
+        {isAuthenticating ? (
+          <Skeleton className="w-14" />
+        ) : userInfo ? (
           <Link href="/user">Profile</Link>
         ) : (
           <Link href="/login">Login</Link>
