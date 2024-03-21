@@ -15,14 +15,15 @@ export default async function SignInPage() {
   }
 
   return (
-    <main className="flex flex-col h-screen mx-auto items-center justify-center max-w-xl">
-      <div className="text-left w-full">
-        <h1 className="text-6xl font-bold uppercase leading-none">Welcome!</h1>
+    <main className="container grid min-h-screen items-center">
+      <section>
+      <header className="text-left">
+        <h1 className="text-3xl md:text-6xl font-bold uppercase leading-none">Welcome!</h1>
         <p className="text-muted-foreground leading-none pb-5 pl-3">
-          use your favourite provider to login
+          use your favorite provider to login
         </p>
-      </div>
-      <section className="flex w-52 flex-col justify-center gap-5 md:w-full md:max-w-2xl">
+      </header>
+      <div className="flex w-52 flex-col justify-center gap-5 md:w-full md:max-w-2xl">
         <a
           href="/api/login/github"
           className={cn(buttonVariants(), "flex items-center justify-center gap-2")}
@@ -38,6 +39,7 @@ export default async function SignInPage() {
           Continue with email
         </p>
         <EmailInput /> */}
+      </div>
       </section>
     </main>
   );
