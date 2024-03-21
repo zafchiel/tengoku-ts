@@ -1,6 +1,6 @@
 import { validateRequest } from "@/lib/server/auth";
 
-// Get user and session from the request
+// Get user from the request
 export async function GET() {
     const { user, session } = await validateRequest();
 
