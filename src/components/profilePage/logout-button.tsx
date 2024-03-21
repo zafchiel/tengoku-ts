@@ -1,14 +1,12 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
-import { User } from "lucia";
 import { useFormStatus } from "react-dom";
 import { logoutAction } from "@/lib/server/actions/auth-actions";
 import { useContext } from "react";
 import { UserInfoContext } from "../providers/user-info-provider";
 
-function Submit() {
+function SubmitButton() {
   const status = useFormStatus();
   const { cleanUserInfo } = useContext(UserInfoContext);
 
@@ -26,14 +24,11 @@ function Submit() {
   );
 }
 
-type LogoutButtonProps = {
-  user: User;
-};
 
-export function LogoutButton({ user }: LogoutButtonProps) {
+export function LogoutForm() {
   return (
     <form action={logoutAction}>
-      <Submit />
+      <SubmitButton />
     </form>
   );
 }
