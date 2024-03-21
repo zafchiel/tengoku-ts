@@ -14,6 +14,7 @@ function Submit() {
       variant="destructive"
       aria-disabled={status.pending}
       disabled={status.pending}
+      loading={status.pending}
     >
       Sign Out
     </Button>
