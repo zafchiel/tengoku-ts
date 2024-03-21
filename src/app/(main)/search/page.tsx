@@ -4,17 +4,19 @@ import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { AnimeInfo, SearchResult } from "@/types";
+import { AnimeInfo, PaginationInfoType, SearchResult } from "@/types";
 import { Button } from "@/components/ui/button";
 import SearchResultCard from "@/components/mianPage/searchResultCard";
 import { Loader2 } from "lucide-react";
 import DetailsHoverCard from "@/components/ui/detailsHoverCard";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import { usePagination } from "@/hooks/usePagination";
+import { PaginationComponent } from "@/components/mianPage/pagination-component";
 
 export default function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState<AnimeInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [hasNextPage, setHasNextPage] = useState(true);
+  const [paginationInfo, setPaginatonInfo] = useState<PaginationInfoType>();
 
   const router = useRouter();
 
@@ -25,9 +27,8 @@ export default function SearchResultsPage() {
 
   useEffect(() => {
     const fetchSearchResults = async () => {
-      if (!hasNextPage) return;
+      if (paginationInfo?.has_next_page === false) return;
       setIsLoading(true);
-      // if (queryController !== query) setSearchResults([]);
       try {
         const response = await axios.get<SearchResult>(JIKAN_API_ANIME_URL, {
           params: {
@@ -37,10 +38,8 @@ export default function SearchResultsPage() {
             sfw: true,
           },
         });
-        console.log(response.data);
         setSearchResults((prev) => [...prev, ...response.data.data]);
-        if (!response.data.pagination.has_next_page) setHasNextPage(false);
-        // setQueryController(query!);
+        setPaginatonInfo(response.data.pagination);
       } catch (error) {
         console.log(error);
       } finally {
@@ -49,7 +48,7 @@ export default function SearchResultsPage() {
     };
 
     fetchSearchResults();
-  }, [query, currentPage, hasNextPage]);
+  }, [query, currentPage, paginationInfo]);
 
   const navigateToNextPage = useCallback(() => {
     router.replace(`/search?q=${query}&page=${Number(currentPage)! + 1}`, {
@@ -65,6 +64,9 @@ export default function SearchResultsPage() {
           {query}
         </span>
       </h3>
+      {paginationInfo && (
+        <PaginationComponent paginationInfo={paginationInfo} />
+      )}
       <section className="w-full pb-14 md:pb-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
         {searchResults.map((anime, index) => (
           <DetailsHoverCard key={index} anime={anime}>
@@ -74,11 +76,11 @@ export default function SearchResultsPage() {
       </section>
       <div className="p-3">
         <Button
-          disabled={isLoading || !hasNextPage}
+          disabled={isLoading || !paginationInfo?.has_next_page}
           onClick={() => navigateToNextPage()}
           className="w-full"
         >
-          {!hasNextPage ? (
+          {!paginationInfo?.has_next_page ? (
             <p>No More</p>
           ) : isLoading ? (
             <>
