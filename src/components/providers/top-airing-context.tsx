@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { JIKAN_TOP_ANIME_URL } from "@/lib/constants";
+import { JIKAN_API_TOP_ANIME_URL } from "@/lib/constants";
 import { AnimeInfo } from "@/types";
 import axios from "axios";
 // import { setupCache } from "axios-cache-interceptor";
@@ -35,7 +35,7 @@ export function TopAiringContextProvider({
   useEffect(() => {
     const fetchTopAiring = async () => {
       try {
-        const response = await axios.get(JIKAN_TOP_ANIME_URL, {
+        const response = await axios.get(JIKAN_API_TOP_ANIME_URL, {
           params: {
             filter: "airing",
             limit: "6",

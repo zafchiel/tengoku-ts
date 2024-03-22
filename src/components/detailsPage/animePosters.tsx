@@ -1,8 +1,11 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import axios, { AxiosError } from "axios";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 
 type Props = {
   mal_id: number;
@@ -19,7 +22,7 @@ export default function AnimePosters({ mal_id }: Props) {
         const {
           data: { data: animePicturesData },
         } = await axios.get(
-          `https://api.jikan.moe/v4/anime/${mal_id}/pictures`
+          `${JIKAN_API_ANIME_URL}/${mal_id}/pictures`
         );
         setAnimePics(animePicturesData);
       } catch (error) {

@@ -1,12 +1,8 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
-import EpisodeList from "@/components/detailsPage/EpisodeLIst";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { fetchAnimeInfo } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import getBase64 from "@/lib/getBase64Image";
-import FollowButton from "@/components/detailsPage/followButton";
-import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
 import { AlertCircle } from "lucide-react";
@@ -16,18 +12,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import TriggerToastComponent from "@/components/detailsPage/triggerToastComponent";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 import axios from "axios";
 import { AnimeInfo } from "@/types";
 
-type Props = {
+type DetailsPageProps = {
   params: {
     id: string;
   };
 };
 
-export default async function DetailsPage({ params }: Props) {
+export default async function DetailsPage({ params }: DetailsPageProps) {
   // Search anime by slug
   const anime = await axios.get<{data: AnimeInfo}>(JIKAN_API_ANIME_URL + `/${params.id}`).then((res) => res.data.data);
 
@@ -35,17 +30,8 @@ export default async function DetailsPage({ params }: Props) {
 
   const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
-  // const session = await getServerSession(authConfig);
-  // let progress = null;
-  // if (session?.user) {
-  //   progress = await xata.db.progress
-  //     .filter({ anime: params.id, user: session?.user?.id })
-  //     .getFirst();
-  // }
-
   return (
     <>
-      <TriggerToastComponent />
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
@@ -77,36 +63,7 @@ export default async function DetailsPage({ params }: Props) {
             </div>
           </div>
         </div>
-        <div className="flex w-full md:w-3/4 gap-2 p-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href={`/${params.id}/pics`}
-                  className={buttonVariants({
-                    variant: "destructive",
-                    className: "font-light",
-                  })}
-                >
-                  <AlertCircle className="w-8 h-8 mr-2" />
-                  NSFW Pics
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                Random pictures from booru - may contain nudity!
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          {/* <EpisodeList episodeList={anime.episodes!}>
-            <Button className="w-full">Watch Now</Button>
-          </EpisodeList> */}
-          {/* <FollowButton
-            isFollowed={progress !== null}
-            session={session}
-            animeId={anime.id}
-          /> */}
-        </div>
-        {/* <AnimeDetailsSection anime_id={params.id} /> */}
+        <AnimeDetailsSection animeInfo={anime} />
       </div>
     </>
   );
