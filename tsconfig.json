@@ -22,7 +22,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["vidstack/globals"]
   },
   "include": [
     "next-env.d.ts",

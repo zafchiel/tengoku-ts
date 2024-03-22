@@ -1,10 +1,10 @@
-import { TopAiring } from "@/types"
+import { AnimeInfo } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
 import ScoreBadge from "./scoreBadge"
 
 type Props = {
-  anime: TopAiring
+  anime: AnimeInfo
 }
 
 export default function SwiperSlideCard({ anime }: Props) {

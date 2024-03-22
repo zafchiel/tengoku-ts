@@ -1,6 +1,3 @@
-import SignInButton from "@/components/signInPage/signInButton";
-// import EmailInput from "@/components/signInPage/emailInput";
-import GoogleIcon from "@/components/signInPage/googleIcon";
 import { Github } from "lucide-react";
 import { validateRequest } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
@@ -31,14 +28,6 @@ export default async function SignInPage() {
           <Github height="1.75em" width="1.75em" />
           Sign-In with GitHub
         </a>
-        
-        {/* <div className="w-full flex items-center gap-2 before:block before:h-px before:grow before:bg-primary after:block after:grow after:h-px after:bg-primary">
-          OR
-        </div>
-        <p className="font-semibold text-xl">
-          Continue with email
-        </p>
-        <EmailInput /> */}
       </div>
       </section>
     </main>
