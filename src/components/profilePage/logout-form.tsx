@@ -8,7 +8,6 @@ import { UserInfoContext } from "../providers/user-info-provider";
 
 function SubmitButton() {
   const status = useFormStatus();
-  const { cleanUserInfo } = useContext(UserInfoContext);
 
   return (
     <Button
@@ -16,7 +15,6 @@ function SubmitButton() {
       aria-disabled={status.pending}
       disabled={status.pending}
       loading={status.pending}
-      onClick={() => cleanUserInfo()}
       className="uppercase tracking-wider"
     >
       Sign Out
@@ -26,8 +24,13 @@ function SubmitButton() {
 
 
 export function LogoutForm() {
+  const { cleanUserInfo } = useContext(UserInfoContext);
+
   return (
-    <form action={logoutAction}>
+    <form action={async () => {
+      await logoutAction();
+      cleanUserInfo();
+    }}>
       <SubmitButton />
     </form>
   );

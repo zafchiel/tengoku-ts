@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { validateRequest } from "@/lib/server/auth";
-import { LogoutForm } from "@/components/profilePage/logout-button";
+import { LogoutForm } from "@/components/profilePage/logout-form";
 
 export default async function ProfilePage() {
   const { user, session } = await validateRequest();
@@ -12,9 +12,9 @@ export default async function ProfilePage() {
 
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
-      <section className="w-full text-right">
+      <section className="flex items-center justify-between">
         <h1 className="text-6xl font-bold">{user.username}</h1>
-          <LogoutForm />
+        <LogoutForm />
       </section>
       <div>
         <section className="mt-5">
