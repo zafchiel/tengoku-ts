@@ -1,4 +1,4 @@
-import GlobalProviders from "@/components/global/GlobalProviders";
+import GlobalProviders from "@/components/providers/global-providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -15,11 +15,12 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className={nohemi.className}>

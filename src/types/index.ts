@@ -1,4 +1,4 @@
-export type TopAiring = {
+export type AnimeInfo = {
   mal_id: number;
   url: string;
   images: {
@@ -127,67 +127,17 @@ export type TopAiring = {
   ];
 };
 
+export type PaginationInfoType = {
+  last_visible_page: number;
+  has_next_page: boolean;
+  items: {
+    count: number;
+    total: number;
+    per_page: number;
+  };
+}
+
 export type SearchResult = {
-  id: string;
-  title: string;
-  image: string;
-  releaseDate: string | null;
-  subOrDub: "sub" | "dub";
-  url: string;
-};
-
-export type AnimeInfo = {
-  id: string;
-  title: string;
-  url: string;
-  image: string;
-  releaseDate: string | null;
-  description: string | null;
-  genres: string[];
-  subOrDub: string;
-  type: string | null;
-  status: string;
-  otherName: string | null;
-  totalEpisodes: number;
-  episodes: [
-    {
-      id: string;
-      number: number;
-      url: string;
-    },
-  ];
-};
-
-export type EpisodeListType = {
-  id: string;
-  number: number;
-  url: string;
-}[];
-
-export type SourceList = {
-  url: string;
-  isM3U8: boolean;
-  quality: string;
-};
-
-export type RecentEpisode = {
-  id: string;
-  episodeId: string;
-  episodeNumber: number;
-  title: string;
-  image: string;
-  url: string;
-};
-
-export type RecentEpisodesResponseSchema = {
-  currentPage: number;
-  hasNextPage: boolean;
-  results: RecentEpisode[];
-};
-
-export type UserProgressData = {
-  progress_id: string;
-  user_id: string;
-  progress: number;
-  status: string;
+  data: AnimeInfo[];
+  pagination: PaginationInfoType
 };

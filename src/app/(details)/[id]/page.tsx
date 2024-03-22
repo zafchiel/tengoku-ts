@@ -1,15 +1,8 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
-import EpisodeList from "@/components/detailsPage/EpisodeLIst";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { fetchAnimeInfo } from "@/lib/utils";
-import { getXataClient } from "@/xata/xata";
+import { buttonVariants } from "@/components/ui/button";
 import getBase64 from "@/lib/getBase64Image";
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
-import FollowButton from "@/components/detailsPage/followButton";
-import { insertNewAnime } from "@/xata/anime";
 import Link from "next/link";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
 import { AlertCircle } from "lucide-react";
@@ -19,46 +12,32 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import TriggerToastComponent from "@/components/detailsPage/triggerToastComponent";
+import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import axios from "axios";
+import { AnimeInfo } from "@/types";
 
-type Props = {
+type DetailsPageProps = {
   params: {
     id: string;
   };
 };
 
-export default async function DetailsPage({ params }: Props) {
-  const xata = getXataClient();
+export default async function DetailsPage({ params }: DetailsPageProps) {
   // Search anime by slug
-  const anime = await fetchAnimeInfo(params.id);
+  const anime = await axios.get<{data: AnimeInfo}>(JIKAN_API_ANIME_URL + `/${params.id}`).then((res) => res.data.data);
 
   if (!anime) redirect("/");
 
-  const animeRecordInDB = await xata.db.animes.read(anime.id);
-
-  if (!animeRecordInDB) {
-    await insertNewAnime(anime);
-  }
-
-  const imgBase64 = await getBase64(anime.image!);
-
-  const session = await getServerSession(authConfig);
-  let progress = null;
-  if (session?.user) {
-    progress = await xata.db.progress
-      .filter({ anime: params.id, user: session?.user?.id })
-      .getFirst();
-  }
+  const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
   return (
     <>
-      <TriggerToastComponent />
       <div className="w-full flex flex-col items-center p-4 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
           <div>
             <Image
-              src={anime.image!}
+              src={anime.images.webp.large_image_url}
               placeholder="blur"
               blurDataURL={imgBase64}
               width={400}
@@ -70,50 +49,21 @@ export default async function DetailsPage({ params }: Props) {
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
               <h1 className="text-4xl font-bold uppercase">
-                {anime.title as string}
+                {anime.title}
               </h1>
-              <p className="ml-1">{anime.releaseDate}</p>
+              <p className="ml-1">{anime.year}</p>
             </div>
-            <p className="opacity-60 mb-2">{anime.otherName}</p>
-            {anime.description && <Description paragraph={anime.description} />}
+            <p className="opacity-60 mb-2">{anime.title_japanese}</p>
+            {anime.synopsis && <Description paragraph={anime.synopsis} />}
 
             <div className="grid grid-cols-4 md:flex flex-wrap items-center justify-center opacity-70 gap-3">
-              {anime.genres!.map((obj) => (
-                <p key={obj}>{obj}</p>
+              {anime.genres.map((genre) => (
+                <p key={genre.name}>{genre.name}</p>
               ))}
             </div>
           </div>
         </div>
-        <div className="flex w-full md:w-3/4 gap-2 p-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href={`/${params.id}/pics`}
-                  className={buttonVariants({
-                    variant: "destructive",
-                    className: "font-light",
-                  })}
-                >
-                  <AlertCircle className="w-8 h-8 mr-2" />
-                  NSFW Pics
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>
-                Random pictures from booru - may contain nudity!
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <EpisodeList episodeList={anime.episodes!}>
-            <Button className="w-full">Watch Now</Button>
-          </EpisodeList>
-          <FollowButton
-            isFollowed={progress !== null}
-            session={session}
-            animeId={anime.id}
-          />
-        </div>
-        <AnimeDetailsSection anime_id={params.id} />
+        <AnimeDetailsSection animeInfo={anime} />
       </div>
     </>
   );

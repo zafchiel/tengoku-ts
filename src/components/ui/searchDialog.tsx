@@ -14,18 +14,23 @@ import { Input } from "./input";
 import { Label } from "./label";
 import { Separator } from "./separator";
 import { ChangeEvent, useEffect, useState } from "react";
-import type { SearchResult } from "@/types";
+import type { AnimeInfo } from "@/types";
 import axios, { AxiosError } from "axios";
-import { API_URL } from "@/lib/apiUrl";
 import DisplaySearchResults from "./displaySearchResults";
 import { usePathname } from "next/navigation";
 import { useDebounce } from "@/hooks/useDebounce";
+import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 
 const fetchSearchResults = async (searchTerm: string) => {
   try {
     console.log("Made request");
-    const { data } = await axios.get(`${API_URL}/${searchTerm}`);
-    return data.results;
+    const response = await axios.get<{data: AnimeInfo[]}>(JIKAN_API_ANIME_URL, {
+      params: {
+        q: searchTerm,
+        limit: 5
+      }
+    });
+    return response.data.data;
   } catch (error) {
     if (error instanceof AxiosError) console.log(error.message);
   }
@@ -33,7 +38,7 @@ const fetchSearchResults = async (searchTerm: string) => {
 
 export default function SearchDialog() {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchResults, setSearchResults] = useState<AnimeInfo[]>([]);
   const [loading, setLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -51,9 +56,17 @@ export default function SearchDialog() {
     if (debouncedSearchText) {
       setLoading(true);
       fetchSearchResults(debouncedSearchText)
-        .then((results) => setSearchResults(results.slice(0, 5)))
+        .then((results) => {
+          if(results) {
+            setSearchResults(results);
+          } else {
+            setSearchResults([]);
+          }
+        })
         .catch((error) => console.log(error))
         .finally(() => setLoading(false));
+    } else {
+      setLoading(false)
     }
   }, [debouncedSearchText]);
 
@@ -67,7 +80,7 @@ export default function SearchDialog() {
         <SearchIcon />
       </DialogTrigger>
 
-      <DialogContent className="pr-10">
+      <DialogContent className="pr-10 top-[10%] left-1/2 translate-y-0">
         <DialogHeader>
           <form action="/search">
             <div className="flex gap-2 items-center">
@@ -77,7 +90,7 @@ export default function SearchDialog() {
               <Input
                 name="q"
                 id="q"
-                placeholder="Anime Title"
+                placeholder="Search for anime title"
                 value={searchText}
                 onChange={handleInputChange}
               />
@@ -91,6 +104,8 @@ export default function SearchDialog() {
           <div className="flex justify-center items-center">
             <Loader2 className="animate-spin w-8 h-8" />
           </div>
+        ) : searchResults.length === 0 ? (
+          <p>Try searching for something else</p>
         ) : (
           <DisplaySearchResults searchResults={searchResults} />
         )}

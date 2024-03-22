@@ -1,7 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authConfig } from "@/pages/api/auth/[...nextauth]";
 import { redirect } from "next/navigation";
-import { getXataClient } from "@/xata/xata";
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -9,21 +6,23 @@ import MarkAllButton from "@/components/feedPage/markAllButton";
 import styles from "./styles.module.css";
 
 export default async function FeedPage() {
-  const session = await getServerSession(authConfig);
-  if (!session?.user) redirect("/api/auth/signin?callbackUrl=/feed");
+  // const session = await getServerSession(authConfig);
+  // if (!session?.user) redirect("/api/auth/signin?callbackUrl=/feed");
 
-  const xata = getXataClient();
-  const userProgress = await xata.db.progress
-    .filter({ user: session.user, status: "Watching" })
-    .select([
-      "*",
-      "anime.title",
-      "anime.image",
-      "anime.totalEpisodes",
-      "anime.id",
-      "anime.status",
-    ])
-    .getAll();
+  // const xata = getXataClient();
+  // const userProgress = await xata.db.progress
+  //   .filter({ user: session.user, status: "Watching" })
+  //   .select([
+  //     "*",
+  //     "anime.title",
+  //     "anime.image",
+  //     "anime.totalEpisodes",
+  //     "anime.id",
+  //     "anime.status",
+  //   ])
+  //   .getAll();
+
+    return null
 
   return (
     <main className="p-4 md:pt-14">

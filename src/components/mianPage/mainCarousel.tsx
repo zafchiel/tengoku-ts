@@ -1,39 +1,23 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { Autoplay, Navigation, Keyboard } from "swiper/modules"
-import type { TopAiring } from "@/types"
-import { useSetAtom } from "jotai"
-import { useHydrateAtoms } from "jotai/utils"
-import { atomWithStorage } from "jotai/utils"
-import Progressbar from "./progressBar"
-import { Skeleton } from "../ui/skeleton"
+import { useContext, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Navigation, Keyboard } from "swiper/modules";
+import Progressbar from "./progressBar";
+import { Skeleton } from "../ui/skeleton";
+import { TopAiringContext } from "../providers/top-airing-context";
 
-import "swiper/css"
-import "swiper/css/autoplay"
-import "swiper/css/keyboard"
-import "swiper/css/navigation"
-import SwiperSlideCard from "./swiperSlideCard"
+import "swiper/css";
+import "swiper/css/autoplay";
+import "swiper/css/keyboard";
+import "swiper/css/navigation";
+import SwiperSlideCard from "./swiperSlideCard";
 
-export const currentAnimeAtom = atomWithStorage("currentAnime", {} as TopAiring)
+export default function MainCarousel() {
+  const [progressBarWidth, setProgressBarWidth] = useState(0);
+  const { setCurrentAnimeIndex, topAiring, loading } = useContext(TopAiringContext);
 
-export default function MainCarousel({
-  topAiringAnime,
-}: {
-  topAiringAnime: TopAiring[]
-}) {
-  useHydrateAtoms([[currentAnimeAtom, topAiringAnime[0]]])
-  const [progressBarWidth, setProgressBarWidth] = useState(0)
-  const setCurrentAnime = useSetAtom(currentAnimeAtom)
-
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
-
-  if (!isMounted) return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52" />
+  if (!topAiring.length || loading) return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52" />;
 
   return (
     <section className="lg:pt-52 w-full lg:w-3/5">
@@ -43,7 +27,7 @@ export default function MainCarousel({
           setProgressBarWidth(100 - percentage * 100)
         }
         onSlideChange={(S) => {
-          setCurrentAnime(topAiringAnime[S.realIndex])
+          setCurrentAnimeIndex(S.realIndex);
         }}
         spaceBetween={5}
         loop={true}
@@ -75,12 +59,12 @@ export default function MainCarousel({
         }}
         className="mySwiper"
       >
-        {topAiringAnime.map((obj) => (
-          <SwiperSlide key={obj.mal_id}>
-            <SwiperSlideCard obj={obj} />
+        {topAiring.map((anime) => (
+          <SwiperSlide key={anime.mal_id}>
+            <SwiperSlideCard anime={anime} />
           </SwiperSlide>
         ))}
       </Swiper>
     </section>
-  )
+  );
 }
