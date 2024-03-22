@@ -3,7 +3,6 @@
 import MainCarousel from "@/components/mianPage/mainCarousel";
 import MainHeading from "@/components/mianPage/heading";
 import TrailerPlayer from "@/components/mianPage/trailerPlayer";
-import RecentEpisodesSection from "@/components/mianPage/recentEpisodesSection";
 import { TopAiringContextProvider } from "@/components/providers/top-airing-context";
 
 export default function HomePage() {
@@ -14,7 +13,6 @@ export default function HomePage() {
         <MainHeading />
         <MainCarousel/>
       </main>
-      {/* <RecentEpisodesSection /> */}
     </TopAiringContextProvider>
   );
 }

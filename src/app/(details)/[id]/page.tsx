@@ -1,17 +1,8 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Description from "@/components/detailsPage/Description";
-import { buttonVariants } from "@/components/ui/button";
 import getBase64 from "@/lib/getBase64Image";
-import Link from "next/link";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
-import { AlertCircle } from "lucide-react";
-import {
-  TooltipProvider,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 import axios from "axios";
 import { AnimeInfo } from "@/types";
