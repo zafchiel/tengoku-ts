@@ -1,1 +1,2 @@
-### don't use it pls
+# Decently looking anime wiki
+yes it is myanimelist wrapper
