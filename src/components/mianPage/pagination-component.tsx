@@ -21,7 +21,8 @@ export function PaginationComponent({ paginationInfo, activePage, query }: Pagin
   const pagination = usePagination({
     totalCount: paginationInfo?.items.total ?? 0,
     pageSize: paginationInfo?.items.per_page ?? 0,
-    currentPage: paginationInfo?.items.count ?? 1,
+    currentPage: activePage,
+    siblingCount: 1,
   });
 
   return (
