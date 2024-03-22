@@ -8,13 +8,16 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { usePagination } from "@/hooks/usePagination";
+import { cn } from "@/lib/utils";
 import { PaginationInfoType } from "@/types";
 
 type PaginationProps = {
   paginationInfo: PaginationInfoType;
+  activePage: number;
+  query: string;
 };
 
-export function PaginationComponent({ paginationInfo }: PaginationProps) {
+export function PaginationComponent({ paginationInfo, activePage, query }: PaginationProps) {
   const pagination = usePagination({
     totalCount: paginationInfo?.items.total ?? 0,
     pageSize: paginationInfo?.items.per_page ?? 0,
@@ -25,7 +28,7 @@ export function PaginationComponent({ paginationInfo }: PaginationProps) {
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href="#" />
+          <PaginationPrevious className={cn(activePage <= 1 && "pointer-events-none opacity-40")} href={`/search?q=${query}&page=${activePage - 1}`} />
         </PaginationItem>
 
         {pagination?.map((page, index) => {
@@ -38,16 +41,14 @@ export function PaginationComponent({ paginationInfo }: PaginationProps) {
             } else if (typeof page === "number") {
               return (
                 <PaginationItem key={index}>
-                  <PaginationLink href="#">{page}</PaginationLink>
+                  <PaginationLink href={`/search?q=${query}&page=${page}`} isActive={activePage === page}>{page}</PaginationLink>
                 </PaginationItem>
               );
             }
         })}
 
-        
-
         <PaginationItem>
-          <PaginationNext href="#" />
+          <PaginationNext className={cn(activePage >= paginationInfo.last_visible_page && "pointer-events-none opacity-40")} href={`/search?q=${query}&page=${activePage + 1}`} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

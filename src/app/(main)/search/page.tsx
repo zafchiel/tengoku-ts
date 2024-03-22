@@ -12,6 +12,7 @@ import DetailsHoverCard from "@/components/ui/detailsHoverCard";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 import { usePagination } from "@/hooks/usePagination";
 import { PaginationComponent } from "@/components/mianPage/pagination-component";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState<AnimeInfo[]>([]);
@@ -21,7 +22,7 @@ export default function SearchResultsPage() {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
+  const query = searchParams.get("q") ?? "";
   const currentPage = searchParams.get("page") ?? 1;
   // const [queryController, setQueryController] = useState(query);
 
@@ -33,12 +34,12 @@ export default function SearchResultsPage() {
         const response = await axios.get<SearchResult>(JIKAN_API_ANIME_URL, {
           params: {
             q: query,
-            limit: 5,
+            limit: 3,
             page: currentPage,
             sfw: true,
           },
         });
-        setSearchResults((prev) => [...prev, ...response.data.data]);
+        setSearchResults(response.data.data);
         setPaginatonInfo(response.data.pagination);
       } catch (error) {
         console.log(error);
@@ -56,6 +57,12 @@ export default function SearchResultsPage() {
     });
   }, [query, currentPage, router]);
 
+  const navigateTo = (pageNumber: number) => {
+    router.replace(`/search?q=${query}&page=${pageNumber}`, {
+      scroll: false,
+    });
+  };
+
   return (
     <main className="md:pt-14 p-5">
       <h3 className="text-lg text-muted-foreground p-2">
@@ -65,33 +72,38 @@ export default function SearchResultsPage() {
         </span>
       </h3>
       {paginationInfo && (
-        <PaginationComponent paginationInfo={paginationInfo} />
+        <div className="p-3">
+          <PaginationComponent
+            query={query}
+            activePage={Number(currentPage)}
+            paginationInfo={paginationInfo}
+          />
+        </div>
       )}
+
       <section className="w-full pb-14 md:pb-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 gap-3">
-        {searchResults.map((anime, index) => (
-          <DetailsHoverCard key={index} anime={anime}>
-            <SearchResultCard anime={anime} />
-          </DetailsHoverCard>
-        ))}
+        {isLoading ? (
+          Array.from({ length: 10 }).map((_, index) => (
+            <Skeleton key={index} className="h-full aspect-[4/5] w-400px" />
+          ))
+        ) : (
+          searchResults.map((anime, index) => (
+            <DetailsHoverCard key={index} anime={anime}>
+              <SearchResultCard anime={anime} />
+            </DetailsHoverCard>
+          ))
+        )}
       </section>
-      <div className="p-3">
-        <Button
-          disabled={isLoading || !paginationInfo?.has_next_page}
-          onClick={() => navigateToNextPage()}
-          className="w-full"
-        >
-          {!paginationInfo?.has_next_page ? (
-            <p>No More</p>
-          ) : isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Loading
-            </>
-          ) : (
-            <p>Load More</p>
-          )}
-        </Button>
-      </div>
+
+      {paginationInfo && (
+        <div className="p-3">
+          <PaginationComponent
+            query={query}
+            activePage={Number(currentPage)}
+            paginationInfo={paginationInfo}
+          />
+        </div>
+      )}
     </main>
   );
 }

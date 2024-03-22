@@ -17,7 +17,7 @@ type PaginationProps = {
 export const usePagination = ({
   totalCount,
   pageSize,
-  siblingCount = 1,
+  siblingCount = 2,
   currentPage,
 }: PaginationProps) => {
   const paginationRange = useMemo(() => {
@@ -30,7 +30,7 @@ export const usePagination = ({
       If the number of pages is less than the page numbers we want to show in our
       paginationComponent, we return the range [1..totalPageCount]
     */
-    if (totalPageNumbers >= totalPageCount) {
+    if (totalPageNumbers >= totalPageCount) { 
       return range(1, totalPageCount);
     }
 
