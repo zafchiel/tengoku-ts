@@ -18,10 +18,10 @@ export default function DetailsHeadingSection({ animeInfo, imgBase64 }: HeadingS
               <h1 className="text-4xl font-bold uppercase">{animeInfo.title}</h1>
               <p className="ml-1">{animeInfo.year}</p>
             </div>
-            <p className="opacity-60 mb-2">{animeInfo.title_japanese}</p>
+            <p className="text-muted-foreground">{animeInfo.title_japanese}</p>
             <p className="grow">{animeInfo.synopsis ?? "No synposis"}</p>
 
-            <div className="flex flex-wrap items-center justify-center opacity-70 gap-3">
+            <div className="flex flex-wrap items-center justify-center text-muted-foreground gap-3">
               {animeInfo.genres.map((genre) => (
                 <p key={genre.name}>{genre.name}</p>
               ))}

@@ -44,7 +44,7 @@ export const PosterImage = ({ src, alt, imgBase64 }: PosterImageProps) => {
               width={400}
               height={500}
               alt={alt}
-              className="md:static fixed inset-0 h-screen md:h-auto w-full -z-20 object-cover md:rounded-sm"
+              className="md:static fixed inset-0 h-screen w-full -z-20 object-cover md:rounded-sm md:w-[400px] md:h-auto"
             />
         <canvas ref={canvasRef} width={400} height={500} className='absolute inset-0 pointer-events-none scale-105 blur-xl -z-30 opacity-60' />
     </div>

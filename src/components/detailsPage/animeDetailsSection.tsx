@@ -6,15 +6,39 @@ type AnimeDetailsSectionProps = {
   animeInfo: AnimeInfo;
 };
 
-export default function 
-AnimeDetailsSection({ animeInfo }: AnimeDetailsSectionProps) {
+export default function AnimeDetailsSection({
+  animeInfo,
+}: AnimeDetailsSectionProps) {
+  const airingInfo = animeInfo.season
+    ? `${animeInfo.season} - ${animeInfo.year}`
+    : animeInfo.aired.from
+      ? new Date(animeInfo.aired.from).getFullYear().toString()
+      : "unknown";
 
   return (
     <section className="p-4 border mt-4 flex gap-4 flex-wrap rounded-sm">
       {/* <AnimePosters mal_id={animeInfo.mal_id} /> */}
-      <StatsCard title="score" value={animeInfo.score.toString()} additional={`${animeInfo.scored_by.toLocaleString()} users`} />
-      <StatsCard title="episodes" value={`${animeInfo.type} - ${animeInfo.episodes}`} additional={animeInfo.duration} />
-      <StatsCard title="season" value={`${animeInfo.season} - ${animeInfo.year}`} additional={animeInfo.status} />
+      {animeInfo.score && (
+        <StatsCard
+          title="score"
+          value={`${animeInfo.score}`}
+          additional={`${animeInfo.scored_by?.toLocaleString()} users`}
+        />
+      )}
+      {animeInfo.episodes ? (
+        <StatsCard
+          title="episodes"
+          value={`${animeInfo.type} - ${animeInfo.episodes}`}
+          additional={animeInfo.duration}
+        />
+      ) : (
+        <StatsCard title="episodes" value="unknown" />
+      )}
+      <StatsCard
+        title="season"
+        value={airingInfo}
+        additional={animeInfo.status}
+      />
       <StatsCard title="rating" value={animeInfo.rating} />
     </section>
   );

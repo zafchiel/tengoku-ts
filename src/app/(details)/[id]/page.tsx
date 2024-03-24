@@ -43,7 +43,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
   return (
     <>
-      <main className="container px-1 md:pt-14 md:mt-10">
+      <main className="container px-1 md:px-4 md:pt-14 md:mt-10">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <HeadingSection animeInfo={anime} imgBase64={imgBase64!} />
         <AnimeDetailsSection animeInfo={anime} />
