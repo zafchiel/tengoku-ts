@@ -10,7 +10,7 @@ export default function
 AnimeDetailsSection({ animeInfo }: AnimeDetailsSectionProps) {
 
   return (
-    <section className="p-4 border mt-4 flex gap-4 flex-wrap">
+    <section className="p-4 border mt-4 flex gap-4 flex-wrap rounded-sm">
       {/* <AnimePosters mal_id={animeInfo.mal_id} /> */}
       <StatsCard title="score" value={animeInfo.score.toString()} additional={`${animeInfo.scored_by.toLocaleString()} users`} />
       <StatsCard title="episodes" value={`${animeInfo.type} - ${animeInfo.episodes}`} additional={animeInfo.duration} />
