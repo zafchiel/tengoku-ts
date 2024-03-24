@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { sqliteTable, text, integer, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const userTable = sqliteTable("user", {
@@ -12,6 +13,10 @@ export const userTable = sqliteTable("user", {
 	};
 });
 
+export const userRelations = relations(userTable, ({many}) => ({
+	sessions: many(sessionTable)
+}))
+
 export const sessionTable = sqliteTable("session", {
 	id: text("id").notNull().primaryKey(),
 	userId: text("user_id")
@@ -19,6 +24,13 @@ export const sessionTable = sqliteTable("session", {
 		.references(() => userTable.id),
 	expiresAt: integer("expires_at").notNull()
 });
+
+export const sessionRelations = relations(sessionTable, ({one}) => ({
+	user: one(userTable, {
+		fields: [sessionTable.userId],
+		references: [userTable.id]
+	})
+}))
 
 export type DatabaseUser = typeof userTable.$inferSelect;
 export type InsertDatabaseUser = typeof userTable.$inferInsert;
