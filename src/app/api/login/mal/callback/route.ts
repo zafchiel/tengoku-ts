@@ -10,6 +10,7 @@ import axios from "axios";
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
 
   const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
   const MAL_CLIENT_SECRET = process.env.MAL_CLIENT_SECRET;
@@ -20,7 +21,9 @@ export async function GET(request: Request): Promise<Response> {
 
   const storedVerifier =
     cookies().get("mal_oauth_code_verifier")?.value ?? null;
-  if (!code || !storedVerifier) {
+
+  const storedState = cookies().get("mal_oauth_state")?.value ?? null;
+  if (!code || !storedVerifier || !state || state !== storedState) {
     return new Response(null, {
       status: 400,
     });
