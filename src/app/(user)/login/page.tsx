@@ -28,6 +28,13 @@ export default async function SignInPage() {
           <Github height="1.75em" width="1.75em" />
           Sign-In with GitHub
         </a>
+
+        <a
+          href="/api/login/mal"
+          className={cn(buttonVariants(), "flex items-center justify-center gap-2")}
+        >
+          Sign-In with MyAnimeList
+        </a>
       </div>
       </section>
     </main>
