@@ -15,7 +15,9 @@ type DetailsPageProps = {
 
 export default async function DetailsPage({ params }: DetailsPageProps) {
   // Search anime by slug
-  const anime = await axios.get<{data: AnimeInfo}>(JIKAN_API_ANIME_URL + `/${params.id}`).then((res) => res.data.data);
+  const anime = await axios
+    .get<{ data: AnimeInfo }>(JIKAN_API_ANIME_URL + `/${params.id}`)
+    .then((res) => res.data.data);
 
   if (!anime) redirect("/");
 
@@ -23,7 +25,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
   return (
     <>
-      <div className="w-full flex flex-col items-center p-4 md:pt-14">
+      <div className="container px-1 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <div className="md:flex h-full">
           <div>
@@ -33,21 +35,19 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
               blurDataURL={imgBase64}
               width={400}
               height={500}
-              alt={"Anime image"}
+              alt={"Anime poster for " + anime.title}
               className="md:static fixed inset-0 h-screen md:h-auto w-full -z-20 object-cover"
             />
           </div>
           <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
-              <h1 className="text-4xl font-bold uppercase">
-                {anime.title}
-              </h1>
+              <h1 className="text-4xl font-bold uppercase">{anime.title}</h1>
               <p className="ml-1">{anime.year}</p>
             </div>
             <p className="opacity-60 mb-2">{anime.title_japanese}</p>
-            {anime.synopsis && <Description paragraph={anime.synopsis} />}
+            <p className="grow">{anime.synopsis ?? "No synposis"}</p>
 
-            <div className="grid grid-cols-4 md:flex flex-wrap items-center justify-center opacity-70 gap-3">
+            <div className="flex flex-wrap items-center justify-center opacity-70 gap-3">
               {anime.genres.map((genre) => (
                 <p key={genre.name}>{genre.name}</p>
               ))}
