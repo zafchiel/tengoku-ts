@@ -1,11 +1,11 @@
-import { redirect } from "next/navigation";
 import Image from "next/image";
-import Description from "@/components/detailsPage/Description";
 import getBase64 from "@/lib/getBase64Image";
 import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 import axios from "axios";
 import { AnimeInfo } from "@/types";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 type DetailsPageProps = {
   params: {
@@ -14,20 +14,38 @@ type DetailsPageProps = {
 };
 
 export default async function DetailsPage({ params }: DetailsPageProps) {
+  let anime: AnimeInfo | null = null;
+  
   // Search anime by slug
-  const anime = await axios
-    .get<{ data: AnimeInfo }>(JIKAN_API_ANIME_URL + `/${params.id}`)
-    .then((res) => res.data.data);
+  try {
+    anime = await axios
+      .get<{ data: AnimeInfo }>(JIKAN_API_ANIME_URL + `/${params.id}`)
+      .then((res) => res.data.data);
+    
+  } catch (error) {
+    console.log(error);
+  }
 
-  if (!anime) redirect("/");
+  if (!anime) return (
+    <main className="container px-1 md:py-24">
+
+    <Alert variant="destructive" className="max-w-xl">
+      <AlertCircle className="h-4 w-4" />
+      <AlertTitle>Error</AlertTitle>
+      <AlertDescription>
+        Anime not found. Please try searching again.
+      </AlertDescription>
+    </Alert>
+    </main>
+  )
 
   const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
   return (
     <>
-      <div className="container px-1 md:pt-14">
+      <main className="container px-1 md:pt-14">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
-        <div className="md:flex h-full">
+        <div className="md:flex">
           <div>
             <Image
               src={anime.images.webp.large_image_url}
@@ -55,7 +73,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
           </div>
         </div>
         <AnimeDetailsSection animeInfo={anime} />
-      </div>
+      </main>
     </>
   );
 }
