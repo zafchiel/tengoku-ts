@@ -17,7 +17,7 @@ export default function MainCarousel() {
   const [progressBarWidth, setProgressBarWidth] = useState(0);
   const { setCurrentAnimeIndex, topAiring, loading } = useContext(TopAiringContext);
 
-  if (!topAiring.length || loading) return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52" />;
+  if (!topAiring.length || loading) return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52 mx-10" />;
 
   return (
     <section className="lg:pt-52 w-full lg:w-3/5">

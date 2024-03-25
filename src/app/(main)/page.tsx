@@ -9,7 +9,7 @@ export default function HomePage() {
   return (
     <TopAiringContextProvider>
       {/* <TrailerPlayer /> */}
-      <main className="flex flex-col lg:flex-row h-screen w-full p-10 items-center justify-center">
+      <main className="flex flex-col lg:flex-row h-screen w-full px-2 pb-14 md:p-10 items-center justify-center">
         <MainHeading />
         <MainCarousel/>
       </main>

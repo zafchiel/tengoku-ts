@@ -62,7 +62,7 @@
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 62.8% 80%;
-    --destructive-foreground: 0 85.7% 40%;
+    --destructive-foreground: 0 85.7% 30%;
 
     --ring: 217.2 32.6% 17.5%;
   }
@@ -119,10 +119,4 @@ iframe {
   background-color: #02081770;
   padding: 0.5rem;
   border-radius: 0.5rem;
-}
-
-/* -------------- Episode video pLayer ------------------ */
-
-.art-video-player {
-  z-index: 1;
 }
