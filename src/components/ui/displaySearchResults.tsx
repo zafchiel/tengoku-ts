@@ -10,19 +10,21 @@ export default function DisplaySearchResults({ searchResults }: Props) {
   if (searchResults.length === 0) return null;
 
   return (
-    <div>
+    <div className="divide-y">
       {searchResults.map((result) => (
         <Link href={`/${result.mal_id}`} key={result.mal_id}>
-          <div className="flex h-24 rounded-md gap-2 border-b border-dashed p-4 hover:bg-primary-foreground">
+          <div className="flex rounded-sm gap-1 p-2 hover:bg-primary-foreground">
             <Image
-              width={40}
-              height={55}
+              width={80}
+              height={100}
               src={result.images.webp.small_image_url}
               alt={result.title}
+              className="rounded-sm w-20"
             />
             <div className="flex w-full flex-col justify-between text-left">
-              <h3 className="text-base text-white">{result.title}</h3>
-              <h3 className="text-sm text-white/70">{result.year}</h3>
+              <h3 className="text-lg font-semibold">{result.title}</h3>
+              <p className="text-muted-foreground">{result.type === "Movie" || result.type === "Music" ? result.type : `${result.type} - ${result.episodes} ep`}</p>
+              <p className="uppercase text-muted-foreground">{result.year ? `${result.season} - ${result.year}` : new Date(result.aired.from).getFullYear().toString()}</p>
             </div>
           </div>
         </Link>

@@ -24,7 +24,7 @@ export default function SearchResultCard({ anime }: Props) {
             <p>
               Type:&nbsp;<span className="font-semibold">{anime.type}</span>
             </p>
-            <p>{anime.year}</p>
+            <p className="uppercase">{anime.year ? `${anime.season} - ${anime.year}` : new Date(anime.aired.from).getFullYear().toString()}</p>
           </div>
         </div>
       </Link>

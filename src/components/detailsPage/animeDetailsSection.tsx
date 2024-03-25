@@ -9,6 +9,7 @@ type AnimeDetailsSectionProps = {
 export default function AnimeDetailsSection({
   animeInfo,
 }: AnimeDetailsSectionProps) {
+
   const airingInfo = animeInfo.season
     ? `${animeInfo.season} - ${animeInfo.year}`
     : animeInfo.aired.from
@@ -28,7 +29,7 @@ export default function AnimeDetailsSection({
       {animeInfo.episodes ? (
         <StatsCard
           title="episodes"
-          value={`${animeInfo.type} - ${animeInfo.episodes}`}
+          value={animeInfo.type === "Movie" || animeInfo.type === "Music" ? animeInfo.type : `${animeInfo.type} - ${animeInfo.episodes} ep`}
           additional={animeInfo.duration}
         />
       ) : (
