@@ -120,9 +120,3 @@ iframe {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
-
-/* -------------- Episode video pLayer ------------------ */
-
-.art-video-player {
-  z-index: 1;
-}

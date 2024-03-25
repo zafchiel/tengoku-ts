@@ -76,7 +76,7 @@ export default function SearchDialog() {
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-      <DialogTrigger>
+      <DialogTrigger className="px-2">
         <SearchIcon />
       </DialogTrigger>
 

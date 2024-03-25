@@ -8,6 +8,7 @@ import SearchDialog from "./searchDialog";
 import { useContext } from "react";
 import { UserInfoContext } from "../providers/user-info-provider";
 import { Skeleton } from "./skeleton";
+import { buttonVariants } from "./button";
 
 function Header() {
   const { userInfo, isAuthenticating } = useContext(UserInfoContext);
@@ -32,18 +33,16 @@ function Header() {
         </Link>
       </div>
 
-      <div className="flex gap-3">
+      <div className="flex gap-4">
+        <SearchDialog />
+
         {isAuthenticating ? (
           <Skeleton className="w-14" />
         ) : userInfo ? (
-          <Link href="/user">Profile</Link>
+          <Link href="/user" className={cn(buttonVariants({variant: "secondary"}))}>Profile</Link>
         ) : (
-          <Link href="/login">Login</Link>
+          <Link href="/login" className={cn(buttonVariants({variant: "secondary"}))}>Login</Link>
         )}
-
-        <nav className="flex items-center justify-around gap-1 text-xl font-medium">
-          <SearchDialog />
-        </nav>
       </div>
     </header>
   );
