@@ -4,10 +4,7 @@ import { Loader2, Search as SearchIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "./dialog";
 import { Input } from "./input";
@@ -16,9 +13,9 @@ import { Separator } from "./separator";
 import { ChangeEvent, useEffect, useState } from "react";
 import type { AnimeInfo } from "@/types";
 import axios, { AxiosError } from "axios";
-import DisplaySearchResults from "./displaySearchResults";
+import DisplaySearchResults from "./display-search-results";
 import { usePathname } from "next/navigation";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "@/hooks/use-debounce";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 
 const fetchSearchResults = async (searchTerm: string) => {
@@ -82,7 +79,7 @@ export default function SearchDialog() {
 
       <DialogContent className="pr-10 top-[10%] left-1/2 translate-y-0">
         <DialogHeader>
-          <form action="/search">
+          <form action="/search" role="search">
             <div className="flex gap-2 items-center">
               <Label htmlFor="q">
                 <SearchIcon />
@@ -90,6 +87,7 @@ export default function SearchDialog() {
               <Input
                 name="q"
                 id="q"
+                type="search"
                 placeholder="Search for anime title"
                 value={searchText}
                 onChange={handleInputChange}

@@ -2,9 +2,9 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import useScrollDirection from "@/hooks/useScrollDirection";
+import useScrollDirection from "@/hooks/use-scroll-direction";
 import { Home } from "lucide-react";
-import SearchDialog from "./searchDialog";
+import SearchDialog from "./search-dialog";
 import { useContext } from "react";
 import { UserInfoContext } from "../providers/user-info-provider";
 import { Skeleton } from "./skeleton";

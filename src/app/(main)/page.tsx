@@ -1,8 +1,8 @@
 "use client"
 
-import MainCarousel from "@/components/mianPage/mainCarousel";
+import MainCarousel from "@/components/mianPage/main-carousel";
 import MainHeading from "@/components/mianPage/heading";
-import TrailerPlayer from "@/components/mianPage/trailerPlayer";
+import TrailerPlayer from "@/components/mianPage/trailer-player";
 import { TopAiringContextProvider } from "@/components/providers/top-airing-context";
 
 export default function HomePage() {

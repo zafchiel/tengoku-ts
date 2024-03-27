@@ -3,7 +3,7 @@
 import { useContext, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Keyboard } from "swiper/modules";
-import Progressbar from "./progressBar";
+import Progressbar from "./progress-bar";
 import { Skeleton } from "../ui/skeleton";
 import { TopAiringContext } from "../providers/top-airing-context";
 
@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/keyboard";
 import "swiper/css/navigation";
-import SwiperSlideCard from "./swiperSlideCard";
+import SwiperSlideCard from "./swiper-slide-card";
 
 export default function MainCarousel() {
   const [progressBarWidth, setProgressBarWidth] = useState(0);

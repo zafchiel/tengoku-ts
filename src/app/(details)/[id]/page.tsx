@@ -1,5 +1,5 @@
-import getBase64 from "@/lib/getBase64Image";
-import AnimeDetailsSection from "@/components/detailsPage/animeDetailsSection";
+import getBase64 from "@/lib/get-base64-image";
+import AnimeDetailsSection from "@/components/detailsPage/anime-details-section";
 import { JIKAN_API_ANIME_URL } from "@/lib/constants";
 import axios from "axios";
 import { AnimeInfo } from "@/types";

@@ -1,4 +1,4 @@
-import getBase64 from "@/lib/getBase64Image";
+import getBase64 from "@/lib/get-base64-image";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
