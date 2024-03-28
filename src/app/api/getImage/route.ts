@@ -11,7 +11,9 @@ export async function GET(request: Request) {
 
   const base64IMG = await getBase64(img);
 
-  if (!base64IMG)
+  if (!base64IMG) {
     return NextResponse.json({ message: "Couldn't process the image" });
+  }
+  
   return NextResponse.json(base64IMG);
 }

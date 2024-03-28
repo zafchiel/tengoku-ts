@@ -1,4 +1,4 @@
-import { Chrome, Github } from "lucide-react";
+import { Chrome, Github, Sun } from "lucide-react";
 import { validateRequest } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
 
@@ -31,6 +31,24 @@ export default async function SignInPage() {
                 <Chrome size={52} className="mx-auto" />
               </div>
               <p className="font-bold text-center">Google</p>
+            </div>
+            <div
+              className={
+                "absolute bottom-0 right-2 rounded-full h-20 w-20 -z-20 blur-xl bg-gray-500"
+              }
+            ></div>
+          </a>
+
+          <a
+            href="/api/login/discord"
+            className="relative overflow-hidden border rounded-md hover:border-primary/40 transition-all duration-300"
+          >
+            <div className="bg-card/60 backdrop-blur-3xl p-4 h-full space-y-4">
+              <span className="sr-only">Sign-in with Discord</span>
+              <div>
+                <Sun size={52} className="mx-auto" />
+              </div>
+              <p className="font-bold text-center">Discord</p>
             </div>
             <div
               className={

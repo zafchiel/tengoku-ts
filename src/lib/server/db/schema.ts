@@ -6,12 +6,14 @@ export const userTable = sqliteTable("user", {
     username: text("username").notNull(),
     githubId: text("github_id"),
 	malId: text("mal_id"),
-	googleId: text("google_id")
+	googleId: text("google_id"),
+	discordId: text("discord_id")
 }, (table) => {
 	return {
 		githubIdIndex: uniqueIndex("github_id_index").on(table.githubId),
 		malIdIndex: uniqueIndex("mal_id_index").on(table.malId),
-		googleIndex: uniqueIndex("google_id_index").on(table.googleId)
+		googleIndex: uniqueIndex("google_id_index").on(table.googleId),
+		discordIndex: uniqueIndex("discord_id_index").on(table.discordId)
 	};
 });
 

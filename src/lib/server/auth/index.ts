@@ -2,11 +2,13 @@ import { Lucia, type User, type Session } from "lucia";
 import { db } from "../db";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
 import { DatabaseUser, sessionTable, userTable } from "../db/schema";
-import { GitHub, Google } from "arctic";
+import { GitHub, Google, Discord } from "arctic";
 import { cache } from "react";
 import { cookies } from "next/headers";
 
 const dev = process.env.NODE_ENV !== "production";
+const googleRedirectURI = dev ? "http://localhost:3000/api/login/google/callback" : process.env.VERCEL_URL + "/api/login/github/callback";
+const discordRedirectURI = dev ? "http://localhost:3000/api/login/discord/callback" : process.env.VERCEL_URL + "/api/login/github/callback";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -14,12 +16,24 @@ const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
-if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET || !GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
-    throw new Error("GitHub/Google client ID and secret are required");
+const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
+const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
+
+if(!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET) {
+	throw new Error("Discord client ID and secret are required");
+}
+
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET  ) {
+    throw new Error("GitHub client ID and secret are required");
 };
 
+if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
+	throw new Error("Google client ID and secret are required");
+}
+
 export const githubOAuth = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
-export const googleOAuth = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, dev ? "http://localhost:3000/api/login/google/callback" : process.env.VERCEL_URL + "/api/login/google/callback");
+export const googleOAuth = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, googleRedirectURI);
+export const discrodOAuth = new Discord(DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, discordRedirectURI);
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
