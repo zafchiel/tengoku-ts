@@ -1,8 +1,6 @@
-import { Github } from "lucide-react";
+import { Chrome, Github } from "lucide-react";
 import { validateRequest } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
 
 export default async function SignInPage() {
   const { user } = await validateRequest();
@@ -23,6 +21,24 @@ export default async function SignInPage() {
           </p>
         </header>
         <div className="flex flex-col md:grid grid-cols-2 gap-4 max-w-xl">
+        <a
+            href="/api/login/google"
+            className="relative overflow-hidden border rounded-md hover:border-primary/40 transition-all duration-300"
+          >
+            <div className="bg-card/60 backdrop-blur-3xl p-4 h-full space-y-4">
+              <span className="sr-only">Sign-in with Google</span>
+              <div>
+                <Chrome size={52} className="mx-auto" />
+              </div>
+              <p className="font-bold text-center">Google</p>
+            </div>
+            <div
+              className={
+                "absolute bottom-0 right-2 rounded-full h-20 w-20 -z-20 blur-xl bg-gray-500"
+              }
+            ></div>
+          </a>
+          
           <a
             href="/api/login/github"
             className="relative overflow-hidden border rounded-md hover:border-primary/40 transition-all duration-300"

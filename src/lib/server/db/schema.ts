@@ -5,11 +5,13 @@ export const userTable = sqliteTable("user", {
 	id: text("id").notNull().primaryKey(),
     username: text("username").notNull(),
     githubId: text("github_id"),
-	malId: text("mal_id")
+	malId: text("mal_id"),
+	googleId: text("google_id")
 }, (table) => {
 	return {
 		githubIdIndex: uniqueIndex("github_id_index").on(table.githubId),
-		malIdIndex: uniqueIndex("mal_id_index").on(table.malId)
+		malIdIndex: uniqueIndex("mal_id_index").on(table.malId),
+		googleIndex: uniqueIndex("google_id_index").on(table.googleId)
 	};
 });
 
