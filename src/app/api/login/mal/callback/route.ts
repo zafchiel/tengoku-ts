@@ -45,7 +45,7 @@ export async function GET(request: Request): Promise<Response> {
       }
     );
 
-    const userInfo = await axios.get<MalUser>("https://api.myanimelist.net/v2/users/@me", {
+    const { data: userInfo } = await axios.get<MalUser>("https://api.myanimelist.net/v2/users/@me", {
       headers: {
         Authorization: `Bearer ${response.data.access_token}`,
       },
@@ -54,7 +54,7 @@ export async function GET(request: Request): Promise<Response> {
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.malId, userInfo.data.id.toString()))
+      .where(eq(userTable.malId, userInfo.id.toString()))
       .get();
 
     if (existingUser) {
@@ -80,8 +80,8 @@ export async function GET(request: Request): Promise<Response> {
 
     await db.insert(userTable).values({
       id: userId,
-      username: userInfo.data.name,
-      malId: userInfo.data.id.toString(),
+      username: userInfo.name,
+      malId: userInfo.id.toString(),
     });
 
     // Create session cookie for new user
