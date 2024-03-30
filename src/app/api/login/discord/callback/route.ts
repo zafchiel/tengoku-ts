@@ -1,4 +1,4 @@
-import { lucia } from "@/lib/server/auth";
+import { discrodOAuth, lucia } from "@/lib/server/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { generateId } from "lucia";
@@ -12,49 +12,26 @@ export async function GET(request: Request): Promise<Response> {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
-  const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
-  const MAL_CLIENT_SECRET = process.env.MAL_CLIENT_SECRET;
-
-  if (!MAL_CLIENT_ID || !MAL_CLIENT_SECRET) {
-    throw new Error("Missing MAL_CLIENT_ID or MAL_CLIENT_SECRET");
-  }
-
-  const storedVerifier = cookies().get("mal_oauth_code_verifier")?.value ?? null;
-  const storedState = cookies().get("mal_oauth_state")?.value ?? null;
-  
-  if (!code || !storedVerifier || !storedState || !state || state !== storedState) {
+  const storedState = cookies().get("discord_oauth_state")?.value ?? null;
+  if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
     });
   }
 
   try {
-    const response = await axios.post<MalResponse>(
-      "https://myanimelist.net/v1/oauth2/token",
-      {
-        client_id: MAL_CLIENT_ID,
-        client_secret: MAL_CLIENT_SECRET,
-        code: code,
-        code_verifier: storedVerifier,
-        grant_type: "authorization_code",
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    const tokens = await discrodOAuth.validateAuthorizationCode(code);
 
-    const { data: userInfo } = await axios.get<MalUser>("https://api.myanimelist.net/v2/users/@me", {
+    const { data: discordUser } = await axios.get<DiscordUser>("https://discord.com/api/users/@me", {
       headers: {
-        Authorization: `Bearer ${response.data.access_token}`,
+        Authorization: `Bearer ${tokens.accessToken}`,
       },
     });
 
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.malId, userInfo.id.toString()))
+      .where(eq(userTable.discordId, discordUser.id))
       .get();
 
     if (existingUser) {
@@ -80,8 +57,8 @@ export async function GET(request: Request): Promise<Response> {
 
     await db.insert(userTable).values({
       id: userId,
-      username: userInfo.name,
-      malId: userInfo.id.toString(),
+      username: discordUser.username,
+      githubId: discordUser.id,
     });
 
     // Create session cookie for new user
@@ -113,16 +90,21 @@ export async function GET(request: Request): Promise<Response> {
   }
 }
 
-interface MalResponse {
-    token_type: string;
-    expires_in: number;
-    access_token: string;
-    refresh_token: string;
-}
-
-interface MalUser {
-  id: string;
-  name: string;
-  location: string;
-  joined_at: string;
+interface DiscordUser {
+    id: string;
+    username: string;
+    avatar: string;
+    discriminator: string;
+    public_flags: number;
+    premium_type: number;
+    flags: number;
+    banner: null | string;
+    accent_color: null | string;
+    global_name: string;
+    avatar_decoration_data: null | string;
+    banner_color: null | string;
+    mfa_enabled: boolean;
+    locale: string;
+    email: string;
+    verified: boolean;
 }

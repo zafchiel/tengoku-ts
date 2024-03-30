@@ -1,9 +1,9 @@
 "use client";
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
-import Description from "../detailsPage/Description";
+import Description from "../detailsPage/description";
 import { AnimeInfo } from "@/types";
-import MutedText from "./mutedText";
+import MutedText from "./muted-text";
 
 type Props = {
   anime: AnimeInfo;

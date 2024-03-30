@@ -1,4 +1,4 @@
-import { lucia } from "@/lib/server/auth";
+import { lucia, googleOAuth } from "@/lib/server/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
 import { generateId } from "lucia";
@@ -12,16 +12,9 @@ export async function GET(request: Request): Promise<Response> {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
-  const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
-  const MAL_CLIENT_SECRET = process.env.MAL_CLIENT_SECRET;
+  const storedVerifier = cookies().get("google_oauth_code_verifier")?.value ?? null;
+  const storedState = cookies().get("google_oauth_state")?.value ?? null;
 
-  if (!MAL_CLIENT_ID || !MAL_CLIENT_SECRET) {
-    throw new Error("Missing MAL_CLIENT_ID or MAL_CLIENT_SECRET");
-  }
-
-  const storedVerifier = cookies().get("mal_oauth_code_verifier")?.value ?? null;
-  const storedState = cookies().get("mal_oauth_state")?.value ?? null;
-  
   if (!code || !storedVerifier || !storedState || !state || state !== storedState) {
     return new Response(null, {
       status: 400,
@@ -29,32 +22,18 @@ export async function GET(request: Request): Promise<Response> {
   }
 
   try {
-    const response = await axios.post<MalResponse>(
-      "https://myanimelist.net/v1/oauth2/token",
-      {
-        client_id: MAL_CLIENT_ID,
-        client_secret: MAL_CLIENT_SECRET,
-        code: code,
-        code_verifier: storedVerifier,
-        grant_type: "authorization_code",
-      },
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
+    const tokens = await googleOAuth.validateAuthorizationCode(code, storedVerifier);
 
-    const { data: userInfo } = await axios.get<MalUser>("https://api.myanimelist.net/v2/users/@me", {
-      headers: {
-        Authorization: `Bearer ${response.data.access_token}`,
-      },
-    });
+    const { data: userInfo } = await axios.get<GoogleUserInfo>("https://openidconnect.googleapis.com/v1/userinfo", {
+        headers: {
+            Authorization: `Bearer ${tokens.accessToken}`
+        }
+    })
 
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.malId, userInfo.id.toString()))
+      .where(eq(userTable.googleId, userInfo.sub))
       .get();
 
     if (existingUser) {
@@ -81,7 +60,7 @@ export async function GET(request: Request): Promise<Response> {
     await db.insert(userTable).values({
       id: userId,
       username: userInfo.name,
-      malId: userInfo.id.toString(),
+      malId: userInfo.sub,
     });
 
     // Create session cookie for new user
@@ -99,11 +78,11 @@ export async function GET(request: Request): Promise<Response> {
       },
     });
   } catch (e) {
-    console.log(e);
+    console.log(e)
     // the specific error message depends on the provider
     if (e instanceof OAuth2RequestError) {
       // invalid code
-      return new Response(null, {
+      return new Response(e.message, {
         status: 400,
       });
     }
@@ -113,16 +92,13 @@ export async function GET(request: Request): Promise<Response> {
   }
 }
 
-interface MalResponse {
-    token_type: string;
-    expires_in: number;
-    access_token: string;
-    refresh_token: string;
-}
-
-interface MalUser {
-  id: string;
-  name: string;
-  location: string;
-  joined_at: string;
-}
+interface GoogleUserInfo {
+    sub: string;
+    name: string;
+    given_name: string;
+    family_name: string;
+    picture: string;
+    email: string;
+    email_verified: boolean,
+    locale: string;
+  }

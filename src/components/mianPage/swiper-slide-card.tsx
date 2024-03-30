@@ -1,7 +1,7 @@
 import { AnimeInfo } from "@/types"
 import Link from "next/link"
 import Image from "next/image"
-import ScoreBadge from "./scoreBadge"
+import ScoreBadge from "./score-badge"
 
 type Props = {
   anime: AnimeInfo

@@ -5,6 +5,7 @@ import { generateId } from "lucia";
 import { db } from "@/lib/server/db";
 import { userTable } from "@/lib/server/db/schema";
 import { eq } from "drizzle-orm";
+import axios from "axios";
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -19,12 +20,11 @@ export async function GET(request: Request): Promise<Response> {
 
   try {
     const tokens = await githubOAuth.validateAuthorizationCode(code);
-    const githubUserResponse = await fetch("https://api.github.com/user", {
+    const { data: githubUser } = await axios.get<GitHubUser>("https://api.github.com/user", {
       headers: {
         Authorization: `Bearer ${tokens.accessToken}`,
       },
     });
-    const githubUser: GitHubUser = await githubUserResponse.json();
 
     const existingUser = await db
       .select()
@@ -89,6 +89,7 @@ export async function GET(request: Request): Promise<Response> {
 }
 
 interface GitHubUser {
+  // Not all fields are included here
   id: string;
   login: string;
 }
