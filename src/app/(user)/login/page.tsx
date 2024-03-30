@@ -1,4 +1,4 @@
-import { Chrome, Github, GithubIcon, Sun } from "lucide-react";
+import { GithubIcon } from "lucide-react";
 import { validateRequest } from "@/lib/server/auth";
 import { redirect } from "next/navigation";
 import { OAuthLink } from "@/components/loginPage/oauth-link";

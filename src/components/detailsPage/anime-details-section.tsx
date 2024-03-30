@@ -1,4 +1,3 @@
-import AnimePosters from "./animePosters";
 import StatsCard from "./stats-card";
 import { AnimeInfo } from "@/types";
 

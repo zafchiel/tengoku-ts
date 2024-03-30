@@ -1,9 +1,8 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import { AnimeInfo, PaginationInfoType, SearchResult } from "@/types";
 import SearchResultCard from "@/components/mianPage/search-result-card";
 import DetailsHoverCard from "@/components/ui/details-hover-card";
@@ -14,9 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 export default function SearchResultsPage() {
   const [searchResults, setSearchResults] = useState<AnimeInfo[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [paginationInfo, setPaginatonInfo] = useState<PaginationInfoType>();
-
-  const router = useRouter();
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfoType>();
 
   const searchParams = useSearchParams();
   const query = searchParams.get("q") ?? "";
@@ -37,7 +34,7 @@ export default function SearchResultsPage() {
           },
         });
         setSearchResults(response.data.data);
-        setPaginatonInfo(response.data.pagination);
+        setPaginationInfo(response.data.pagination);
       } catch (error) {
         console.log(error);
       } finally {
