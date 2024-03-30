@@ -6,9 +6,7 @@ import { GitHub, Google, Discord } from "arctic";
 import { cache } from "react";
 import { cookies } from "next/headers";
 
-const dev = process.env.NODE_ENV !== "production";
-const googleRedirectURI = dev ? "http://localhost:3000/api/login/google/callback" : process.env.VERCEL_URL + "/api/login/github/callback";
-const discordRedirectURI = dev ? "http://localhost:3000/api/login/discord/callback" : process.env.VERCEL_URL + "/api/login/github/callback";
+const DEPLOYMENT_URL = process.env.DEPLOYMENT_URL || "http://localhost:3000";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
@@ -32,8 +30,8 @@ if (!GOOGLE_CLIENT_ID || !GOOGLE_CLIENT_SECRET) {
 }
 
 export const githubOAuth = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
-export const googleOAuth = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, googleRedirectURI);
-export const discrodOAuth = new Discord(DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, discordRedirectURI);
+export const googleOAuth = new Google(GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, `${DEPLOYMENT_URL}/api/login/google/callback`);
+export const discrodOAuth = new Discord(DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET, `${DEPLOYMENT_URL}/api/login/discord/callback`);
 
 const adapter = new DrizzleSQLiteAdapter(db, sessionTable, userTable);
 
