@@ -1,4 +1,4 @@
-import { AnimeInfo, SearchResult } from "@/types";
+import { AnimeInfo } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 
