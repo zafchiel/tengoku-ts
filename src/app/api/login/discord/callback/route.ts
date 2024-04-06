@@ -4,7 +4,7 @@ import { OAuth2RequestError } from "arctic";
 import { generateId } from "lucia";
 import { db } from "@/lib/server/db";
 import { userTable } from "@/lib/server/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import axios from "axios";
 
 export async function GET(request: Request): Promise<Response> {
@@ -31,7 +31,12 @@ export async function GET(request: Request): Promise<Response> {
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.discordId, discordUser.id))
+      .where(
+        and(
+          eq(userTable.authProviderType, "discord"),
+          eq(userTable.authProviderId, discordUser.id)
+        )
+      )
       .get();
 
     if (existingUser) {
@@ -58,7 +63,8 @@ export async function GET(request: Request): Promise<Response> {
     await db.insert(userTable).values({
       id: userId,
       username: discordUser.username,
-      githubId: discordUser.id,
+      authProviderType: "discord",
+      authProviderId: discordUser.id
     });
 
     // Create session cookie for new user
