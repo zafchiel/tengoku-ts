@@ -2,11 +2,11 @@ import { AnimeInfo } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 
-type Props = {
+type DisplaySearchResultsProps = {
   searchResults: AnimeInfo[];
 };
 
-export default function DisplaySearchResults({ searchResults }: Props) {
+export default function DisplaySearchResults({ searchResults }: DisplaySearchResultsProps) {
   if (searchResults.length === 0) return null;
 
   return (

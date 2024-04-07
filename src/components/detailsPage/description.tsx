@@ -15,7 +15,7 @@ export default function Description({ paragraph }: { paragraph: string }) {
         {paragraph.length > 100 && (
           <button
             onClick={() => setIsOpen((prev) => !prev)}
-            className="opacity-40"
+            className="text-muted-foreground"
           >
             show more
           </button>
@@ -26,7 +26,7 @@ export default function Description({ paragraph }: { paragraph: string }) {
   return (
     <div className="grow">
       <p>{paragraph}</p>
-      <button onClick={() => setIsOpen((prev) => !prev)} className="opacity-40">
+      <button onClick={() => setIsOpen((prev) => !prev)} className="text-muted-foreground">
         show less
       </button>
     </div>

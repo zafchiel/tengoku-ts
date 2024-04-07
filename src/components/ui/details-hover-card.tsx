@@ -3,14 +3,13 @@
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 import Description from "../detailsPage/description";
 import { AnimeInfo } from "@/types";
-import MutedText from "./muted-text";
 
-type Props = {
+type DetailsHoverCardProps = {
   anime: AnimeInfo;
   children: React.ReactNode;
 };
 
-export default function DetailsHoverCard({ anime, children }: Props) {
+export default function DetailsHoverCard({ anime, children }: DetailsHoverCardProps) {
   return (
     <HoverCard>
       <HoverCardTrigger>{children}</HoverCardTrigger>
@@ -18,19 +17,19 @@ export default function DetailsHoverCard({ anime, children }: Props) {
         <div className="flex flex-col gap-2">
           <div>
             <p>
-              <MutedText>Score:&nbsp;</MutedText>
+              <span className="text-muted-foreground">Score:&nbsp;</span>
               {anime.score}
             </p>
             <p>
-              <MutedText>Type:&nbsp;</MutedText>
+              <span className="text-muted-foreground">Type:&nbsp;</span>
               {anime.type}
             </p>
             <p>
-              <MutedText>Episodes:&nbsp;</MutedText>
+              <span className="text-muted-foreground">Episodes:&nbsp;</span>
               {anime.episodes}
             </p>
             <p>
-              <MutedText>Rating:&nbsp;</MutedText>
+              <span className="text-muted-foreground">Rating:&nbsp;</span>
               {anime.rating}
             </p>
           </div>
