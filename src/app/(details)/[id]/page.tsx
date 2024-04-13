@@ -1,6 +1,6 @@
 import getBase64 from "@/lib/get-base64-image";
 import AnimeDetailsSection from "@/components/detailsPage/anime-details-section";
-import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import { JIKAN_API_URL } from "@/lib/constants";
 import axios from "axios";
 import { AnimeInfo } from "@/types";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -19,7 +19,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
   // Search anime by slug
   try {
     anime = await axios
-      .get<{ data: AnimeInfo }>(JIKAN_API_ANIME_URL + `/${params.id}`)
+      .get<{ data: AnimeInfo }>(JIKAN_API_URL + `/anime/${params.id}`)
       .then((res) => res.data.data);
     
   } catch (error) {

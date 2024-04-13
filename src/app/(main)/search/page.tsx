@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { AnimeInfo, PaginationInfoType, SearchResult } from "@/types";
 import SearchResultCard from "@/components/mianPage/search-result-card";
 import DetailsHoverCard from "@/components/ui/details-hover-card";
-import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import { JIKAN_API_URL } from "@/lib/constants";
 import { PaginationComponent } from "@/components/mianPage/pagination-component";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -25,7 +25,7 @@ export default function SearchResultsPage() {
       if (paginationInfo?.has_next_page === false) return;
       setIsLoading(true);
       try {
-        const response = await axios.get<SearchResult>(JIKAN_API_ANIME_URL, {
+        const response = await axios.get<SearchResult>(JIKAN_API_URL + "/anime", {
           params: {
             q: query,
             limit: 20,
