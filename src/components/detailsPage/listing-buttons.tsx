@@ -1,34 +1,12 @@
 "use client";
 
-import {Button} from "@/components/ui/button";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import axios from "axios";
 import {UserInfoContext} from "@/components/providers/user-info-provider";
 import {useContext, useEffect, useState} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 import AddToList from "@/components/detailsPage/add-to-list";
 import {ProgressRecordType} from "@/lib/server/db/schema";
-
-const SCORES = Object.fromEntries([
-    [10, 'Masterpiece'],
-    [9, 'Great'],
-    [8, 'Very Good'],
-    [7, 'Good'],
-    [6, 'Fine'],
-    [5, 'Average'],
-    [4, 'Bad'],
-    [3, 'Very Bad'],
-    [2, 'Horrible'],
-    [1, 'Appaling'],
-    [0, 'None']
-])
-
+import UpdateListing from "@/components/detailsPage/update-listing";
 
 type ListingButtonsProps = {
     animeId: number;
@@ -75,22 +53,6 @@ export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsP
     }
 
     return (
-        <div className="flex gap-3">
-            <Select>
-                <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="PTW" />
-                </SelectTrigger>
-                <SelectContent>
-                </SelectContent>
-            </Select>
-
-            <Select>
-                <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Score" />
-                </SelectTrigger>
-                <SelectContent>
-                </SelectContent>
-            </Select>
-        </div>
+        <UpdateListing animeId={animeId} />
     )
 }

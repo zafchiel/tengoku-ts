@@ -2,10 +2,14 @@
 
 import {validateRequest} from "@/lib/server/auth";
 import {db} from "@/lib/server/db";
-import {progressTable} from "@/lib/server/db/schema";
-import { z } from "zod"
+import {ProgressRecordType, progressTable, WATCHING_STATUSES} from "@/lib/server/db/schema";
+import {z, ZodError} from "zod"
+import {and,eq} from "drizzle-orm";
 
-export async function addAnimeProgress(animeId: number, maxEpisodes: number | null) {
+export async function addAnimeProgress(animeId: number, maxEpisodes: number | null): Promise<{
+    error: string | null;
+    data: ProgressRecordType | null;
+}> {
     const { user } = await validateRequest();
 
     if(!user) {
@@ -34,4 +38,76 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
             data: null
         }
     }
+}
+
+const updateSchema = z.object({
+    animeId: z
+        .coerce
+        .number()
+        .int(),
+    score: z
+        .coerce
+        .number()
+        .int()
+        .positive()
+        .max(10),
+    status: z
+        .enum(WATCHING_STATUSES),
+    episodesWatched: z
+        .coerce
+        .number()
+        .int()
+        .positive()
+        .optional()
+})
+
+export async function updateAnimeProgress(formData: FormData): Promise<{
+    error: string | null;
+    data: ProgressRecordType | null;
+}> {
+    const { user } = await validateRequest();
+
+    if(!user) {
+        return {
+            error: "Must be logged in",
+            data: null
+        }
+    }
+
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+        const validatedData = updateSchema.parse(data);
+        const res = await db
+            .update(progressTable)
+            .set(validatedData)
+            .where(
+                and(
+                    eq(progressTable.userId, user.id),
+                    eq(progressTable.animeId, validatedData.animeId)
+                )
+            )
+            .returning()
+            .get();
+
+        return {
+            error: null,
+            data: res
+        }
+
+    } catch (e) {
+        console.log(e)
+        if (e instanceof ZodError) {
+            return {
+                error: e.message,
+                data: null
+            }
+        } else {
+            return {
+                error: "Something went wrong",
+                data: null
+            }
+        }
+    }
+
 }

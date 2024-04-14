@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 const PROVIDERS = ["github", "mal", "google", "discord"] as const;
-const WATCHING_STATUSES = ["Plan to watch", "Watching", "Completed", "On-hold", "Dropped"] as const;
+export const WATCHING_STATUSES = ["Plan to watch", "Watching", "Completed", "On-hold", "Dropped"] as const;
 
 export const userTable = sqliteTable("users", {
 	id: text("id")
