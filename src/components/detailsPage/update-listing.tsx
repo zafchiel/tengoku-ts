@@ -3,9 +3,11 @@
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {Button} from "@/components/ui/button";
-import {Save} from "lucide-react";
+import {Loader2, Save} from "lucide-react";
 import {updateAnimeProgress} from "@/lib/server/actions/progress-actions";
-import {WATCHING_STATUSES} from "@/lib/server/db/schema";
+import {ProgressRecordType, WATCHING_STATUSES} from "@/lib/server/db/schema";
+import {useState} from "react";
+import {toast} from "sonner";
 
 const SCORES = [
     [10, 'Masterpiece'],
@@ -22,22 +24,35 @@ const SCORES = [
 ] as const
 
 type UpdateListingProps = {
-    animeId: number;
+    progressInfo: ProgressRecordType
 }
 
-export default function UpdateListing({ animeId }: UpdateListingProps) {
+export default function UpdateListing({ progressInfo }: UpdateListingProps) {
+    const [loading, setLoading] = useState(false);
+
+    const submitAction = async (formData: FormData) => {
+        setLoading(true);
+        formData.append("animeId", progressInfo.animeId.toString());
+
+        const res = await updateAnimeProgress(formData);
+
+        if(res.error === null && res.data) {
+            toast.success("List entry saved");
+        } else if (res.error) {
+            toast.error(res.error);
+        }
+
+        setLoading(false);
+    }
 
     return (
         <form
-            action={async (formData) => {
-                formData.append("animeId", animeId.toString());
-                await updateAnimeProgress(formData);
-             }}
+            action={submitAction}
             className="flex gap-3"
         >
             <Select name="status">
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="PTW"/>
+                    <SelectValue placeholder={progressInfo.status}/>
                 </SelectTrigger>
                 <SelectContent>
                     {WATCHING_STATUSES.map((status) => (
@@ -48,19 +63,23 @@ export default function UpdateListing({ animeId }: UpdateListingProps) {
 
             <Select name="score">
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Score"/>
+                    <SelectValue placeholder={progressInfo.score}/>
                 </SelectTrigger>
                 <SelectContent>
                     {SCORES.map(([score, name]) => (
-                        <SelectItem value={score.toString()}>{`${score} - ${name}`}</SelectItem>
+                        <SelectItem key={name} value={score.toString()}>{`${score} - ${name}`}</SelectItem>
                     ))}
                 </SelectContent>
             </Select>
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button size="icon" variant="default" type="submit">
-                            <Save/>
+                        <Button size="icon" variant="default" type="submit" disabled={loading}>
+                            {loading ? (
+                                <Loader2 className="animate-spin" />
+                            ) : (
+                                <Save />
+                            )}
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>

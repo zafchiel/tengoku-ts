@@ -53,6 +53,6 @@ export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsP
     }
 
     return (
-        <UpdateListing animeId={animeId} />
+        <UpdateListing progressInfo={progressInfo} />
     )
 }

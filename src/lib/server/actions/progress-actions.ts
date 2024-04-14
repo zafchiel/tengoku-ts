@@ -49,7 +49,7 @@ const updateSchema = z.object({
         .coerce
         .number()
         .int()
-        .positive()
+        .min(0)
         .max(10),
     status: z
         .enum(WATCHING_STATUSES),
@@ -57,7 +57,6 @@ const updateSchema = z.object({
         .coerce
         .number()
         .int()
-        .positive()
         .optional()
 })
 
@@ -99,7 +98,7 @@ export async function updateAnimeProgress(formData: FormData): Promise<{
         console.log(e)
         if (e instanceof ZodError) {
             return {
-                error: e.message,
+                error: e.errors[0].message,
                 data: null
             }
         } else {
