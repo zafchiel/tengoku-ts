@@ -56,7 +56,8 @@ export const progressTable = sqliteTable('progress', {
 	animeId: integer('anime_id', { mode: 'number' })
 		.notNull(),
 	score: integer('score', { mode: 'number' })
-		.notNull(),
+		.notNull()
+		.default(0),
 	status: text('status', { enum: WATCHING_STATUSES})
 		.notNull()
 		.default("Plan to watch"),
