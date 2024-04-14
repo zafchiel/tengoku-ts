@@ -13,8 +13,8 @@ type ListingButtonsProps = {
     maxEpisodes: number | null;
 }
 
-export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsProps) {
-    const { userInfo, isAuthenticating } = useContext(UserInfoContext);
+export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsProps) {
+    const {userInfo, isAuthenticating} = useContext(UserInfoContext);
     const [loadingProgress, setLoadingProgress] = useState(true);
     const [progressInfo, setProgressInfo] = useState<ProgressRecordType | null>(null)
 
@@ -36,10 +36,10 @@ export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsP
         }
 
         fetchProgress(animeId);
-    }, []);
+    }, [animeId]);
 
     if (isAuthenticating || loadingProgress) {
-        return <Skeleton className="w-[200px] h-14" />
+        return <Skeleton className="w-[200px] h-14"/>
     }
 
     if (progressInfo === null && !loadingProgress) {
@@ -52,7 +52,9 @@ export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsP
         )
     }
 
-    return (
-        <UpdateListing progressInfo={progressInfo} />
-    )
+    if (progressInfo !== null && userInfo) {
+        return (
+            <UpdateListing progressInfo={progressInfo}/>
+        )
+    }
 }
