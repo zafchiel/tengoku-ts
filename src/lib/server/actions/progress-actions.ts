@@ -4,19 +4,21 @@ import {validateRequest} from "@/lib/server/auth";
 import {db} from "@/lib/server/db";
 import {ProgressRecordType, progressTable, WATCHING_STATUSES} from "@/lib/server/db/schema";
 import {z, ZodError} from "zod"
-import {and,eq} from "drizzle-orm";
+import {and, eq} from "drizzle-orm";
+import {redirect} from "next/navigation";
 
 export async function addAnimeProgress(animeId: number, maxEpisodes: number | null): Promise<{
     error: string | null;
     data: ProgressRecordType | null;
 }> {
-    const { user } = await validateRequest();
+    const {user} = await validateRequest();
 
-    if(!user) {
-        return {
-            error: "Must be logged in",
-            data: null
-        }
+    if (!user) {
+        redirect("/login");
+        // return {
+        //     error: "Must be logged in",
+        //     data: null
+        // }
     }
 
     try {
@@ -64,9 +66,9 @@ export async function updateAnimeProgress(formData: FormData): Promise<{
     error: string | null;
     data: ProgressRecordType | null;
 }> {
-    const { user } = await validateRequest();
+    const {user} = await validateRequest();
 
-    if(!user) {
+    if (!user) {
         return {
             error: "Must be logged in",
             data: null

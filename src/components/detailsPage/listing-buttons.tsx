@@ -7,6 +7,7 @@ import {Skeleton} from "@/components/ui/skeleton";
 import AddToList from "@/components/detailsPage/add-to-list";
 import {ProgressRecordType} from "@/lib/server/db/schema";
 import UpdateListing from "@/components/detailsPage/update-listing";
+import Link from "next/link";
 
 type ListingButtonsProps = {
     animeId: number;

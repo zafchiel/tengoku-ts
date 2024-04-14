@@ -5,6 +5,7 @@ import {addAnimeProgress} from "@/lib/server/actions/progress-actions";
 import {ProgressRecordType} from "@/lib/server/db/schema";
 import {useState} from "react";
 import {MessageSquarePlus} from "lucide-react";
+import {toast} from "sonner";
 
 type AddToListProps = {
     animeId: number;
@@ -18,9 +19,12 @@ export default function AddToList({animeId, setProgressInfo, maxEpisodes}: AddTo
     const clickHandler = async () => {
         setLoading(true);
         const res = await addAnimeProgress(animeId, maxEpisodes);
-        if (res.error) {
-            console.log(res.error);
+        if (!res) {
+            toast.info("You must be logged in");
+        } else if (res.error) {
+            toast.error(res.error);
         } else if (res.data) {
+            toast.success("Added to list");
             setProgressInfo(res.data);
         }
 
@@ -35,7 +39,7 @@ export default function AddToList({animeId, setProgressInfo, maxEpisodes}: AddTo
             aria-disabled={loading}
             className="capitalize flex gap-2 items-center"
         >
-            <MessageSquarePlus />
+            <MessageSquarePlus/>
             Add To List
         </Button>
     )
