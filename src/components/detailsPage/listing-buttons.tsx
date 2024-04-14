@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select"
 import axios from "axios";
 import {UserInfoContext} from "@/components/providers/user-info-provider";
-import {useContext} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 
 const SCORES = Object.fromEntries([
@@ -27,20 +27,57 @@ const SCORES = Object.fromEntries([
     [0, 'None']
 ])
 
-console.log(SCORES)
 
-export default function ListingButtons() {
+type ListingButtonsProps = {
+    animeId: number;
+}
+
+export default function ListingButtons({ animeId }: ListingButtonsProps) {
     const { userInfo, isAuthenticating } = useContext(UserInfoContext);
+    const [loadingProgress, setLoadingProgress] = useState(true);
+    const [progressInfo, setProgressInfo] = useState(null)
 
-    if (isAuthenticating) {
+    useEffect(() => {
+        const fetchProgress = async (id: number) => {
+            try {
+                const response = await axios.get("/api/anime", {
+                    params: {
+                        id
+                    }
+                })
+
+                setProgressInfo(response.data)
+            } catch (e) {
+                // console.log(e)
+            } finally {
+                setLoadingProgress(false);
+            }
+        }
+
+        fetchProgress(animeId);
+    }, []);
+
+    if (isAuthenticating || loadingProgress) {
         return <Skeleton className="w-[200px]" />
+    }
+
+    if (progressInfo === null && !loadingProgress) {
+        return (
+            <Button>
+                Add to list
+            </Button>
+        )
     }
 
     return (
         <div className="flex gap-3">
-            <Button>
-                Add to list
-            </Button>
+            <Select>
+                <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="PTW" />
+                </SelectTrigger>
+                <SelectContent>
+                </SelectContent>
+            </Select>
 
             <Select>
                 <SelectTrigger className="w-[180px]">
