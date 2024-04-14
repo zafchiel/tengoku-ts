@@ -1,5 +1,3 @@
-"use client";
-
 import {Button} from "@/components/ui/button";
 import {addAnimeProgress} from "@/lib/server/actions/progress-actions";
 import {ProgressRecordType} from "@/lib/server/db/schema";
@@ -13,9 +11,9 @@ type AddToListProps = {
     maxEpisodes: number | null;
 }
 
-
 export default function AddToList({animeId, setProgressInfo, maxEpisodes}: AddToListProps) {
     const [loading, setLoading] = useState(false);
+
     const clickHandler = async () => {
         setLoading(true);
         const res = await addAnimeProgress(animeId, maxEpisodes);

@@ -22,11 +22,10 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
     }
 
     try {
-        const validate = z.number().parse;
-
+        const validatedMaxEpisodes = maxEpisodes === null ? undefined : z.number().optional().parse(maxEpisodes)
         const res = await db.insert(progressTable).values({
-            animeId: validate(animeId),
-            maxEpisodes: validate(maxEpisodes),
+            animeId: z.number().parse(animeId),
+            maxEpisodes: validatedMaxEpisodes,
             userId: user.id
         }).returning().get();
 
@@ -35,6 +34,7 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
             data: res
         }
     } catch (e) {
+        console.log(e);
         return {
             error: "Something went wrong",
             data: null

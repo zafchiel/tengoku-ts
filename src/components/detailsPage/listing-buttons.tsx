@@ -1,13 +1,13 @@
 "use client";
 
 import axios from "axios";
-import {UserInfoContext} from "@/components/providers/user-info-provider";
-import {useContext, useEffect, useState} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
 import AddToList from "@/components/detailsPage/add-to-list";
 import {ProgressRecordType} from "@/lib/server/db/schema";
 import UpdateListing from "@/components/detailsPage/update-listing";
-import Link from "next/link";
+import useSWR from "swr";
+
+const fetcher = (url: string) => axios.get<ProgressRecordType>(url).then(res => res.data)
 
 type ListingButtonsProps = {
     animeId: number;
@@ -15,47 +15,25 @@ type ListingButtonsProps = {
 }
 
 export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsProps) {
-    const {userInfo, isAuthenticating} = useContext(UserInfoContext);
-    const [loadingProgress, setLoadingProgress] = useState(true);
-    const [progressInfo, setProgressInfo] = useState<ProgressRecordType | null>(null)
+    const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher)
 
-    useEffect(() => {
-        const fetchProgress = async (id: number) => {
-            try {
-                const response = await axios.get<ProgressRecordType>("/api/anime", {
-                    params: {
-                        id
-                    }
-                })
-
-                setProgressInfo(response.data)
-            } catch (e) {
-                // console.log(e)
-            } finally {
-                setLoadingProgress(false);
-            }
-        }
-
-        fetchProgress(animeId);
-    }, [animeId]);
-
-    if (isAuthenticating || loadingProgress) {
+    if (isLoading) {
         return <Skeleton className="w-[200px] h-14"/>
     }
 
-    if (progressInfo === null && !loadingProgress) {
+    if (!data && !isLoading) {
         return (
             <AddToList
                 animeId={animeId}
-                setProgressInfo={(data) => setProgressInfo(data)}
+                setProgressInfo={mutate}
                 maxEpisodes={maxEpisodes}
             />
         )
     }
 
-    if (progressInfo !== null && userInfo) {
+    if (data) {
         return (
-            <UpdateListing progressInfo={progressInfo}/>
+            <UpdateListing progressInfo={data}/>
         )
     }
 }
