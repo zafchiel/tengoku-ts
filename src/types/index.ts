@@ -141,3 +141,4 @@ export type SearchResult = {
   data: AnimeInfo[];
   pagination: PaginationInfoType
 };
+

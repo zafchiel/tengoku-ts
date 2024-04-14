@@ -12,6 +12,8 @@ import axios from "axios";
 import {UserInfoContext} from "@/components/providers/user-info-provider";
 import {useContext, useEffect, useState} from "react";
 import {Skeleton} from "@/components/ui/skeleton";
+import AddToList from "@/components/detailsPage/add-to-list";
+import {ProgressRecordType} from "@/lib/server/db/schema";
 
 const SCORES = Object.fromEntries([
     [10, 'Masterpiece'],
@@ -30,17 +32,18 @@ const SCORES = Object.fromEntries([
 
 type ListingButtonsProps = {
     animeId: number;
+    maxEpisodes: number | null;
 }
 
-export default function ListingButtons({ animeId }: ListingButtonsProps) {
+export default function ListingButtons({ animeId, maxEpisodes }: ListingButtonsProps) {
     const { userInfo, isAuthenticating } = useContext(UserInfoContext);
     const [loadingProgress, setLoadingProgress] = useState(true);
-    const [progressInfo, setProgressInfo] = useState(null)
+    const [progressInfo, setProgressInfo] = useState<ProgressRecordType | null>(null)
 
     useEffect(() => {
         const fetchProgress = async (id: number) => {
             try {
-                const response = await axios.get("/api/anime", {
+                const response = await axios.get<ProgressRecordType>("/api/anime", {
                     params: {
                         id
                     }
@@ -58,14 +61,16 @@ export default function ListingButtons({ animeId }: ListingButtonsProps) {
     }, []);
 
     if (isAuthenticating || loadingProgress) {
-        return <Skeleton className="w-[200px]" />
+        return <Skeleton className="w-[200px] h-14" />
     }
 
     if (progressInfo === null && !loadingProgress) {
         return (
-            <Button>
-                Add to list
-            </Button>
+            <AddToList
+                animeId={animeId}
+                setProgressInfo={(data) => setProgressInfo(data)}
+                maxEpisodes={maxEpisodes}
+            />
         )
     }
 

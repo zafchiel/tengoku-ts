@@ -10,6 +10,7 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
     if(!user) {
         return {
             error: "Must be logged in",
+            data: null
         }
     }
 
@@ -18,12 +19,16 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
             animeId,
             maxEpisodes,
             userId: user.id
-        }).returning();
+        }).returning().get();
 
-        return res
+        return {
+            error: null,
+            data: res
+        }
     } catch (e) {
         return {
-            error: e.message
+            error: "Something went wrong",
+            data: null
         }
     }
 }

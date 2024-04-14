@@ -76,3 +76,4 @@ export const progressRelations = relations(progressTable, ({ one }) => ({
 
 export type DatabaseUser = typeof userTable.$inferSelect;
 export type InsertDatabaseUser = typeof userTable.$inferInsert;
+export type ProgressRecordType = typeof progressTable.$inferSelect;

@@ -47,7 +47,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
       <main className="container space-y-4 px-1 md:px-4 md:pt-14 md:mt-10">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <HeadingSection animeInfo={anime} imgBase64={imgBase64!} />
-        <ListingButtons />
+        <ListingButtons animeId={anime.mal_id} maxEpisodes={anime.episodes} />
         <AnimeDetailsSection animeInfo={anime} />
       </main>
     </>
