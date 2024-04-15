@@ -18,7 +18,7 @@ export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsPro
     const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher)
 
     if (isLoading) {
-        return <Skeleton className="w-[200px] h-14"/>
+        return <Skeleton className="w-full h-10"/>
     }
 
     if (!data && !isLoading) {

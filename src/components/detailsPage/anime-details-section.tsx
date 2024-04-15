@@ -16,7 +16,7 @@ export default function AnimeDetailsSection({
       : "unknown";
 
   return (
-    <section className="p-4 border flex gap-4 flex-wrap rounded-sm">
+    <section className="p-1 md:p-4 border flex gap-4 flex-wrap rounded-sm">
       {/* <AnimePosters mal_id={animeInfo.mal_id} /> */}
       {animeInfo.score && (
         <StatsCard

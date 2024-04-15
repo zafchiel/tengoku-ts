@@ -7,6 +7,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import HeadingSection from "@/components/detailsPage/details-heading-section";
 import ListingButtons from "@/components/detailsPage/listing-buttons";
+import { cn } from "@/lib/utils";
 
 type DetailsPageProps = {
   params: {
@@ -44,10 +45,12 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
   return (
     <>
-      <main className="container space-y-4 px-1 md:px-4 md:pt-14 md:mt-10">
+      <main className="container space-y-4 px-2 md:px-4 md:pt-14 md:mt-10">
         <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
         <HeadingSection animeInfo={anime} imgBase64={imgBase64!} />
-        <ListingButtons animeId={anime.mal_id} maxEpisodes={anime.episodes} />
+        <div className="w-full md:max-w-xl" >
+          <ListingButtons animeId={anime.mal_id} maxEpisodes={anime.episodes} />
+        </div>
         <AnimeDetailsSection animeInfo={anime} />
       </main>
     </>
