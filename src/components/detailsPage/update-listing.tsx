@@ -14,7 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, Save, Star } from "lucide-react";
 import { updateAnimeProgress } from "@/lib/server/actions/progress-actions";
 import { ProgressRecordType, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { useState } from "react";
@@ -78,11 +78,12 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
       <div className="w-full">
         <Label htmlFor="score" className="text-muted-foreground">Score</Label>
         <Select name="score" defaultValue={progressInfo.score.toString()}>
-          <SelectTrigger id="score">
+          <SelectTrigger id="score" className="relative">
             <SelectValue
               defaultValue={progressInfo.score}
               placeholder={progressInfo.score}
             />
+            <Star className="absolute right-8 opacity-50" />
           </SelectTrigger>
           <SelectContent>
             {SCORES.map(([score, name]) => (
