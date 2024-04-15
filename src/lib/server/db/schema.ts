@@ -1,7 +1,8 @@
 import { relations } from "drizzle-orm";
-import { sqliteTable, text, integer, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
-const providerTypes = ["github", "mal", "google", "discord"] as const;
+const PROVIDERS = ["github", "mal", "google", "discord"] as const;
+export const WATCHING_STATUSES = ["Plan to watch", "Watching", "Completed", "On-hold", "Dropped"] as const;
 
 export const userTable = sqliteTable("users", {
 	id: text("id")
@@ -9,7 +10,7 @@ export const userTable = sqliteTable("users", {
 		.primaryKey(),
     username: text("username")
 		.notNull(),
-	authProviderType: text("auth_provider_type", { enum: providerTypes})
+	authProviderType: text("auth_provider_type", { enum: PROVIDERS})
 		.notNull(),
 	authProviderId: text("auth_provider_id")
 		.notNull()
@@ -24,8 +25,9 @@ export const userTable = sqliteTable("users", {
 // }
 );
 
-export const userRelations = relations(userTable, ({ many, one }) => ({
-	sessions: many(sessionTable)
+export const userRelations = relations(userTable, ({ many }) => ({
+	sessions: many(sessionTable),
+	progress: many(progressTable)
 }))
 
 export const sessionTable = sqliteTable("sessions", {
@@ -39,12 +41,39 @@ export const sessionTable = sqliteTable("sessions", {
 		.notNull()
 });
 
-export const sessionRelations = relations(sessionTable, ({one}) => ({
+export const sessionRelations = relations(sessionTable, ({ one }) => ({
 	user: one(userTable, {
 		fields: [sessionTable.userId],
 		references: [userTable.id]
 	})
 }))
 
+export const progressTable = sqliteTable('progress', {
+	id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true} ),
+	userId: text("user_id")
+		.notNull()
+		.references(() => userTable.id),
+	animeId: integer('anime_id', { mode: 'number' })
+		.notNull(),
+	score: integer('score', { mode: 'number' })
+		.notNull()
+		.default(0),
+	status: text('status', { enum: WATCHING_STATUSES})
+		.notNull()
+		.default("Plan to watch"),
+	episodesWatched: integer('episodes_watched', { mode: 'number'})
+		.notNull()
+		.default(0),
+	maxEpisodes: integer('max_episodes', { mode: 'number'})
+})
+
+export const progressRelations = relations(progressTable, ({ one }) => ({
+	user: one(userTable, {
+		fields: [progressTable.userId],
+		references: [userTable.id]
+	})
+}))
+
 export type DatabaseUser = typeof userTable.$inferSelect;
 export type InsertDatabaseUser = typeof userTable.$inferInsert;
+export type ProgressRecordType = typeof progressTable.$inferSelect;

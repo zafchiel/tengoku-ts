@@ -16,12 +16,12 @@ import axios, { AxiosError } from "axios";
 import DisplaySearchResults from "./display-search-results";
 import { usePathname } from "next/navigation";
 import { useDebounce } from "@/hooks/use-debounce";
-import { JIKAN_API_ANIME_URL } from "@/lib/constants";
+import { JIKAN_API_URL } from "@/lib/constants";
 
 const fetchSearchResults = async (searchTerm: string) => {
   try {
     console.log("Made request");
-    const response = await axios.get<{data: AnimeInfo[]}>(JIKAN_API_ANIME_URL, {
+    const response = await axios.get<{data: AnimeInfo[]}>(JIKAN_API_URL + "/anime", {
       params: {
         q: searchTerm,
         limit: 5
