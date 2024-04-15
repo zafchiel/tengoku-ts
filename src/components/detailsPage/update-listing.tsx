@@ -50,9 +50,9 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
             action={submitAction}
             className="flex gap-3"
         >
-            <Select name="status">
+            <Select name="status" defaultValue={progressInfo.status}>
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder={progressInfo.status}/>
+                    <SelectValue placeholder={progressInfo.status} />
                 </SelectTrigger>
                 <SelectContent>
                     {WATCHING_STATUSES.map((status) => (
@@ -61,9 +61,9 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
                 </SelectContent>
             </Select>
 
-            <Select name="score">
+            <Select name="score" defaultValue={progressInfo.score.toString()} >
                 <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder={progressInfo.score}/>
+                    <SelectValue defaultValue={progressInfo.score} placeholder={progressInfo.score}/>
                 </SelectTrigger>
                 <SelectContent>
                     {SCORES.map(([score, name]) => (
