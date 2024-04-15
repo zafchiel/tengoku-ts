@@ -19,6 +19,7 @@ import { updateAnimeProgress } from "@/lib/server/actions/progress-actions";
 import { ProgressRecordType, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { useState } from "react";
 import { toast } from "sonner";
+import { Label } from "../ui/label";
 
 const SCORES = [
   [10, "Masterpiece"],
@@ -57,36 +58,42 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
   };
 
   return (
-    <form action={submitAction} className="flex gap-3 flex-wrap md:flex-nowrap">
-      <Select name="status" defaultValue={progressInfo.status}>
-        <SelectTrigger className="">
-          <SelectValue placeholder={progressInfo.status} />
-        </SelectTrigger>
-        <SelectContent>
-          {WATCHING_STATUSES.map((status) => (
-            <SelectItem key={status} value={status}>
-              {status}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+    <form action={submitAction} className="flex gap-3 items-end flex-wrap md:flex-nowrap">
+      <div className="w-full">
+        <Label htmlFor="status" className="text-muted-foreground">Watching status</Label>
+        <Select name="status" defaultValue={progressInfo.status}>
+          <SelectTrigger id="status">
+            <SelectValue placeholder={progressInfo.status} />
+          </SelectTrigger>
+          <SelectContent>
+            {WATCHING_STATUSES.map((status) => (
+              <SelectItem key={status} value={status}>
+                {status}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-      <Select name="score" defaultValue={progressInfo.score.toString()}>
-        <SelectTrigger className="">
-          <SelectValue
-            defaultValue={progressInfo.score}
-            placeholder={progressInfo.score}
-          />
-        </SelectTrigger>
-        <SelectContent>
-          {SCORES.map(([score, name]) => (
-            <SelectItem
-              key={name}
-              value={score.toString()}
-            >{`${score} - ${name}`}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="w-full">
+        <Label htmlFor="score" className="text-muted-foreground">Score</Label>
+        <Select name="score" defaultValue={progressInfo.score.toString()}>
+          <SelectTrigger id="score">
+            <SelectValue
+              defaultValue={progressInfo.score}
+              placeholder={progressInfo.score}
+            />
+          </SelectTrigger>
+          <SelectContent>
+            {SCORES.map(([score, name]) => (
+              <SelectItem
+                key={name}
+                value={score.toString()}
+              >{`${score} - ${name}`}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       <TooltipProvider>
         <Tooltip>
