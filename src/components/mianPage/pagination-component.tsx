@@ -27,10 +27,11 @@ export function PaginationComponent({ paginationInfo, activePage, query }: Pagin
 
   return (
     <Pagination>
-      <PaginationContent>
+      <PaginationContent className="flex-wrap">
         <PaginationItem>
           <PaginationPrevious className={cn(activePage <= 1 && "pointer-events-none opacity-40")} href={`/search?q=${query}&page=${activePage - 1}`} />
         </PaginationItem>
+
 
         {pagination?.map((page, index) => {
             if (page === "...") {
@@ -48,8 +49,9 @@ export function PaginationComponent({ paginationInfo, activePage, query }: Pagin
             }
         })}
 
+
         <PaginationItem>
-          <PaginationNext className={cn(activePage >= paginationInfo.last_visible_page && "pointer-events-none opacity-40")} href={`/search?q=${query}&page=${activePage + 1}`} />
+          <PaginationNext className={cn(activePage >= paginationInfo.last_visible_page && "pointer-events-none opacity-40 flex-grow")} href={`/search?q=${query}&page=${activePage + 1}`} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
