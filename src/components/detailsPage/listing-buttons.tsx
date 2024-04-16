@@ -15,6 +15,7 @@ type ListingButtonsProps = {
 }
 
 export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsProps) {
+    // Check if progress record exists
     const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher)
 
     if (isLoading) {
