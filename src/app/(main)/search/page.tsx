@@ -1,15 +1,15 @@
 "use client";
 
 import axios from "axios";
-import {useSearchParams} from "next/navigation";
-import {SearchResult} from "@/types";
-import {JIKAN_API_URL} from "@/lib/constants";
-import {PaginationComponent} from "@/components/searchResultsPage/pagination-component";
-import {Skeleton} from "@/components/ui/skeleton";
+import { useSearchParams } from "next/navigation";
+import { SearchResult } from "@/types";
+import { JIKAN_API_URL } from "@/lib/constants";
+import { PaginationComponent } from "@/components/searchResultsPage/pagination-component";
+import { Skeleton } from "@/components/ui/skeleton";
 import useSWR from "swr";
 import SearchResultSection from "@/components/searchResultsPage/search-result-sections";
-import {AlertCircle} from "lucide-react";
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const fetcher = (url: string) => axios.get<SearchResult>(url).then(res => res.data);
 const LIMIT = 20;
@@ -23,7 +23,7 @@ export default function SearchResultsPage() {
         data,
         isLoading,
         error
-    } = useSWR(`${JIKAN_API_URL}/anime?q=${query}&limit=${LIMIT}&page=${currentPage}&sfw=true`, fetcher)
+    } = useSWR(`${JIKAN_API_URL}/anime?q=${query}&limit=${LIMIT}&page=${currentPage}&sfw=true`, fetcher);
 
     return (
         <main className="md:pt-14 p-5">
