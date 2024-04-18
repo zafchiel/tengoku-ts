@@ -1,12 +1,13 @@
 import getBase64 from "@/lib/get-base64-image";
 import AnimeDetailsSection from "@/components/detailsPage/anime-details-section";
-import {JIKAN_API_URL} from "@/lib/constants";
+import { JIKAN_API_URL } from "@/lib/constants";
 import axios from "axios";
-import {AnimeInfo} from "@/types";
-import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert";
-import {AlertCircle} from "lucide-react";
+import { AnimeInfo } from "@/types";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 import HeadingSection from "@/components/detailsPage/details-heading-section";
 import ListingButtons from "@/components/detailsPage/listing-buttons";
+import RelationsSection from "@/components/detailsPage/relations-sections";
 
 type DetailsPageProps = {
     params: {
@@ -14,7 +15,7 @@ type DetailsPageProps = {
     };
 };
 
-export default async function DetailsPage({params}: DetailsPageProps) {
+export default async function DetailsPage({ params }: DetailsPageProps) {
     let anime: AnimeInfo | null = null;
 
     // Search anime by slug
@@ -37,7 +38,7 @@ export default async function DetailsPage({params}: DetailsPageProps) {
                 </AlertDescription>
             </Alert>
         </main>
-    )
+    );
 
     const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
@@ -50,6 +51,7 @@ export default async function DetailsPage({params}: DetailsPageProps) {
                     <ListingButtons animeId={anime.mal_id} maxEpisodes={anime.episodes}/>
                 </div>
                 <AnimeDetailsSection animeInfo={anime}/>
+                <RelationsSection animeInfo={anime}/>
             </main>
         </>
     );
