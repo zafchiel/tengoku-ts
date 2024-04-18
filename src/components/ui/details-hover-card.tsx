@@ -1,18 +1,23 @@
 "use client";
 
-import {HoverCard, HoverCardContent, HoverCardTrigger} from "./hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 import Description from "../detailsPage/description";
-import {AnimeInfo} from "@/types";
+import { AnimeInfo } from "@/types";
+import Link from "next/link";
 
 type DetailsHoverCardProps = {
     anime: AnimeInfo;
     children: React.ReactNode;
 };
 
-export default function DetailsHoverCard({anime, children}: DetailsHoverCardProps) {
+export default function DetailsHoverCard({ anime, children }: DetailsHoverCardProps) {
     return (
         <HoverCard>
-            <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+            <HoverCardTrigger asChild>
+                <Link href={`/${anime.mal_id}`}>
+                    {children}
+                </Link>
+            </HoverCardTrigger>
             <HoverCardContent>
                 <div className="flex flex-col gap-2">
                     <div>
