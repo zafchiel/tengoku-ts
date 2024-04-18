@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 type RelationCategoryProps = {
     category: string;
     entries: {
@@ -10,13 +12,14 @@ type RelationCategoryProps = {
 
 export default function RelationCategory({ category, entries }: RelationCategoryProps) {
     return (
-        <div className="flex gap-3">
-            <p>{category}</p>
-            <div className="flex gap-2">
+        <div className="grid grid-cols-[80px_1fr] md:grid-cols-[150px_1fr] gap-3">
+            <p className="font-light">{category}:</p>
+            <div className="flex gap-2 flex-col">
                 {entries.map((entry) => (
-                    <p key={entry.mal_id}>{entry.name}</p>
+                    <Link href={`/${entry.mal_id}`} key={entry.mal_id} className="underline">{entry.name}</Link>
                 ))}
             </div>
+            <hr className="col-span-2"/>
         </div>
     );
 }

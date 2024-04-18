@@ -32,10 +32,12 @@ export default function RelationsSection({ animeInfo }: RelationSectionProps) {
 
     return (
         <section>
-            <h3 className="text-3xl">Relations</h3>
-            {relations.map((category) => (
-                <RelationCategory category={category[0]} entries={category[1]} key={category[0]}/>
-            ))}
+            <h3 className="text-3xl font-semibold">Relations</h3>
+            <div className="space-y-3 px-1 py-2">
+                {relations.map((category) => (
+                    <RelationCategory category={category[0]} entries={category[1]} key={category[0]}/>
+                ))}
+            </div>
         </section>
     );
 }
