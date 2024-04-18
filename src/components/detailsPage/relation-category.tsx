@@ -16,7 +16,13 @@ export default function RelationCategory({ category, entries }: RelationCategory
             <p className="font-light">{category}:</p>
             <div className="flex gap-2 flex-col">
                 {entries.map((entry) => (
-                    <Link href={`/${entry.mal_id}`} key={entry.mal_id} className="underline">{entry.name}</Link>
+                    <Link
+                        href={`/${entry.mal_id}`}
+                        key={entry.mal_id}
+                        className="underline max-w-max"
+                    >
+                        {entry.name}
+                    </Link>
                 ))}
             </div>
             <hr className="col-span-2"/>
