@@ -14,7 +14,7 @@ export default function DetailsHoverCard({ anime, children }: DetailsHoverCardPr
     return (
         <HoverCard>
             <HoverCardTrigger asChild>
-                <Link href={`/${anime.mal_id}`}>
+                <Link href={`/anime/${anime.mal_id}`}>
                     {children}
                 </Link>
             </HoverCardTrigger>

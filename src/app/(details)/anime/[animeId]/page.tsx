@@ -11,7 +11,7 @@ import RelationsSection from "@/components/detailsPage/relations-sections";
 
 type DetailsPageProps = {
     params: {
-        id: string;
+        animeId: string;
     };
 };
 
@@ -21,7 +21,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
     // Search anime by slug
     try {
         anime = await axios
-            .get<{ data: AnimeInfo }>(JIKAN_API_URL + `/anime/${params.id}/full`)
+            .get<{ data: AnimeInfo }>(JIKAN_API_URL + `/anime/${params.animeId}/full`)
             .then((res) => res.data.data);
 
     } catch (error) {

@@ -15,7 +15,7 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
     const {user} = await validateRequest();
 
     if (!user) {
-        cookies().set('redirect', `/${animeId}`)
+        cookies().set('redirect', `/anime/${animeId}`)
         redirect("/login");
         // return {
         //     error: "Must be logged in",

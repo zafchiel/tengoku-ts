@@ -9,7 +9,7 @@ type Props = {
 
 export default function SwiperSlideCard({ anime }: Props) {
   return (
-    <Link href={`/${anime.mal_id}`}>
+    <Link href={`/anime/${anime.mal_id}`}>
       <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-sm shadow-md">
         <section className="absolute top-3 left-3 z-50 border-none">
           <ScoreBadge score={anime.score} />
