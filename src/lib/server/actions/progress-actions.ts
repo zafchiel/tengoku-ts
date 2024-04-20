@@ -6,6 +6,7 @@ import {ProgressRecordType, progressTable, WATCHING_STATUSES} from "@/lib/server
 import {z, ZodError} from "zod"
 import {and, eq} from "drizzle-orm";
 import {redirect} from "next/navigation";
+import { cookies } from "next/headers";
 
 export async function addAnimeProgress(animeId: number, maxEpisodes: number | null): Promise<{
     error: string | null;
@@ -14,6 +15,7 @@ export async function addAnimeProgress(animeId: number, maxEpisodes: number | nu
     const {user} = await validateRequest();
 
     if (!user) {
+        cookies().set('redirect', `/anime/${animeId}`)
         redirect("/login");
         // return {
         //     error: "Must be logged in",

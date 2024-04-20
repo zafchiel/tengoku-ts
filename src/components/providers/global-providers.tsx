@@ -9,7 +9,9 @@ export default function GlobalProviders({ children }: { children: ReactNode }) {
     <>
       <UserInfoProvier>
         {children}
-          <Toaster richColors />
+          <Toaster richColors toastOptions={{
+            duration: 3000
+          }} />
       </UserInfoProvier>
     </>
   );

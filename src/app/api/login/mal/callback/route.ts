@@ -15,6 +15,9 @@ export async function GET(request: Request): Promise<Response> {
   const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
   const MAL_CLIENT_SECRET = process.env.MAL_CLIENT_SECRET;
 
+  const redirectLocation = cookies().get('redirect')?.value ?? "/profile";
+  cookies().delete('redirect');
+
   if (!MAL_CLIENT_ID || !MAL_CLIENT_SECRET) {
     throw new Error("Missing MAL_CLIENT_ID or MAL_CLIENT_SECRET");
   }
@@ -74,7 +77,7 @@ export async function GET(request: Request): Promise<Response> {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/user",
+          Location: redirectLocation,
         },
       });
     }
@@ -101,7 +104,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/user",
+        Location: redirectLocation,
       },
     });
   } catch (e) {

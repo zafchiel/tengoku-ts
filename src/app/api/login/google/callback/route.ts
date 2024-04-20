@@ -12,6 +12,9 @@ export async function GET(request: Request): Promise<Response> {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
+  const redirectLocation = cookies().get('redirect')?.value ?? "/profile";
+  cookies().delete('redirect');
+
   const storedVerifier = cookies().get("google_oauth_code_verifier")?.value ?? null;
   const storedState = cookies().get("google_oauth_state")?.value ?? null;
 
@@ -53,7 +56,7 @@ export async function GET(request: Request): Promise<Response> {
       return new Response(null, {
         status: 302,
         headers: {
-          Location: "/user",
+          Location: redirectLocation,
         },
       });
     }
@@ -80,7 +83,7 @@ export async function GET(request: Request): Promise<Response> {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/user",
+        Location: redirectLocation,
       },
     });
   } catch (e) {

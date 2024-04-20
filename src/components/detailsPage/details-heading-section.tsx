@@ -13,7 +13,7 @@ export default function DetailsHeadingSection({ animeInfo, imgBase64 }: HeadingS
         <div className="md:flex">
           <PosterImage alt="dw" src={animeInfo.images.webp.large_image_url} imgBase64={imgBase64} />
 
-          <div className="flex flex-col justify-start p-4 md:max-w-md lg:max-w-xl">
+          <div className="flex flex-col justify-start md:p-4 md:max-w-md lg:max-w-xl">
             <div className="flex">
               <h1 className="text-4xl font-bold uppercase">{animeInfo.title}</h1>
               <p className="ml-1">{animeInfo.year}</p>

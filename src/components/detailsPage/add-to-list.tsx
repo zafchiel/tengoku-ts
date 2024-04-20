@@ -35,7 +35,7 @@ export default function AddToList({animeId, setProgressInfo, maxEpisodes}: AddTo
             loading={loading}
             disabled={loading}
             aria-disabled={loading}
-            className="capitalize flex gap-2 items-center"
+            className="capitalize flex gap-2 items-center w-full"
         >
             <MessageSquarePlus/>
             Add To List

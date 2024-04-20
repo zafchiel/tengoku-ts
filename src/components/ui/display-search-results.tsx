@@ -12,7 +12,7 @@ export default function DisplaySearchResults({ searchResults }: DisplaySearchRes
   return (
     <div className="divide-y">
       {searchResults.map((result) => (
-        <Link href={`/${result.mal_id}`} key={result.mal_id}>
+        <Link href={`/anime/${result.mal_id}`} key={result.mal_id}>
           <div className="flex rounded-sm gap-1 p-2 hover:bg-primary-foreground">
             <Image
               width={80}
