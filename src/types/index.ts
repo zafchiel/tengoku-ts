@@ -147,7 +147,7 @@ export type SearchResult = {
     pagination: PaginationInfoType
 };
 
-export type AnimeCharacters = {
+export type AnimeCharacter = {
     character: {
       mal_id: number;
       url: string;
@@ -178,4 +178,4 @@ export type AnimeCharacters = {
       };
       language: string;
     }[];
-  }[];
+  };
