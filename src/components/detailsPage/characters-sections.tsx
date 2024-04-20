@@ -4,6 +4,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { AnimeCharacter } from "@/types";
 import CharacterCard from "./character-card";
+import Link from "next/link";
 
 type CharactersSectionProps = {
     animeId: number;
@@ -37,8 +38,12 @@ export default async function CharactersSection({ animeId }: CharactersSectionPr
     }
 
     return (
-        <section>
-            <h3 className="text-3xl font-semibold">Characters</h3>
+        <section className="px-1 py-2">
+            <div className="flex justify-between items-end">
+                <h3 className="text-3xl font-semibold">Characters</h3>
+                <Link href={`/anime/${animeId}/characters`} className="underline">Show all characters</Link>
+            </div>
+            <hr className="mb-2" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {sortedCharacters.slice(0, 10).map((character) => (
                     <CharacterCard 
@@ -46,6 +51,9 @@ export default async function CharactersSection({ animeId }: CharactersSectionPr
                         character={character} 
                     />
                 ))}
+            </div>
+            <div className="text-center">
+                <Link href={`/anime/${animeId}/characters`} className="underline">Show all characters</Link>
             </div>
         </section>
     )
