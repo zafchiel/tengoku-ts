@@ -16,7 +16,11 @@ type ListingButtonsProps = {
 
 export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsProps) {
     // Check if progress record exists
-    const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher)
+    const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher, {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false
+    })
 
     if (isLoading) {
         return <Skeleton className="w-full h-10"/>
