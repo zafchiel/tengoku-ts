@@ -5,25 +5,16 @@ import { AlertCircle } from "lucide-react";
 import { AnimeCharacter } from "@/types";
 import CharacterCard from "./character-card";
 import Link from "next/link";
+import { fetchAnimeCharacters } from "@/lib/utils";
 
 type CharactersSectionProps = {
     animeId: number;
 }
 
 export default async function CharactersSection({ animeId }: CharactersSectionProps) {
-    const characters = await axios.get<{data: AnimeCharacter[] }>(`${JIKAN_API_URL}/anime/${animeId}/characters`).then(res => res.data.data);
+    const characters = await fetchAnimeCharacters(animeId);
 
-    const sortedCharacters = characters.sort((a, b) => {
-        if (a.role === "Main" && b.role !== "Main") {
-          return -1;
-        } else if (b.role === "Main" && a.role !== "Main") {
-          return 1;
-        } else {
-          return b.favorites - a.favorites;
-        }
-    });
-
-    if(!characters) {
+    if (!characters) {
         return (
             <section>
                 <Alert variant="destructive" className="max-w-xl">
@@ -34,7 +25,7 @@ export default async function CharactersSection({ animeId }: CharactersSectionPr
                     </AlertDescription>
                 </Alert>
             </section>
-        )
+        );
     }
 
     return (
@@ -43,12 +34,12 @@ export default async function CharactersSection({ animeId }: CharactersSectionPr
                 <h3 className="text-3xl font-semibold">Characters</h3>
                 <Link href={`/anime/${animeId}/characters`} className="underline">Show all characters</Link>
             </div>
-            <hr className="mb-2" />
+            <hr className="mb-2"/>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {sortedCharacters.slice(0, 10).map((character) => (
-                    <CharacterCard 
-                        key={character.character.mal_id} 
-                        character={character} 
+                {characters.slice(0, 10).map((character) => (
+                    <CharacterCard
+                        key={character.character.mal_id}
+                        character={character}
                     />
                 ))}
             </div>
@@ -56,5 +47,5 @@ export default async function CharactersSection({ animeId }: CharactersSectionPr
                 <Link href={`/anime/${animeId}/characters`} className="underline">Show all characters</Link>
             </div>
         </section>
-    )
+    );
 }

@@ -11,6 +11,7 @@ import RelationsSection from "@/components/detailsPage/relations-section";
 import CharactersSection from "@/components/detailsPage/characters-sections";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchAnimeInfoFull } from "@/lib/utils";
 
 type DetailsPageProps = {
     params: {
@@ -21,12 +22,8 @@ type DetailsPageProps = {
 export default async function DetailsPage({ params }: DetailsPageProps) {
     let anime: AnimeInfo | null = null;
 
-    // Search anime by slug
     try {
-        anime = await axios
-            .get<{ data: AnimeInfo }>(JIKAN_API_URL + `/anime/${params.animeId}/full`)
-            .then((res) => res.data.data);
-
+        anime = await fetchAnimeInfoFull(params.animeId);
     } catch (error) {
         console.log(error);
     }
@@ -58,8 +55,8 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
                 <RelationsSection animeInfo={anime}/>
 
-                <Suspense fallback={<Skeleton className="w-full h-96" />}>
-                    <CharactersSection animeId={anime.mal_id} />
+                <Suspense fallback={<Skeleton className="w-full h-96"/>}>
+                    <CharactersSection animeId={anime.mal_id}/>
                 </Suspense>
             </main>
         </>
