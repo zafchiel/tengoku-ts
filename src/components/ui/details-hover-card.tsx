@@ -1,7 +1,7 @@
 "use client";
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
-import Description from "../detailsPage/description";
+import Description from "../details-page/description";
 import { AnimeInfo } from "@/types";
 import Link from "next/link";
 

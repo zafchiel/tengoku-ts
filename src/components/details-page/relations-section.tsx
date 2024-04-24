@@ -1,5 +1,5 @@
 import { AnimeInfo } from "@/types";
-import RelationCategory from "@/components/detailsPage/relation-category";
+import RelationCategory from "@/components/details-page/relation-category";
 
 type RelationSectionProps = {
     animeInfo: AnimeInfo;

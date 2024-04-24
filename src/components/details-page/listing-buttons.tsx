@@ -2,9 +2,9 @@
 
 import axios from "axios";
 import {Skeleton} from "@/components/ui/skeleton";
-import AddToList from "@/components/detailsPage/add-to-list";
+import AddToList from "@/components/details-page/add-to-list";
 import {ProgressRecordType} from "@/lib/server/db/schema";
-import UpdateListing from "@/components/detailsPage/update-listing";
+import UpdateListing from "@/components/details-page/update-listing";
 import useSWR from "swr";
 
 const fetcher = (url: string) => axios.get<ProgressRecordType>(url).then(res => res.data)

@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import DetailsHoverCard from "@/components/ui/details-hover-card";
-import SearchResultCard from "@/components/searchResultsPage/search-result-card";
+import SearchResultCard from "@/components/search-results-page/search-result-card";
 import { SearchResult } from "@/types";
 
 type SearchResultSectionProps = {
