@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { validateRequest } from "@/lib/server/auth";
-import { LogoutForm } from "@/components/profilePage/logout-form";
+import { LogoutForm } from "@/components/profile-page/logout-form";
 import { db } from "@/lib/server/db";
 import { progressTable } from "@/lib/server/db/schema";
 import { eq } from "drizzle-orm";

@@ -1,103 +1,103 @@
 import { discrodOAuth, lucia } from "@/lib/server/auth";
 import { cookies } from "next/headers";
 import { OAuth2RequestError } from "arctic";
-import { generateId } from "lucia";
+import { generateIdFromEntropySize } from "lucia";
 import { db } from "@/lib/server/db";
 import { userTable } from "@/lib/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import axios from "axios";
 
 export async function GET(request: Request): Promise<Response> {
-  const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
+    const url = new URL(request.url);
+    const code = url.searchParams.get("code");
+    const state = url.searchParams.get("state");
 
-  const storedState = cookies().get("discord_oauth_state")?.value ?? null;
+    const storedState = cookies().get("discord_oauth_state")?.value ?? null;
 
-  const redirectLocation = cookies().get('redirect')?.value ?? "/profile";
-  cookies().delete('redirect');
+    const redirectLocation = cookies().get('redirect')?.value ?? "/user";
+    cookies().delete('redirect');
 
-  if (!code || !state || !storedState || state !== storedState) {
-    return new Response(null, {
-      status: 400,
-    });
-  }
-
-  try {
-    const tokens = await discrodOAuth.validateAuthorizationCode(code);
-
-    const { data: discordUser } = await axios.get<DiscordUser>("https://discord.com/api/users/@me", {
-      headers: {
-        Authorization: `Bearer ${tokens.accessToken}`,
-      },
-    });
-
-    const existingUser = await db
-      .select()
-      .from(userTable)
-      .where(
-        and(
-          eq(userTable.authProviderType, "discord"),
-          eq(userTable.authProviderId, discordUser.id)
-        )
-      )
-      .get();
-
-    if (existingUser) {
-      // Create session cookie for exiting user
-      const session = await lucia.createSession(existingUser.id, {});
-      const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
-        sessionCookie.name,
-        sessionCookie.value,
-        sessionCookie.attributes
-      );
-      return new Response(null, {
-        status: 302,
-        headers: {
-          Location: redirectLocation,
-        },
-      });
+    if (!code || !state || !storedState || state !== storedState) {
+        return new Response(null, {
+            status: 400,
+        });
     }
 
-    // If new user, create a new user in the database
+    try {
+        const tokens = await discrodOAuth.validateAuthorizationCode(code);
 
-    const userId = generateId(15);
+        const { data: discordUser } = await axios.get<DiscordUser>("https://discord.com/api/users/@me", {
+            headers: {
+                Authorization: `Bearer ${tokens.accessToken}`,
+            },
+        });
 
-    await db.insert(userTable).values({
-      id: userId,
-      username: discordUser.username,
-      authProviderType: "discord",
-      authProviderId: discordUser.id
-    });
+        const existingUser = await db
+            .select()
+            .from(userTable)
+            .where(
+                and(
+                    eq(userTable.authProviderType, "discord"),
+                    eq(userTable.authProviderId, discordUser.id)
+                )
+            )
+            .get();
 
-    // Create session cookie for new user
-    const session = await lucia.createSession(userId, {});
-    const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes
-    );
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: redirectLocation,
-      },
-    });
-  } catch (e) {
-    console.log(e);
-    // the specific error message depends on the provider
-    if (e instanceof OAuth2RequestError) {
-      // invalid code
-      return new Response(null, {
-        status: 400,
-      });
+        if (existingUser) {
+            // Create session cookie for exiting user
+            const session = await lucia.createSession(existingUser.id, {});
+            const sessionCookie = lucia.createSessionCookie(session.id);
+            cookies().set(
+                sessionCookie.name,
+                sessionCookie.value,
+                sessionCookie.attributes
+            );
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    Location: redirectLocation,
+                },
+            });
+        }
+
+        // If new user, create a new user in the database
+
+        const userId = generateIdFromEntropySize(10);
+
+        await db.insert(userTable).values({
+            id: userId,
+            username: discordUser.username,
+            authProviderType: "discord",
+            authProviderId: discordUser.id
+        });
+
+        // Create session cookie for new user
+        const session = await lucia.createSession(userId, {});
+        const sessionCookie = lucia.createSessionCookie(session.id);
+        cookies().set(
+            sessionCookie.name,
+            sessionCookie.value,
+            sessionCookie.attributes
+        );
+        return new Response(null, {
+            status: 302,
+            headers: {
+                Location: redirectLocation,
+            },
+        });
+    } catch (e) {
+        console.log(e);
+        // the specific error message depends on the provider
+        if (e instanceof OAuth2RequestError) {
+            // invalid code
+            return new Response(null, {
+                status: 400,
+            });
+        }
+        return new Response(null, {
+            status: 500,
+        });
     }
-    return new Response(null, {
-      status: 500,
-    });
-  }
 }
 
 interface DiscordUser {

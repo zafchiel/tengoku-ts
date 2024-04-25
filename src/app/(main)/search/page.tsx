@@ -4,10 +4,10 @@ import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { SearchResult } from "@/types";
 import { JIKAN_API_URL } from "@/lib/constants";
-import { PaginationComponent } from "@/components/searchResultsPage/pagination-component";
+import { PaginationComponent } from "@/components/search-results-page/pagination-component";
 import { Skeleton } from "@/components/ui/skeleton";
 import useSWR from "swr";
-import SearchResultSection from "@/components/searchResultsPage/search-result-sections";
+import SearchResultSection from "@/components/search-results-page/search-result-sections";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
