@@ -1,6 +1,6 @@
 export default function Navigation() {
   return (
-    <div className="mt-12 sticky h-fit top-12">
+    <div className="mt-12 sticky h-fit top-24">
       <h4 className="uppercase tracking-wide font-light text-muted-foreground text-center mb-8">
         navigation
       </h4>

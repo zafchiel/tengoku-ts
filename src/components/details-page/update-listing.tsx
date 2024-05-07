@@ -58,9 +58,14 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
   };
 
   return (
-    <form action={submitAction} className="flex gap-3 items-end flex-wrap md:flex-nowrap">
+    <form
+      action={submitAction}
+      className="flex gap-3 items-end flex-wrap md:flex-nowrap"
+    >
       <div className="w-full">
-        <Label htmlFor="status" className="text-muted-foreground">Watching status</Label>
+        <Label htmlFor="status" className="text-muted-foreground">
+          Watching status
+        </Label>
         <Select name="status" defaultValue={progressInfo.status}>
           <SelectTrigger id="status">
             <SelectValue placeholder={progressInfo.status} />
@@ -76,14 +81,15 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
       </div>
 
       <div className="w-full">
-        <Label htmlFor="score" className="text-muted-foreground">Score</Label>
+        <Label htmlFor="score" className="text-muted-foreground">
+          Score
+        </Label>
         <Select name="score" defaultValue={progressInfo.score.toString()}>
-          <SelectTrigger id="score" className="relative">
+          <SelectTrigger id="score" className="relative" star={true}>
             <SelectValue
               defaultValue={progressInfo.score}
               placeholder={progressInfo.score}
             />
-            <Star className="absolute right-8 opacity-50" />
           </SelectTrigger>
           <SelectContent>
             {SCORES.map(([score, name]) => (

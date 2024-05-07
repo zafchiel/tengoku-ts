@@ -9,7 +9,7 @@ type OpeningsSectionProps = {
 
 export default function OpeningsSection({ theme }: OpeningsSectionProps) {
   return (
-    <section>
+    <section id="openings">
       <h3 className="text-3xl font-semibold">Openings & Endings</h3>
       <Separator className="mb-3" />
       <div className="grid grid-cols-2 px-2">
