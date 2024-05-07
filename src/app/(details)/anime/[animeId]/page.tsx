@@ -14,6 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { fetchAnimeInfoFull } from "@/lib/utils";
 import { PosterImage } from "@/components/details-page/poster-image";
 import Navigation from "@/components/details-page/navigation";
+import OpeningsSection from "@/components/details-page/openings-section";
 
 type DetailsPageProps = {
   params: {
@@ -72,6 +73,8 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
           <Suspense fallback={<Skeleton className="w-full h-96" />}>
             <CharactersSection animeId={anime.mal_id} />
           </Suspense>
+
+          <OpeningsSection theme={anime.theme} />
         </section>
       </main>
     </>
