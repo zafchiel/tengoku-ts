@@ -75,6 +75,15 @@
   body {
     @apply bg-background text-foreground;
   }
+  .nav-element {
+    @apply hover:border-l-2 hover:scale-105 hover:bg-primary/5 cursor-pointer transition-all duration-200 px-4 py-6 font-semibold tracking-wider w-full block;
+  }
+}
+
+*,
+html,
+body {
+  scroll-behavior: smooth !important;
 }
 
 /* -------------------- Trailer Frame ------------------ */
