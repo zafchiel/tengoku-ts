@@ -8,7 +8,6 @@ type AnimeDetailsSectionProps = {
 export default function AnimeDetailsSection({
   animeInfo,
 }: AnimeDetailsSectionProps) {
-
   const airingInfo = animeInfo.season
     ? `${animeInfo.season} - ${animeInfo.year}`
     : animeInfo.aired.from
@@ -16,7 +15,10 @@ export default function AnimeDetailsSection({
       : "unknown";
 
   return (
-    <section className="p-1 md:p-4 border flex gap-4 flex-wrap rounded-sm">
+    <section
+      id="stats"
+      className="p-1 md:p-4 border flex gap-4 flex-wrap rounded-sm"
+    >
       {/* <AnimePosters mal_id={animeInfo.mal_id} /> */}
       {animeInfo.score && (
         <StatsCard
@@ -28,7 +30,11 @@ export default function AnimeDetailsSection({
       {animeInfo.episodes ? (
         <StatsCard
           title="episodes"
-          value={animeInfo.type === "Movie" || animeInfo.type === "Music" ? animeInfo.type : `${animeInfo.type} - ${animeInfo.episodes} ep`}
+          value={
+            animeInfo.type === "Movie" || animeInfo.type === "Music"
+              ? animeInfo.type
+              : `${animeInfo.type} - ${animeInfo.episodes} ep`
+          }
           additional={animeInfo.duration}
         />
       ) : (
