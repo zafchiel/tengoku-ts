@@ -35,6 +35,11 @@ export default function Navigation() {
             Recomendations
           </a>
         </li>
+        <li>
+          <a href="#external" className="nav-element">
+            External
+          </a>
+        </li>
       </ul>
     </div>
   );
