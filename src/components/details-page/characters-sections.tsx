@@ -31,7 +31,7 @@ export default async function CharactersSection({
   }
 
   return (
-    <section id="characters" className="px-1 py-2">
+    <section id="characters" className="scroll-mt-40 px-1 py-2">
       <div className="flex justify-between items-end">
         <h3 className="text-3xl font-semibold">Characters</h3>
         <Link href={`/anime/${animeId}/characters`} className="underline">

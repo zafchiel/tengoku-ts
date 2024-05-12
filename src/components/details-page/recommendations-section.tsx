@@ -24,7 +24,7 @@ export default async function RecommendationsSection({
     console.log(error);
   }
   return (
-    <section id="recommendations">
+    <section id="recommendations" className="scroll-mt-40">
       <h3 className="text-3xl font-semibold">Recommendations</h3>
       <p className="text-muted-foreground">
         These anime were voted as simillar by community

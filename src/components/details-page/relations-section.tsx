@@ -7,7 +7,7 @@ type RelationSectionProps = {
 
 export default function RelationsSection({ animeInfo }: RelationSectionProps) {
   return (
-    <section id="characters">
+    <section id="relations" className="scroll-mt-40">
       <h3 className="text-3xl font-semibold">Relations</h3>
       <hr className="mb-2" />
       <div className="space-y-3 px-1 py-2">
