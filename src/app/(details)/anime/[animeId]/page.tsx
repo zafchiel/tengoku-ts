@@ -63,7 +63,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
           <Navigation />
         </section>
 
-        <section className="max-w-5xl space-y-8">
+        <section className="max-w-5xl space-y-28">
           <AnimeDetailsSection animeInfo={anime} />
 
           <RelationsSection animeInfo={anime} />

@@ -31,7 +31,7 @@ export default function Navigation() {
           </a>
         </li>
         <li>
-          <a href="#recomendations" className="nav-element">
+          <a href="#recommendations" className="nav-element">
             Recomendations
           </a>
         </li>
