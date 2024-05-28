@@ -13,7 +13,7 @@ export default function DetailsHeadingSection({
   imgBase64,
 }: HeadingSectionProps) {
   return (
-    <div id="description" className="md:flex">
+    <div id="description" className="md:flex scroll-mt-40">
       <PosterImage
         alt="dw"
         src={animeInfo.images.webp.large_image_url}
