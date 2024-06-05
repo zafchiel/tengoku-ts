@@ -22,7 +22,7 @@ export default function RelationCategory({
           <Link
             href={`/anime/${entry.mal_id}`}
             key={entry.mal_id}
-            className="underline max-w-max"
+            className="underline max-w-max hover:text-slate-400"
           >
             {entry.name}
           </Link>

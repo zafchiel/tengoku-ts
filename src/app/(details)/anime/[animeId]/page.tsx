@@ -13,6 +13,7 @@ import { fetchAnimeInfoFull } from "@/lib/utils";
 import Navigation from "@/components/details-page/navigation";
 import OpeningsSection from "@/components/details-page/openings-section";
 import RecommendationsSection from "@/components/details-page/recommendations-section";
+import ExternalLinksSection from "@/components/details-page/external-links-section";
 
 type DetailsPageProps = {
   params: {
@@ -66,7 +67,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
         <section className="max-w-5xl space-y-28">
           <AnimeDetailsSection animeInfo={anime} />
 
-          <RelationsSection animeInfo={anime} />
+          <RelationsSection animeRelations={anime.relations} />
 
           <Suspense fallback={<Skeleton className="w-full h-96" />}>
             <CharactersSection animeId={anime.mal_id} />
@@ -77,6 +78,8 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
           <Suspense fallback={<Skeleton className="w-full h-96" />}>
             <RecommendationsSection animeId={params.animeId} />
           </Suspense>
+
+          <ExternalLinksSection externalLinks={anime.external} />
         </section>
       </main>
     </>
