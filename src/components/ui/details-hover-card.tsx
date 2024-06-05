@@ -14,7 +14,7 @@ export default function DetailsHoverCard({ anime, children }: DetailsHoverCardPr
     return (
         <HoverCard>
             <HoverCardTrigger asChild>
-                <Link href={`/anime/${anime.mal_id}`}>
+                <Link href={`/anime/${anime.mal_id}`} className="max-w-md">
                     {children}
                 </Link>
             </HoverCardTrigger>

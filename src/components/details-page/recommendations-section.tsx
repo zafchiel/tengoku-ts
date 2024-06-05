@@ -44,7 +44,7 @@ export default async function RecommendationsSection({
                   height={500}
                   src={recommendation.entry.images.webp.large_image_url}
                   alt={recommendation.entry.title}
-                  className="w-full h-full rounded-lg hover:scale-110 duration-200 ease-linear"
+                  className="w-full h-full rounded-lg hover:scale-105 duration-200 ease-linear"
                 />
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
                   <p className="font-semibold">{recommendation.entry.title}</p>
