@@ -79,7 +79,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
             <RecommendationsSection animeId={params.animeId} />
           </Suspense>
 
-          <ExternalLinksSection externalLinks={anime.external} />
+          <ExternalLinksSection externalLinks={anime.external} streamingLinks={anime.streaming} />
         </section>
       </main>
     </>
