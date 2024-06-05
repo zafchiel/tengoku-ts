@@ -1,7 +1,7 @@
 {
   "name": "TENGOKU",
   "short_name": "TENGOKU",
-  "description": "Watch anime",
+  "description": "MyAnimeList wrapper skin",
   "theme_color": "#ffffff",
   "background_color": "#ffffff",
   "display": "fullscreen",
