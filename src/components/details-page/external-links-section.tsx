@@ -1,5 +1,6 @@
 import type { AnimeInfo } from "@/types";
 import Link from "next/link";
+import { Separator } from "../ui/separator";
 
 type ExternalLinksSectionProps = {
   externalLinks: AnimeInfo['external'];
@@ -12,7 +13,7 @@ export default function ExternalLinksSection({ externalLinks, streamingLinks }: 
       <h3 className="text-3xl font-semibold">External</h3>
       <hr className="mb-2" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="flex gap-4">
         <div className="p-1">
           <h5 className="font-semibold text-xl text-muted-foreground">
             External Media Links
@@ -31,6 +32,9 @@ export default function ExternalLinksSection({ externalLinks, streamingLinks }: 
             ))}
           </div>
         </div>
+
+        <Separator orientation="vertical" className="h-32" />
+
 
         <div className="p-1">
           <h5 className="font-semibold text-xl text-muted-foreground">
