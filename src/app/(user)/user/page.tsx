@@ -21,12 +21,12 @@ export default async function ProfilePage() {
 
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
-      <section className="flex flex-wrap items-center justify-between">
+      <section className="flex flex-wrap items-center justify-between mb-8">
         <h1 className="text-6xl font-bold">{user.username}</h1>
         <LogoutForm />
       </section>
 
-      <section>
+      <section className="flex gap-4 flex-wrap">
         {progress.map((item) => (
           <EditSeriesProgressCard key={item.id} progressInfo={item} />
         ))}

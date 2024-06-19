@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { CircleCheckBig, PenIcon, Trash } from "lucide-react";
+import Link from "next/link";
 
 type EditSeriesProgressCardProps = {
   progressInfo: ProgressRecordType;
@@ -15,23 +16,36 @@ export default function EditSeriesProgressCard({
   return (
     <Card className="w-full max-w-md">
       <CardContent className="grid grid-cols-[100px_1fr] gap-4 p-4">
-        <Image
-          src={progressInfo.animePoster || "/images/placeholder.jpg"}
-          alt="Series Thumbnail"
-          className="rounded-md"
-          width={100}
-          height={150}
-        />
+        {progressInfo.animePoster && (
+          <Link href={`/anime/${progressInfo.animeId}`}>
+            <Image
+              src={progressInfo.animePoster}
+              alt="Series Thumbnail"
+              className="rounded-md"
+              width={100}
+              height={150}
+            />
+          </Link>
+        )}
         <div className="space-y-3">
           <div>
-            <h3 className="text-lg font-medium">{progressInfo.animeTitle}</h3>
+            <Link href={`/anime/${progressInfo.animeId}`}>
+              <h3 className="text-lg font-medium">{progressInfo.animeTitle}</h3>
+            </Link>
             <p className="text-sm text-muted-foreground">
               {progressInfo.status}
               &nbsp;|&nbsp;
               {progressInfo.episodesWatched}/{progressInfo.maxEpisodes}
             </p>
           </div>
-          <Progress value={75} className="w-full" />
+          {progressInfo.maxEpisodes && (
+            <Progress
+              value={
+                (progressInfo.episodesWatched / progressInfo.maxEpisodes) * 100
+              }
+              className="w-full h-2"
+            />
+          )}
           <div className="flex items-center justify-between">
             <Button variant="destructive" size="sm">
               Delete
