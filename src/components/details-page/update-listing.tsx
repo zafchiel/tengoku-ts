@@ -37,9 +37,13 @@ const SCORES = [
 
 type UpdateListingProps = {
   progressInfo: ProgressRecordType;
+  maxEpisodes: number | null;
 };
 
-export default function UpdateListing({ progressInfo }: UpdateListingProps) {
+export default function UpdateListing({
+  progressInfo,
+  maxEpisodes,
+}: UpdateListingProps) {
   const { isPending, execute, isSuccess, data, isError, error } =
     useServerAction(updateAnimeProgressEntry);
 
@@ -51,6 +55,9 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 
         const formData = new FormData(form);
         formData.append("animeId", progressInfo.animeId.toString());
+        if (formData.get("status") === "Completed" && maxEpisodes !== null) {
+          formData.set("episodesWatched", maxEpisodes.toString());
+        }
         const [data, error] = await execute(formData);
 
         if (data === null) {

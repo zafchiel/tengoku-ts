@@ -44,6 +44,8 @@ export default function ListingButtons({ animeInfo }: ListingButtonsProps) {
   }
 
   if (data) {
-    return <UpdateListing progressInfo={data} />;
+    return (
+      <UpdateListing progressInfo={data} maxEpisodes={animeInfo.episodes} />
+    );
   }
 }

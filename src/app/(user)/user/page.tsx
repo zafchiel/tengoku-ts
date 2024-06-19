@@ -5,6 +5,7 @@ import { LogoutForm } from "@/components/profile-page/logout-form";
 import { db } from "@/lib/server/db";
 import { progressTable } from "@/lib/server/db/schema";
 import { eq } from "drizzle-orm";
+import EditSeriesProgressCard from "@/components/profile-page/edit-series-progress-card";
 
 export default async function ProfilePage() {
   const { user, session } = await validateRequest();
@@ -26,7 +27,9 @@ export default async function ProfilePage() {
       </section>
 
       <section>
-        <pre>{JSON.stringify(progress, null, 2)}</pre>
+        {progress.map((item) => (
+          <EditSeriesProgressCard key={item.id} progressInfo={item} />
+        ))}
       </section>
     </main>
   );
