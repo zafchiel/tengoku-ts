@@ -1,44 +1,49 @@
 "use client";
 
 import axios from "axios";
-import {Skeleton} from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton";
 import AddToList from "@/components/details-page/add-to-list";
-import {ProgressRecordType} from "@/lib/server/db/schema";
+import { ProgressRecordType } from "@/lib/server/db/schema";
 import UpdateListing from "@/components/details-page/update-listing";
 import useSWR from "swr";
+import { AnimeInfo } from "@/types";
 
-const fetcher = (url: string) => axios.get<ProgressRecordType>(url).then(res => res.data)
+const fetcher = (url: string) =>
+  axios.get<ProgressRecordType>(url).then((res) => res.data);
 
 type ListingButtonsProps = {
-    animeId: number;
-    maxEpisodes: number | null;
-}
+  animeInfo: AnimeInfo;
+};
 
-export default function ListingButtons({animeId, maxEpisodes}: ListingButtonsProps) {
-    // Check if progress record exists
-    const {data, isLoading, mutate} = useSWR(`/api/anime?id=${animeId}`, fetcher, {
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false
-    })
-
-    if (isLoading) {
-        return <Skeleton className="w-full h-10"/>
+export default function ListingButtons({ animeInfo }: ListingButtonsProps) {
+  // Check if progress record exists
+  const { data, isLoading, mutate } = useSWR(
+    `/api/anime?id=${animeInfo.mal_id}`,
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
+  );
 
-    if (!data && !isLoading) {
-        return (
-            <AddToList
-                animeId={animeId}
-                setProgressInfo={mutate}
-                maxEpisodes={maxEpisodes}
-            />
-        )
-    }
+  if (isLoading) {
+    return <Skeleton className="w-full h-10" />;
+  }
 
-    if (data) {
-        return (
-            <UpdateListing progressInfo={data}/>
-        )
-    }
+  if (!data && !isLoading) {
+    return (
+      <AddToList
+        animeId={animeInfo.mal_id}
+        animePoster={animeInfo.images.webp.large_image_url}
+        animeTitle={animeInfo.title}
+        setProgressInfo={mutate}
+        maxEpisodes={animeInfo.episodes}
+      />
+    );
+  }
+
+  if (data) {
+    return <UpdateListing progressInfo={data} />;
+  }
 }

@@ -55,10 +55,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
         <section>
           <div className="w-full md:max-w-xl">
-            <ListingButtons
-              animeId={anime.mal_id}
-              maxEpisodes={anime.episodes}
-            />
+            <ListingButtons animeInfo={anime} />
           </div>
 
           <Navigation />
@@ -79,7 +76,10 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
             <RecommendationsSection animeId={params.animeId} />
           </Suspense>
 
-          <ExternalLinksSection externalLinks={anime.external} streamingLinks={anime.streaming} />
+          <ExternalLinksSection
+            externalLinks={anime.external}
+            streamingLinks={anime.streaming}
+          />
         </section>
       </main>
     </>
