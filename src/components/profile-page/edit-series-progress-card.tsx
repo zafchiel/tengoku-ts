@@ -27,7 +27,7 @@ export default function EditSeriesProgressCard({
             />
           </Link>
         )}
-        <div className="space-y-3">
+        <div className="grid gap-3">
           <div>
             <Link href={`/anime/${progressInfo.animeId}`}>
               <h3 className="text-lg font-medium">{progressInfo.animeTitle}</h3>
@@ -35,7 +35,10 @@ export default function EditSeriesProgressCard({
             <p className="text-sm text-muted-foreground">
               {progressInfo.status}
               &nbsp;|&nbsp;
-              {progressInfo.episodesWatched}/{progressInfo.maxEpisodes}
+              {progressInfo.episodesWatched}
+              {progressInfo.maxEpisodes && (
+                <span>/{progressInfo.maxEpisodes}</span>
+              )}
             </p>
           </div>
           {progressInfo.maxEpisodes && (
@@ -54,7 +57,9 @@ export default function EditSeriesProgressCard({
             <Button
               variant="outline"
               size="sm"
-              disabled={progressInfo.status === "Completed"}
+              disabled={
+                progressInfo.status === "Completed" || !progressInfo.maxEpisodes
+              }
             >
               Complete
               <CircleCheckBig className="w-4 h-4 ml-2" />
