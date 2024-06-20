@@ -13,11 +13,11 @@ export default async function ProfilePage() {
   }
 
   return (
-    <main className={cn("p-3 flex flex-col md:pt-20 container")}>
-      <section className="flex flex-wrap items-center justify-between mb-8">
+    <main className={cn("p-3 flex flex-col md:pt-14 container")}>
+      <header className="flex flex-wrap items-center justify-between my-24">
         <h2 className="text-6xl font-light">{user.username}</h2>
         <LogoutForm />
-      </section>
+      </header>
 
       <div className="grid grid-cols-[400px_1fr] gap-4 items-start">
         <ProgressSectionNavigation />

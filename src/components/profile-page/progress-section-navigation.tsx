@@ -6,27 +6,27 @@ export default function ProgressSectionNavigation() {
       </h4>
       <ul className="space-y-4">
         <li>
-          <a href="#watching" className="nav-element">
+          <a href="#Watching" className="nav-element">
             Watching
           </a>
         </li>
         <li>
-          <a href="#completed" className="nav-element">
+          <a href="#Completed" className="nav-element">
             Completed
           </a>
         </li>
         <li>
-          <a href="#ptw" className="nav-element">
+          <a href="#Plan to watch" className="nav-element">
             Plan to watch
           </a>
         </li>
         <li>
-          <a href="#onhold" className="nav-element">
+          <a href="#On-hold" className="nav-element">
             On-hold
           </a>
         </li>
         <li>
-          <a href="#dropped" className="nav-element">
+          <a href="#Dropped" className="nav-element">
             Dropped
           </a>
         </li>

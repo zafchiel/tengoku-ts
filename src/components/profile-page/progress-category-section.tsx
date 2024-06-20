@@ -13,7 +13,7 @@ export default function ProgressCategorySection({
   progressEntries,
 }: ProgressCategorySectionProps) {
   return (
-    <section>
+    <section id={category} className="scroll-mt-40">
       <h3 className="text-muted-foreground font-bold text-3xl">{category}</h3>
       <div className="flex gap-4 flex-wrap p-2">
         {progressEntries.length === 0 ? (
