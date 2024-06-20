@@ -127,51 +127,22 @@ export const updateAnimeProgressEntry = createServerAction()
     }
   });
 
-// export async function updateAnimeProgress(formData: FormData): Promise<{
-//   error: string | null;
-//   data: ProgressRecordType | null;
-// }> {
-//   const { user } = await validateRequest();
+export const deleteAnimeProgressEntry = createServerAction()
+  .input(z.number())
+  .handler(async ({ input }) => {
+    const { user } = await validateRequest();
 
-//   if (!user) {
-//     return {
-//       error: "Must be logged in",
-//       data: null,
-//     };
-//   }
+    if (!user) {
+      return null;
+    }
 
-//   const data = Object.fromEntries(formData.entries());
-
-//   try {
-//     const validatedData = updateSchema.parse(data);
-//     const res = await db
-//       .update(progressTable)
-//       .set(validatedData)
-//       .where(
-//         and(
-//           eq(progressTable.userId, user.id),
-//           eq(progressTable.animeId, validatedData.animeId)
-//         )
-//       )
-//       .returning()
-//       .get();
-
-//     return {
-//       error: null,
-//       data: res,
-//     };
-//   } catch (e) {
-//     console.log(e);
-//     if (e instanceof ZodError) {
-//       return {
-//         error: e.errors[0].message,
-//         data: null,
-//       };
-//     } else {
-//       return {
-//         error: "Something went wrong",
-//         data: null,
-//       };
-//     }
-//   }
-// }
+    try {
+      await db
+        .delete(progressTable)
+        .where(
+          and(eq(progressTable.userId, user.id), eq(progressTable.id, input))
+        );
+    } catch (error) {
+      return null;
+    }
+  });
