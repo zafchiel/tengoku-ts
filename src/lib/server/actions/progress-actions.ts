@@ -3,7 +3,7 @@
 import { validateRequest } from "@/lib/server/auth";
 import { db } from "@/lib/server/db";
 import { progressTable, WATCHING_STATUSES } from "@/lib/server/db/schema";
-import { z, ZodError } from "zod";
+import { z } from "zod";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
@@ -24,7 +24,6 @@ export const addNewAnimeProgressEntry = createServerAction()
     if (!user) {
       cookies().set("redirect", `/anime/${input.animeId}`);
       redirect("/login");
-      return null;
     }
 
     try {
@@ -39,55 +38,9 @@ export const addNewAnimeProgressEntry = createServerAction()
 
       return res;
     } catch (error) {
-      return null;
+      throw "An error occurred. Please try again.";
     }
   });
-
-// export async function addAnimeProgress(
-//   animeId: number,
-//   maxEpisodes: number | null
-// ): Promise<{
-//   error: string | null;
-//   data: ProgressRecordType | null;
-// }> {
-//   const { user } = await validateRequest();
-
-//   if (!user) {
-//     cookies().set("redirect", `/anime/${animeId}`);
-//     redirect("/login");
-//     // return {
-//     //     error: "Must be logged in",
-//     //     data: null
-//     // }
-//   }
-
-//   try {
-//     const validatedMaxEpisodes =
-//       maxEpisodes === null
-//         ? undefined
-//         : z.number().optional().parse(maxEpisodes);
-//     const res = await db
-//       .insert(progressTable)
-//       .values({
-//         animeId: z.number().parse(animeId),
-//         maxEpisodes: validatedMaxEpisodes,
-//         userId: user.id,
-//       })
-//       .returning()
-//       .get();
-
-//     return {
-//       error: null,
-//       data: res,
-//     };
-//   } catch (e) {
-//     console.log(e);
-//     return {
-//       error: "Something went wrong",
-//       data: null,
-//     };
-//   }
-// }
 
 const updateSchema = z.object({
   animeId: z.coerce.number().int(),
@@ -104,7 +57,7 @@ export const updateAnimeProgressEntry = createServerAction()
     const { user } = await validateRequest();
 
     if (!user) {
-      return null;
+      throw "Must be logged in to edit progress";
     }
 
     try {
@@ -123,7 +76,7 @@ export const updateAnimeProgressEntry = createServerAction()
       return res;
     } catch (error) {
       console.log(error);
-      return null;
+      throw "An error occurred. Please try again.";
     }
   });
 
@@ -134,7 +87,7 @@ export const deleteAnimeProgressEntry = createServerAction()
     const { user } = await validateRequest();
 
     if (!user) {
-      return null;
+      throw "Must be logged in to delete progress";
     }
 
     try {
@@ -146,7 +99,7 @@ export const deleteAnimeProgressEntry = createServerAction()
 
       return "success";
     } catch (error) {
-      return null;
+      throw "An error occurred. Please try again.";
     }
   });
 
@@ -161,7 +114,7 @@ export const markSeriesAsCompleted = createServerAction()
     const { user } = await validateRequest();
 
     if (!user) {
-      return null;
+      throw "Must be logged in to edit progress";
     }
 
     try {
@@ -180,6 +133,6 @@ export const markSeriesAsCompleted = createServerAction()
 
       return "success";
     } catch (error) {
-      return null;
+      throw "An error occurred. Please try again.";
     }
   });

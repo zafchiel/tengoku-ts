@@ -24,15 +24,10 @@ export default function MarkSeriesCompletedButton({
       onClick={async () => {
         if (!maxEpisodes) return;
 
-        const [data, error] = await execute({ progressId, maxEpisodes });
-
-        if (data === null) {
-          toast.error("You must be logged in to complete a series.");
-          return;
-        }
+        const [, error] = await execute({ progressId, maxEpisodes });
 
         if (error) {
-          toast.error("An error occurred. Please try again.");
+          toast.error(error.data);
           return;
         }
 

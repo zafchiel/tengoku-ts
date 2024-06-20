@@ -30,17 +30,13 @@ export default function AddToList({
       animeTitle,
       maxEpisodes,
     });
-    if (data === null) {
-      toast.info("You must be logged in");
-      return;
-    } else if (error) {
-      toast.error(error);
+    if (error) {
+      toast.error(error.data);
       return;
     }
 
     toast.success("Added to list");
     setProgressInfo(data);
-
     setLoading(false);
   };
 

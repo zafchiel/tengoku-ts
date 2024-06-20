@@ -55,17 +55,10 @@ export default function DeleteSeriesProgressEntryButton({
             variant="destructive"
             disabled={isPending}
             onClick={async () => {
-              const [data, error] = await execute(progressId);
-
-              if (data === null) {
-                toast.error("Must be logged in to delete progress entry");
-                return;
-              }
+              const [, error] = await execute(progressId);
 
               if (error) {
-                toast.error(
-                  "An error occurred while deleting the progress entry"
-                );
+                toast.error(error.data);
                 return;
               }
 
