@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { CircleCheckBig, PenIcon, Trash } from "lucide-react";
 import Link from "next/link";
+import DeleteSeriesProgressEntryButton from "./delete-series-progress-entry-button";
 
 type EditSeriesProgressCardProps = {
   progressInfo: ProgressRecordType;
@@ -41,19 +42,21 @@ export default function EditSeriesProgressCard({
               )}
             </p>
           </div>
-          {progressInfo.maxEpisodes && (
+          {progressInfo.maxEpisodes ? (
             <Progress
               value={
                 (progressInfo.episodesWatched / progressInfo.maxEpisodes) * 100
               }
               className="w-full h-2"
             />
+          ) : (
+            <p>Currently Airing</p>
           )}
           <div className="flex items-center justify-between">
-            <Button variant="destructive" size="sm">
-              Delete
-              <Trash className="w-4 h-4 ml-2" />
-            </Button>
+            <DeleteSeriesProgressEntryButton
+              animeTitle={progressInfo.animeTitle}
+              progressId={progressInfo.id}
+            />
             <Button
               variant="outline"
               size="sm"
