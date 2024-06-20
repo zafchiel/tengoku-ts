@@ -12,11 +12,15 @@ export default function ProgressCategorySection({
   category,
   progressEntries,
 }: ProgressCategorySectionProps) {
+  const entriesSortedByScore = progressEntries.sort(
+    (a, b) => b.score - a.score
+  );
+
   return (
     <section id={category} className="scroll-mt-40">
       <h3 className="text-muted-foreground font-bold text-3xl">{category}</h3>
       <div className="flex gap-4 flex-wrap p-2">
-        {progressEntries.length === 0 ? (
+        {entriesSortedByScore.length === 0 ? (
           <Alert className="max-w-xl">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>No {category}</AlertTitle>
@@ -26,7 +30,7 @@ export default function ProgressCategorySection({
             </AlertDescription>
           </Alert>
         ) : (
-          progressEntries.map((progressInfo) => (
+          entriesSortedByScore.map((progressInfo) => (
             <EditSeriesProgressCard
               key={progressInfo.id}
               progressInfo={progressInfo}

@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { CircleCheckBig, PenIcon } from "lucide-react";
+import { CircleCheckBig, PenIcon, Star } from "lucide-react";
 import Link from "next/link";
 import DeleteSeriesProgressEntryButton from "./delete-series-progress-entry-button";
 import MarkSeriesCompletedButton from "./mark-series-completed-button";
@@ -34,22 +34,30 @@ export default function EditSeriesProgressCard({
             <Link href={`/anime/${progressInfo.animeId}`}>
               <h3 className="text-lg font-medium">{progressInfo.animeTitle}</h3>
             </Link>
+            <p className="text-muted-foreground flex gap-1 items-center">
+              <Star size={16} />
+              {progressInfo.score}
+            </p>
             <p className="text-sm text-muted-foreground">
               {progressInfo.status}
-              &nbsp;|&nbsp;
-              {progressInfo.episodesWatched}
-              {progressInfo.maxEpisodes && (
-                <span>/{progressInfo.maxEpisodes}</span>
-              )}
             </p>
           </div>
           {progressInfo.maxEpisodes ? (
-            <Progress
-              value={
-                (progressInfo.episodesWatched / progressInfo.maxEpisodes) * 100
-              }
-              className="w-full h-2"
-            />
+            <div className="flex items-center gap-2">
+              <Progress
+                value={
+                  (progressInfo.episodesWatched / progressInfo.maxEpisodes) *
+                  100
+                }
+                className="h-2"
+              />
+              <p className="text-sm text-muted-foreground">
+                {progressInfo.episodesWatched}
+                {progressInfo.maxEpisodes && (
+                  <span>/{progressInfo.maxEpisodes}</span>
+                )}
+              </p>
+            </div>
           ) : (
             <p>Currently Airing</p>
           )}
