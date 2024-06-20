@@ -44,8 +44,7 @@ export default function UpdateListing({
   progressInfo,
   maxEpisodes,
 }: UpdateListingProps) {
-  const { isPending, execute, isSuccess, data, isError, error } =
-    useServerAction(updateAnimeProgressEntry);
+  const { isPending, execute } = useServerAction(updateAnimeProgressEntry);
 
   return (
     <form
@@ -58,13 +57,10 @@ export default function UpdateListing({
         if (formData.get("status") === "Completed" && maxEpisodes !== null) {
           formData.set("episodesWatched", maxEpisodes.toString());
         }
-        const [data, error] = await execute(formData);
+        const [, error] = await execute(formData);
 
-        if (data === null) {
-          toast.error("You must be authenticated");
-          return;
-        } else if (error) {
-          toast.error("Something went wrong");
+        if (error) {
+          toast.error(error.data);
           return;
         }
 

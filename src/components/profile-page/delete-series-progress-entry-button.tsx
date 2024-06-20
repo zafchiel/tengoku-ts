@@ -16,6 +16,7 @@ import { deleteAnimeProgressEntry } from "@/lib/server/actions/progress-actions"
 import { useServerAction } from "zsa-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { mutate } from "swr";
 
 type DeleteSeriesProgressEntryButtonProps = {
   progressId: number;
@@ -64,6 +65,7 @@ export default function DeleteSeriesProgressEntryButton({
 
               toast.success("Progress entry deleted");
               setModalOpen(false);
+              mutate("/api/user/progress");
             }}
           >
             Delete

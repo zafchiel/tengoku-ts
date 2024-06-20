@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useServerAction } from "zsa-react";
 import { markSeriesAsCompleted } from "@/lib/server/actions/progress-actions";
 import { toast } from "sonner";
+import { mutate } from "swr";
 
 type MarkSeriesCompletedButtonProps = {
   progressId: number;
@@ -32,6 +33,8 @@ export default function MarkSeriesCompletedButton({
         }
 
         toast.success("Series marked as completed.");
+        mutate("/api/user/progress");
+        return;
       }}
     >
       Complete
