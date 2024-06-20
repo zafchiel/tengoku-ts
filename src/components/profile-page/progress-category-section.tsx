@@ -1,0 +1,39 @@
+import { ProgressRecordType } from "@/lib/server/db/schema";
+import EditSeriesProgressCard from "./edit-series-progress-card";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
+
+type ProgressCategorySectionProps = {
+  category: string;
+  progressEntries: ProgressRecordType[];
+};
+
+export default function ProgressCategorySection({
+  category,
+  progressEntries,
+}: ProgressCategorySectionProps) {
+  return (
+    <section>
+      <h3 className="text-muted-foreground font-bold text-3xl">{category}</h3>
+      <div className="flex gap-4 flex-wrap p-2">
+        {progressEntries.length === 0 ? (
+          <Alert className="max-w-xl">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>No {category}</AlertTitle>
+            <AlertDescription>
+              You don&apos;t have any progress entries yet. Start adding some to
+              see them here.
+            </AlertDescription>
+          </Alert>
+        ) : (
+          progressEntries.map((progressInfo) => (
+            <EditSeriesProgressCard
+              key={progressInfo.id}
+              progressInfo={progressInfo}
+            />
+          ))
+        )}
+      </div>
+    </section>
+  );
+}

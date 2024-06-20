@@ -2,10 +2,8 @@ import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { validateRequest } from "@/lib/server/auth";
 import { LogoutForm } from "@/components/profile-page/logout-form";
-import { db } from "@/lib/server/db";
-import { progressTable } from "@/lib/server/db/schema";
-import { eq } from "drizzle-orm";
 import ProgressSection from "@/components/profile-page/progress-section";
+import ProgressSectionNavigation from "@/components/profile-page/progress-section-navigation";
 
 export default async function ProfilePage() {
   const { user, session } = await validateRequest();
@@ -14,19 +12,17 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
-  const progress = await db
-    .select()
-    .from(progressTable)
-    .where(eq(progressTable.userId, user.id));
-
   return (
-    <main className={cn("p-3 flex flex-col md:pt-14 container")}>
+    <main className={cn("p-3 flex flex-col md:pt-20 container")}>
       <section className="flex flex-wrap items-center justify-between mb-8">
-        <h1 className="text-6xl font-bold">{user.username}</h1>
+        <h2 className="text-6xl font-light">{user.username}</h2>
         <LogoutForm />
       </section>
 
-      <ProgressSection />
+      <div className="grid grid-cols-[400px_1fr] gap-4 items-start">
+        <ProgressSectionNavigation />
+        <ProgressSection />
+      </div>
     </main>
   );
 }

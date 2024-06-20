@@ -5,8 +5,8 @@ import axios from "axios";
 import useSWR from "swr";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
-import EditSeriesProgressCard from "@/components/profile-page/edit-series-progress-card";
 import { Skeleton } from "../ui/skeleton";
+import ProgressCategorySection from "./progress-category-section";
 
 const fetcher = (url: string) =>
   axios.get<ProgressRecordType[]>(url).then((res) => res.data);
@@ -51,12 +51,27 @@ export default function ProgressSection() {
     );
   }
 
+  // const categories = Array.from(new Set(data.map((entry) => entry.status)));
+  const categories = [
+    "Watching",
+    "Completed",
+    "Plan to watch",
+    "On-hold",
+    "Dropped",
+  ];
+
+  const progressEntriesByCategory = categories.map((category) => ({
+    category,
+    progressEntries: data.filter((entry) => entry.status === category),
+  }));
+
   return (
-    <section className="flex gap-4 flex-wrap">
-      {data.map((progressInfo) => (
-        <EditSeriesProgressCard
-          key={progressInfo.id}
-          progressInfo={progressInfo}
+    <section className="space-y-12">
+      {progressEntriesByCategory.map(({ category, progressEntries }) => (
+        <ProgressCategorySection
+          key={category}
+          category={category}
+          progressEntries={progressEntries}
         />
       ))}
     </section>

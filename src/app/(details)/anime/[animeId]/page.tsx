@@ -10,8 +10,8 @@ import CharactersSection from "@/components/details-page/characters-sections";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchAnimeInfoFull } from "@/lib/utils";
-import Navigation from "@/components/details-page/navigation";
 import OpeningsSection from "@/components/details-page/openings-section";
+import AnimeDetailsNavigation from "@/components/details-page/anime-details-navigation";
 import RecommendationsSection from "@/components/details-page/recommendations-section";
 import ExternalLinksSection from "@/components/details-page/external-links-section";
 
@@ -58,7 +58,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
             <ListingButtons animeInfo={anime} />
           </div>
 
-          <Navigation />
+          <AnimeDetailsNavigation />
         </section>
 
         <section className="max-w-5xl space-y-28">

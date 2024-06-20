@@ -1,4 +1,4 @@
-export default function Navigation() {
+export default function AnimeDetailsNavigation() {
   return (
     <div className="mt-12 sticky h-fit top-24">
       <h4 className="uppercase tracking-wide font-light text-muted-foreground text-center mb-8">
