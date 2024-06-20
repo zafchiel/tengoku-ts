@@ -128,6 +128,7 @@ export const updateAnimeProgressEntry = createServerAction()
   });
 
 export const deleteAnimeProgressEntry = createServerAction()
+  // input is Progress id
   .input(z.number())
   .handler(async ({ input }) => {
     const { user } = await validateRequest();
@@ -142,6 +143,42 @@ export const deleteAnimeProgressEntry = createServerAction()
         .where(
           and(eq(progressTable.userId, user.id), eq(progressTable.id, input))
         );
+
+      return "success";
+    } catch (error) {
+      return null;
+    }
+  });
+
+export const markSeriesAsCompleted = createServerAction()
+  .input(
+    z.object({
+      progressId: z.number(),
+      maxEpisodes: z.number(),
+    })
+  )
+  .handler(async ({ input }) => {
+    const { user } = await validateRequest();
+
+    if (!user) {
+      return null;
+    }
+
+    try {
+      await db
+        .update(progressTable)
+        .set({
+          status: "Completed",
+          episodesWatched: input.maxEpisodes,
+        })
+        .where(
+          and(
+            eq(progressTable.userId, user.id),
+            eq(progressTable.id, input.progressId)
+          )
+        );
+
+      return "success";
     } catch (error) {
       return null;
     }
