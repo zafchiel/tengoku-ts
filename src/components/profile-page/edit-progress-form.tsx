@@ -60,7 +60,15 @@ export default function EditProgressForm({
   const { execute, isPending } = useServerAction(updateAnimeProgressEntry);
 
   const onSubmit = async (values: z.infer<typeof EditProgressFormSchema>) => {
-    console.log(values);
+    if (!progressInfo.maxEpisodes && values.status === "Completed") {
+      toast.error("Anime is still airing, please update the progress manually");
+      return;
+    }
+
+    if (values.status === "Completed" && progressInfo.maxEpisodes !== null) {
+      values.episodesWatched = progressInfo.maxEpisodes;
+    }
+
     const [, error] = await execute({
       animeId: progressInfo.animeId,
       ...values,
@@ -204,7 +212,13 @@ export default function EditProgressForm({
             />
           </form>
         </Form>
-        <SheetFooter>
+        <SheetFooter className="grid grid-cols-2 gap-4 py-4">
+          <SheetClose asChild>
+            <Button type="button" variant="secondary">
+              Close
+            </Button>
+          </SheetClose>
+
           <SheetClose asChild>
             <Button type="submit" form="edit-progress-form">
               Save changes
