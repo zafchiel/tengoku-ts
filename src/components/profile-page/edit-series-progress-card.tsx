@@ -7,6 +7,7 @@ import { CircleCheckBig, PenIcon, Star } from "lucide-react";
 import Link from "next/link";
 import DeleteSeriesProgressEntryButton from "./delete-series-progress-entry-button";
 import MarkSeriesCompletedButton from "./mark-series-completed-button";
+import EditProgressForm from "./edit-progress-form";
 
 type EditSeriesProgressCardProps = {
   progressInfo: ProgressRecordType;
@@ -77,10 +78,7 @@ export default function EditSeriesProgressCard({
                 <CircleCheckBig className="w-4 h-4 ml-2" />
               </Button>
             )}
-            <Button variant="ghost" size="sm">
-              Edit
-              <PenIcon className="w-4 h-4 ml-2" />
-            </Button>
+            <EditProgressForm progressInfo={progressInfo} />
           </div>
         </div>
       </CardContent>

@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { z } from "zod";
 
 const PROVIDERS = ["github", "mal", "google", "discord"] as const;
 export const WATCHING_STATUSES = [
@@ -8,6 +9,20 @@ export const WATCHING_STATUSES = [
   "Completed",
   "On-hold",
   "Dropped",
+] as const;
+
+export const SCORES = [
+  [10, "Masterpiece"],
+  [9, "Great"],
+  [8, "Very Good"],
+  [7, "Good"],
+  [6, "Fine"],
+  [5, "Average"],
+  [4, "Bad"],
+  [3, "Very Bad"],
+  [2, "Horrible"],
+  [1, "Appaling"],
+  [0, "None"],
 ] as const;
 
 export const userTable = sqliteTable(

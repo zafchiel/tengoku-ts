@@ -50,6 +50,35 @@ const updateSchema = z.object({
 });
 
 export const updateAnimeProgressEntry = createServerAction()
+  .input(updateSchema)
+  .handler(async ({ input }) => {
+    const { user } = await validateRequest();
+
+    if (!user) {
+      throw "Must be logged in to edit progress";
+    }
+
+    try {
+      const res = await db
+        .update(progressTable)
+        .set(input)
+        .where(
+          and(
+            eq(progressTable.userId, user.id),
+            eq(progressTable.animeId, input.animeId)
+          )
+        )
+        .returning()
+        .get();
+
+      return res;
+    } catch (error) {
+      console.log(error);
+      throw "An error occurred. Please try again.";
+    }
+  });
+
+export const updateAnimeProgressEntryByForm = createServerAction()
   .input(updateSchema, {
     type: "formData",
   })

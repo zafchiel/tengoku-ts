@@ -14,7 +14,6 @@ function Header() {
   const { userInfo, isAuthenticating } = useContext(UserInfoContext);
   const direction = useScrollDirection();
 
-
   return (
     <header
       className={cn(
@@ -37,11 +36,21 @@ function Header() {
         <SearchDialog />
 
         {isAuthenticating ? (
-          <Skeleton className="w-14" />
+          <Skeleton className="w-14 h-10" />
         ) : userInfo ? (
-          <Link href="/user" className={cn(buttonVariants({variant: "secondary"}))}>Profile</Link>
+          <Link
+            href="/user"
+            className={cn(buttonVariants({ variant: "secondary" }))}
+          >
+            Profile
+          </Link>
         ) : (
-          <Link href="/login" className={cn(buttonVariants({variant: "secondary"}))}>Login</Link>
+          <Link
+            href="/login"
+            className={cn(buttonVariants({ variant: "secondary" }))}
+          >
+            Login
+          </Link>
         )}
       </div>
     </header>

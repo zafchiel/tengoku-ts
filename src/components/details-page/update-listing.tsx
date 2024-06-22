@@ -15,25 +15,12 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { Loader2, Save } from "lucide-react";
-import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
+import { updateAnimeProgressEntryByForm } from "@/lib/server/actions/progress-actions";
 import { ProgressRecordType, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { toast } from "sonner";
 import { Label } from "../ui/label";
 import { useServerAction } from "zsa-react";
-
-const SCORES = [
-  [10, "Masterpiece"],
-  [9, "Great"],
-  [8, "Very Good"],
-  [7, "Good"],
-  [6, "Fine"],
-  [5, "Average"],
-  [4, "Bad"],
-  [3, "Very Bad"],
-  [2, "Horrible"],
-  [1, "Appaling"],
-  [0, "None"],
-] as const;
+import { SCORES } from "@/lib/server/db/schema";
 
 type UpdateListingProps = {
   progressInfo: ProgressRecordType;
@@ -44,7 +31,9 @@ export default function UpdateListing({
   progressInfo,
   maxEpisodes,
 }: UpdateListingProps) {
-  const { isPending, execute } = useServerAction(updateAnimeProgressEntry);
+  const { isPending, execute } = useServerAction(
+    updateAnimeProgressEntryByForm
+  );
 
   return (
     <form
@@ -57,6 +46,7 @@ export default function UpdateListing({
         if (formData.get("status") === "Completed" && maxEpisodes !== null) {
           formData.set("episodesWatched", maxEpisodes.toString());
         }
+
         const [, error] = await execute(formData);
 
         if (error) {
