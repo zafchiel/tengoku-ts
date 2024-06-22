@@ -45,10 +45,10 @@ type EditProgressFormProps = {
 };
 
 const EditProgressFormSchema = z.object({
-    episodesWatched: z.coerce.number().nonnegative(),
-    score: z.coerce.number().nonnegative().max(10),
-    status: z.enum(WATCHING_STATUSES),
-  });  
+  episodesWatched: z.coerce.number().nonnegative(),
+  score: z.coerce.number().nonnegative().max(10),
+  status: z.enum(WATCHING_STATUSES),
+});
 
 export default function EditProgressForm({
   progressInfo,
@@ -119,7 +119,7 @@ export default function EditProgressForm({
                           form.getValues("episodesWatched");
                         form.setValue(
                           "episodesWatched",
-                          currentEpisodesWatched - 1
+                          Number(currentEpisodesWatched) - 1
                         );
                       }}
                     >
@@ -134,7 +134,7 @@ export default function EditProgressForm({
                           form.getValues("episodesWatched");
                         form.setValue(
                           "episodesWatched",
-                          currentEpisodesWatched + 1
+                          Number(currentEpisodesWatched) + 1
                         );
                       }}
                     >
