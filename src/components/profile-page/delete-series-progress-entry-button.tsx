@@ -33,9 +33,9 @@ export default function DeleteSeriesProgressEntryButton({
   return (
     <Dialog open={modalOpen} onOpenChange={setModalOpen}>
       <DialogTrigger asChild>
-        <Button variant="destructive" size="sm">
+        <Button variant="destructive" size="sm" className="leading-none">
           Delete
-          <Trash className="w-4 h-4 ml-2" />
+          <Trash size={14} className="ml-2" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

@@ -15,7 +15,10 @@ export default async function ProfilePage() {
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
       <header className="flex flex-wrap items-center justify-between my-24">
-        <h2 className="text-3xl md:text-6xl font-light">{user.username}</h2>
+        <div>
+          <h2 className="text-3xl md:text-6xl font-light">{user.username}</h2>
+          <p className="text-muted-foreground capitalize">My watch list</p>
+        </div>
         <LogoutForm />
       </header>
 

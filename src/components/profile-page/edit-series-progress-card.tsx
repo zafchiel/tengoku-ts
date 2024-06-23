@@ -60,7 +60,19 @@ export default function EditSeriesProgressCard({
               </p>
             </div>
           ) : (
-            <p>Currently Airing</p>
+            <div>
+              <p>
+                <span className="font-semibold text-xl">
+                  {progressInfo.episodesWatched}
+                </span>
+                &nbsp;
+                <span className="text-sm text-muted-foreground">
+                  {" "}
+                  Episodes watched
+                </span>
+              </p>
+              <p className="text-sm">Currently Airing</p>
+            </div>
           )}
         </div>
 
