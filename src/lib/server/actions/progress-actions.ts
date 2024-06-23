@@ -7,9 +7,26 @@ import { z } from "zod";
 import { and, eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
-import { createServerAction } from "zsa";
+import { createServerAction, createServerActionProcedure } from "zsa";
 
-export const addNewAnimeProgressEntry = createServerAction()
+const authedProcedure = createServerActionProcedure().handler(async () => {
+  try {
+    const { user } = await validateRequest();
+
+    if (!user) {
+      throw new Error("User not authenticated");
+    }
+
+    return {
+      user,
+    };
+  } catch {
+    throw new Error("User not authenticated");
+  }
+});
+
+export const addNewAnimeProgressEntry = authedProcedure
+  .createServerAction()
   .input(
     z.object({
       animeId: z.number(),
@@ -18,13 +35,8 @@ export const addNewAnimeProgressEntry = createServerAction()
       animePoster: z.string().nullable(),
     })
   )
-  .handler(async ({ input }) => {
-    const { user } = await validateRequest();
-
-    if (!user) {
-      cookies().set("redirect", `/anime/${input.animeId}`);
-      redirect("/login");
-    }
+  .handler(async ({ input, ctx }) => {
+    const { user } = ctx;
 
     try {
       const res = await db
@@ -49,14 +61,11 @@ const updateSchema = z.object({
   episodesWatched: z.coerce.number().int().optional(),
 });
 
-export const updateAnimeProgressEntry = createServerAction()
+export const updateAnimeProgressEntry = authedProcedure
+  .createServerAction()
   .input(updateSchema)
-  .handler(async ({ input }) => {
-    const { user } = await validateRequest();
-
-    if (!user) {
-      throw "Must be logged in to edit progress";
-    }
+  .handler(async ({ input, ctx }) => {
+    const { user } = ctx;
 
     try {
       const res = await db
@@ -78,16 +87,13 @@ export const updateAnimeProgressEntry = createServerAction()
     }
   });
 
-export const updateAnimeProgressEntryByForm = createServerAction()
+export const updateAnimeProgressEntryByForm = authedProcedure
+  .createServerAction()
   .input(updateSchema, {
     type: "formData",
   })
-  .handler(async ({ input }) => {
-    const { user } = await validateRequest();
-
-    if (!user) {
-      throw "Must be logged in to edit progress";
-    }
+  .handler(async ({ input, ctx }) => {
+    const { user } = ctx;
 
     try {
       const res = await db
@@ -109,15 +115,12 @@ export const updateAnimeProgressEntryByForm = createServerAction()
     }
   });
 
-export const deleteAnimeProgressEntry = createServerAction()
+export const deleteAnimeProgressEntry = authedProcedure
+  .createServerAction()
   // input is Progress id
   .input(z.number())
-  .handler(async ({ input }) => {
-    const { user } = await validateRequest();
-
-    if (!user) {
-      throw "Must be logged in to delete progress";
-    }
+  .handler(async ({ input, ctx }) => {
+    const { user } = ctx;
 
     try {
       await db
@@ -132,19 +135,16 @@ export const deleteAnimeProgressEntry = createServerAction()
     }
   });
 
-export const markSeriesAsCompleted = createServerAction()
+export const markSeriesAsCompleted = authedProcedure
+  .createServerAction()
   .input(
     z.object({
       progressId: z.number(),
       maxEpisodes: z.number(),
     })
   )
-  .handler(async ({ input }) => {
-    const { user } = await validateRequest();
-
-    if (!user) {
-      throw "Must be logged in to edit progress";
-    }
+  .handler(async ({ input, ctx }) => {
+    const { user } = ctx;
 
     try {
       await db
