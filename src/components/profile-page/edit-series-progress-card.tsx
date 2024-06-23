@@ -52,7 +52,7 @@ export default function EditSeriesProgressCard({
                 }
                 className="h-2"
               />
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm">
                 {progressInfo.episodesWatched}
                 {progressInfo.maxEpisodes && (
                   <span>/{progressInfo.maxEpisodes}</span>
