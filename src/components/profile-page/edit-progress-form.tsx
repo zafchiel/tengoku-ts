@@ -40,24 +40,30 @@ import { useServerAction } from "zsa-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 import { toast } from "sonner";
 import { mutate } from "swr";
+import { useState } from "react";
 
 type EditProgressFormProps = {
   progressInfo: ProgressRecordType;
 };
 
-const EditProgressFormSchema = z.object({
-  episodesWatched: z.coerce.number().nonnegative(),
-  score: z.coerce.number().nonnegative().max(10),
-  status: z.enum(WATCHING_STATUSES),
-});
-
 export default function EditProgressForm({
   progressInfo,
 }: EditProgressFormProps) {
+  const EditProgressFormSchema = z.object({
+    episodesWatched: z.coerce
+      .number()
+      .nonnegative()
+      .max(progressInfo.maxEpisodes ?? 9999),
+    score: z.coerce.number().nonnegative().max(10),
+    status: z.enum(WATCHING_STATUSES),
+  });
+
   const form = useForm<z.infer<typeof EditProgressFormSchema>>({
     resolver: zodResolver(EditProgressFormSchema),
     defaultValues: progressInfo,
   });
+
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { execute, isPending } = useServerAction(updateAnimeProgressEntry);
 
   const onSubmit = async (values: z.infer<typeof EditProgressFormSchema>) => {
@@ -82,11 +88,12 @@ export default function EditProgressForm({
 
     toast.success("Updated progress");
     mutate("/api/user/progress");
+    setIsSheetOpen(false);
     return;
   };
 
   return (
-    <Sheet>
+    <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="sm">
           Edit
@@ -116,6 +123,8 @@ export default function EditProgressForm({
                     <Input
                       placeholder="Episodes watched"
                       type="number"
+                      min={0}
+                      max={progressInfo.maxEpisodes ?? undefined}
                       {...field}
                     />
                   </FormControl>
@@ -126,6 +135,9 @@ export default function EditProgressForm({
                       onClick={() => {
                         const currentEpisodesWatched =
                           form.getValues("episodesWatched");
+
+                        if (Number(currentEpisodesWatched) === 0) return;
+
                         form.setValue(
                           "episodesWatched",
                           Number(currentEpisodesWatched) - 1
@@ -141,6 +153,13 @@ export default function EditProgressForm({
                       onClick={() => {
                         const currentEpisodesWatched =
                           form.getValues("episodesWatched");
+
+                        if (
+                          Number(currentEpisodesWatched) ===
+                          progressInfo.maxEpisodes
+                        )
+                          return;
+
                         form.setValue(
                           "episodesWatched",
                           Number(currentEpisodesWatched) + 1
@@ -224,15 +243,9 @@ export default function EditProgressForm({
             </Button>
           </SheetClose>
 
-          <SheetClose asChild>
-            <Button
-              type="submit"
-              form="edit-progress-form"
-              disabled={isPending}
-            >
-              Save changes
-            </Button>
-          </SheetClose>
+          <Button type="submit" form="edit-progress-form" disabled={isPending}>
+            Save changes
+          </Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
