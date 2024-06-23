@@ -9,24 +9,25 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { createServerAction, createServerActionProcedure } from "zsa";
 
-const authedProcedure = createServerActionProcedure().handler(async () => {
-  try {
-    const { user } = await validateRequest();
+const authedProcedure = createServerActionProcedure()
+  .handler(async () => {
+    try {
+      const { user } = await validateRequest();
 
-    if (!user) {
+      if (!user) {
+        throw new Error("User not authenticated");
+      }
+
+      return {
+        user,
+      };
+    } catch {
       throw new Error("User not authenticated");
     }
-
-    return {
-      user,
-    };
-  } catch {
-    throw new Error("User not authenticated");
-  }
-});
+  })
+  .createServerAction();
 
 export const addNewAnimeProgressEntry = authedProcedure
-  .createServerAction()
   .input(
     z.object({
       animeId: z.number(),
@@ -62,7 +63,6 @@ const updateSchema = z.object({
 });
 
 export const updateAnimeProgressEntry = authedProcedure
-  .createServerAction()
   .input(updateSchema)
   .handler(async ({ input, ctx }) => {
     const { user } = ctx;
@@ -88,7 +88,6 @@ export const updateAnimeProgressEntry = authedProcedure
   });
 
 export const updateAnimeProgressEntryByForm = authedProcedure
-  .createServerAction()
   .input(updateSchema, {
     type: "formData",
   })
@@ -116,7 +115,6 @@ export const updateAnimeProgressEntryByForm = authedProcedure
   });
 
 export const deleteAnimeProgressEntry = authedProcedure
-  .createServerAction()
   // input is Progress id
   .input(z.number())
   .handler(async ({ input, ctx }) => {
@@ -136,7 +134,6 @@ export const deleteAnimeProgressEntry = authedProcedure
   });
 
 export const markSeriesAsCompleted = authedProcedure
-  .createServerAction()
   .input(
     z.object({
       progressId: z.number(),
