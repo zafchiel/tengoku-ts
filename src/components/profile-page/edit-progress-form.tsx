@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { PenIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -183,7 +184,7 @@ export default function EditProgressForm({
               )}
             />
 
-            <FormField
+            {/* <FormField
               control={form.control}
               name="status"
               render={({ field }) => (
@@ -206,6 +207,41 @@ export default function EditProgressForm({
                       ))}
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem className="space-y-3">
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                      className="flex flex-col space-y-2"
+                    >
+                      {WATCHING_STATUSES.map((status) => (
+                        <FormItem
+                          key={status}
+                          className="flex items-center space-y-0 border border-accent px-2 py-3 rounded-md"
+                        >
+                          <FormControl>
+                            <RadioGroupItem
+                              value={status}
+                              className="checked:bg-green-900"
+                            />
+                          </FormControl>
+                          <FormLabel className="font-normal cursor-pointer w-full pl-2">
+                            {status}
+                          </FormLabel>
+                        </FormItem>
+                      ))}
+                    </RadioGroup>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
