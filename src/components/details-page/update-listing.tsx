@@ -50,7 +50,7 @@ export default function UpdateListing({
         const [, error] = await execute(formData);
 
         if (error) {
-          toast.error(error.data);
+          toast.error(error.message);
           return;
         }
 

@@ -31,7 +31,7 @@ export default function AddToList({
       maxEpisodes,
     });
     if (error) {
-      toast.error(error.data);
+      toast.error(error.message);
       return;
     }
 

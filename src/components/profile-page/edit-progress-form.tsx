@@ -76,7 +76,7 @@ export default function EditProgressForm({
     });
 
     if (error) {
-      toast.error(error.data);
+      toast.error(error.message);
       return;
     }
 
@@ -184,34 +184,6 @@ export default function EditProgressForm({
               )}
             />
 
-            {/* <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a status" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {WATCHING_STATUSES.map((status) => (
-                        <SelectItem key={status} value={status}>
-                          {status}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
-
             <FormField
               control={form.control}
               name="status"
@@ -253,7 +225,11 @@ export default function EditProgressForm({
           </SheetClose>
 
           <SheetClose asChild>
-            <Button type="submit" form="edit-progress-form">
+            <Button
+              type="submit"
+              form="edit-progress-form"
+              disabled={isPending}
+            >
               Save changes
             </Button>
           </SheetClose>
