@@ -66,7 +66,7 @@ export default function ProgressSection() {
   }));
 
   return (
-    <section className="space-y-12 border-l-2 pl-4">
+    <section className="space-y-12 md:border-l-2 md:pl-4">
       {progressEntriesByCategory.map(({ category, progressEntries }) => (
         <ProgressCategorySection
           key={category}

@@ -227,15 +227,12 @@ export default function EditProgressForm({
                       {WATCHING_STATUSES.map((status) => (
                         <FormItem
                           key={status}
-                          className="flex items-center space-y-0 border border-accent px-2 py-3 rounded-md"
+                          className="flex items-center space-y-0 border border-accent rounded-md"
                         >
                           <FormControl>
-                            <RadioGroupItem
-                              value={status}
-                              className="checked:bg-green-900"
-                            />
+                            <RadioGroupItem value={status} className="ml-2" />
                           </FormControl>
-                          <FormLabel className="font-normal cursor-pointer w-full pl-2">
+                          <FormLabel className="font-normal cursor-pointer  w-full px-2 py-3">
                             {status}
                           </FormLabel>
                         </FormItem>

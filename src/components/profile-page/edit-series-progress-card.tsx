@@ -17,7 +17,7 @@ export default function EditSeriesProgressCard({
   progressInfo,
 }: EditSeriesProgressCardProps) {
   return (
-    <Card className="w-full max-w-md">
+    <Card className="max-w-md w-full">
       <CardContent className="grid grid-cols-[100px_1fr] gap-4 p-4">
         {progressInfo.animePoster && (
           <Link href={`/anime/${progressInfo.animeId}`}>
@@ -62,24 +62,25 @@ export default function EditSeriesProgressCard({
           ) : (
             <p>Currently Airing</p>
           )}
-          <div className="flex items-center justify-between">
-            <DeleteSeriesProgressEntryButton
-              animeTitle={progressInfo.animeTitle}
+        </div>
+
+        <DeleteSeriesProgressEntryButton
+          animeTitle={progressInfo.animeTitle}
+          progressId={progressInfo.id}
+        />
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {progressInfo.status !== "Completed" ? (
+            <MarkSeriesCompletedButton
+              maxEpisodes={progressInfo.maxEpisodes}
               progressId={progressInfo.id}
             />
-            {progressInfo.status !== "Completed" ? (
-              <MarkSeriesCompletedButton
-                maxEpisodes={progressInfo.maxEpisodes}
-                progressId={progressInfo.id}
-              />
-            ) : (
-              <Button variant="outline" size="sm" disabled={true}>
-                Completed
-                <CircleCheckBig className="w-4 h-4 ml-2" />
-              </Button>
-            )}
-            <EditProgressForm progressInfo={progressInfo} />
-          </div>
+          ) : (
+            <Button variant="outline" size="sm" disabled={true}>
+              Completed
+              <CircleCheckBig className="w-4 h-4 ml-2" />
+            </Button>
+          )}
+          <EditProgressForm progressInfo={progressInfo} />
         </div>
       </CardContent>
     </Card>
