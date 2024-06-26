@@ -19,23 +19,27 @@ export default function OpeningsSection({ theme }: OpeningsSectionProps) {
           </h5>
 
           <div className="space-y-2">
-            {theme.openings.map((opening) => (
-              <p key={opening}>{opening}</p>
-            ))}
+            {theme.openings.length > 0 ? (
+              theme.openings.map((opening) => <p key={opening}>{opening}</p>)
+            ) : (
+              <p className="py-2">No openings yet</p>
+            )}
           </div>
         </div>
 
         <Separator orientation="vertical" className="h-32" />
-        
+
         <div>
           <h5 className="font-semibold text-xl text-muted-foreground">
             Ending theme
           </h5>
 
           <div className="space-y-2">
-            {theme.endings.map((ending) => (
-              <p key={ending}>{ending}</p>
-            ))}
+            {theme.endings.length > 0 ? (
+              theme.endings.map((ending) => <p key={ending}>{ending}</p>)
+            ) : (
+              <p className="py-2">No endings yet</p>
+            )}
           </div>
         </div>
       </div>

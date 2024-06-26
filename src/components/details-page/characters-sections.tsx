@@ -47,7 +47,7 @@ export default async function CharactersSection({
           />
         ))}
       </div>
-      <div className="text-center">
+      <div className="text-center my-2">
         <Link href={`/anime/${animeId}/characters`} className="underline">
           Show all characters
         </Link>

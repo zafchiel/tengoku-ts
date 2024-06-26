@@ -4,6 +4,7 @@ import { ProgressRecordType } from "@/lib/server/db/schema";
 import { useState } from "react";
 import { MessageSquarePlus } from "lucide-react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type AddToListProps = {
   animeId: number;
@@ -21,6 +22,7 @@ export default function AddToList({
   animeTitle,
 }: AddToListProps) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const clickHandler = async () => {
     setLoading(true);
@@ -31,6 +33,9 @@ export default function AddToList({
       maxEpisodes,
     });
     if (error) {
+      if (error.message.includes("User not authenticated")) {
+        router.push("/login");
+      }
       toast.error(error.message);
       return;
     }

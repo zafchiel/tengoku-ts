@@ -62,7 +62,7 @@ export default async function RecommendationsSection({
           ))}
         </div>
       ) : (
-        <p>There are no recommendations yet.</p>
+        <p className="py-2">There are no recommendations yet.</p>
       )}
     </section>
   );
