@@ -1,6 +1,5 @@
 import getBase64 from "@/lib/get-base64-image";
 import AnimeDetailsSection from "@/components/details-page/anime-details-section";
-import { AnimeInfo } from "@/types";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import HeadingSection from "@/components/details-page/details-heading-section";
@@ -22,13 +21,7 @@ type DetailsPageProps = {
 };
 
 export default async function DetailsPage({ params }: DetailsPageProps) {
-  let anime: AnimeInfo | null = null;
-
-  try {
-    anime = await fetchAnimeInfoFull(params.animeId);
-  } catch (error) {
-    console.log(error);
-  }
+  const anime = await fetchAnimeInfoFull(params.animeId);
 
   if (!anime)
     return (
