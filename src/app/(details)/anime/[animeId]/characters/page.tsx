@@ -1,5 +1,7 @@
 import { fetchAnimeCharacters, fetchAnimeInfoFull } from "@/lib/utils";
 import CharacterCardFull from "@/components/characters-page/character-card-full";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 type AllCharactersPageProps = {
   params: {
@@ -16,6 +18,21 @@ export default async function AllCharactersPage({
   ] as const;
 
   const [characters, animeInfo] = await Promise.all(promises);
+
+  if (!characters || !animeInfo) {
+    return (
+      <section>
+        <Alert variant="destructive" className="max-w-xl">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>
+            Anime characters not found. Please try searching again.
+          </AlertDescription>
+        </Alert>
+      </section>
+    );
+  }
+
   return (
     <main className="container space-y-8 px-2 md:px-4 md:py-14 md:mt-10">
       <h2 className="text-3xl md:text-5xl">

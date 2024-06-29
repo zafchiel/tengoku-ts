@@ -23,7 +23,7 @@ export default async function CharactersSection({
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
-            Anime not found. Please try searching again.
+            Anime characters not found. Please try searching again.
           </AlertDescription>
         </Alert>
       </section>
