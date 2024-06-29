@@ -73,6 +73,7 @@ export default function EditProgressForm({
     }
 
     if (values.status === "Completed" && progressInfo.maxEpisodes !== null) {
+      form.setValue("episodesWatched", progressInfo.maxEpisodes);
       values.episodesWatched = progressInfo.maxEpisodes;
     }
 
@@ -211,7 +212,19 @@ export default function EditProgressForm({
                   <FormLabel>Status</FormLabel>
                   <FormControl>
                     <RadioGroup
-                      onValueChange={field.onChange}
+                      onValueChange={(selectedStatus) => {
+                        if (
+                          selectedStatus === "Completed" &&
+                          progressInfo.maxEpisodes
+                        ) {
+                          form.setValue(
+                            "episodesWatched",
+                            progressInfo.maxEpisodes
+                          );
+                        }
+
+                        field.onChange(selectedStatus);
+                      }}
                       defaultValue={field.value}
                       className="flex flex-col space-y-2"
                     >
