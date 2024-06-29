@@ -18,7 +18,6 @@ import { Loader2, Save } from "lucide-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 import { ProgressRecordType, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { toast } from "sonner";
-import { Label } from "../ui/label";
 import { useServerAction } from "zsa-react";
 import { SCORES } from "@/lib/server/db/schema";
 import {
@@ -39,9 +38,7 @@ type UpdateListingProps = {
   progressInfo: ProgressRecordType;
 };
 
-export default function UpdateListing({
-  progressInfo,
-}: UpdateListingProps) {
+export default function UpdateListing({ progressInfo }: UpdateListingProps) {
   const EditProgressFormSchema = z.object({
     episodesWatched: z.coerce
       .number()

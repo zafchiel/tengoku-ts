@@ -87,33 +87,6 @@ export const updateAnimeProgressEntry = authedProcedure
     }
   });
 
-export const updateAnimeProgressEntryByForm = authedProcedure
-  .input(updateSchema, {
-    type: "formData",
-  })
-  .handler(async ({ input, ctx }) => {
-    const { user } = ctx;
-
-    try {
-      const res = await db
-        .update(progressTable)
-        .set(input)
-        .where(
-          and(
-            eq(progressTable.userId, user.id),
-            eq(progressTable.animeId, input.animeId)
-          )
-        )
-        .returning()
-        .get();
-
-      return res;
-    } catch (error) {
-      console.log(error);
-      throw "An error occurred. Please try again.";
-    }
-  });
-
 export const deleteAnimeProgressEntry = authedProcedure
   // input is Progress id
   .input(z.number())
