@@ -95,7 +95,7 @@ export default function EditProgressForm({
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost">
           Edit
           <PenIcon className="w-4 h-4 ml-2" />
         </Button>
@@ -128,7 +128,7 @@ export default function EditProgressForm({
                       {...field}
                     />
                   </FormControl>
-                  <FormDescription className="grid grid-cols-2 gap-4">
+                  <FormDescription className="grid grid-cols-2 gap-2">
                     <Button
                       type="button"
                       variant="outline"

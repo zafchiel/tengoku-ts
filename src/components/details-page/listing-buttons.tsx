@@ -19,12 +19,7 @@ export default function ListingButtons({ animeInfo }: ListingButtonsProps) {
   // Check if progress record exists
   const { data, isLoading, mutate } = useSWR(
     `/api/anime?id=${animeInfo.mal_id}`,
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
+    fetcher
   );
 
   if (isLoading) {
@@ -44,8 +39,6 @@ export default function ListingButtons({ animeInfo }: ListingButtonsProps) {
   }
 
   if (data) {
-    return (
-      <UpdateListing progressInfo={data} maxEpisodes={animeInfo.episodes} />
-    );
+    return <UpdateListing progressInfo={data} />;
   }
 }
