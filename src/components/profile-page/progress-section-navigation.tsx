@@ -1,6 +1,6 @@
 export default function ProgressSectionNavigation() {
   return (
-    <div className="mt-12 sticky h-fit top-24 hidden md:block">
+    <div className="mt-12 block pb-12 h-fit top-24 md:sticky">
       <h4 className="uppercase tracking-wide font-light text-muted-foreground text-center mb-8">
         navigation
       </h4>
