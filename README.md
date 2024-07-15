@@ -3,10 +3,9 @@ yes it is myanimelist wrapper
 
 
 ## Development
-
-To deploy this project localy you must run db migration to local sqlite instance
+To deploy this project localy you must run db migration to local (or remote) sqlite instance. Update drizzle config if needed.
 
 ```bash
-  npm run db:push
+  pnpm run db:push
 ```
 
