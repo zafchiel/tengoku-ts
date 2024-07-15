@@ -1,4 +1,4 @@
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -21,14 +21,14 @@ export default function DisplaySearchResults({
 							height={100}
 							src={result.images.webp.small_image_url}
 							alt={result.title}
-							className="rounded-sm w-20"
+							className="rounded-sm w-20 max-h-24 object-cover"
 						/>
-						<div className="flex w-full flex-col justify-between text-left">
+						<div className="flex w-full flex-col text-left">
 							<h3 className="text-lg font-semibold">{result.title}</h3>
 							<p className="text-muted-foreground">
 								{result.type === "Movie" || result.type === "Music"
 									? result.type
-									: `${result.type} - ${result.episodes} ep`}
+									: `${result.type} - ${result.episodes ?? 'Unknown'} ep`}
 							</p>
 							<p className="uppercase text-muted-foreground">
 								{result.year
