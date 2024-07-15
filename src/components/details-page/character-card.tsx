@@ -1,7 +1,8 @@
 import { cn } from "@/lib/utils";
-import { AnimeCharacter } from "@/types";
+import type { AnimeCharacter } from "@/types";
 import { Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 type CharacterCardProps = {
 	character: AnimeCharacter;
@@ -13,9 +14,11 @@ export default function CharacterCard({ character }: CharacterCardProps) {
 	);
 
 	return (
-		<div
+		<Link 
+			target="_blank"
+			href={`https://myanimelist.net/character/${character.character.mal_id}`}
 			className={cn(
-				"flex flex-col gap-2 sm:flex-row justify-between rounded-sm p-2",
+				"flex flex-col gap-2 sm:flex-row justify-between rounded-sm p-2 hover:bg-primary/40 hover:scale-[1.02] transition-transform duration-200",
 				{
 					"bg-muted-foreground/10": character.role === "Main",
 					"bg-accent/20": character.role === "Supporting",
@@ -58,6 +61,6 @@ export default function CharacterCard({ character }: CharacterCardProps) {
 					/>
 				</div>
 			)}
-		</div>
+		</Link>
 	);
 }
