@@ -4,8 +4,13 @@ import Image from "next/image";
 
 type DisplaySearchResultsProps = {
 	searchResults: AnimeInfo[];
+	searchResults: AnimeInfo[];
 };
 
+export default function DisplaySearchResults({
+	searchResults,
+}: DisplaySearchResultsProps) {
+	if (searchResults.length === 0) return null;
 export default function DisplaySearchResults({
 	searchResults,
 }: DisplaySearchResultsProps) {

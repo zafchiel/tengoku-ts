@@ -7,6 +7,8 @@ import Link from "next/link";
 type CharacterCardProps = {
 	character: AnimeCharacter;
 };
+	character: AnimeCharacter;
+};
 
 export default function CharacterCard({ character }: CharacterCardProps) {
 	const japaneseVoiceActor = character.voice_actors.find(
@@ -64,3 +66,4 @@ export default function CharacterCard({ character }: CharacterCardProps) {
 		</Link>
 	);
 }
+
