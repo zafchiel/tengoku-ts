@@ -7,31 +7,32 @@ import { useContext } from "react";
 import { UserInfoContext } from "../providers/user-info-provider";
 
 function SubmitButton() {
-  const status = useFormStatus();
+	const status = useFormStatus();
 
-  return (
-    <Button
-      variant="blur"
-      aria-disabled={status.pending}
-      disabled={status.pending}
-      loading={status.pending}
-      className="uppercase tracking-wider border text-destructive"
-    >
-      Logout
-    </Button>
-  );
+	return (
+		<Button
+			variant="blur"
+			aria-disabled={status.pending}
+			disabled={status.pending}
+			loading={status.pending}
+			className="uppercase tracking-wider border text-destructive"
+		>
+			Logout
+		</Button>
+	);
 }
 
-
 export function LogoutForm() {
-  const { cleanUserInfo } = useContext(UserInfoContext);
+	const { cleanUserInfo } = useContext(UserInfoContext);
 
-  return (
-    <form action={async () => {
-      await logoutAction();
-      cleanUserInfo();
-    }}>
-      <SubmitButton />
-    </form>
-  );
+	return (
+		<form
+			action={async () => {
+				await logoutAction();
+				cleanUserInfo();
+			}}
+		>
+			<SubmitButton />
+		</form>
+	);
 }

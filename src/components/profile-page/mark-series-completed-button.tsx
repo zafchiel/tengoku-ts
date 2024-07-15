@@ -8,37 +8,37 @@ import { toast } from "sonner";
 import { mutate } from "swr";
 
 type MarkSeriesCompletedButtonProps = {
-  progressId: number;
-  maxEpisodes: number | null;
+	progressId: number;
+	maxEpisodes: number | null;
 };
 
 export default function MarkSeriesCompletedButton({
-  maxEpisodes,
-  progressId,
+	maxEpisodes,
+	progressId,
 }: MarkSeriesCompletedButtonProps) {
-  const { isPending, execute } = useServerAction(markSeriesAsCompleted);
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      disabled={isPending || maxEpisodes === null}
-      onClick={async () => {
-        if (!maxEpisodes) return;
+	const { isPending, execute } = useServerAction(markSeriesAsCompleted);
+	return (
+		<Button
+			variant="outline"
+			size="sm"
+			disabled={isPending || maxEpisodes === null}
+			onClick={async () => {
+				if (!maxEpisodes) return;
 
-        const [, error] = await execute({ progressId, maxEpisodes });
+				const [, error] = await execute({ progressId, maxEpisodes });
 
-        if (error) {
-          toast.error(error.data);
-          return;
-        }
+				if (error) {
+					toast.error(error.data);
+					return;
+				}
 
-        toast.success("Series marked as completed.");
-        mutate("/api/user/progress");
-        return;
-      }}
-    >
-      Complete
-      <CircleCheckBig className="w-4 h-4 ml-2" />
-    </Button>
-  );
+				toast.success("Series marked as completed.");
+				mutate("/api/user/progress");
+				return;
+			}}
+		>
+			Complete
+			<CircleCheckBig className="w-4 h-4 ml-2" />
+		</Button>
+	);
 }

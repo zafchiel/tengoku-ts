@@ -5,30 +5,29 @@ import localFont from "next/font/local";
 import Header from "@/components/ui/header";
 
 const nohemi = localFont({
-  src: "./fonts/Nohemi-VF.ttf",
-  display: "swap",
+	src: "./fonts/Nohemi-VF.ttf",
+	display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Tengoku - anime web app",
-  description: "",
-  manifest: "/manifest.json",
+	title: "Tengoku - anime web app",
+	description: "",
+	manifest: "/manifest.json",
 };
 
 export default async function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode;
+	children: React.ReactNode;
 }) {
-  
-  return (
-    <html lang="en" className="dark" suppressHydrationWarning>
-      <body className={nohemi.className}>
-        <GlobalProviders>
-          <Header />
-          {children}
-        </GlobalProviders>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en" className="dark" suppressHydrationWarning>
+			<body className={nohemi.className}>
+				<GlobalProviders>
+					<Header />
+					{children}
+				</GlobalProviders>
+			</body>
+		</html>
+	);
 }

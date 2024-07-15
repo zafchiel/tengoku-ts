@@ -8,49 +8,49 @@ import { TopAiringContext } from "../providers/top-airing-context";
 const randomVideoStartSecond = Math.floor(Math.random() * 40);
 
 export default function TrailerPlayer() {
-  const { currentAnimeIndex, topAiring, loading } =
-    useContext(TopAiringContext);
+	const { currentAnimeIndex, topAiring, loading } =
+		useContext(TopAiringContext);
 
-  const [videoLoaded, setVideoLoaded] = useState(false);
+	const [videoLoaded, setVideoLoaded] = useState(false);
 
-  const handleLoadedVideo = () => {
-    setVideoLoaded(true);
-  };
+	const handleLoadedVideo = () => {
+		setVideoLoaded(true);
+	};
 
-  if (!topAiring.length || loading) return null;
+	if (!topAiring.length || loading) return null;
 
-  return (
-    <>
-      <div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
+	return (
+		<>
+			<div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
 
-      <YouTube
-        videoId={topAiring[currentAnimeIndex].trailer.youtube_id}
-        iframeClassName={`absolute w-full h-screen -z-20 ${
-          !videoLoaded && "hidden"
-        }`}
-        onError={() => setVideoLoaded(false)}
-        onPlay={handleLoadedVideo}
-        onEnd={() => setVideoLoaded(false)}
-        opts={{
-          playerVars: {
-            autoplay: 1,
-            controls: 0,
-            mute: 1,
-            disablekb: 1,
-            iv_load_policy: 3,
-            modestbranding: 1,
-            showinfo: 0,
-            start: randomVideoStartSecond,
-          },
-        }}
-      />
-      <Image
-        src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer.youtube_id}/maxresdefault.jpg`}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        alt="image"
-        className="-z-30 h-full w-full object-cover"
-      />
-    </>
-  );
+			<YouTube
+				videoId={topAiring[currentAnimeIndex].trailer.youtube_id}
+				iframeClassName={`absolute w-full h-screen -z-20 ${
+					!videoLoaded && "hidden"
+				}`}
+				onError={() => setVideoLoaded(false)}
+				onPlay={handleLoadedVideo}
+				onEnd={() => setVideoLoaded(false)}
+				opts={{
+					playerVars: {
+						autoplay: 1,
+						controls: 0,
+						mute: 1,
+						disablekb: 1,
+						iv_load_policy: 3,
+						modestbranding: 1,
+						showinfo: 0,
+						start: randomVideoStartSecond,
+					},
+				}}
+			/>
+			<Image
+				src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer.youtube_id}/maxresdefault.jpg`}
+				fill
+				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+				alt="image"
+				className="-z-30 h-full w-full object-cover"
+			/>
+		</>
+	);
 }

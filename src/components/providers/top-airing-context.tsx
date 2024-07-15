@@ -8,61 +8,61 @@ import axios from "axios";
 // const axios = setupCache(instance);
 
 type TopAiringContext = {
-  topAiring: AnimeInfo[];
-  currentAnimeIndex: number;
-  setCurrentAnimeIndex: (index: number) => void;
-  loading: boolean;
+	topAiring: AnimeInfo[];
+	currentAnimeIndex: number;
+	setCurrentAnimeIndex: (index: number) => void;
+	loading: boolean;
 };
 
 export const TopAiringContext = createContext<TopAiringContext>({
-  topAiring: [],
-  currentAnimeIndex: 0,
-  setCurrentAnimeIndex: () => {},
-  loading: true,
+	topAiring: [],
+	currentAnimeIndex: 0,
+	setCurrentAnimeIndex: () => {},
+	loading: true,
 });
 
 type TopAiringContextProviderProps = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 export function TopAiringContextProvider({
-  children,
+	children,
 }: TopAiringContextProviderProps) {
-  const [topAiring, setTopAiring] = useState<AnimeInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [currentAnimeIndex, setCurrentAnimeIndex] = useState(0);
+	const [topAiring, setTopAiring] = useState<AnimeInfo[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [currentAnimeIndex, setCurrentAnimeIndex] = useState(0);
 
-  useEffect(() => {
-    const fetchTopAiring = async () => {
-      try {
-        const response = await axios.get(JIKAN_API_TOP_ANIME_URL, {
-          params: {
-            filter: "airing",
-            limit: "6",
-          },
-        });
+	useEffect(() => {
+		const fetchTopAiring = async () => {
+			try {
+				const response = await axios.get(JIKAN_API_TOP_ANIME_URL, {
+					params: {
+						filter: "airing",
+						limit: "6",
+					},
+				});
 
-        setTopAiring(response.data.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+				setTopAiring(response.data.data);
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-    fetchTopAiring();
-  }, []);
+		fetchTopAiring();
+	}, []);
 
-  const value = {
-    topAiring,
-    currentAnimeIndex,
-    setCurrentAnimeIndex,
-    loading,
-  };
+	const value = {
+		topAiring,
+		currentAnimeIndex,
+		setCurrentAnimeIndex,
+		loading,
+	};
 
-  return (
-    <TopAiringContext.Provider value={value}>
-      {children}
-    </TopAiringContext.Provider>
-  );
+	return (
+		<TopAiringContext.Provider value={value}>
+			{children}
+		</TopAiringContext.Provider>
+	);
 }

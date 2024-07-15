@@ -7,54 +7,54 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 type AddToListProps = {
-  animeId: number;
-  setProgressInfo: (data: ProgressRecordType) => void;
-  maxEpisodes: number | null;
-  animeTitle: string;
-  animePoster: string | null;
+	animeId: number;
+	setProgressInfo: (data: ProgressRecordType) => void;
+	maxEpisodes: number | null;
+	animeTitle: string;
+	animePoster: string | null;
 };
 
 export default function AddToList({
-  animeId,
-  setProgressInfo,
-  maxEpisodes,
-  animePoster,
-  animeTitle,
+	animeId,
+	setProgressInfo,
+	maxEpisodes,
+	animePoster,
+	animeTitle,
 }: AddToListProps) {
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+	const [loading, setLoading] = useState(false);
+	const router = useRouter();
 
-  const clickHandler = async () => {
-    setLoading(true);
-    const [data, error] = await addNewAnimeProgressEntry({
-      animeId,
-      animePoster,
-      animeTitle,
-      maxEpisodes,
-    });
-    if (error) {
-      if (error.message.includes("User not authenticated")) {
-        router.push("/login");
-      }
-      toast.error(error.message);
-      return;
-    }
+	const clickHandler = async () => {
+		setLoading(true);
+		const [data, error] = await addNewAnimeProgressEntry({
+			animeId,
+			animePoster,
+			animeTitle,
+			maxEpisodes,
+		});
+		if (error) {
+			if (error.message.includes("User not authenticated")) {
+				router.push("/login");
+			}
+			toast.error(error.message);
+			return;
+		}
 
-    toast.success("Added to list");
-    setProgressInfo(data);
-    setLoading(false);
-  };
+		toast.success("Added to list");
+		setProgressInfo(data);
+		setLoading(false);
+	};
 
-  return (
-    <Button
-      onClick={clickHandler}
-      loading={loading}
-      disabled={loading}
-      aria-disabled={loading}
-      className="capitalize flex gap-2 items-center w-full"
-    >
-      <MessageSquarePlus />
-      Add To List
-    </Button>
-  );
+	return (
+		<Button
+			onClick={clickHandler}
+			loading={loading}
+			disabled={loading}
+			aria-disabled={loading}
+			className="capitalize flex gap-2 items-center w-full"
+		>
+			<MessageSquarePlus />
+			Add To List
+		</Button>
+	);
 }

@@ -15,66 +15,80 @@ import RecommendationsSection from "@/components/details-page/recommendations-se
 import ExternalLinksSection from "@/components/details-page/external-links-section";
 
 type DetailsPageProps = {
-  params: {
-    animeId: string;
-  };
+	params: {
+		animeId: string;
+	};
 };
 
 export default async function DetailsPage({ params }: DetailsPageProps) {
-  const anime = await fetchAnimeInfoFull(params.animeId);
+	const anime = await fetchAnimeInfoFull(params.animeId);
 
-  if (!anime)
-    return (
-      <main className="container px-1 md:py-24">
-        <Alert variant="destructive" className="max-w-xl">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Error</AlertTitle>
-          <AlertDescription>
-            Anime not found. Please try searching again.
-          </AlertDescription>
-        </Alert>
-      </main>
-    );
+	if (!anime)
+		return (
+			<main className="container px-1 md:py-24">
+				<Alert variant="destructive" className="max-w-xl">
+					<AlertCircle className="h-4 w-4" />
+					<AlertTitle>Error</AlertTitle>
+					<AlertDescription>
+						Anime not found. Please try searching again.
+					</AlertDescription>
+				</Alert>
+			</main>
+		);
 
-  const imgBase64 = await getBase64(anime.images.webp.large_image_url);
+	const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
-  return (
-    <>
-      <div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
-      <main className="grid gird-cols-1 md:grid-cols-[400px_1fr] gap-4 px-2 md:px-4 md:py-14 md:mt-10 w-fit mx-auto">
-        <div className="md:col-span-2">
-          <HeadingSection animeInfo={anime} imgBase64={imgBase64!} />
-        </div>
+	if (!imgBase64) {
+		return (
+			<main className="container px-1 md:py-24">
+				<Alert variant="destructive" className="max-w-xl">
+					<AlertCircle className="h-4 w-4" />
+					<AlertTitle>Error</AlertTitle>
+					<AlertDescription>
+						Anime not found. Please try searching again.
+					</AlertDescription>
+				</Alert>
+			</main>
+		);
+	}
 
-        <section className="col-span-2 md:col-span-1">
-          <div className="w-full md:max-w-xl">
-            <ListingButtons animeInfo={anime} />
-          </div>
+	return (
+		<>
+			<div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
+			<main className="grid gird-cols-1 md:grid-cols-[400px_1fr] gap-4 px-2 md:px-4 md:py-14 md:mt-10 w-fit mx-auto">
+				<div className="md:col-span-2">
+					<HeadingSection animeInfo={anime} imgBase64={imgBase64} />
+				</div>
 
-          <AnimeDetailsNavigation />
-        </section>
+				<section className="col-span-2 md:col-span-1">
+					<div className="w-full md:max-w-xl">
+						<ListingButtons animeInfo={anime} />
+					</div>
 
-        <section className="md:max-w-5xl w-full space-y-28">
-          <AnimeDetailsSection animeInfo={anime} />
+					<AnimeDetailsNavigation />
+				</section>
 
-          <RelationsSection animeRelations={anime.relations} />
+				<section className="md:max-w-5xl w-full space-y-28">
+					<AnimeDetailsSection animeInfo={anime} />
 
-          <Suspense fallback={<Skeleton className="w-full h-96" />}>
-            <CharactersSection animeId={anime.mal_id} />
-          </Suspense>
+					<RelationsSection animeRelations={anime.relations} />
 
-          <OpeningsSection theme={anime.theme} />
+					<Suspense fallback={<Skeleton className="w-full h-96" />}>
+						<CharactersSection animeId={anime.mal_id} />
+					</Suspense>
 
-          <Suspense fallback={<Skeleton className="w-full h-96" />}>
-            <RecommendationsSection animeId={params.animeId} />
-          </Suspense>
+					<OpeningsSection theme={anime.theme} />
 
-          <ExternalLinksSection
-            externalLinks={anime.external}
-            streamingLinks={anime.streaming}
-          />
-        </section>
-      </main>
-    </>
-  );
+					<Suspense fallback={<Skeleton className="w-full h-96" />}>
+						<RecommendationsSection animeId={params.animeId} />
+					</Suspense>
+
+					<ExternalLinksSection
+						externalLinks={anime.external}
+						streamingLinks={anime.streaming}
+					/>
+				</section>
+			</main>
+		</>
+	);
 }
