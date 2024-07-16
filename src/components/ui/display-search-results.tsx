@@ -4,13 +4,8 @@ import Image from "next/image";
 
 type DisplaySearchResultsProps = {
 	searchResults: AnimeInfo[];
-	searchResults: AnimeInfo[];
 };
 
-export default function DisplaySearchResults({
-	searchResults,
-}: DisplaySearchResultsProps) {
-	if (searchResults.length === 0) return null;
 export default function DisplaySearchResults({
 	searchResults,
 }: DisplaySearchResultsProps) {
@@ -33,7 +28,7 @@ export default function DisplaySearchResults({
 							<p className="text-muted-foreground">
 								{result.type === "Movie" || result.type === "Music"
 									? result.type
-									: `${result.type} - ${result.episodes ?? 'Unknown'} ep`}
+									: `${result.type} - ${result.episodes ?? "Unknown"} ep`}
 							</p>
 							<p className="uppercase text-muted-foreground">
 								{result.year
