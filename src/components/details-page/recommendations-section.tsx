@@ -3,6 +3,8 @@ import type { Recommendation } from "@/types";
 import { JIKAN_API_URL } from "@/lib/constants";
 import Link from "next/link";
 import Image from "next/image";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
 
 type RecommendationsSectionProps = {
 	animeId: string | number;
@@ -62,7 +64,13 @@ export default async function RecommendationsSection({
 					))}
 				</div>
 			) : (
-				<p className="py-2">There are no recommendations yet</p>
+				<Alert variant="default" className="max-w-xl m-2">
+					<AlertCircle className="h-4 w-4" />
+					<AlertTitle>No recommendations</AlertTitle>
+					<AlertDescription>
+						There are no recommendations for this anime yet.
+					</AlertDescription>
+				</Alert>
 			)}
 		</section>
 	);

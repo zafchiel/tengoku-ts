@@ -13,6 +13,7 @@ import OpeningsSection from "@/components/details-page/openings-section";
 import AnimeDetailsNavigation from "@/components/details-page/anime-details-navigation";
 import RecommendationsSection from "@/components/details-page/recommendations-section";
 import ExternalLinksSection from "@/components/details-page/external-links-section";
+import GallerySection from "@/components/details-page/gallery-section";
 
 type DetailsPageProps = {
 	params: {
@@ -78,6 +79,10 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 					</Suspense>
 
 					<OpeningsSection theme={anime.theme} />
+
+					<Suspense fallback={<Skeleton className="w-full h-96" />}>
+						<GallerySection animeId={anime.mal_id} />
+					</Suspense>
 
 					<Suspense fallback={<Skeleton className="w-full h-96" />}>
 						<RecommendationsSection animeId={params.animeId} />

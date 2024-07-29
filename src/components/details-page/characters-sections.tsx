@@ -18,7 +18,9 @@ export default async function CharactersSection({
 
 	if (!characters) {
 		return (
-			<section>
+			<section id="characters" className="scroll-mt-40 px-1 py-2">
+				<h3 className="text-3xl font-semibold">Characters</h3>
+				<hr className="mb-2" />
 				<Alert variant="destructive" className="max-w-xl">
 					<AlertCircle className="h-4 w-4" />
 					<AlertTitle>Error</AlertTitle>
