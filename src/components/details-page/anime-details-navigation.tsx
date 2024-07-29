@@ -31,6 +31,11 @@ export default function AnimeDetailsNavigation() {
 					</a>
 				</li>
 				<li>
+					<a href="#gallery" className="nav-element">
+						Gallery
+					</a>
+				</li>
+				<li>
 					<a href="#recommendations" className="nav-element">
 						Recomendations
 					</a>
