@@ -86,6 +86,20 @@ body {
   scroll-behavior: smooth !important;
 }
 
+section:target h3 {
+  animation: pulse-text 900ms ease-out alternate;
+  animation-iteration-count: 3;
+}
+
+@keyframes pulse-text {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* -------------------- Trailer Frame ------------------ */
 
 @media (min-aspect-ratio: 16/9) {
