@@ -8,7 +8,7 @@ type GallerySectionProps = {
 	animeId: number;
 };
 
-type Gallery = {
+type GalleryEntry = {
 	jpg: {
 		image_url: string;
 		small_image_url: string;
@@ -19,13 +19,13 @@ type Gallery = {
 		small_image_url: string;
 		large_image_url: string;
 	};
-}[];
+};
 
 export default async function GallerySection({ animeId }: GallerySectionProps) {
 	const gallery = await axios
-		.get<{ data: Gallery }>(`${JIKAN_API_URL}/anime/${animeId}/pictures`)
+		.get<{ data: GalleryEntry[] }>(`${JIKAN_API_URL}/anime/${animeId}/pictures`)
 		.then((res) => res.data.data)
-		.catch((err) => console.log("gallery fetch error"));
+		.catch(() => null);
 
 	if (!gallery) {
 		return (
