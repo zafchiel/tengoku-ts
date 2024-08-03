@@ -1,7 +1,7 @@
 import { Lucia, type User, type Session } from "lucia";
 import { db } from "../db";
 import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { DatabaseUser, sessionTable, userTable } from "../db/schema";
+import { type DatabaseUser, sessionTable, userTable } from "../db/schema";
 import { GitHub, Google, Discord } from "arctic";
 import { cache } from "react";
 import { cookies } from "next/headers";
@@ -83,7 +83,7 @@ export const validateRequest = cache(
 		const result = await lucia.validateSession(sessionId);
 		// next.js throws when you attempt to set cookie when rendering page
 		try {
-			if (result.session && result.session.fresh) {
+			if (result.session?.fresh) {
 				const sessionCookie = lucia.createSessionCookie(result.session.id);
 				cookies().set(
 					sessionCookie.name,

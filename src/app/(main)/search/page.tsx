@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { SearchResult } from "@/types";
+import type { SearchResult } from "@/types";
 import { JIKAN_API_URL } from "@/lib/constants";
 import { PaginationComponent } from "@/components/search-results-page/pagination-component";
 import { Skeleton } from "@/components/ui/skeleton";

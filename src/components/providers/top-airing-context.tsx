@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { JIKAN_API_TOP_ANIME_URL } from "@/lib/constants";
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 import axios from "axios";
 // import { setupCache } from "axios-cache-interceptor";
 

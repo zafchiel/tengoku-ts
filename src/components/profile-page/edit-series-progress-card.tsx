@@ -1,4 +1,4 @@
-import { ProgressRecordType } from "@/lib/server/db/schema";
+import type { ProgressRecordType } from "@/lib/server/db/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";

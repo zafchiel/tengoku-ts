@@ -1,8 +1,5 @@
-import { JIKAN_API_URL } from "@/lib/constants";
-import axios from "axios";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
-import { AnimeCharacter } from "@/types";
 import CharacterCard from "./character-card";
 import Link from "next/link";
 import { fetchAnimeCharacters } from "@/lib/utils";

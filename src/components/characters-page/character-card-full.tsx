@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { AnimeCharacter } from "@/types";
+import type { AnimeCharacter } from "@/types";
 import { Star } from "lucide-react";
 import Image from "next/image";
 

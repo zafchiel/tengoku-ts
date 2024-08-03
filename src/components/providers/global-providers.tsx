@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { UserInfoProvier } from "./user-info-provider";
 

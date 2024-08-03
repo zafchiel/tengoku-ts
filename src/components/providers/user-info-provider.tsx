@@ -1,4 +1,4 @@
-import { User } from "lucia";
+import type { User } from "lucia";
 import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 

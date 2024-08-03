@@ -1,5 +1,5 @@
 import StatsCard from "./stats-card";
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 
 type AnimeDetailsSectionProps = {
 	animeInfo: AnimeInfo;

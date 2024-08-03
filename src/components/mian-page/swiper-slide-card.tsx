@@ -1,4 +1,4 @@
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 import ScoreBadge from "./score-badge";

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 import { PosterImage } from "./poster-image";
 
 type HeadingSectionProps = {

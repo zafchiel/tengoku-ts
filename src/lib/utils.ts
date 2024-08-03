@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import axios from "axios";
-import { AnimeCharacter, AnimeInfo } from "@/types";
+import type { AnimeCharacter, AnimeInfo } from "@/types";
 import { JIKAN_API_URL } from "@/lib/constants";
 
 export function cn(...inputs: ClassValue[]) {

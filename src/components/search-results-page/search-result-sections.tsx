@@ -1,11 +1,11 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import DetailsHoverCard from "@/components/ui/details-hover-card";
 import SearchResultCard from "@/components/search-results-page/search-result-card";
-import { SearchResult } from "@/types";
+import type { SearchResult } from "@/types";
 
 type SearchResultSectionProps = {
 	data: SearchResult | undefined;
-	isLoading: Boolean;
+	isLoading: boolean;
 };
 
 export default function SearchResultSection({

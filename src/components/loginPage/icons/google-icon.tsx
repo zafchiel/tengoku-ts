@@ -1,4 +1,4 @@
-import { IconProps } from "../oauth-link";
+import type { IconProps } from "../oauth-link";
 
 export function GoogleIcon({ className, size, color }: IconProps) {
 	return (

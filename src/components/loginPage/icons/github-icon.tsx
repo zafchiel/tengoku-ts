@@ -1,4 +1,4 @@
-import { IconProps } from "../oauth-link";
+import type { IconProps } from "../oauth-link";
 import { Github } from "lucide-react";
 
 export function GithubIcon({ className, size, color }: IconProps) {

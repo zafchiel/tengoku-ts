@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "./dialog";
 import { Input } from "./input";
 import { Label } from "./label";
 import { Separator } from "./separator";
-import { ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useState } from "react";
 import type { AnimeInfo } from "@/types";
 import axios, { AxiosError } from "axios";
 import DisplaySearchResults from "./display-search-results";

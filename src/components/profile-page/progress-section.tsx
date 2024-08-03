@@ -1,6 +1,6 @@
 "use client";
 
-import { ProgressRecordType } from "@/lib/server/db/schema";
+import type { ProgressRecordType } from "@/lib/server/db/schema";
 import axios from "axios";
 import useSWR from "swr";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";

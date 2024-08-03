@@ -2,7 +2,7 @@
 
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./hover-card";
 import Description from "../details-page/description";
-import { AnimeInfo } from "@/types";
+import type { AnimeInfo } from "@/types";
 import Link from "next/link";
 
 type DetailsHoverCardProps = {

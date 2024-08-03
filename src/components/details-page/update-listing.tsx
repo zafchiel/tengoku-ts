@@ -16,7 +16,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Loader2, Save } from "lucide-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
-import { ProgressRecordType, WATCHING_STATUSES } from "@/lib/server/db/schema";
+import {
+	type ProgressRecordType,
+	WATCHING_STATUSES,
+} from "@/lib/server/db/schema";
 import { toast } from "sonner";
 import { useServerAction } from "zsa-react";
 import { SCORES } from "@/lib/server/db/schema";

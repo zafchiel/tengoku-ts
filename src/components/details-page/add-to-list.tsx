@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { addNewAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
-import { ProgressRecordType } from "@/lib/server/db/schema";
+import type { ProgressRecordType } from "@/lib/server/db/schema";
 import { useState } from "react";
 import { MessageSquarePlus } from "lucide-react";
 import { toast } from "sonner";

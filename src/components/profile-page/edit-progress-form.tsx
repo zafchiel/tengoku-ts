@@ -1,5 +1,5 @@
 import {
-	ProgressRecordType,
+	type ProgressRecordType,
 	WATCHING_STATUSES,
 	SCORES,
 } from "@/lib/server/db/schema";

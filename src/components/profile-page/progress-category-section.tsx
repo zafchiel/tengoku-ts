@@ -1,4 +1,4 @@
-import { ProgressRecordType } from "@/lib/server/db/schema";
+import type { ProgressRecordType } from "@/lib/server/db/schema";
 import EditSeriesProgressCard from "./edit-series-progress-card";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";

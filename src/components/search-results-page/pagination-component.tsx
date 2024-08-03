@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/pagination";
 import { usePagination } from "@/hooks/use-pagination";
 import { cn } from "@/lib/utils";
-import { PaginationInfoType } from "@/types";
+import type { PaginationInfoType } from "@/types";
 
 type PaginationProps = {
 	paginationInfo: PaginationInfoType;
