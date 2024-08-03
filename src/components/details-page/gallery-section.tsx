@@ -50,9 +50,9 @@ export default async function GallerySection({ animeId }: GallerySectionProps) {
 			<div className="m-2 flex flex-wrap gap-4">
 				{gallery.map((image) => (
 					<GalleryCard
-						key={image.jpg.image_url}
-						src={image.jpg.large_image_url}
-						alt="Gallery image"
+						key={image.webp.image_url}
+						src={image.webp.large_image_url}
+						alt={image.webp.image_url}
 					/>
 				))}
 			</div>
