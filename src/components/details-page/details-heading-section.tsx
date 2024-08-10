@@ -5,7 +5,7 @@ import { PosterImage } from "./poster-image";
 
 type HeadingSectionProps = {
 	animeInfo: AnimeInfo;
-	imgBase64: string;
+	imgBase64: string | undefined;
 };
 
 export default function DetailsHeadingSection({

@@ -6,14 +6,14 @@ import Image from "next/image";
 type PosterImageProps = {
 	src: string;
 	alt: string;
-	imgBase64: string;
+	imgBase64: string | undefined;
 };
 
 export const PosterImage = ({ src, alt, imgBase64 }: PosterImageProps) => {
 	const imageRef = useRef<HTMLImageElement>(null);
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 
-	useEffect(() => {
+	const drawCanvas = () => {
 		const canvas = canvasRef.current;
 		const image = imageRef.current;
 
@@ -21,31 +21,23 @@ export const PosterImage = ({ src, alt, imgBase64 }: PosterImageProps) => {
 
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
+		canvas.width = image.width;
+		canvas.height = image.height;
 
-		const drawCanvas = () => {
-			canvas.width = image.width;
-			canvas.height = image.height;
-
-			ctx.drawImage(image, 0, 0, image.width, image.height);
-		};
-
-		image.addEventListener("load", drawCanvas);
-
-		return () => {
-			image.removeEventListener("load", drawCanvas);
-		};
-	}, []);
+		ctx.drawImage(image, 0, 0, image.width, image.height);
+	};
 
 	return (
 		<div className="relative overflow-hidden md:overflow-visible">
 			<Image
 				ref={imageRef}
 				src={src}
-				placeholder="blur"
+				placeholder={imgBase64 ? "blur" : "empty"}
 				blurDataURL={imgBase64}
 				width={400}
 				height={500}
 				alt={alt}
+				onLoad={drawCanvas}
 				className="md:static fixed inset-0 h-screen w-full -z-20 object-cover md:rounded-sm md:w-[400px] md:h-auto"
 			/>
 			<canvas

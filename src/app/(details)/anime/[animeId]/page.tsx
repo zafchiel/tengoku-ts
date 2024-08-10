@@ -37,21 +37,10 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 			</main>
 		);
 
+	const start = performance.now();
 	const imgBase64 = await getBase64(anime.images.webp.large_image_url);
-
-	if (!imgBase64) {
-		return (
-			<main className="container px-1 md:py-24">
-				<Alert variant="destructive" className="max-w-xl">
-					<AlertCircle className="h-4 w-4" />
-					<AlertTitle>Error</AlertTitle>
-					<AlertDescription>
-						Anime not found. Please try searching again.
-					</AlertDescription>
-				</Alert>
-			</main>
-		);
-	}
+	const end = performance.now();
+	console.log(`getBase64 took ${end - start}ms`);
 
 	return (
 		<>
