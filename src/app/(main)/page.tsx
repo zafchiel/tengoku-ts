@@ -8,7 +8,11 @@ import type { AnimeInfo } from "@/types";
 export default async function HomePage() {
 	const topAiring = await fetch(
 		`${JIKAN_API_TOP_ANIME_URL}?filter=airing&limit=6`,
-		{ cache: "force-cache" },
+		{
+			cache: "force-cache",
+			// Revalidate every 7 days
+			next: { revalidate: 60 * 60 * 24 * 7 },
+		},
 	);
 	const topAiringData = (await topAiring.json()).data as AnimeInfo[];
 
