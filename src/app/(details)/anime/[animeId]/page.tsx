@@ -37,10 +37,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 			</main>
 		);
 
-	const start = performance.now();
 	const imgBase64 = await getBase64(anime.images.webp.large_image_url);
-	const end = performance.now();
-	console.log(`getBase64 took ${end - start}ms`);
 
 	return (
 		<>
