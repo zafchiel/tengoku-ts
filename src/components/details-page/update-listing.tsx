@@ -156,8 +156,10 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 							<FormLabel>
 								<span className="text-xs text-muted-foreground">
 									Episodes Watched
-								</span>{" "}
-								/ {progressInfo.maxEpisodes}
+								</span>
+								<span title="Maximum episodes" aria-label="Maximum episodes">
+									{progressInfo.maxEpisodes && ` / ${progressInfo.maxEpisodes}`}
+								</span>
 							</FormLabel>
 							<FormControl>
 								<Input

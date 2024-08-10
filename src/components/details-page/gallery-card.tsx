@@ -16,7 +16,7 @@ export default function GalleryCard(props: GalleryCardProps) {
 					{...props}
 					width={200}
 					height={300}
-					className="rounded-md"
+					className="rounded-md h-full object-cover hover:scale-105 transition-all duration-300"
 					alt={props.alt}
 				/>
 			</DialogTrigger>
