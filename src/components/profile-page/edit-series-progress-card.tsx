@@ -85,7 +85,7 @@ export default function EditSeriesProgressCard({
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<div
-											className="absolute -right-3 bottom-2 w-14 h-2 bg-primary -rotate-45"
+											className="absolute -top-2 right-0 w-2 h-8 bg-primary -rotate-45"
 											aria-label="Anime is currently airing"
 										></div>
 									</TooltipTrigger>
