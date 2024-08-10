@@ -43,14 +43,27 @@ export default function IncrementEpisodesButton({
 	};
 
 	return (
-		<Button
-			disabled={progressInfo.status === "Completed" || isPending}
-			loading={isPending}
-			size="icon"
-			className="grow"
-			onClick={increment}
-		>
-			{!isPending && <Plus size={14} />}
-		</Button>
+		<TooltipProvider>
+			<Tooltip>
+				<TooltipTrigger asChild>
+					<Button
+						disabled={progressInfo.status === "Completed" || isPending}
+						loading={isPending}
+						size="icon"
+						className="grow"
+						onClick={increment}
+					>
+						{!isPending && <Plus size={14} />}
+					</Button>
+				</TooltipTrigger>
+				<TooltipContent>
+					<Tooltip>
+						{progressInfo.status === "Completed"
+							? "You've completed this series"
+							: "Increment episode count"}
+					</Tooltip>
+				</TooltipContent>
+			</Tooltip>
+		</TooltipProvider>
 	);
 }
