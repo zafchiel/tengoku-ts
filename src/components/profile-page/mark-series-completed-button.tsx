@@ -20,7 +20,6 @@ export default function MarkSeriesCompletedButton({
 	return (
 		<Button
 			variant="outline"
-			size="sm"
 			disabled={isPending || maxEpisodes === null}
 			onClick={async () => {
 				if (!maxEpisodes) return;

@@ -17,7 +17,7 @@ export default function AnimeDetailsSection({
 	return (
 		<section
 			id="stats"
-			className="scroll-mt-40 p-1 md:p-4 border flex gap-4 flex-wrap rounded-sm"
+			className="scroll-mt-40 p-1 md:p-4 border flex gap-4 flex-wrap rounded-lg"
 		>
 			{/* <AnimePosters mal_id={animeInfo.mal_id} /> */}
 			{animeInfo.score && (

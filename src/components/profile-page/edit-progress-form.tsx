@@ -96,7 +96,7 @@ export default function EditProgressForm({
 	return (
 		<Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
 			<SheetTrigger asChild>
-				<Button variant="ghost">
+				<Button variant="outline">
 					Edit
 					<PenIcon size={14} className="ml-2" />
 				</Button>

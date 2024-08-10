@@ -10,7 +10,7 @@ export default function StatsCard({
 	additional,
 }: StatsCardProps) {
 	return (
-		<div className="grow relative overflow-hidden border rounded-md min-w-[200px]">
+		<div className="grow relative overflow-hidden border rounded-sm min-w-[200px]">
 			<div className="bg-card/60 backdrop-blur-3xl p-4 h-full">
 				<div>
 					<div className="text-muted-foreground font-light">{title}</div>

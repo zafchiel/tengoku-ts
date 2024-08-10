@@ -25,13 +25,13 @@ export default function EditSeriesProgressCard({
 }: EditSeriesProgressCardProps) {
 	return (
 		<Card className="max-w-md w-full">
-			<CardContent className="grid grid-cols-[100px_1fr] gap-4 p-4 relative overflow-hidden">
+			<CardContent className="grid grid-cols-[100px_1fr] gap-4 p-4 h-full items-center relative overflow-hidden">
 				{progressInfo.animePoster && (
 					<Link href={`/anime/${progressInfo.animeId}`}>
 						<Image
 							src={progressInfo.animePoster}
 							alt="Series Thumbnail"
-							className="rounded-md"
+							className="rounded-sm"
 							width={100}
 							height={150}
 						/>
@@ -103,14 +103,14 @@ export default function EditSeriesProgressCard({
 					animeTitle={progressInfo.animeTitle}
 					progressId={progressInfo.id}
 				/>
-				<div className="flex gap-4 flex-wrap">
+				<div className="flex gap-2 flex-wrap">
 					{progressInfo.status !== "Completed" ? (
 						<MarkSeriesCompletedButton
 							maxEpisodes={progressInfo.maxEpisodes}
 							progressId={progressInfo.id}
 						/>
 					) : (
-						<Button variant="outline" size="sm" disabled={true}>
+						<Button variant="outline" disabled={true}>
 							Completed
 							<CircleCheckBig size={14} className="ml-2" />
 						</Button>

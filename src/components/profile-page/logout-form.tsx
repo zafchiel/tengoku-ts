@@ -11,11 +11,11 @@ function SubmitButton() {
 
 	return (
 		<Button
-			variant="blur"
+			variant="destructive"
 			aria-disabled={status.pending}
 			disabled={status.pending}
 			loading={status.pending}
-			className="uppercase tracking-wider border text-destructive"
+			className="uppercase tracking-wider rounded-full"
 		>
 			Logout
 		</Button>

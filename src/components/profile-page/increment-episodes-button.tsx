@@ -53,7 +53,7 @@ export default function IncrementEpisodesButton({
 						className="grow"
 						onClick={increment}
 					>
-						{!isPending && <Plus size={18} />}
+						{!isPending && <Plus size={22} />}
 					</Button>
 				</TooltipTrigger>
 				<TooltipContent side="bottom">
