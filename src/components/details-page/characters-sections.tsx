@@ -38,7 +38,7 @@ export default async function CharactersSection({
 				</Link>
 			</div>
 			<hr className="mb-2" />
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+			<div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
 				{characters.slice(0, 10).map((character) => (
 					<CharacterCard
 						key={character.character.mal_id}

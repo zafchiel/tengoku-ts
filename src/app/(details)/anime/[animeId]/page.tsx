@@ -42,20 +42,20 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 	return (
 		<>
 			<div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
-			<main className="grid gird-cols-1 md:grid-cols-[400px_1fr] gap-4 px-2 md:px-4 md:py-14 md:mt-10 w-fit mx-auto">
+			<main className="grid gird-cols-1 md:grid-cols-[minmax(200px,400px)_minmax(450px,1fr)] gap-4 px-2 md:px-4 md:py-14 md:mt-10 max-w-[1440px] mx-auto">
 				<div className="md:col-span-2">
 					<HeadingSection animeInfo={anime} imgBase64={imgBase64} />
 				</div>
 
 				<section className="col-span-2 md:col-span-1">
-					<div className="w-full md:max-w-xl">
+					<div>
 						<ListingButtons animeInfo={anime} />
 					</div>
 
 					<AnimeDetailsNavigation />
 				</section>
 
-				<section className="md:max-w-5xl w-full space-y-28">
+				<section className="w-full space-y-28 max-w-5xl">
 					<AnimeDetailsSection animeInfo={anime} />
 
 					<RelationsSection animeRelations={anime.relations} />
