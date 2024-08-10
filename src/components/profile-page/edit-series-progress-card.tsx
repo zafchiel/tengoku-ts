@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { CircleCheckBig, PenIcon, Star } from "lucide-react";
+import { CircleCheckBig, PenIcon, Plus, Star } from "lucide-react";
 import Link from "next/link";
 import DeleteSeriesProgressEntryButton from "./delete-series-progress-entry-button";
 import MarkSeriesCompletedButton from "./mark-series-completed-button";
@@ -14,6 +14,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "../ui/tooltip";
+import IncrementEpisodesButton from "./increment-episodes-button";
 
 type EditSeriesProgressCardProps = {
 	progressInfo: ProgressRecordType;
@@ -102,7 +103,7 @@ export default function EditSeriesProgressCard({
 					animeTitle={progressInfo.animeTitle}
 					progressId={progressInfo.id}
 				/>
-				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div className="flex gap-4 flex-wrap">
 					{progressInfo.status !== "Completed" ? (
 						<MarkSeriesCompletedButton
 							maxEpisodes={progressInfo.maxEpisodes}
@@ -115,6 +116,8 @@ export default function EditSeriesProgressCard({
 						</Button>
 					)}
 					<EditProgressForm progressInfo={progressInfo} />
+
+					<IncrementEpisodesButton progressInfo={progressInfo} />
 				</div>
 			</CardContent>
 		</Card>
