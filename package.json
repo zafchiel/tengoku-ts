@@ -55,7 +55,7 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "~5.4.5",
     "zod": "^3.23.8",
-    "zsa": "^0.3.5",
+    "zsa": "^0.5.1",
     "zsa-react": "^0.1.9"
   },
   "devDependencies": {
