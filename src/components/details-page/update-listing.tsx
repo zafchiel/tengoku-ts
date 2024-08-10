@@ -90,8 +90,10 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 						control={form.control}
 						name="status"
 						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Status</FormLabel>
+							<FormItem className="space-y-1">
+								<FormLabel className="text-xs text-muted-foreground">
+									Status
+								</FormLabel>
 								<Select
 									onValueChange={field.onChange}
 									defaultValue={field.value?.toString()}
@@ -118,8 +120,10 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 						control={form.control}
 						name="score"
 						render={({ field }) => (
-							<FormItem>
-								<FormLabel>Score</FormLabel>
+							<FormItem className="space-y-1">
+								<FormLabel className="text-xs text-muted-foreground">
+									Score
+								</FormLabel>
 								<Select
 									onValueChange={field.onChange}
 									defaultValue={field.value?.toString()}
@@ -148,8 +152,13 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 					control={form.control}
 					name="episodesWatched"
 					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Episodes Watched</FormLabel>
+						<FormItem className="space-y-1">
+							<FormLabel>
+								<span className="text-xs text-muted-foreground">
+									Episodes Watched
+								</span>{" "}
+								/ {progressInfo.maxEpisodes}
+							</FormLabel>
 							<FormControl>
 								<Input
 									placeholder="Episodes watched"
