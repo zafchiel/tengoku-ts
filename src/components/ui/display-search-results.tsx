@@ -15,7 +15,7 @@ export default function DisplaySearchResults({
 		<div className="divide-y">
 			{searchResults.map((result) => (
 				<Link href={`/anime/${result.mal_id}`} key={result.mal_id}>
-					<div className="flex rounded-sm gap-1 p-2 hover:bg-primary-foreground">
+					<div className="flex rounded-sm gap-1 p-2 hover:bg-primary/20">
 						<Image
 							width={80}
 							height={100}

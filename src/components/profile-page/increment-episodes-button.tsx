@@ -53,15 +53,13 @@ export default function IncrementEpisodesButton({
 						className="grow"
 						onClick={increment}
 					>
-						{!isPending && <Plus size={14} />}
+						{!isPending && <Plus size={18} />}
 					</Button>
 				</TooltipTrigger>
-				<TooltipContent>
-					<Tooltip>
-						{progressInfo.status === "Completed"
-							? "You've completed this series"
-							: "Increment episode count"}
-					</Tooltip>
+				<TooltipContent side="bottom">
+					{progressInfo.status === "Completed"
+						? "You've completed this series"
+						: "Increment episode count"}
 				</TooltipContent>
 			</Tooltip>
 		</TooltipProvider>

@@ -1,11 +1,11 @@
 import type { AnimeInfo } from "@/types";
 import Image from "next/image";
 
-type Props = {
+type SearchResultCardProps = {
 	anime: AnimeInfo;
 };
 
-export default function SearchResultCard({ anime }: Props) {
+export default function SearchResultCard({ anime }: SearchResultCardProps) {
 	return (
 		<div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
 			<Image
