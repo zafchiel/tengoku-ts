@@ -89,7 +89,7 @@ export default function EditSeriesProgressCard({
 					) : (
 						<Button variant="outline" size="sm" disabled={true}>
 							Completed
-							<CircleCheckBig className="w-4 h-4 ml-2" />
+							<CircleCheckBig size={14} className="ml-2" />
 						</Button>
 					)}
 					<EditProgressForm progressInfo={progressInfo} />

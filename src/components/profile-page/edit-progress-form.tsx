@@ -98,7 +98,7 @@ export default function EditProgressForm({
 			<SheetTrigger asChild>
 				<Button variant="ghost">
 					Edit
-					<PenIcon className="w-4 h-4 ml-2" />
+					<PenIcon size={14} className="ml-2" />
 				</Button>
 			</SheetTrigger>
 			<SheetContent>
