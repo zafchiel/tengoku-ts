@@ -4,12 +4,16 @@ import { useContext, useState } from "react";
 import YouTube from "react-youtube";
 import Image from "next/image";
 import { TopAiringContext } from "../providers/top-airing-context";
+import type { AnimeInfo } from "@/types";
 
 const randomVideoStartSecond = Math.floor(Math.random() * 40);
 
-export default function TrailerPlayer() {
-	const { currentAnimeIndex, topAiring, loading } =
-		useContext(TopAiringContext);
+type TrailerPlayerProps = {
+	topAiring: AnimeInfo[];
+};
+
+export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
+	const { currentAnimeIndex } = useContext(TopAiringContext);
 
 	const [videoLoaded, setVideoLoaded] = useState(false);
 
@@ -17,7 +21,7 @@ export default function TrailerPlayer() {
 		setVideoLoaded(true);
 	};
 
-	if (!topAiring.length || loading) return null;
+	if (topAiring.length < 1) return null;
 
 	return (
 		<>

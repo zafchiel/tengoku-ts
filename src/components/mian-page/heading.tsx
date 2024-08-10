@@ -2,12 +2,16 @@
 
 import { useContext } from "react";
 import { TopAiringContext } from "../providers/top-airing-context";
+import type { AnimeInfo } from "@/types";
 
-export default function MainHeading() {
-	const { topAiring, currentAnimeIndex, loading } =
-		useContext(TopAiringContext);
+type MainHeadingProps = {
+	topAiring: AnimeInfo[];
+};
 
-	if (!topAiring.length || topAiring[0] === undefined || loading) return null;
+export default function MainHeading({ topAiring }: MainHeadingProps) {
+	const { currentAnimeIndex } = useContext(TopAiringContext);
+
+	if (topAiring.length < 1) return null;
 
 	return (
 		<section className="z-20 md:mt-20 flex h-3/5 w-full flex-col items-center justify-center p-5 lg:h-full lg:w-2/5">

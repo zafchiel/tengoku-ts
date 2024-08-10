@@ -12,13 +12,17 @@ import "swiper/css/autoplay";
 import "swiper/css/keyboard";
 import "swiper/css/navigation";
 import SwiperSlideCard from "./swiper-slide-card";
+import type { AnimeInfo } from "@/types";
 
-export default function MainCarousel() {
+type MainCarouselProps = {
+	topAiring: AnimeInfo[];
+};
+
+export default function MainCarousel({ topAiring }: MainCarouselProps) {
 	const [progressBarWidth, setProgressBarWidth] = useState(0);
-	const { setCurrentAnimeIndex, topAiring, loading } =
-		useContext(TopAiringContext);
+	const { setCurrentAnimeIndex } = useContext(TopAiringContext);
 
-	if (!topAiring.length || loading)
+	if (topAiring.length < 1)
 		return <Skeleton className="w-full lg:w3/4 h-96 lg:pt-52 mx-10" />;
 
 	return (
