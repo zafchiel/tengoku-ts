@@ -10,6 +10,7 @@ import { useServerAction } from "zsa-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 import type { ProgressRecordType } from "@/lib/server/db/schema";
 import { mutate } from "swr";
+import { toast } from "sonner";
 
 type IncrementEpisodesButtonProps = {
 	progressInfo: ProgressRecordType;
@@ -33,17 +34,23 @@ export default function IncrementEpisodesButton({
 			score: progressInfo.score,
 		});
 
+		if (error) {
+			toast.error(error.data);
+			return;
+		}
+
 		mutate("/api/user/progress");
 	};
 
 	return (
 		<Button
-			disabled={progressInfo.status === "Completed"}
+			disabled={progressInfo.status === "Completed" || isPending}
+			loading={isPending}
 			size="icon"
 			className="grow"
 			onClick={increment}
 		>
-			<Plus size={14} />
+			{!isPending && <Plus size={14} />}
 		</Button>
 	);
 }
