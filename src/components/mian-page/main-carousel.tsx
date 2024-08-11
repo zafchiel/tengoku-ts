@@ -12,10 +12,10 @@ import "swiper/css/autoplay";
 import "swiper/css/keyboard";
 import "swiper/css/navigation";
 import SwiperSlideCard from "./swiper-slide-card";
-import type { AnimeInfo } from "@/types";
+import type { AnimeInfoFiltered } from "@/types";
 
 type MainCarouselProps = {
-	topAiring: AnimeInfo[];
+	topAiring: AnimeInfoFiltered[];
 };
 
 export default function MainCarousel({ topAiring }: MainCarouselProps) {

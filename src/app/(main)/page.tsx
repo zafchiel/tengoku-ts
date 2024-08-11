@@ -3,18 +3,38 @@ import MainHeading from "@/components/mian-page/heading";
 import TrailerPlayer from "@/components/mian-page/trailer-player";
 import { TopAiringContextProvider } from "@/components/providers/top-airing-context";
 import { JIKAN_API_TOP_ANIME_URL } from "@/lib/constants";
-import type { AnimeInfo } from "@/types";
+import type { AnimeInfo, AnimeInfoFiltered } from "@/types";
+import { propertiesToKeep } from "@/types";
 
 export default async function HomePage() {
-	const topAiring = await fetch(
-		`${JIKAN_API_TOP_ANIME_URL}?filter=airing&limit=6`,
-		{
-			cache: "force-cache",
-			// Revalidate every 7 days
-			next: { revalidate: 60 * 60 * 24 * 7 },
-		},
-	);
-	const topAiringData = (await topAiring.json()).data as AnimeInfo[];
+	let topAiringData: AnimeInfoFiltered[] = [];
+	try {
+		const response = await fetch(
+			`${JIKAN_API_TOP_ANIME_URL}?filter=airing&limit=6`,
+			{
+				cache: "force-cache",
+				// Revalidate every 7 days
+				next: { revalidate: 60 * 60 * 24 * 7 },
+			},
+		);
+		if (!response.ok) {
+			throw new Error(`HTTP Error! status: ${response.status}`);
+		}
+		const data = (await response.json()).data as AnimeInfo[];
+
+		topAiringData = data.map((anime) => {
+			const newItem: AnimeInfoFiltered = {};
+			for (const property of propertiesToKeep) {
+				if (Object.hasOwn(anime, property)) {
+					// biome-ignore lint/suspicious/noExplicitAny: Correct implementation
+					(newItem as any)[property] = anime[property];
+				}
+			}
+			return newItem;
+		});
+	} catch (error) {
+		console.log(error);
+	}
 
 	return (
 		<TopAiringContextProvider>

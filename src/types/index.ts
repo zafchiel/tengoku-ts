@@ -132,6 +132,20 @@ export type AnimeInfo = {
 	}[];
 };
 
+export const propertiesToKeep = [
+	"trailer",
+	"title",
+	"title_english",
+	"mal_id",
+	"score",
+	"images",
+	"genres",
+] as const;
+
+export type AnimeInfoFiltered = Partial<
+	Pick<AnimeInfo, (typeof propertiesToKeep)[number]>
+>;
+
 export type PaginationInfoType = {
 	last_visible_page: number;
 	has_next_page: boolean;

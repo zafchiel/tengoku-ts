@@ -2,10 +2,10 @@
 
 import { useContext } from "react";
 import { TopAiringContext } from "../providers/top-airing-context";
-import type { AnimeInfo } from "@/types";
+import type { AnimeInfoFiltered } from "@/types";
 
 type MainHeadingProps = {
-	topAiring: AnimeInfo[];
+	topAiring: AnimeInfoFiltered[];
 };
 
 export default function MainHeading({ topAiring }: MainHeadingProps) {
@@ -18,7 +18,7 @@ export default function MainHeading({ topAiring }: MainHeadingProps) {
 			<h1 className="mb-3 text-4xl font-bold md:text-6xl">
 				{topAiring[currentAnimeIndex]?.title}
 			</h1>
-			<p className="text-primary/70">
+			<p className="text-primary text-xl">
 				{topAiring[currentAnimeIndex]?.title_english}
 			</p>
 		</section>
