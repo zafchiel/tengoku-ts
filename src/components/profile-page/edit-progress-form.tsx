@@ -45,7 +45,7 @@ import { useServerAction } from "zsa-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 import { toast } from "sonner";
 import { mutate } from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Minus, Plus } from "lucide-react";
 
 type EditProgressFormProps = {
@@ -101,6 +101,10 @@ export default function EditProgressForm({
     setIsSheetOpen(false);
     return;
   };
+
+  useEffect(() => {
+    form.reset(progressInfo);
+  }, [progressInfo]);
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>

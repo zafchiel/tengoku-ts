@@ -21,6 +21,7 @@ export default function EditSeriesProgressCard({
   progressInfo,
 }: EditSeriesProgressCardProps) {
   const { deleteProgressEntry, isMutating } = useProgressRecords();
+
   return (
     <Card
       className={cn(

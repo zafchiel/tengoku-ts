@@ -113,8 +113,3 @@ iframe {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
-
-
-/* div:has(> input:checked) {
-  background-color: red;
-} */
