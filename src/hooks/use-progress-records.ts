@@ -1,9 +1,10 @@
-import { deleteAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
+import { deleteAnimeProgressEntry, markSeriesAsCompleted } from "@/lib/server/actions/progress-actions";
 import type { ProgressRecordType } from "@/lib/server/db/schema";
 import axios from "axios";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { toast } from "sonner";
+
 
 const fetcher = (url: string) =>
 	axios.get<ProgressRecordType[]>(url).then((res) => res.data);

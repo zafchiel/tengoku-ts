@@ -5,9 +5,7 @@ import { db } from "@/lib/server/db";
 import { progressTable, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
-import { createServerAction, createServerActionProcedure } from "zsa";
+import { createServerActionProcedure } from "zsa";
 
 const authedProcedure = createServerActionProcedure()
 	.handler(async () => {
