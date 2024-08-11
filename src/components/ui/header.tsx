@@ -24,7 +24,7 @@ function Header() {
 			)}
 		>
 			<div>
-				<Link href="/">
+				<Link href="/" aria-label="Home Page">
 					<h1 className=" text-xl md:text-4xl font-bold hidden md:block">
 						TENGOKU
 					</h1>

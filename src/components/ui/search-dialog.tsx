@@ -71,7 +71,7 @@ export default function SearchDialog() {
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-			<DialogTrigger className="px-2">
+			<DialogTrigger className="px-2" aria-label="Search for anime">
 				<SearchIcon />
 			</DialogTrigger>
 

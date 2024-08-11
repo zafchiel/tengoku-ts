@@ -11,7 +11,7 @@ const nohemi = localFont({
 
 export const metadata: Metadata = {
 	title: "Tengoku - anime web app",
-	description: "",
+	description: "Discover, track, and explore your favorite anime with Tengoku. Get personalized recommendations, manage your watchlist, and connect with other anime enthusiasts.",
 	manifest: "/manifest.json",
 };
 
