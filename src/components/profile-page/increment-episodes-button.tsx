@@ -1,11 +1,6 @@
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
-import {
-	Tooltip,
-	TooltipProvider,
-	TooltipContent,
-	TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { useServerAction } from "zsa-react";
 import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 import type { ProgressRecordType } from "@/lib/server/db/schema";
@@ -43,25 +38,23 @@ export default function IncrementEpisodesButton({
 	};
 
 	return (
-		<TooltipProvider>
-			<Tooltip>
-				<TooltipTrigger asChild>
-					<Button
-						disabled={progressInfo.status === "Completed" || isPending}
-						loading={isPending}
-						size="icon"
-						className="grow"
-						onClick={increment}
-					>
-						{!isPending && <Plus size={22} />}
-					</Button>
-				</TooltipTrigger>
-				<TooltipContent side="bottom">
-					{progressInfo.status === "Completed"
-						? "You've completed this series"
-						: "Increment episode count"}
-				</TooltipContent>
-			</Tooltip>
-		</TooltipProvider>
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<Button
+					disabled={progressInfo.status === "Completed" || isPending}
+					loading={isPending}
+					size="icon"
+					className="grow"
+					onClick={increment}
+				>
+					{!isPending && <Plus size={22} />}
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent side="bottom">
+				{progressInfo.status === "Completed"
+					? "You've completed this series"
+					: "Increment episode count"}
+			</TooltipContent>
+		</Tooltip>
 	);
 }

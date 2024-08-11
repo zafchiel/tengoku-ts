@@ -10,7 +10,6 @@ import {
 import {
 	Tooltip,
 	TooltipContent,
-	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
@@ -223,22 +222,20 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 					)}
 				/>
 
-				<TooltipProvider>
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<Button
-								size="icon"
-								variant="default"
-								type="submit"
-								disabled={isPending}
-								className="w-full"
-							>
-								{isPending ? <Loader2 className="animate-spin" /> : <Save />}
-							</Button>
-						</TooltipTrigger>
-						<TooltipContent>Save</TooltipContent>
-					</Tooltip>
-				</TooltipProvider>
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							size="icon"
+							variant="default"
+							type="submit"
+							disabled={isPending}
+							className="w-full"
+						>
+							{isPending ? <Loader2 className="animate-spin" /> : <Save />}
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>Save</TooltipContent>
+				</Tooltip>
 			</form>
 		</Form>
 	);

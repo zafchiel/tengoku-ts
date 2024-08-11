@@ -8,12 +8,7 @@ import Link from "next/link";
 import DeleteSeriesProgressEntryButton from "./delete-series-progress-entry-button";
 import MarkSeriesCompletedButton from "./mark-series-completed-button";
 import EditProgressForm from "./edit-progress-form";
-import {
-	Tooltip,
-	TooltipProvider,
-	TooltipContent,
-	TooltipTrigger,
-} from "../ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import IncrementEpisodesButton from "./increment-episodes-button";
 
 type EditSeriesProgressCardProps = {
@@ -81,20 +76,18 @@ export default function EditSeriesProgressCard({
 							<p className="text-sm">Currently Airing</p>
 
 							{/* Visual indicator that anime is still ongoin */}
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<div
-											className="absolute -top-2 right-0 w-2 h-8 bg-primary -rotate-45"
-											aria-label="Anime is currently airing"
-										></div>
-									</TooltipTrigger>
+							<Tooltip>
+								<TooltipTrigger asChild>
+									<div
+										className="absolute -top-2 right-0 w-2 h-8 bg-primary -rotate-45"
+										aria-label="Anime is currently airing"
+									></div>
+								</TooltipTrigger>
 
-									<TooltipContent>
-										<p className="text-xs">Anime is Currently Airing</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
+								<TooltipContent>
+									<p className="text-xs">Anime is Currently Airing</p>
+								</TooltipContent>
+							</Tooltip>
 						</div>
 					)}
 				</div>

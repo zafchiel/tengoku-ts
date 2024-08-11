@@ -31,6 +31,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { PenIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -50,6 +55,9 @@ type EditProgressFormProps = {
 export default function EditProgressForm({
 	progressInfo,
 }: EditProgressFormProps) {
+	const [isMaxEpisodesTooltipOpen, setIsMaxEpisodesTooltipOpen] =
+		useState(false);
+
 	const EditProgressFormSchema = z.object({
 		episodesWatched: z.coerce
 			.number()
@@ -133,13 +141,28 @@ export default function EditProgressForm({
 										</span>
 									</FormLabel>
 									<FormControl>
-										<Input
-											placeholder="Episodes watched"
-											type="number"
-											min={0}
-											max={progressInfo.maxEpisodes ?? undefined}
-											{...field}
-										/>
+										<Tooltip
+											defaultOpen={false}
+											open={isMaxEpisodesTooltipOpen}
+											onOpenChange={setIsMaxEpisodesTooltipOpen}
+										>
+											<TooltipTrigger asChild>
+												<Input
+													placeholder="Episodes watched"
+													type="number"
+													min={0}
+													max={progressInfo.maxEpisodes ?? undefined}
+													{...field}
+												/>
+											</TooltipTrigger>
+											<TooltipContent>
+												{field.value === progressInfo.maxEpisodes ? (
+													<p>You watched all episodes</p>
+												) : (
+													<p>You watched {field.value} episodes</p>
+												)}
+											</TooltipContent>
+										</Tooltip>
 									</FormControl>
 									<FormDescription className="grid grid-cols-2 gap-2">
 										<Button
@@ -148,6 +171,7 @@ export default function EditProgressForm({
 											aria-label="Remove one episode"
 											title="Remove one episode"
 											className="bg-destructive/10"
+											autoFocus={true}
 											onClick={() => {
 												const currentEpisodesWatched =
 													form.getValues("episodesWatched");
@@ -176,8 +200,13 @@ export default function EditProgressForm({
 												if (
 													Number(currentEpisodesWatched) ===
 													progressInfo.maxEpisodes
-												)
+												) {
+													setIsMaxEpisodesTooltipOpen(true);
+													setTimeout(() => {
+														setIsMaxEpisodesTooltipOpen(false);
+													}, 2000);
 													return;
+												}
 
 												form.setValue(
 													"episodesWatched",
