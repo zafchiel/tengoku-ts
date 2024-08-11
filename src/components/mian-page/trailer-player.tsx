@@ -26,7 +26,7 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
 
   return (
     <div
-      className="absolute min-h-screen"
+      className="absolute min-h-screen w-full"
       onMouseEnter={() => {
         if (!showVideo) {
           setShowVideo(true);
