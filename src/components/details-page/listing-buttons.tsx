@@ -9,36 +9,39 @@ import useSWR from "swr";
 import type { AnimeInfo } from "@/types";
 
 const fetcher = (url: string) =>
-	axios.get<ProgressRecordType>(url).then((res) => res.data);
+  axios.get<ProgressRecordType>(url).then((res) => res.data);
 
 type ListingButtonsProps = {
-	animeInfo: AnimeInfo;
+  animeInfo: AnimeInfo;
 };
 
 export default function ListingButtons({ animeInfo }: ListingButtonsProps) {
-	// Check if progress record exists
-	const { data, isLoading, mutate } = useSWR(
-		`/api/anime?id=${animeInfo.mal_id}`,
-		fetcher,
-	);
+  // Check if progress record exists
+  const { data, isLoading, mutate, error } = useSWR(
+    `/api/anime?id=${animeInfo.mal_id}`,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+    }
+  );
 
-	if (isLoading) {
-		return <Skeleton className="w-full h-10" />;
-	}
+  if (isLoading) {
+    return <Skeleton className="w-full h-10" />;
+  }
 
-	if (!data && !isLoading) {
-		return (
-			<AddToList
-				animeId={animeInfo.mal_id}
-				animePoster={animeInfo.images.webp.large_image_url}
-				animeTitle={animeInfo.title}
-				setProgressInfo={mutate}
-				maxEpisodes={animeInfo.episodes}
-			/>
-		);
-	}
+  if ((!data && !isLoading) || error) {
+    return (
+      <AddToList
+        animeId={animeInfo.mal_id}
+        animePoster={animeInfo.images.webp.large_image_url}
+        animeTitle={animeInfo.title}
+        setProgressInfo={mutate}
+        maxEpisodes={animeInfo.episodes}
+      />
+    );
+  }
 
-	if (data) {
-		return <UpdateListing progressInfo={data} />;
-	}
+  if (data) {
+    return <UpdateListing progressInfo={data} />;
+  }
 }

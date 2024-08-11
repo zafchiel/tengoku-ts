@@ -80,6 +80,10 @@ export const updateAnimeProgressEntry = authedProcedure
 				.returning()
 				.get();
 
+			if (!res) {
+				throw "An error occurred. Please try again.";
+			}
+
 			return res;
 		} catch (error) {
 			console.log(error);

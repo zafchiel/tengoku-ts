@@ -13,7 +13,7 @@ export default function ProgressSection() {
     return (
       <section className="flex gap-4 flex-wrap">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Skeleton key={i} className="w-80 h-40" />
+          <Skeleton key={i} className="w-[446px] h-[230px]" />
         ))}
       </section>
     );
