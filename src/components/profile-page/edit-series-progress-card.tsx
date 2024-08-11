@@ -12,8 +12,8 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import IncrementEpisodesButton from "./increment-episodes-button";
 import useSWRMutation from "swr/mutation";
 import { toast } from "sonner";
-import axios from "axios";
 import { cn } from "@/lib/utils";
+import { deleteAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
 
 type EditSeriesProgressCardProps = {
   progressInfo: ProgressRecordType;
@@ -22,21 +22,27 @@ type EditSeriesProgressCardProps = {
 export default function EditSeriesProgressCard({
   progressInfo,
 }: EditSeriesProgressCardProps) {
+  // Function to delete a progress entry
   const deleteProgressEntryAction = async () => {
-    return axios.delete("/api/user/progress", {
-      data: {
-        progressId: progressInfo.id,
-      },
-    });
+    // Call the deleteAnimeProgressEntry function with the progress ID
+    const [data, error] = await deleteAnimeProgressEntry(progressInfo.id);
+
+    // If there's an error, throw it
+    if (error) {
+      throw new Error(error.data);
+    }
   };
 
+  // Use SWR mutation hook for deleting progress entry pending state
   const { trigger: deleteProgressEntry, isMutating } = useSWRMutation(
     "/api/user/progress",
     deleteProgressEntryAction,
     {
+      // On successful deletion
       onSuccess: () => {
         toast.success("Progress entry deleted successfully");
       },
+      // On error during deletion
       onError: () => {
         toast.error("An error occurred. Please try again.");
       },

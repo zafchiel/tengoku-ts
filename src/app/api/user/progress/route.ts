@@ -26,28 +26,28 @@ export async function GET() {
 	}
 }
 
-export async function DELETE(req: Request) {
-	const { user, session } = await validateRequest();
+// export async function DELETE(req: Request) {
+// 	const { user, session } = await validateRequest();
 
-	if (!user || !session) {
-		return new Response("Unauthorized", {
-			status: 402,
-		});
-	}
+// 	if (!user || !session) {
+// 		return new Response("Unauthorized", {
+// 			status: 402,
+// 		});
+// 	}
 	
-	const { progressId } = await req.json();
+// 	const { progressId } = await req.json();
 
-	try {
-		await db
-			.delete(progressTable)
-			.where(
-				and(eq(progressTable.userId, user.id), eq(progressTable.id, progressId)),
-			);
+// 	try {
+// 		await db
+// 			.delete(progressTable)
+// 			.where(
+// 				and(eq(progressTable.userId, user.id), eq(progressTable.id, progressId)),
+// 			);
 
-		return Response.json({ message: "success" });
-	} catch (error) {
-		return new Response("An error occurred. Please try again.", {
-			status: 500,
-		});
-	}
-}
+// 		return Response.json({ message: "success" });
+// 	} catch (error) {
+// 		return new Response("An error occurred. Please try again.", {
+// 			status: 500,
+// 		});
+// 	}
+// }
