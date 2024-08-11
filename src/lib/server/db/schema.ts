@@ -1,6 +1,5 @@
 import { relations } from "drizzle-orm";
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
-import { z } from "zod";
 
 const PROVIDERS = ["github", "mal", "google", "discord"] as const;
 export const WATCHING_STATUSES = [

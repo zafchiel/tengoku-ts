@@ -21,7 +21,7 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
 		setVideoLoaded(true);
 	};
 
-	if (topAiring.length < 1 || !topAiring[currentAnimeIndex].trailer)
+	if (topAiring.length < 1 || !topAiring[currentAnimeIndex])
 		return null;
 
 	return (
@@ -29,7 +29,7 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
 			<div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
 
 			<YouTube
-				videoId={topAiring[currentAnimeIndex].trailer.youtube_id}
+				videoId={topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}
 				iframeClassName={`absolute w-full h-screen -z-20 ${
 					!videoLoaded && "hidden"
 				}`}
@@ -50,7 +50,7 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
 				}}
 			/>
 			<Image
-				src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer.youtube_id}/maxresdefault.jpg`}
+				src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}/maxresdefault.jpg`}
 				fill
 				sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 				alt="image"

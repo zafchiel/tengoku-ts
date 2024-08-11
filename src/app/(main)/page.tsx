@@ -26,7 +26,6 @@ export default async function HomePage() {
 			const newItem: AnimeInfoFiltered = {};
 			for (const property of propertiesToKeep) {
 				if (Object.hasOwn(anime, property)) {
-					// biome-ignore lint/suspicious/noExplicitAny: Correct implementation
 					(newItem as any)[property] = anime[property];
 				}
 			}
