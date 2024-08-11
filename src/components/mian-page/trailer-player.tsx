@@ -18,7 +18,6 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
   const { currentAnimeIndex } = useContext(TopAiringContext);
 
   const handleLoadedVideo = (loaded: boolean) => {
-    console.log("loaded", loaded);
     setVideoLoaded(loaded);
   };
 
