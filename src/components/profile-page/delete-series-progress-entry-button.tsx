@@ -14,14 +14,12 @@ import {
 } from "@/components/ui/dialog";
 
 type DeleteSeriesProgressEntryButtonProps = {
-  progressId: number;
   animeTitle: string;
   deleteProgressEntry: () => void;
 };
 
 export default function DeleteSeriesProgressEntryButton({
   animeTitle,
-  progressId,
   deleteProgressEntry,
 }: DeleteSeriesProgressEntryButtonProps) {
   return (

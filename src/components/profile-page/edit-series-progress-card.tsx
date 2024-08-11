@@ -10,10 +10,8 @@ import MarkSeriesCompletedButton from "./mark-series-completed-button";
 import EditProgressForm from "./edit-progress-form";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import IncrementEpisodesButton from "./increment-episodes-button";
-import useSWRMutation from "swr/mutation";
-import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { deleteAnimeProgressEntry } from "@/lib/server/actions/progress-actions";
+import useProgressRecords from "@/hooks/use-progress-records";
 
 type EditSeriesProgressCardProps = {
   progressInfo: ProgressRecordType;
@@ -22,32 +20,7 @@ type EditSeriesProgressCardProps = {
 export default function EditSeriesProgressCard({
   progressInfo,
 }: EditSeriesProgressCardProps) {
-  // Function to delete a progress entry
-  const deleteProgressEntryAction = async () => {
-    // Call the deleteAnimeProgressEntry function with the progress ID
-    const [data, error] = await deleteAnimeProgressEntry(progressInfo.id);
-
-    // If there's an error, throw it
-    if (error) {
-      throw new Error(error.data);
-    }
-  };
-
-  // Use SWR mutation hook for deleting progress entry pending state
-  const { trigger: deleteProgressEntry, isMutating } = useSWRMutation(
-    "/api/user/progress",
-    deleteProgressEntryAction,
-    {
-      // On successful deletion
-      onSuccess: () => {
-        toast.success("Progress entry deleted successfully");
-      },
-      // On error during deletion
-      onError: () => {
-        toast.error("An error occurred. Please try again.");
-      },
-    }
-  );
+  const { deleteProgressEntry, isMutating } = useProgressRecords();
   return (
     <Card
       className={cn(
@@ -130,8 +103,9 @@ export default function EditSeriesProgressCard({
 
         <DeleteSeriesProgressEntryButton
           animeTitle={progressInfo.animeTitle}
-          progressId={progressInfo.id}
-          deleteProgressEntry={deleteProgressEntry}
+          deleteProgressEntry={() =>
+            deleteProgressEntry({ progressId: progressInfo.id })
+          }
         />
         <div className="flex gap-2 flex-wrap">
           {progressInfo.status !== "Completed" ? (
