@@ -21,6 +21,9 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
+    --success: 120 60% 50%;
+    --success-foreground: 0 0% 98%;
+    --success-bg: 120 60% 50%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 346.8 77.2% 49.8%;
@@ -110,3 +113,8 @@ iframe {
   padding: 0.5rem;
   border-radius: 0.5rem;
 }
+
+
+/* div:has(> input:checked) {
+  background-color: red;
+} */

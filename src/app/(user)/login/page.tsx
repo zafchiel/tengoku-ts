@@ -18,10 +18,10 @@ export default async function SignInPage() {
 			<section>
 				<header className="text-left">
 					<h1 className="text-3xl md:text-6xl font-bold uppercase leading-none">
-						Welcome!
+						Sign In
 					</h1>
-					<p className="text-muted-foreground leading-none md:pl-3 mb-4">
-						login with your favorite provider
+					<p className="text-muted-foreground leading-none mb-4">
+						choose your favorite provider
 					</p>
 				</header>
 				<div className="flex flex-col md:grid grid-cols-2 gap-4 max-w-xl">

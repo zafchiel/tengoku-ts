@@ -36,6 +36,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "../ui/input";
+import { Minus, Plus } from "lucide-react";
 
 type UpdateListingProps = {
 	progressInfo: ProgressRecordType;
@@ -174,6 +175,9 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 								<Button
 									type="button"
 									variant="outline"
+									className="bg-destructive/10"
+									aria-label="Remove one episode"
+									title="Remove one episode"
 									onClick={() => {
 										const currentEpisodesWatched =
 											form.getValues("episodesWatched");
@@ -186,12 +190,15 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 										);
 									}}
 								>
-									Remove one
+									<Minus />
 								</Button>
 
 								<Button
 									type="button"
 									variant="outline"
+									className="bg-success/10"
+									aria-label="Add one episode"
+									title="Add one episode"
 									onClick={() => {
 										const currentEpisodesWatched =
 											form.getValues("episodesWatched");
@@ -208,7 +215,7 @@ export default function UpdateListing({ progressInfo }: UpdateListingProps) {
 										);
 									}}
 								>
-									Add one
+									<Plus />
 								</Button>
 							</FormDescription>
 							<FormMessage />

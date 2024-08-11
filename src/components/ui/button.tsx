@@ -22,7 +22,7 @@ const buttonVariants = cva(
 				blur: "backdrop-blur-sm hover:bg-accent/40",
 			},
 			size: {
-				default: "h-10 px-5 py-2",
+				default: "h-10 px-5",
 				sm: "h-9 px-3",
 				lg: "h-11 px-8",
 				icon: "h-10 w-10",

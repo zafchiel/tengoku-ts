@@ -41,6 +41,7 @@ import { updateAnimeProgressEntry } from "@/lib/server/actions/progress-actions"
 import { toast } from "sonner";
 import { mutate } from "swr";
 import { useState } from "react";
+import { Minus, Plus } from "lucide-react";
 
 type EditProgressFormProps = {
 	progressInfo: ProgressRecordType;
@@ -119,7 +120,18 @@ export default function EditProgressForm({
 							name="episodesWatched"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Episodes Watched</FormLabel>
+									<FormLabel>
+										<span className="text-xs text-muted-foreground">
+											Episodes Watched
+										</span>
+										<span
+											title="Maximum episodes"
+											aria-label="Maximum episodes"
+										>
+											{progressInfo.maxEpisodes &&
+												` / ${progressInfo.maxEpisodes}`}
+										</span>
+									</FormLabel>
 									<FormControl>
 										<Input
 											placeholder="Episodes watched"
@@ -133,6 +145,9 @@ export default function EditProgressForm({
 										<Button
 											type="button"
 											variant="outline"
+											aria-label="Remove one episode"
+											title="Remove one episode"
+											className="bg-destructive/10"
 											onClick={() => {
 												const currentEpisodesWatched =
 													form.getValues("episodesWatched");
@@ -145,12 +160,15 @@ export default function EditProgressForm({
 												);
 											}}
 										>
-											Remove one
+											<Minus />
 										</Button>
 
 										<Button
 											type="button"
 											variant="outline"
+											aria-label="Add one episode"
+											title="Add one episode"
+											className="bg-success/10"
 											onClick={() => {
 												const currentEpisodesWatched =
 													form.getValues("episodesWatched");
@@ -167,7 +185,7 @@ export default function EditProgressForm({
 												);
 											}}
 										>
-											Add one
+											<Plus />
 										</Button>
 									</FormDescription>
 									<FormMessage />
@@ -231,12 +249,12 @@ export default function EditProgressForm({
 											{WATCHING_STATUSES.map((status) => (
 												<FormItem
 													key={status}
-													className="flex items-center space-y-0 border border-accent rounded-md"
+													className="flex items-center space-y-0 border border-accent rounded-md hover:bg-accent/40 transition-colors duration-200 has-[:checked]:bg-primary/10"
 												>
 													<FormControl>
 														<RadioGroupItem value={status} className="ml-2" />
 													</FormControl>
-													<FormLabel className="font-normal cursor-pointer  w-full px-2 py-3">
+													<FormLabel className="font-normal cursor-pointer w-full px-2 py-3">
 														{status}
 													</FormLabel>
 												</FormItem>
