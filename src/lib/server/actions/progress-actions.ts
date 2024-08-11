@@ -92,13 +92,14 @@ export const deleteAnimeProgressEntry = authedProcedure
 	.input(z.number())
 	.handler(async ({ input, ctx }) => {
 		const { user } = ctx;
-
+		
 		try {
 			await db
 				.delete(progressTable)
 				.where(
 					and(eq(progressTable.userId, user.id), eq(progressTable.id, input)),
 				);
+
 
 			return "success";
 		} catch (error) {
