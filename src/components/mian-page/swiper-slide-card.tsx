@@ -5,9 +5,10 @@ import ScoreBadge from "./score-badge";
 
 type Props = {
   anime: AnimeInfoFiltered;
+  first?: boolean;
 };
 
-export default function SwiperSlideCard({ anime }: Props) {
+export default function SwiperSlideCard({ anime, first }: Props) {
   return (
     <Link href={`/anime/${anime.mal_id}`}>
       <div className="relative h-full max-h-[500px] aspect-[4/5] w-full overflow-hidden rounded-sm shadow-md">
@@ -19,7 +20,7 @@ export default function SwiperSlideCard({ anime }: Props) {
           height={400}
           src={anime.images?.webp.large_image_url ?? "/bg_placeholder.webp"}
           alt={anime.title ?? "Anime Image"}
-          priority
+          priority={first}
           className="w-full h-full object-cover rounded-sm hover:scale-110 duration-200 ease-linear"
         />
         <div className="pointer-events-none absolute bottom-0 inset-x-0 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
