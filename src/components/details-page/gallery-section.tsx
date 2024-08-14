@@ -34,7 +34,7 @@ export default async function GallerySection({ animeId }: GallerySectionProps) {
       <section id="gallery" className="scroll-mt-40">
         <h3 className="text-3xl font-semibold">Gallery</h3>
         <hr className="mb-2" />
-        <Alert variant="default" className="max-w-xl m-2">
+        <Alert variant="default" className="m-2">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No pictures</AlertTitle>
           <AlertDescription>

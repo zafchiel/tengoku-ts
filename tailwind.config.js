@@ -16,6 +16,9 @@ module.exports = {
 			},
 		},
 		extend: {
+			width: {
+				paragraph: "clamp(45ch, 50%, 75ch)",
+			},
 			colors: {
 				border: "hsl(var(--border))",
 				input: "hsl(var(--input))",

@@ -21,7 +21,7 @@ export default function ProgressSection() {
   if (error)
     return (
       <section>
-        <Alert variant="destructive" className="max-w-xl">
+        <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Error</AlertTitle>
           <AlertDescription>
@@ -34,7 +34,7 @@ export default function ProgressSection() {
   if (!data || data.length === 0) {
     return (
       <section>
-        <Alert className="max-w-xl">
+        <Alert>
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No Progress</AlertTitle>
           <AlertDescription>

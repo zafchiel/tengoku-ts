@@ -22,7 +22,7 @@ export default async function ProfilePage() {
         <LogoutForm />
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-[400px_1fr] gap-4 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-[minmax(200px,300px)_minmax(450px,1fr)] gap-4 items-start">
         <ProgressSectionNavigation />
         <ProgressSection />
       </div>

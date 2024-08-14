@@ -69,7 +69,7 @@ export default async function RecommendationsSection({
           ))}
         </div>
       ) : (
-        <Alert variant="default" className="max-w-xl m-2">
+        <Alert variant="default" className="m-2">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>No recommendations</AlertTitle>
           <AlertDescription>
