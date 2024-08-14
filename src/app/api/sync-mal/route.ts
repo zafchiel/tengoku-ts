@@ -18,8 +18,7 @@ export async function GET(): Promise<Response> {
 	url.searchParams.append("state", state);
 	url.searchParams.append("code_challenge", codeChallange);
 	url.searchParams.append("code_challenge_method", "plain");
-  url.searchParams.append("redirect_uri", "http://localhost:3000/api/login/mal/callback");
-
+  url.searchParams.append("redirect_uri", "http://localhost:3000/api/sync-mal/callback");
 
 	cookies().set("mal_oauth_code_verifier", codeChallange, {
 		path: "/",

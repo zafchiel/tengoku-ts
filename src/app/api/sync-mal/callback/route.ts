@@ -6,8 +6,9 @@ import { db } from "@/lib/server/db";
 import { userTable } from "@/lib/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import axios from "axios";
+import { NextResponse } from "next/server";
 
-export async function GET(request: Request): Promise<Response> {
+export async function GET(request: Request, response: Response): Promise<Response> {
 	const url = new URL(request.url);
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
@@ -15,8 +16,7 @@ export async function GET(request: Request): Promise<Response> {
 	const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
 	const MAL_CLIENT_SECRET = process.env.MAL_CLIENT_SECRET;
 
-	const redirectLocation = cookies().get("redirect")?.value ?? "/user";
-	cookies().delete("redirect");
+	const redirectLocation = "/user";
 
 	if (!MAL_CLIENT_ID || !MAL_CLIENT_SECRET) {
 		throw new Error("Missing MAL_CLIENT_ID or MAL_CLIENT_SECRET");
@@ -33,7 +33,9 @@ export async function GET(request: Request): Promise<Response> {
 		!state ||
 		state !== storedState
 	) {
-		return new Response(null, {
+		return new Response(JSON.stringify({
+			error: "Invalid code or state"
+		}), {
 			status: 400,
 		});
 	}
@@ -47,7 +49,7 @@ export async function GET(request: Request): Promise<Response> {
 				code: code,
 				code_verifier: storedVerifier,
 				grant_type: "authorization_code",
-				redirect_uri: "http://localhost:3000/api/login/mal/callback",
+				redirect_uri: "http://localhost:3000/api/sync-mal/callback",
 			},
 			{
 				headers: {
@@ -65,59 +67,21 @@ export async function GET(request: Request): Promise<Response> {
 			},
 		);
 
-		const existingUser = await db
-			.select()
-			.from(userTable)
-			.where(
-				and(
-					eq(userTable.authProviderType, "mal"),
-					eq(userTable.authProviderId, userInfo.id),
-				),
-			)
-			.get();
-
-		if (existingUser) {
-			// Create session cookie for exiting user
-			const session = await lucia.createSession(existingUser.id, {});
-			const sessionCookie = lucia.createSessionCookie(session.id);
-			cookies().set(
-				sessionCookie.name,
-				sessionCookie.value,
-				sessionCookie.attributes,
-			);
-			return new Response(null, {
-				status: 302,
-				headers: {
-					Location: redirectLocation,
-				},
-			});
+		const responseData = {
+			...response.data,
+			userInfo
 		}
 
-		// If new user, create a new user in the database
+		cookies().set("mal_data", JSON.stringify(responseData));
 
-		const userId = generateIdFromEntropySize(10);
-
-		await db.insert(userTable).values({
-			id: userId,
-			username: userInfo.name,
-			authProviderType: "mal",
-			authProviderId: userInfo.id.toString(),
-		});
-
-		// Create session cookie for new user
-		const session = await lucia.createSession(userId, {});
-		const sessionCookie = lucia.createSessionCookie(session.id);
-		cookies().set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
 		return new Response(null, {
 			status: 302,
 			headers: {
 				Location: redirectLocation,
 			},
 		});
+
+		
 	} catch (e) {
 		console.log(e);
 		// the specific error message depends on the provider

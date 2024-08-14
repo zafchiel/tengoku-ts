@@ -4,6 +4,8 @@ import { validateRequest } from "@/lib/server/auth";
 import { LogoutForm } from "@/components/profile-page/logout-form";
 import ProgressSection from "@/components/profile-page/progress-section";
 import ProgressSectionNavigation from "@/components/profile-page/progress-section-navigation";
+import SyncMal from "@/components/profile-page/sync-mal";
+import { cookies } from "next/headers";
 
 export default async function ProfilePage() {
   const { user, session } = await validateRequest();
@@ -12,13 +14,18 @@ export default async function ProfilePage() {
     redirect("/login");
   }
 
+  const malData = JSON.parse(cookies().get("mal_data")?.value || "{}");
+  console.log({ malData });
+
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
-      <header className="flex flex-wrap items-center justify-between md:my-24">
+      <header className="flex flex-wrap items-center justify-between md:my-16">
         <div>
           <h2 className="text-3xl md:text-6xl font-light">{user.username}</h2>
           <p className="text-muted-foreground capitalize">My watch list</p>
+          <SyncMal />
         </div>
+
         <LogoutForm />
       </header>
 
