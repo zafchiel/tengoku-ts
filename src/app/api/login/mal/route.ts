@@ -8,6 +8,13 @@ export async function GET(): Promise<Response> {
 		return Response.error();
 	}
 
+	// const malAccessToken = cookies().get("mal_access_token");
+	// const malRefreshToken = cookies().get("mal_refresh_token");
+
+	// if (malAccessToken && malRefreshToken) {
+	// 	return Response.redirect("/api/login/mal/callback");
+	// }
+
 	const state = generateState();
 	const codeChallange = generateCodeVerifier();
 

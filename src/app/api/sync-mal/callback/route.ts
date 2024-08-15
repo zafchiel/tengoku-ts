@@ -67,12 +67,9 @@ export async function GET(request: Request, response: Response): Promise<Respons
 			},
 		);
 
-		const responseData = {
-			...response.data,
-			userInfo
-		}
 
-		cookies().set("mal_data", JSON.stringify(responseData));
+		cookies().set("mal_access_token", response.data.access_token);
+		cookies().set("mal_refresh_token", response.data.refresh_token);
 
 		return new Response(null, {
 			status: 302,

@@ -2,6 +2,13 @@ import { generateCodeVerifier, generateState } from "arctic";
 import { cookies } from "next/headers";
 
 export async function GET(): Promise<Response> {
+	const malAccessToken = cookies().get("mal_access_token");
+	const malRefreshToken = cookies().get("mal_refresh_token");
+
+	if (malAccessToken && malRefreshToken) {
+		return Response.redirect("/user/sync-list");
+	}
+
 	const MAL_CLIENT_ID = process.env.MAL_CLIENT_ID;
 
 	if (!MAL_CLIENT_ID) {
