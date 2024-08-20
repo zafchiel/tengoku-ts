@@ -10,9 +10,6 @@ type CharacterCardFullProps = {
 export default function CharacterCardFull({
 	character,
 }: CharacterCardFullProps) {
-	const japaneseVoiceActor = character.voice_actors.find(
-		(actor) => actor.language === "Japanese",
-	);
 
 	return (
 		<div

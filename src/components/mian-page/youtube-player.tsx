@@ -1,5 +1,5 @@
 import type { AnimeInfoFiltered } from "@/types";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import YouTube from "react-youtube";
 import { TopAiringContext } from "../providers/top-airing-context";
 
