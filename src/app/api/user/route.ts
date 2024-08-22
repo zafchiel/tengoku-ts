@@ -6,9 +6,10 @@ export async function GET() {
 
 	if (!user || !session) {
 		return new Response("Unauthorized", {
-			status: 402,
+			status: 401,
 		});
-	} else if (user && session) {
+	}
+	if (user && session) {
 		return Response.json({ ...user });
 	}
 }
