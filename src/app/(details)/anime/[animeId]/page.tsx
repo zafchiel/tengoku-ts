@@ -66,9 +66,7 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 
 					<OpeningsSection theme={anime.theme} />
 
-					<Suspense fallback={<Skeleton className="w-full h-96" />}>
-						<GallerySection animeId={anime.mal_id} />
-					</Suspense>
+					<GallerySection animeId={anime.mal_id} />
 
 					<Suspense fallback={<Skeleton className="w-full h-96" />}>
 						<RecommendationsSection animeId={params.animeId} />
