@@ -36,9 +36,10 @@ export default function GallerySection({ animeId }: GallerySectionProps) {
 				if (entry.isIntersecting && !gallery && !isLoading) {
 					setIsLoading(true);
 					fetchGallery();
+					observer.disconnect();
 				}
 			},
-			{ threshold: 0.1 },
+			{ threshold: 0, rootMargin: "0px 0px 200px 0px" },
 		);
 
 		if (sectionRef.current) {
