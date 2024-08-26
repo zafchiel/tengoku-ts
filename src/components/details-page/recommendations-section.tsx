@@ -48,18 +48,16 @@ export default function RecommendationsSection({
 
 	const fetchRecommendations = async () => {
 		try {
-			console.log("fetching");
 			await new Promise((resolve) => setTimeout(resolve, 3000));
 			const response = await axios.get<{ data: Recommendation[] }>(
 				`${JIKAN_API_URL}/anime/${animeId}/recommendations`,
 			);
 			setRecommendations(response.data.data);
 		} catch (error) {
-			console.log(error);
+			console.error(error);
 			setRecommendations([]);
 		} finally {
 			setIsLoading(false);
-			console.log("done");
 		}
 	};
 

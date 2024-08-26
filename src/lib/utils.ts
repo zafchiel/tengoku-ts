@@ -26,9 +26,9 @@ export default function slugify(str: string) {
 	return slug;
 }
 
-export const debounce = (fn: Function, delay: number) => {
+export const debounce = <T>(fn: (...args: T[]) => void, delay: number) => {
 	let timerId: NodeJS.Timeout;
-	return (...args: any[]) => {
+	return (...args: T[]) => {
 		clearTimeout(timerId);
 		timerId = setTimeout(() => fn(...args), delay);
 	};
@@ -37,7 +37,7 @@ export const debounce = (fn: Function, delay: number) => {
 export async function fetchAnimeInfoFull(animeId: string | number) {
 	try {
 		const data = await axios
-			.get<{ data: AnimeInfo }>(JIKAN_API_URL + `/anime/${animeId}/full`)
+			.get<{ data: AnimeInfo }>(`${JIKAN_API_URL}/anime/${animeId}/full`)
 			.then((res) => res.data.data);
 
 		return data;
@@ -57,11 +57,11 @@ export async function fetchAnimeCharacters(animeId: string | number) {
 		const sortedCharacters = characters.sort((a, b) => {
 			if (a.role === "Main" && b.role !== "Main") {
 				return -1;
-			} else if (b.role === "Main" && a.role !== "Main") {
-				return 1;
-			} else {
-				return b.favorites - a.favorites;
 			}
+			if (b.role === "Main" && a.role !== "Main") {
+				return 1;
+			}
+			return b.favorites - a.favorites;
 		});
 
 		return sortedCharacters;
