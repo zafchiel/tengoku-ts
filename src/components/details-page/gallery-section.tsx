@@ -4,9 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import { JIKAN_API_URL } from "@/lib/constants";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
-import GalleryCard from "./gallery-card";
 import { Skeleton } from "../ui/skeleton";
 import axios from "axios";
+import dynamic from "next/dynamic";
+
+const GalleryCard = dynamic(() => import("./gallery-card"), {
+	ssr: false,
+});
 
 type GallerySectionProps = {
 	animeId: number;
