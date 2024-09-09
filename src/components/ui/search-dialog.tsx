@@ -17,7 +17,7 @@ const fetchSearchResults = async (searchTerm: string) => {
 	try {
 		console.log("Made request");
 		const response = await axios.get<{ data: AnimeInfo[] }>(
-			JIKAN_API_URL + "/anime",
+			`${JIKAN_API_URL}/anime`,
 			{
 				params: {
 					q: searchTerm,
@@ -68,6 +68,23 @@ export default function SearchDialog() {
 	useEffect(() => {
 		setIsDialogOpen(false);
 	}, [pathName]);
+
+	useEffect(() => {
+		// Bind shortcut for opening search dialog
+		const handleKeyDown = (e: KeyboardEvent) => {
+			// Handle "/"
+			if (e.key === "/") {
+				e.preventDefault();
+				setIsDialogOpen(true);
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
+	}, []);
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
