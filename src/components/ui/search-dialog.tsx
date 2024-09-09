@@ -65,6 +65,7 @@ export default function SearchDialog() {
 		}
 	}, [debouncedSearchText]);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Correct dependency array
 	useEffect(() => {
 		setIsDialogOpen(false);
 	}, [pathName]);
