@@ -88,8 +88,12 @@ export default function SearchDialog() {
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-			<DialogTrigger className="px-2" aria-label="Search for anime">
+			<DialogTrigger className="px-2 flex gap-2 items-center bg-secondary rounded-sm " aria-label="Search for anime">
 				<SearchIcon />
+				<kbd className="text-sm bg-background/80 text-muted-foreground rounded-sm px-2 py-1 shadow-[inset_0_-2px_#f9fafb1a,0_1px_2px_1px_#484848]">
+				/
+				</kbd>
+				<span className="sr-only">Search for anime</span>
 			</DialogTrigger>
 
 			<DialogContent className="pr-10 top-[10%] left-1/2 translate-y-0">
