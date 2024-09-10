@@ -13,7 +13,7 @@ export default async function CharactersSection({
 }: CharactersSectionProps) {
   const characters = await fetchAnimeCharacters(animeId);
 
-  if (!characters) {
+  if (!characters || characters.length < 1) {
     return (
       <section id="characters" className="scroll-mt-40 px-1 py-2">
         <h3 className="text-3xl font-semibold">Characters</h3>

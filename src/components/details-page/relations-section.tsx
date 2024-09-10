@@ -1,5 +1,7 @@
 import type { AnimeInfo } from "@/types";
 import RelationCategory from "@/components/details-page/relation-category";
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { AlertCircle } from "lucide-react";
 
 type RelationSectionProps = {
 	animeRelations: AnimeInfo["relations"];
@@ -22,7 +24,13 @@ export default function RelationsSection({
 						/>
 					))
 				) : (
-					<p className="py-2">This anime has no related entries yet</p>
+					<Alert variant="default" className="m-2">
+						<AlertCircle className="h-4 w-4"/>
+						<AlertTitle>No recommendations</AlertTitle>
+						<AlertDescription>
+							There are no recommendations for this anime yet.
+						</AlertDescription>
+					</Alert>
 				)}
 			</div>
 		</section>

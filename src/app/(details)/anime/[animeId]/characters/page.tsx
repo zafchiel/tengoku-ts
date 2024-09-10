@@ -19,7 +19,7 @@ export default async function AllCharactersPage({
 
   const [characters, animeInfo] = await Promise.all(promises);
 
-  if (!characters || !animeInfo) {
+  if (!characters || characters.length < 1 || !animeInfo) {
     return (
       <section>
         <Alert variant="destructive">
