@@ -22,16 +22,16 @@ export async function GET(request: Request): Promise<Response> {
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
 
-  const redirectLocation = cookies().get("redirect")?.value ?? "/user";
-  cookies().delete("redirect");
+  const redirectLocation = (await cookies()).get("redirect")?.value ?? "/user";
+  (await cookies()).delete("redirect");
 
   if (!MAL_CLIENT_ID || !MAL_CLIENT_SECRET) {
     throw new Error("Missing MAL_CLIENT_ID or MAL_CLIENT_SECRET");
   }
 
   const storedVerifier =
-    cookies().get("mal_oauth_code_verifier")?.value ?? null;
-  const storedState = cookies().get("mal_oauth_state")?.value ?? null;
+    (await cookies()).get("mal_oauth_code_verifier")?.value ?? null;
+  const storedState = (await cookies()).get("mal_oauth_state")?.value ?? null;
 
   if (
     !code ||
@@ -72,8 +72,8 @@ export async function GET(request: Request): Promise<Response> {
       }
     );
 
-    cookies().set("mal_access_token", response.data.access_token);
-    cookies().set("mal_refresh_token", response.data.refresh_token);
+    (await cookies()).set("mal_access_token", response.data.access_token);
+    (await cookies()).set("mal_refresh_token", response.data.refresh_token);
 
     const existingUser = await db
       .select()
@@ -90,7 +90,7 @@ export async function GET(request: Request): Promise<Response> {
       // Create session cookie for exiting user
       const session = await lucia.createSession(existingUser.id, {});
       const sessionCookie = lucia.createSessionCookie(session.id);
-      cookies().set(
+      (await cookies()).set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
@@ -117,7 +117,7 @@ export async function GET(request: Request): Promise<Response> {
     // Create session cookie for new user
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
+    (await cookies()).set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes

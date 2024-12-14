@@ -28,7 +28,7 @@ export async function GET(): Promise<Response> {
   url.searchParams.append("redirect_uri", "http://localhost:3000/api/login/mal/callback");
 
 
-	cookies().set("mal_oauth_code_verifier", codeChallange, {
+	(await cookies()).set("mal_oauth_code_verifier", codeChallange, {
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		httpOnly: true,
@@ -36,7 +36,7 @@ export async function GET(): Promise<Response> {
 		sameSite: "lax",
 	});
 
-	cookies().set("mal_oauth_state", state, {
+	(await cookies()).set("mal_oauth_state", state, {
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		httpOnly: true,

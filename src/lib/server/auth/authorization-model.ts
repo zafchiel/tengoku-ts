@@ -3,7 +3,7 @@ import { db } from "@/lib/server/db";
 import { userTable } from "@/lib/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import { lucia } from "@/lib/server/auth";
-import { cookies } from "next/headers";
+import { cookies, type UnsafeUnwrappedCookies } from "next/headers";
 import { generateIdFromEntropySize } from "lucia";
 import axios from "axios";
 
@@ -76,7 +76,7 @@ export class Auth {
   async createSessionCookie(userId: string): Promise<void> {
     const session = await lucia.createSession(userId, {});
     const sessionCookie = lucia.createSessionCookie(session.id);
-    cookies().set(
+    (cookies() as unknown as UnsafeUnwrappedCookies).set(
       sessionCookie.name,
       sessionCookie.value,
       sessionCookie.attributes

@@ -12,12 +12,12 @@ export async function GET(request: Request): Promise<Response> {
 	const code = url.searchParams.get("code");
 	const state = url.searchParams.get("state");
 
-	const redirectLocation = cookies().get("redirect")?.value ?? "/user";
-	cookies().delete("redirect");
+	const redirectLocation = (await cookies()).get("redirect")?.value ?? "/user";
+	(await cookies()).delete("redirect");
 
 	const storedVerifier =
-		cookies().get("google_oauth_code_verifier")?.value ?? null;
-	const storedState = cookies().get("google_oauth_state")?.value ?? null;
+		(await cookies()).get("google_oauth_code_verifier")?.value ?? null;
+	const storedState = (await cookies()).get("google_oauth_state")?.value ?? null;
 
 	if (
 		!code ||
@@ -61,7 +61,7 @@ export async function GET(request: Request): Promise<Response> {
 			// Create session cookie for exiting user
 			const session = await lucia.createSession(existingUser.id, {});
 			const sessionCookie = lucia.createSessionCookie(session.id);
-			cookies().set(
+			(await cookies()).set(
 				sessionCookie.name,
 				sessionCookie.value,
 				sessionCookie.attributes,
@@ -88,7 +88,7 @@ export async function GET(request: Request): Promise<Response> {
 		// Create session cookie for new user
 		const session = await lucia.createSession(userId, {});
 		const sessionCookie = lucia.createSessionCookie(session.id);
-		cookies().set(
+		(await cookies()).set(
 			sessionCookie.name,
 			sessionCookie.value,
 			sessionCookie.attributes,

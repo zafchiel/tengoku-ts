@@ -1,4 +1,4 @@
-import { createElement } from "react";
+import { createElement, type JSX } from "react";
 
 export type IconProps = {
 	size?: number;

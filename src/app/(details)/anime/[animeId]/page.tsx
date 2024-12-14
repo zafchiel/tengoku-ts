@@ -16,15 +16,16 @@ import ExternalLinksSection from "@/components/details-page/external-links-secti
 import GallerySection from "@/components/details-page/gallery-section";
 
 type DetailsPageProps = {
-	params: {
+	params: Promise<{
 		animeId: string;
-	};
+	}>;
 };
 
-export default async function DetailsPage({ params }: DetailsPageProps) {
-	const anime = await fetchAnimeInfoFull(params.animeId);
+export default async function DetailsPage(props: DetailsPageProps) {
+    const params = await props.params;
+    const anime = await fetchAnimeInfoFull(params.animeId);
 
-	if (!anime)
+    if (!anime)
 		return (
 			<main className="container px-1 md:py-24">
 				<Alert variant="destructive">
@@ -37,9 +38,9 @@ export default async function DetailsPage({ params }: DetailsPageProps) {
 			</main>
 		);
 
-	const imgBase64 = await getBase64(anime.images.webp.large_image_url);
+    const imgBase64 = await getBase64(anime.images.webp.large_image_url);
 
-	return (
+    return (
 		<>
 			<div className="fixed -z-10 bg-black/80 inset-0 w-full h-screen md:hidden"></div>
 			<main className="grid gird-cols-1 md:grid-cols-[minmax(200px,400px)_minmax(450px,1fr)] gap-4 px-2 md:px-4 md:py-14 md:mt-10 max-w-[1440px] mx-auto">

@@ -14,7 +14,7 @@ export default async function ProfilePage() {
 		redirect("/login");
 	}
 
-	const malData = JSON.parse(cookies().get("mal_data")?.value || "{}");
+	const malData = JSON.parse((await cookies()).get("mal_data")?.value || "{}");
 	console.log({ malData });
 
 	return (

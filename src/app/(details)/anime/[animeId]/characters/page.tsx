@@ -4,14 +4,18 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 
 type AllCharactersPageProps = {
-  params: {
+  params: Promise<{
     animeId: string;
-  };
+  }>;
 };
 
-export default async function AllCharactersPage({
-  params: { animeId },
-}: AllCharactersPageProps) {
+export default async function AllCharactersPage(props: AllCharactersPageProps) {
+  const params = await props.params;
+
+  const {
+    animeId
+  } = params;
+
   const promises = [
     fetchAnimeCharacters(animeId),
     fetchAnimeInfoFull(animeId),

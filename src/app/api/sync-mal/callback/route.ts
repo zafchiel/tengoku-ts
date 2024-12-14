@@ -23,8 +23,8 @@ export async function GET(request: Request, response: Response): Promise<Respons
 	}
 
 	const storedVerifier =
-		cookies().get("mal_oauth_code_verifier")?.value ?? null;
-	const storedState = cookies().get("mal_oauth_state")?.value ?? null;
+		(await cookies()).get("mal_oauth_code_verifier")?.value ?? null;
+	const storedState = (await cookies()).get("mal_oauth_state")?.value ?? null;
 
 	if (
 		!code ||
@@ -68,8 +68,8 @@ export async function GET(request: Request, response: Response): Promise<Respons
 		);
 
 
-		cookies().set("mal_access_token", response.data.access_token);
-		cookies().set("mal_refresh_token", response.data.refresh_token);
+		(await cookies()).set("mal_access_token", response.data.access_token);
+		(await cookies()).set("mal_refresh_token", response.data.refresh_token);
 
 		return new Response(null, {
 			status: 302,

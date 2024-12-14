@@ -2,8 +2,8 @@ import { generateCodeVerifier, generateState } from "arctic";
 import { cookies } from "next/headers";
 
 export async function GET(): Promise<Response> {
-	const malAccessToken = cookies().get("mal_access_token");
-	const malRefreshToken = cookies().get("mal_refresh_token");
+	const malAccessToken = (await cookies()).get("mal_access_token");
+	const malRefreshToken = (await cookies()).get("mal_refresh_token");
 
 	if (malAccessToken && malRefreshToken) {
 		return Response.redirect("/user/sync-list");
@@ -27,7 +27,7 @@ export async function GET(): Promise<Response> {
 	url.searchParams.append("code_challenge_method", "plain");
   url.searchParams.append("redirect_uri", "http://localhost:3000/api/sync-mal/callback");
 
-	cookies().set("mal_oauth_code_verifier", codeChallange, {
+	(await cookies()).set("mal_oauth_code_verifier", codeChallange, {
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		httpOnly: true,
@@ -35,7 +35,7 @@ export async function GET(): Promise<Response> {
 		sameSite: "lax",
 	});
 
-	cookies().set("mal_oauth_state", state, {
+	(await cookies()).set("mal_oauth_state", state, {
 		path: "/",
 		secure: process.env.NODE_ENV === "production",
 		httpOnly: true,
