@@ -13,7 +13,7 @@ export default function LoginButton() {
         })
       }
     >
-      Github better-auth
+      Google better-auth
     </Button>
   );
 }
