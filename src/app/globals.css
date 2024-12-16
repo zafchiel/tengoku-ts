@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   .dark {
     --background: 20 14.3% 4.1%;
@@ -36,7 +35,6 @@
     --radius: 1rem;
   }
 }
-
 
 @layer base {
   * {

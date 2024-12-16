@@ -26,35 +26,32 @@ export const SCORES = [
   [0, "None"],
 ] as const;
 
-export const userTable = sqliteTable(
-  "users",
-  {
-    id: text("id").notNull().primaryKey(),
-    username: text("username").notNull(),
-    authProviderType: text("auth_provider_type", { enum: PROVIDERS }).notNull(),
-    authProviderId: text("auth_provider_id").notNull(),
-  }
-  // (table) => {
-  // 	return {
-  // 		githubIdIndex: uniqueIndex("github_id_index").on(table.githubId),
-  // 		malIdIndex: uniqueIndex("mal_id_index").on(table.malId),
-  // 		googleIndex: uniqueIndex("google_id_index").on(table.googleId),
-  // 		discordIndex: uniqueIndex("discord_id_index").on(table.discordId)
-  // 	};
-  // }
-);
+export const userTable = sqliteTable("user", {
+  id: text("id").notNull().primaryKey(),
+  name: text("name").notNull(),
+  email: text("email"),
+  emailVerified: integer("emailVerified", { mode: "boolean" }),
+  image: text("image"),
+  createdAt: integer("createdAt", { mode: "timestamp" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }),
+});
 
 export const userRelations = relations(userTable, ({ many }) => ({
   sessions: many(sessionTable),
   progress: many(progressTable),
 }));
 
-export const sessionTable = sqliteTable("sessions", {
+export const sessionTable = sqliteTable("session", {
   id: text("id").notNull().primaryKey(),
-  userId: text("user_id")
+  userId: text("userId")
     .notNull()
     .references(() => userTable.id),
-  expiresAt: integer("expires_at").notNull(),
+  token: text("token").notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  createdAt: integer("createdAt", { mode: "timestamp" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }),
 });
 
 export const sessionRelations = relations(sessionTable, ({ one }) => ({
@@ -63,6 +60,41 @@ export const sessionRelations = relations(sessionTable, ({ one }) => ({
     references: [userTable.id],
   }),
 }));
+
+export const accountTable = sqliteTable("account", {
+  id: text("id").notNull().primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => userTable.id),
+  accountId: text("accountId").notNull(),
+  providerId: text("providerId").notNull(),
+  accesssToken: text("accessToken"),
+  refreshToken: text("refreshToken"),
+  accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
+  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
+    mode: "timestamp",
+  }),
+  scope: text("scope"),
+  password: text("password"),
+  createdAt: integer("createdAt", { mode: "timestamp" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }),
+});
+
+export const accountRelations = relations(accountTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [accountTable.userId],
+    references: [userTable.id],
+  }),
+}));
+
+export const verificationTable = sqliteTable("verification", {
+  id: text("id").notNull().primaryKey(),
+  identifier: text("identifier").notNull(),
+  value: text("value").notNull(),
+  expiresAt: integer("expiresAt", { mode: "timestamp" }),
+  createdAt: integer("createdAt", { mode: "timestamp" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }),
+});
 
 export const progressTable = sqliteTable("progress", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
