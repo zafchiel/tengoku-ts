@@ -13,19 +13,9 @@ const withPWA = withPWAInit({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["@react-email"],
-  },
+  serverExternalPackages: ["@react-email"],
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "img3.gelbooru.com",
-      },
-      {
-        protocol: "https",
-        hostname: "video-cdn3.gelbooru.com",
-      },
       {
         protocol: "https",
         hostname: "img.youtube.com",
