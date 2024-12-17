@@ -3,8 +3,6 @@ import { cn } from "@/lib/utils";
 import { LogoutForm } from "@/components/profile-page/logout-form";
 import ProgressSection from "@/components/profile-page/progress-section";
 import ProgressSectionNavigation from "@/components/profile-page/progress-section-navigation";
-import SyncMal from "@/components/profile-page/sync-mal";
-import { cookies } from "next/headers";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import ProfilePicture from "@/components/profile-page/profile-picture";
@@ -17,9 +15,6 @@ export default async function ProfilePage() {
   if (!session) {
     redirect("/login");
   }
-
-  const malData = JSON.parse((await cookies()).get("mal_data")?.value || "{}");
-  console.log({ malData });
 
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
