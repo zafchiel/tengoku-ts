@@ -7,6 +7,7 @@ import SyncMal from "@/components/profile-page/sync-mal";
 import { cookies } from "next/headers";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import ProfilePicture from "@/components/profile-page/profile-picture";
 
 export default async function ProfilePage() {
   const session = await auth.api.getSession({
@@ -23,12 +24,15 @@ export default async function ProfilePage() {
   return (
     <main className={cn("p-3 flex flex-col md:pt-14 container")}>
       <header className="flex flex-wrap items-center justify-between md:my-16">
-        <div>
-          <h2 className="text-3xl md:text-6xl font-light">
-            {session.user.name}
-          </h2>
-          <p className="text-muted-foreground capitalize">My watch list</p>
-          <SyncMal />
+        <div className="flex gap-4">
+          <ProfilePicture src={session.user.image} />
+          <div>
+            <h2 className="text-3xl md:text-6xl font-light">
+              {session.user.name}
+            </h2>
+            <p className="text-muted-foreground capitalize">My watch list</p>
+          </div>
+          {/* <SyncMal /> */}
         </div>
 
         <LogoutForm />
