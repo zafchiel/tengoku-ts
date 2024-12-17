@@ -5,9 +5,10 @@ import { authClient } from "@/lib/auth-client";
 export default function LoginButton() {
   return (
     <Button
-      onClick={() =>
-        authClient.signIn.social({
+      onClick={async () =>
+        await authClient.signIn.social({
           provider: "google",
+          callbackURL: "/user",
         })
       }
     >

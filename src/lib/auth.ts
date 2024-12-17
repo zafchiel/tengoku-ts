@@ -13,7 +13,7 @@ export const auth = betterAuth({
     provider: "sqlite",
     schema: {
       user: userTable,
-      assount: accountTable,
+      account: accountTable,
       verification: verificationTable,
       session: sessionTable,
     },

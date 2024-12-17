@@ -5,13 +5,17 @@ import { GoogleIcon } from "@/components/loginPage/icons/google-icon";
 import { MalIcon } from "@/components/loginPage/icons/mal-icon";
 import { GithubIcon } from "@/components/loginPage/icons/github-icon";
 import LoginButton from "@/components/loginPage/login-button";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export default async function SignInPage() {
-  // const { user } = await validateRequest();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  // if (user) {
-  //   redirect("/");
-  // }
+  if (session) {
+    redirect("/user");
+  }
 
   return (
     <main className="container grid min-h-screen items-center">

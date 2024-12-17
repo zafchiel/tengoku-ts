@@ -62,22 +62,23 @@ export const sessionRelations = relations(sessionTable, ({ one }) => ({
 }));
 
 export const accountTable = sqliteTable("account", {
-  id: text("id").notNull().primaryKey(),
+  id: text("id").primaryKey(),
+  accountId: text("accountId").notNull(),
+  providerId: text("providerId").notNull(),
   userId: text("userId")
     .notNull()
     .references(() => userTable.id),
-  accountId: text("accountId").notNull(),
-  providerId: text("providerId").notNull(),
-  accesssToken: text("accessToken"),
+  accessToken: text("accessToken"),
   refreshToken: text("refreshToken"),
+  idToken: text("idToken"),
   accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
   refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
     mode: "timestamp",
   }),
   scope: text("scope"),
   password: text("password"),
-  createdAt: integer("createdAt", { mode: "timestamp" }),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }),
+  createdAt: integer("createdAt", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).notNull(),
 });
 
 export const accountRelations = relations(accountTable, ({ one }) => ({
