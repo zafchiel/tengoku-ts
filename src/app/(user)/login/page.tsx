@@ -1,12 +1,7 @@
 import { redirect } from "next/navigation";
-import { OAuthLink } from "@/components/loginPage/oauth-link";
-import { DiscordIcon } from "@/components/loginPage/icons/discord-icon";
-import { GoogleIcon } from "@/components/loginPage/icons/google-icon";
-import { MalIcon } from "@/components/loginPage/icons/mal-icon";
-import { GithubIcon } from "@/components/loginPage/icons/github-icon";
-import LoginButton from "@/components/loginPage/login-button";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import AuthSection from "@/components/loginPage/auth-section";
 
 export default async function SignInPage() {
   const session = await auth.api.getSession({
@@ -28,22 +23,8 @@ export default async function SignInPage() {
             choose your favorite provider
           </p>
         </header>
-        <div className="flex flex-col md:grid grid-cols-2 gap-4 max-w-xl">
-          <OAuthLink providerName="google" icon={GoogleIcon} />
-          <OAuthLink providerName="discord" icon={DiscordIcon} />
 
-          {/* You can pass component reference with default props */}
-          <OAuthLink providerName="github" icon={GithubIcon} />
-
-          {/* Passing function to modify default props */}
-          <OAuthLink
-            providerName="MyAnimeList"
-            providerLink="mal"
-            icon={(props) => <MalIcon className="mx-auto" {...props} />}
-          />
-        </div>
-
-        <LoginButton />
+        <AuthSection />
       </section>
     </main>
   );
