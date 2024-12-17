@@ -5,20 +5,22 @@ import { progressTable, WATCHING_STATUSES } from "@/lib/server/db/schema";
 import { z } from "zod";
 import { and, eq } from "drizzle-orm";
 import { createServerActionProcedure } from "zsa";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const authedProcedure = createServerActionProcedure()
   .handler(async () => {
     try {
-      const user = {
-        id: "123",
-      };
+      const session = await auth.api.getSession({
+        headers: await headers(),
+      });
 
-      if (!user) {
+      if (!session) {
         throw new Error("User not authenticated");
       }
 
       return {
-        user,
+        user: session.user,
       };
     } catch {
       throw new Error("User not authenticated");
