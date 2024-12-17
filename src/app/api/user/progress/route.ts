@@ -1,31 +1,30 @@
+import { auth } from "@/lib/auth";
 import { db } from "@/lib/server/db";
 import { progressTable } from "@/lib/server/db/schema";
 import { and, eq } from "drizzle-orm";
+import { headers } from "next/headers";
 
 export async function GET() {
-  // const { user, session } = await validateRequest();
-  return new Response("An error occurred. Please try again.", {
-    status: 500,
-  });
+  const session = await auth.api.getSession({ headers: await headers() });
 
-  // if (!user || !session) {
-  //   return new Response("Unauthorized", {
-  //     status: 402,
-  //   });
-  // } else if (user && session) {
-  //   try {
-  //     const res = await db
-  //       .select()
-  //       .from(progressTable)
-  //       .where(eq(progressTable.userId, user.id));
+  if (!session) {
+    return new Response("Unauthorized", {
+      status: 402,
+    });
+  } else if (session) {
+    try {
+      const res = await db
+        .select()
+        .from(progressTable)
+        .where(eq(progressTable.userId, session.user.id));
 
-  //     return Response.json(res);
-  //   } catch (error) {
-  //     return new Response("An error occurred. Please try again.", {
-  //       status: 500,
-  //     });
-  //   }
-  // }
+      return Response.json(res);
+    } catch (error) {
+      return new Response("An error occurred. Please try again.", {
+        status: 500,
+      });
+    }
+  }
 }
 
 // export async function DELETE(req: Request) {

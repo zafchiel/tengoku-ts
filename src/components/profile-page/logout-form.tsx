@@ -2,8 +2,7 @@
 
 import { Button } from "../ui/button";
 import { useFormStatus } from "react-dom";
-import { logoutAction } from "@/lib/server/actions/auth-actions";
-import useUser from "@/hooks/use-user";
+import { authClient } from "@/lib/auth-client";
 
 function SubmitButton() {
   const status = useFormStatus();
@@ -22,13 +21,10 @@ function SubmitButton() {
 }
 
 export function LogoutForm() {
-  const { mutate } = useUser();
-
   return (
     <form
       action={async () => {
-        await logoutAction();
-        mutate(undefined);
+        await authClient.signOut();
       }}
     >
       <SubmitButton />

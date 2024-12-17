@@ -7,10 +7,10 @@ import { Home } from "lucide-react";
 import SearchDialog from "./search-dialog";
 import { Skeleton } from "./skeleton";
 import { buttonVariants } from "./button";
-import useUser from "@/hooks/use-user";
+import { authClient } from "@/lib/auth-client";
 
 function Header() {
-  const { user, isAuthenticating, error } = useUser();
+  const { data: session, isPending, error } = authClient.useSession();
   const direction = useScrollDirection();
 
   return (
@@ -34,9 +34,9 @@ function Header() {
       <div className="flex gap-4">
         <SearchDialog />
 
-        {isAuthenticating ? (
+        {isPending ? (
           <Skeleton className="w-14 h-10" />
-        ) : user ? (
+        ) : session ? (
           <Link
             href="/user"
             className={cn(buttonVariants({ variant: "secondary" }))}

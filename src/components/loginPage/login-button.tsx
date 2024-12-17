@@ -1,10 +1,8 @@
 "use client";
 import { Button } from "../ui/button";
-import { createAuthClient } from "better-auth/react";
+import { authClient } from "@/lib/auth-client";
 
 export default function LoginButton() {
-  const authClient = createAuthClient();
-
   return (
     <Button
       onClick={() =>
