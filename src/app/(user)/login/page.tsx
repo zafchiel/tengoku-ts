@@ -17,7 +17,7 @@ export default async function SignInPage() {
       <section>
         <header className="text-left">
           <h1 className="text-3xl md:text-6xl font-bold uppercase leading-none">
-            Sign In
+            Login
           </h1>
           <p className="text-muted-foreground leading-none mb-4">
             choose your favorite provider

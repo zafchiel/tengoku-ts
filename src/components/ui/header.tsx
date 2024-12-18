@@ -35,18 +35,18 @@ function Header() {
         <SearchDialog />
 
         {isPending ? (
-          <Skeleton className="w-14 h-10" />
+          <Skeleton className="w-14 h-10 rounded" />
         ) : session ? (
           <Link
             href="/user"
-            className={cn(buttonVariants({ variant: "secondary" }))}
+            className={cn(buttonVariants({ variant: "secondary" }), "rounded")}
           >
             Profile
           </Link>
         ) : (
           <Link
             href="/login"
-            className={cn(buttonVariants({ variant: "secondary" }))}
+            className={cn(buttonVariants({ variant: "secondary" }), "rounded")}
           >
             Login
           </Link>

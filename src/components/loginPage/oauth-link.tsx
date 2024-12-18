@@ -17,11 +17,7 @@ type OAuthLinkProps = {
   providerLink?: string;
 };
 
-export function OAuthLink({
-  icon,
-  providerName,
-  providerLink,
-}: OAuthLinkProps) {
+export function OAuthLink({ icon, providerName }: OAuthLinkProps) {
   return (
     <button
       onClick={async () => {
