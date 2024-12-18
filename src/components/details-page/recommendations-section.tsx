@@ -15,8 +15,8 @@ type RecommendationsSectionProps = {
 };
 
 export default function RecommendationsSection({
-                                                 animeId,
-                                               }: RecommendationsSectionProps) {
+  animeId,
+}: RecommendationsSectionProps) {
   const [recommendations, setRecommendations] = useState<
     Recommendation[] | null
   >(null);
@@ -27,7 +27,7 @@ export default function RecommendationsSection({
     try {
       await new Promise((resolve) => setTimeout(resolve, 3000));
       const response = await axios.get<{ data: Recommendation[] }>(
-        `${JIKAN_API_URL}/anime/${animeId}/recommendations`,
+        `${JIKAN_API_URL}/anime/${animeId}/recommendations`
       );
       setRecommendations(response.data.data);
     } catch (error) {
@@ -47,7 +47,7 @@ export default function RecommendationsSection({
           observer.disconnect();
         }
       },
-      { threshold: 0, rootMargin: "0px 0px 200px 0px" },
+      { threshold: 0, rootMargin: "0px 0px 200px 0px" }
     );
 
     const section = sectionRef.current;
@@ -63,42 +63,40 @@ export default function RecommendationsSection({
     };
   }, [fetchRecommendations, recommendations, isLoading]);
 
-
   return (
     <section id="recommendations" className="scroll-mt-40" ref={sectionRef}>
       <h3 className="text-3xl font-semibold">Recommendations</h3>
       <p className="text-muted-foreground">
         These anime were voted as simillar by community
       </p>
-      <hr className="mb-2"/>
+      <hr className="mb-2" />
 
       {isLoading ? (
-        <Skeleton className="w-full h-96"/>
+        <Skeleton className="w-full h-96" />
       ) : !recommendations || recommendations.length < 1 ? (
         <Alert variant="default" className="m-2">
-          <AlertCircle className="h-4 w-4"/>
+          <AlertCircle className="h-4 w-4" />
           <AlertTitle>No recommendations</AlertTitle>
           <AlertDescription>
             There are no recommendations for this anime yet.
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="grid grid-cols-3 gap-4 px-2">
+        <div className="m-2 gap-4 flex flex-wrap">
           {recommendations.map((recommendation) => (
             <Link
               key={recommendation.url}
               href={`/anime/${recommendation.entry.mal_id}`}
             >
-              <div className="relative h-full aspect-[4/5] w-full overflow-hidden rounded-md shadow-md">
+              <div className="relative overflow-hidden rounded-md shadow-md">
                 <Image
-                  width={400}
-                  height={500}
+                  width={200}
+                  height={300}
                   src={recommendation.entry.images.webp.large_image_url}
                   alt={recommendation.entry.title}
-                  className="w-full h-full rounded-lg hover:scale-105 duration-200 ease-linear"
+                  className="rounded-lg aspect-[2/3] hover:scale-105 duration-200 ease-linear"
                 />
-                <div
-                  className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
                   <p className="font-semibold text-lg">
                     {recommendation.entry.title}
                   </p>
@@ -106,8 +104,8 @@ export default function RecommendationsSection({
                     <p>
                       Votes:&nbsp;
                       <span className="font-semibold">
-												{recommendation.votes}
-											</span>
+                        {recommendation.votes}
+                      </span>
                     </p>
                   </div>
                 </div>
