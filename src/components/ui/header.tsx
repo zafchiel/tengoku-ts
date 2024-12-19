@@ -2,7 +2,6 @@
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import useScrollDirection from "@/hooks/use-scroll-direction";
 import { Home } from "lucide-react";
 import SearchDialog from "./search-dialog";
 import { Skeleton } from "./skeleton";
@@ -11,15 +10,11 @@ import { authClient } from "@/lib/auth-client";
 
 function Header() {
   const { data: session, isPending, error } = authClient.useSession();
-  const direction = useScrollDirection();
 
   return (
     <header
       className={cn(
-        "fixed inset-x-0 md:top-0 bottom-0 z-30 flex h-14 items-center justify-between p-5 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500",
-        {
-          "md:-top-14 -bottom-14": direction === "down",
-        }
+        "fixed inset-x-0 md:top-0 z-30 flex h-14 items-center justify-between p-5 bg-gradient-to-b from-transparent to-transparent backdrop-blur-sm transition-all duration-500"
       )}
     >
       <div>
