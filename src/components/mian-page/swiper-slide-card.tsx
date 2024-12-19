@@ -11,7 +11,7 @@ type Props = {
 export default function SwiperSlideCard({ anime, first }: Props) {
   return (
     <Link href={`/anime/${anime.mal_id}`}>
-      <div className="relative h-full max-h-[500px] aspect-[4/5] w-full overflow-hidden rounded-sm shadow-md">
+      <div className="relative h-full max-h-[500px] aspect-[3/4] w-full overflow-hidden rounded-sm shadow-md">
         <section className="absolute top-3 left-3 z-50 border-none">
           <ScoreBadge score={anime.score ?? 0} />
         </section>
