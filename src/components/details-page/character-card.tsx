@@ -18,14 +18,14 @@ export default function CharacterCard({ character }: CharacterCardProps) {
       target="_blank"
       href={`https://myanimelist.net/character/${character.character.mal_id}`}
       className={cn(
-        "flex flex-col gap-2 sm:flex-row justify-between rounded-sm p-2 hover:bg-primary/40 hover:scale-[1.02] transition-transform duration-200",
+        "grid min-w-0 grid-cols-1 grid-rows-5 rounded-sm p-2 hover:bg-primary/40 hover:scale-[1.02] transition-transform duration-200",
         {
-          "bg-muted-foreground/10": character.role === "Main",
+          "bg-muted-foreground/30": character.role === "Main",
           "bg-accent/20": character.role === "Supporting",
         }
       )}
     >
-      <div className="flex gap-2">
+      <div className="flex min-w-0 gap-2 col-start-1 col-end-2 row-start-1 row-end-4">
         <Image
           src={character.character.images.webp.image_url}
           alt={`${character.character.name} thumbnail`}
@@ -44,7 +44,7 @@ export default function CharacterCard({ character }: CharacterCardProps) {
       </div>
 
       {!!japaneseVoiceActor && (
-        <div className="flex place-self-end items-end gap-2">
+        <div className="flex min-w-0 place-self-end items-end gap-2 col-start-1 col-end-2 row-start-3 row-end-6">
           <div className="text-right">
             <p className="text-muted-foreground">
               {japaneseVoiceActor.language}

@@ -33,7 +33,10 @@ export default async function CharactersSection({
     <section id="characters" className="scroll-mt-40 px-1 py-2">
       <div className="flex justify-between items-end">
         <h3 className="text-3xl font-semibold">Characters</h3>
-        <Link href={`/anime/${animeId}/characters`} className="underline">
+        <Link
+          href={`/anime/${animeId}/characters`}
+          className="underline text-sm"
+        >
           Show all characters
         </Link>
       </div>

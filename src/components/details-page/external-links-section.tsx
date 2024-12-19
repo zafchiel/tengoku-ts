@@ -25,7 +25,7 @@ export default function ExternalLinksSection({
       </Link>
       <hr className="mb-2" />
 
-      <div className="flex gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-[1fr_10px_1fr] gap-4 px-2">
         <div className="p-1">
           <h5 className="font-semibold text-xl text-muted-foreground">
             External Media Links
@@ -48,7 +48,7 @@ export default function ExternalLinksSection({
           </div>
         </div>
 
-        <Separator orientation="vertical" className="h-32" />
+        <Separator orientation="vertical" className="hidden sm:block h-32" />
 
         <div className="p-1">
           <h5 className="font-semibold text-xl text-muted-foreground">
