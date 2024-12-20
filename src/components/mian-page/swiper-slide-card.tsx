@@ -21,10 +21,6 @@ export default function SwiperSlideCard({ anime, first }: Props) {
           src={anime.images?.webp.large_image_url ?? "/bg_placeholder.webp"}
           alt={anime.title ?? "Anime Image"}
           priority={first}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = "/bg_placeholder.webp";
-          }}
           className="w-full h-full object-cover rounded-sm hover:scale-110 duration-200 ease-linear"
         />
         <div className="pointer-events-none absolute bottom-0 inset-x-0 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
