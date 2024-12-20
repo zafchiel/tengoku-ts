@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { LogoutForm } from "@/components/profile-page/logout-form";
+import LogoutButton from "@/components/profile-page/logout-button";
 import ProgressSection from "@/components/profile-page/progress-section";
 import ProgressSectionNavigation from "@/components/profile-page/progress-section-navigation";
 import { auth } from "@/lib/auth";
@@ -30,7 +30,7 @@ export default async function ProfilePage() {
           {/* <SyncMal /> */}
         </div>
 
-        <LogoutForm />
+        <LogoutButton />
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-[minmax(200px,300px)_minmax(450px,1fr)] gap-4 items-start">
