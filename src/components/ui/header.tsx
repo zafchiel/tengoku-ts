@@ -31,7 +31,7 @@ function Header() {
 
         {isPending ? (
           <Skeleton className="w-14 h-10 rounded" />
-        ) : session ? (
+        ) : session?.session.id ? (
           <Link
             href="/user"
             className={cn(buttonVariants({ variant: "secondary" }), "rounded")}
