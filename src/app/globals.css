@@ -92,16 +92,17 @@ iframe {
 
 /* -------------- Swiper ----------------- */
 .swiper-slide {
-  padding: 10px;
+  padding: 16px;
 }
 
 .swiper-slide-active {
-  padding: 0;
+  padding: 8px;
 }
 
 .swiper-slide-active div:first-child {
   border-radius: 0.5rem;
-  border: 2px solid white;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 10px 0 rgba(255, 255, 255, 0.5);
 }
 
 .swiper-button-prev::after,
