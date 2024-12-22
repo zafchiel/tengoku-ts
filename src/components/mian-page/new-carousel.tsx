@@ -1,7 +1,12 @@
-import useEmblaCarousel from "embla-carousel-react/components/useEmblaCarousel";
+"use client";
+
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from 'embla-carousel-autoplay'
 
 export default function NewCarousel() {
-  const [emblaRef] = useEmblaCarousel();
+  const [emblaRef] = useEmblaCarousel({
+    loop: true,
+  }, [Autoplay()]);
 
   return (
      <div className="embla" ref={emblaRef}>
