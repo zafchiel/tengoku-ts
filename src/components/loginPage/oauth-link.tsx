@@ -2,6 +2,7 @@
 
 import { createElement, type JSX } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export type IconProps = {
   size?: number;
@@ -24,6 +25,11 @@ export function OAuthLink({ icon, providerName }: OAuthLinkProps) {
         await authClient.signIn.social({
           provider: providerName as "github" | "google",
           callbackURL: "/user",
+        fetchOptions: {
+          onError: (error) => {
+            toast.error("Something went wrong, try again later");
+          }
+        }
         });
       }}
       className="relative overflow-hidden border rounded-md hover:border-primary/40 transition-all duration-300"
