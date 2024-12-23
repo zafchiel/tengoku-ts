@@ -42,7 +42,7 @@ export default async function NewMainPage() {
 					Bleach: Sennen Kessen-hen - Soukoku-tan
 				</p>
 			</div>
-			<NewCarousel slides={[1, 2, 3, 4, 5, 6, 7]} options={{ loop: true }} />
+			<NewCarousel slides={topAiringData} options={{ loop: true }} />
 		</main>
 	);
 }

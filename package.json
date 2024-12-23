@@ -35,6 +35,7 @@
     "drizzle-orm": "^0.33.0",
     "embla-carousel": "^8.5.1",
     "embla-carousel-autoplay": "^8.5.1",
+    "embla-carousel-class-names": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
     "lucide-react": "^0.383.0",
     "next": "15.1.2",
