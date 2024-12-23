@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useCallback } from "react";
+import type React from "react";
+import { useCallback } from "react";
 import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 import { DotButton, useDotButton } from "./carousel-dot-button";
 import {
@@ -72,7 +73,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 				<div className="embla__dots">
 					{scrollSnaps.map((_, index) => (
 						<DotButton
-							key={index}
+							key={_}
 							onClick={() => onDotButtonClick(index)}
 							className={"embla__dot".concat(
 								index === selectedIndex ? " embla__dot--selected" : "",

@@ -1,6 +1,7 @@
 "use client";
 
-import React, {
+import type React from "react";
+import {
 	type ComponentPropsWithRef,
 	useCallback,
 	useEffect,
