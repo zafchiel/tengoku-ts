@@ -3,125 +3,111 @@
 @tailwind utilities;
 
 @layer base {
-  .dark {
-    --background: 20 14.3% 4.1%;
-    --foreground: 0 0% 95%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 95%;
-    --primary: 346.8 77.2% 49.8%;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 85.7% 97.3%;
-    --success: 120 60% 50%;
-    --success-foreground: 0 0% 98%;
-    --success-bg: 120 60% 50%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 346.8 77.2% 49.8%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+	.dark {
+		--background: 20 14.3% 4.1%;
+		--foreground: 0 0% 95%;
+		--card: 24 9.8% 10%;
+		--card-foreground: 0 0% 95%;
+		--popover: 0 0% 9%;
+		--popover-foreground: 0 0% 95%;
+		--primary: 346.8 77.2% 49.8%;
+		--primary-foreground: 355.7 100% 97.3%;
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+		--muted: 0 0% 15%;
+		--muted-foreground: 240 5% 64.9%;
+		--accent: 12 6.5% 15.1%;
+		--accent-foreground: 0 0% 98%;
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 85.7% 97.3%;
+		--success: 120 60% 50%;
+		--success-foreground: 0 0% 98%;
+		--success-bg: 120 60% 50%;
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+		--ring: 346.8 77.2% 49.8%;
+		--chart-1: 220 70% 50%;
+		--chart-2: 160 60% 45%;
+		--chart-3: 30 80% 55%;
+		--chart-4: 280 65% 60%;
+		--chart-5: 340 75% 55%;
 
-    --radius: 1rem;
-  }
+		--radius: 1rem;
+	}
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  .nav-element {
-    @apply hover:border-l-2 hover:scale-105 hover:bg-primary/5 cursor-pointer transition-all duration-200 px-4 py-6 font-semibold tracking-wider w-full block;
-  }
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+	.nav-element {
+		@apply hover:border-l-2 hover:scale-105 hover:bg-primary/5 cursor-pointer transition-all duration-200 px-4 py-6 font-semibold tracking-wider w-full block;
+	}
 }
 
 *,
 html,
 body {
-  scroll-behavior: smooth !important;
+	scroll-behavior: smooth !important;
 }
 
 section:target h3 {
-  animation: pulse-text 900ms ease-out alternate;
-  animation-iteration-count: 3;
+	animation: pulse-text 900ms ease-out alternate;
+	animation-iteration-count: 3;
 }
 
 @keyframes pulse-text {
-  from {
-    opacity: 0.5;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0.5;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 /* -------------------- Trailer Frame ------------------ */
 
-@media (min-aspect-ratio: 16/9) {
-  iframe {
-    /* height = 100 * (9 / 16) = 56.25 */
-    height: 56.25vw;
-  }
+@media (min-aspect-ratio: 16 / 9) {
+	iframe {
+		/* height = 100 * (9 / 16) = 56.25 */
+		height: 56.25vw;
+	}
 }
 
-@media (max-aspect-ratio: 16/9) {
-  iframe {
-    /* width = 100 / (9 / 16) = 177.777777 */
-    width: 177.78vh;
-  }
+@media (max-aspect-ratio: 16 / 9) {
+	iframe {
+		/* width = 100 / (9 / 16) = 177.777777 */
+		width: 177.78vh;
+	}
 }
 
 iframe {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
 /* -------------- Swiper ----------------- */
 .swiper-slide {
-  padding: 10px;
+	padding: 10px;
 }
 
 .swiper-slide-active {
-  padding: 0;
+	padding: 0;
 }
 
 .swiper-slide-active div:first-child {
-  border-radius: 0.5rem;
-  border: 2px solid white;
+	border-radius: 0.5rem;
+	border: 2px solid white;
 }
 
 .swiper-button-prev::after,
 .swiper-button-next::after {
-  color: white;
-  background-color: #02081770;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-}
-
-/* -------------- Embla Carousel ----------------- */
-.embla {
-  overflow: hidden;
-}
-.embla__container {
-  display: flex;
-}
-.embla__slide {
-  flex: 0 0 100%;
-  min-width: 0;
-  min-height: 200px;
-  border: 1px solid red;
+	color: white;
+	background-color: #02081770;
+	padding: 0.5rem;
+	border-radius: 0.5rem;
 }
