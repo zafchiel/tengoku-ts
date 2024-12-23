@@ -1,7 +1,14 @@
 .embla {
 	--slide-height: 19rem;
 	--slide-spacing: 1rem;
-	--slide-size: 33%;
+	--slide-size: 100%;
+
+	@media (min-width: 768px) {
+		--slide-size: 33%;
+	}
+	@media (min-width: 1300px) {
+		--slide-size: 25%;
+	}
 }
 .embla__viewport {
 	overflow: hidden;
@@ -51,9 +58,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
-.embla__button:disabled {
-	color: var(--detail-high-contrast);
 }
 .embla__button__svg {
 	width: 35%;
