@@ -122,4 +122,6 @@ iframe {
 .embla__slide {
   flex: 0 0 100%;
   min-width: 0;
+  min-height: 200px;
+  border: 1px solid red;
 }

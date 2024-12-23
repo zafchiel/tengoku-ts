@@ -6,7 +6,6 @@ import ProgressSectionNavigation from "@/components/profile-page/progress-sectio
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import ProfilePicture from "@/components/profile-page/profile-picture";
-import NewCarousel from "@/components/mian-page/new-carousel";
 
 export default async function ProfilePage() {
   const session = await auth.api.getSession({
@@ -33,8 +32,6 @@ export default async function ProfilePage() {
 
         <LogoutButton />
       </header>
-
-      <NewCarousel />
 
       <div className="grid grid-cols-1 md:grid-cols-[minmax(200px,300px)_minmax(450px,1fr)] gap-4 items-start">
         <ProgressSectionNavigation />

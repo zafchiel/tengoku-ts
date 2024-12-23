@@ -6,7 +6,11 @@ import Autoplay from 'embla-carousel-autoplay'
 export default function NewCarousel() {
   const [emblaRef] = useEmblaCarousel({
     loop: true,
-  }, [Autoplay()]);
+  }, [Autoplay({
+    stopOnMouseEnter: true,
+    stopOnInteraction: false,
+    delay: 1000,
+  })]);
 
   return (
      <div className="embla" ref={emblaRef}>
