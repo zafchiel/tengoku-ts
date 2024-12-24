@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { use, useCallback, useEffect } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 import { DotButton, useDotButton } from "./carousel-dot-button";
 import {
@@ -16,6 +16,7 @@ import type { AnimeInfoFiltered } from "@/types";
 import Slide from "./carousel-slide";
 import ClassNames from "embla-carousel-class-names";
 import { TopAiringContext } from "../providers/top-airing-context";
+import Progressbar from "./progress-bar";
 
 type PropType = {
 	slides: AnimeInfoFiltered[];
@@ -28,7 +29,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 		Autoplay({
 			stopOnInteraction: false,
 			stopOnMouseEnter: true,
-			delay: 2000,
+			delay: 10000,
 		}),
 		ClassNames({
 			snapped: "embla__slide--snapped",
@@ -39,6 +40,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 		}),
 	]);
 	const { setCurrentAnimeIndex } = use(TopAiringContext);
+	const [progressBarWidth, setProgressBarWidth] = useState(0);
 
 	const onNavButtonClick = useCallback((emblaApi: EmblaCarouselType) => {
 		const autoplay = emblaApi?.plugins()?.autoplay;
@@ -70,10 +72,23 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 		emblaApi.on("select", (ep) => {
 			setCurrentAnimeIndex(ep.selectedScrollSnap());
 		});
+
+		emblaApi.on("autoplay:timerset", (ep) => {
+			const totalDelay = ep.plugins().autoplay.timeUntilNext() ?? 0;
+
+			const interval = setInterval(() => {
+				const currentTimeUntilNext = ep.plugins().autoplay.timeUntilNext() ?? 0;
+				const percentage = 100 - (currentTimeUntilNext / totalDelay) * 100;
+				setProgressBarWidth(percentage);
+			}, 10);
+
+			return () => clearInterval(interval);
+		});
 	}, [emblaApi, setCurrentAnimeIndex]);
 
 	return (
 		<section className="embla">
+			<Progressbar barWidth={progressBarWidth} />
 			<div className="embla__viewport" ref={emblaRef}>
 				<div className="embla__container">
 					{slides.map((slide, index) => (
