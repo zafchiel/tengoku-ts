@@ -30,7 +30,13 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 			stopOnMouseEnter: true,
 			delay: 2000,
 		}),
-		ClassNames(),
+		ClassNames({
+			snapped: "embla__slide--snapped",
+			inView: "",
+			loop: "",
+			draggable: "",
+			dragging: "",
+		}),
 	]);
 	const { setCurrentAnimeIndex } = use(TopAiringContext);
 
