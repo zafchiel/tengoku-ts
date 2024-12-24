@@ -5,6 +5,7 @@ import { TopAiringContextProvider } from "@/components/providers/top-airing-cont
 import { JIKAN_API_TOP_ANIME_URL } from "@/lib/constants";
 import type { AnimeInfo, AnimeInfoFiltered } from "@/types";
 import { propertiesToKeep } from "@/types";
+import EmblaCarousel from "@/components/mian-page/carousel";
 
 export default async function HomePage() {
 	let topAiringData: AnimeInfoFiltered[] = [];
@@ -39,9 +40,9 @@ export default async function HomePage() {
 	return (
 		<TopAiringContextProvider>
 			<TrailerPlayer topAiring={topAiringData} />
-			<main className="flex flex-col lg:flex-row h-screen w-full px-2 pb-14 md:p-10 items-center justify-center">
+			<main className="py-14 px-6 grid grid-cols-1 lg:grid-cols-[400px_1fr] min-h-screen items-center gap-8">
 				<MainHeading topAiring={topAiringData} />
-				<MainCarousel topAiring={topAiringData} />
+				<EmblaCarousel slides={topAiringData} />
 			</main>
 		</TopAiringContextProvider>
 	);

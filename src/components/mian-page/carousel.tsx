@@ -25,20 +25,23 @@ type PropType = {
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
 	const { slides, options } = props;
-	const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-		Autoplay({
-			stopOnInteraction: false,
-			stopOnMouseEnter: true,
-			delay: 10000,
-		}),
-		ClassNames({
-			snapped: "embla__slide--snapped",
-			inView: "",
-			loop: "",
-			draggable: "",
-			dragging: "",
-		}),
-	]);
+	const [emblaRef, emblaApi] = useEmblaCarousel(
+		{ loop: true, align: "start" },
+		[
+			Autoplay({
+				stopOnInteraction: false,
+				stopOnMouseEnter: true,
+				delay: 10000,
+			}),
+			ClassNames({
+				snapped: "embla__slide--snapped",
+				inView: "",
+				loop: "",
+				draggable: "",
+				dragging: "",
+			}),
+		],
+	);
 	const { setCurrentAnimeIndex } = use(TopAiringContext);
 	const [progressBarWidth, setProgressBarWidth] = useState(0);
 

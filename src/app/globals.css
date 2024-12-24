@@ -89,25 +89,3 @@ iframe {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
-
-/* -------------- Swiper ----------------- */
-.swiper-slide {
-	padding: 10px;
-}
-
-.swiper-slide-active {
-	padding: 0;
-}
-
-.swiper-slide-active div:first-child {
-	border-radius: 0.5rem;
-	border: 2px solid white;
-}
-
-.swiper-button-prev::after,
-.swiper-button-next::after {
-	color: white;
-	background-color: #02081770;
-	padding: 0.5rem;
-	border-radius: 0.5rem;
-}
