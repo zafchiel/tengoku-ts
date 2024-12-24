@@ -38,7 +38,10 @@ export default async function NewMainPage() {
 		<TopAiringContextProvider>
 			<main className="py-14 px-6 grid grid-cols-1 lg:grid-cols-[400px_1fr] min-h-screen items-center gap-8">
 				<MainHeading topAiring={topAiringData} />
-				<NewCarousel slides={topAiringData} options={{ loop: true }} />
+				<NewCarousel
+					slides={topAiringData}
+					options={{ loop: true, align: "start" }}
+				/>
 			</main>
 		</TopAiringContextProvider>
 	);

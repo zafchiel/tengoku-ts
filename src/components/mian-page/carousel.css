@@ -14,13 +14,15 @@
 	overflow: hidden;
 }
 .embla__container {
-	display: flex;
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: var(--slide-size);
+
 	touch-action: pan-y pinch-zoom;
-	margin-left: calc(var(--slide-spacing) * -1);
+	/* margin-left: calc(var(--slide-spacing) * -1); */
 }
 .embla__slide {
-	transform: translate3d(0, 0, 0);
-	flex: 0 0 var(--slide-size);
+	/* transform: translate3d(0, 0, 0); */
 	min-width: 0;
 	padding-left: var(--slide-spacing);
 }
