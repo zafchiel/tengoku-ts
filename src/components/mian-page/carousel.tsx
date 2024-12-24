@@ -11,20 +11,19 @@ import {
 } from "./carousel-arrow-buttons";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
-import "./carousel.css";
 import type { AnimeInfoFiltered } from "@/types";
 import Slide from "./carousel-slide";
 import ClassNames from "embla-carousel-class-names";
 import { TopAiringContext } from "../providers/top-airing-context";
 import Progressbar from "./progress-bar";
 
-type PropType = {
+import "./carousel.css";
+
+type Props = {
 	slides: AnimeInfoFiltered[];
-	options?: EmblaOptionsType;
 };
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
-	const { slides, options } = props;
+export default function EmblaCarousel({ slides }: Props) {
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: true, align: "start" },
 		[
@@ -76,17 +75,28 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 			setCurrentAnimeIndex(ep.selectedScrollSnap());
 		});
 
+		let interval: number | null = null;
+
 		emblaApi.on("autoplay:timerset", (ep) => {
+			if (interval) {
+				clearInterval(interval);
+			}
+
 			const totalDelay = ep.plugins().autoplay.timeUntilNext() ?? 0;
 
-			const interval = setInterval(() => {
+			interval = setInterval(() => {
 				const currentTimeUntilNext = ep.plugins().autoplay.timeUntilNext() ?? 0;
 				const percentage = 100 - (currentTimeUntilNext / totalDelay) * 100;
 				setProgressBarWidth(percentage);
-			}, 10);
-
-			return () => clearInterval(interval);
+				console.log(percentage);
+			}, 10) as unknown as number;
 		});
+
+		return () => {
+			if (interval) {
+				clearInterval(interval);
+			}
+		};
 	}, [emblaApi, setCurrentAnimeIndex]);
 
 	return (
@@ -122,6 +132,4 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 			</div>
 		</section>
 	);
-};
-
-export default EmblaCarousel;
+}
