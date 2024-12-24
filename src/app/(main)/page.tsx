@@ -1,4 +1,3 @@
-import MainCarousel from "@/components/mian-page/main-carousel";
 import MainHeading from "@/components/mian-page/heading";
 import TrailerPlayer from "@/components/mian-page/trailer-player";
 import { TopAiringContextProvider } from "@/components/providers/top-airing-context";
