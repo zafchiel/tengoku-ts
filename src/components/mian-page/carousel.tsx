@@ -88,7 +88,6 @@ export default function EmblaCarousel({ slides }: Props) {
 				const currentTimeUntilNext = ep.plugins().autoplay.timeUntilNext() ?? 0;
 				const percentage = 100 - (currentTimeUntilNext / totalDelay) * 100;
 				setProgressBarWidth(percentage);
-				console.log(percentage);
 			}, 10) as unknown as number;
 		});
 

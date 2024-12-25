@@ -26,8 +26,6 @@
 	min-width: 0;
 	padding-left: var(--slide-spacing);
 }
-.embla__slide--snapped {
-}
 .embla__slide--snapped > a {
 	border: 2px solid hsl(var(--primary));
 	display: block;
@@ -45,6 +43,8 @@
 	grid-template-columns: repeat(2, 1fr);
 	gap: 0.6rem;
 	align-items: center;
+	position: relative;
+	z-index: 10;
 }
 .embla__button {
 	-webkit-tap-highlight-color: rgba(255, 255, 255, 0.5);
