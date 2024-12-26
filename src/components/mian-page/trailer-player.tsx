@@ -8,18 +8,13 @@ import dynamic from "next/dynamic";
 
 const YouTubePlayer = dynamic(() => import("./youtube-player"), { ssr: false });
 
-type TrailerPlayerProps = {
+type Props = {
 	topAiring: AnimeInfoFiltered[];
 };
 
-export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
-	const [videoLoaded, setVideoLoaded] = useState(false);
+export default function TrailerPlayer({ topAiring }: Props) {
 	const [showVideo, setShowVideo] = useState(false);
 	const { currentAnimeIndex } = useContext(TopAiringContext);
-
-	const handleLoadedVideo = (loaded: boolean) => {
-		setVideoLoaded(loaded);
-	};
 
 	if (topAiring.length < 1 || !topAiring[currentAnimeIndex]) return null;
 
@@ -34,12 +29,7 @@ export default function TrailerPlayer({ topAiring }: TrailerPlayerProps) {
 		>
 			<div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
 
-			{showVideo && (
-				<YouTubePlayer
-					topAiring={topAiring}
-					handleLoadedVideo={handleLoadedVideo}
-				/>
-			)}
+			{showVideo && <YouTubePlayer topAiring={topAiring} />}
 
 			<Image
 				src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}/maxresdefault.jpg`}

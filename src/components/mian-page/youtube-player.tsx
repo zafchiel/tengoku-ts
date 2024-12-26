@@ -5,24 +5,17 @@ import { TopAiringContext } from "../providers/top-airing-context";
 
 const randomVideoStartSecond = Math.floor(Math.random() * 40);
 
-type YouTubePlayerProps = {
+type Props = {
 	topAiring: AnimeInfoFiltered[];
-	handleLoadedVideo: (loaded: boolean) => void;
 };
 
-export default function YouTubePlayer({
-	topAiring,
-	handleLoadedVideo,
-}: YouTubePlayerProps) {
+export default function YouTubePlayer({ topAiring }: Props) {
 	const { currentAnimeIndex } = useContext(TopAiringContext);
 
 	return (
 		<YouTube
 			videoId={topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}
 			iframeClassName="absolute w-full h-screen -z-20"
-			onError={() => handleLoadedVideo(false)}
-			onPlay={() => handleLoadedVideo(true)}
-			onEnd={() => handleLoadedVideo(false)}
 			opts={{
 				playerVars: {
 					autoplay: 1,

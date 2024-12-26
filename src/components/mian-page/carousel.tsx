@@ -30,7 +30,7 @@ export default function EmblaCarousel({ slides }: Props) {
 			Autoplay({
 				stopOnInteraction: false,
 				stopOnMouseEnter: true,
-				delay: 10000,
+				delay: 6000,
 			}),
 			ClassNames({
 				snapped: "embla__slide--snapped",
