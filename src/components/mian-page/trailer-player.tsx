@@ -1,35 +1,42 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { use } from "react";
 import Image from "next/image";
 import { TopAiringContext } from "../providers/top-airing-context";
 import type { AnimeInfoFiltered } from "@/types";
-import dynamic from "next/dynamic";
+import YouTube from "react-youtube";
 
-const YouTubePlayer = dynamic(() => import("./youtube-player"), { ssr: false });
+const randomVideoStartSecond = Math.floor(Math.random() * 40);
 
 type Props = {
 	topAiring: AnimeInfoFiltered[];
 };
 
 export default function TrailerPlayer({ topAiring }: Props) {
-	const [showVideo, setShowVideo] = useState(false);
-	const { currentAnimeIndex } = useContext(TopAiringContext);
+	const { currentAnimeIndex } = use(TopAiringContext);
 
 	if (topAiring.length < 1 || !topAiring[currentAnimeIndex]) return null;
 
 	return (
-		<div
-			className="absolute min-h-screen w-full pointer-events-none"
-			onMouseEnter={() => {
-				if (!showVideo) {
-					setShowVideo(true);
-				}
-			}}
-		>
+		<div className="absolute min-h-screen w-full pointer-events-none">
 			<div className="fixed left-0 top-0 -z-10 h-full w-full overflow-hidden bg-black/40"></div>
 
-			{showVideo && <YouTubePlayer topAiring={topAiring} />}
+			<YouTube
+				videoId={topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}
+				iframeClassName="absolute w-full h-screen -z-20"
+				opts={{
+					playerVars: {
+						autoplay: 1,
+						controls: 0,
+						mute: 1,
+						disablekb: 1,
+						iv_load_policy: 3,
+						modestbranding: 1,
+						showinfo: 0,
+						start: randomVideoStartSecond,
+					},
+				}}
+			/>
 
 			<Image
 				src={`https://img.youtube.com/vi/${topAiring[currentAnimeIndex].trailer?.youtube_id ?? ""}/maxresdefault.jpg`}
