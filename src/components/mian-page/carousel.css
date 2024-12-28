@@ -12,6 +12,7 @@
 }
 .embla__viewport {
 	overflow: hidden;
+	padding-block: 1rem;
 }
 .embla__container {
 	display: grid;
@@ -19,7 +20,7 @@
 	grid-auto-columns: var(--slide-size);
 
 	touch-action: pan-y pinch-zoom;
-	margin-left: calc(var(--slide-spacing) * -1);
+	margin-left: calc(var(--slide-spacing) * -0.65);
 }
 .embla__slide {
 	transform: translate3d(0, 0, 0);
@@ -28,8 +29,11 @@
 }
 .embla__slide--snapped > a {
 	border: 2px solid hsl(var(--primary));
-	display: block;
 	border-radius: calc(var(--radius) - 10px);
+	display: block;
+	box-shadow: 0 0 10px 0 hsl(var(--primary) / 0.3);
+	transform: scale(1.05);
+	transition: all 0.3s ease-in-out;
 }
 .embla__controls {
 	display: grid;

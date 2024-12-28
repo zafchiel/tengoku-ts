@@ -27,11 +27,11 @@ export default function EmblaCarousel({ slides }: Props) {
 	const [emblaRef, emblaApi] = useEmblaCarousel(
 		{ loop: true, align: "start" },
 		[
-			Autoplay({
-				stopOnInteraction: false,
-				stopOnMouseEnter: true,
-				delay: 6000,
-			}),
+			// Autoplay({
+			// 	stopOnInteraction: false,
+			// 	stopOnMouseEnter: true,
+			// 	delay: 6000,
+			// }),
 			ClassNames({
 				snapped: "embla__slide--snapped",
 				inView: "",

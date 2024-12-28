@@ -10,8 +10,11 @@ type Props = {
 
 export default function Slide({ anime, first }: Props) {
 	return (
-		<Link href={`/anime/${anime.mal_id}`}>
-			<div className="relative h-full max-h-[500px] aspect-[3/4] w-full overflow-hidden rounded-sm shadow-md">
+		<Link
+			href={`/anime/${anime.mal_id}`}
+			// className="shadow-md shadow-primary/30 scale-105"
+		>
+			<div className="relative h-full max-h-[500px] aspect-[3/4] w-full overflow-hidden rounded-sm">
 				<section className="absolute top-3 left-3 z-50 border-none">
 					<ScoreBadge score={anime.score ?? 0} />
 				</section>
@@ -23,11 +26,11 @@ export default function Slide({ anime, first }: Props) {
 					priority={first}
 					className="w-full h-full object-cover rounded-sm hover:scale-110 duration-200 ease-linear"
 				/>
-				<div className="pointer-events-none absolute bottom-0 inset-x-0 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
+				<div className="pointer-events-none absolute bottom-0 inset-x-0 bg-gradient-to-t from-background to-transparent p-2">
 					<h1 className="z-10 text-xl font-semibold">
 						{anime.title?.replaceAll('"', "")}
 					</h1>
-					<div className="flex gap-2 text-muted-foreground">
+					<div className="flex flex-wrap gap-x-2 text-muted-foreground">
 						{anime.genres?.map((genre) => (
 							<p key={genre.name}>{genre.name}</p>
 						))}
