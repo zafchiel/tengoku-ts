@@ -39,7 +39,7 @@ export default async function HomePage() {
 	return (
 		<TopAiringContextProvider>
 			<TrailerPlayer topAiring={topAiringData} />
-			<main className="container py-14 px-6 grid grid-cols-1 lg:grid-cols-[400px_1fr] min-h-screen items-center gap-8">
+			<main className="container py-14 px-6 grid grid-cols-1 lg:grid-cols-[500px_1fr] min-h-screen items-center gap-8">
 				<MainHeading topAiring={topAiringData} />
 				<EmblaCarousel slides={topAiringData} />
 			</main>

@@ -15,7 +15,7 @@ export default function MainHeading({ topAiring }: MainHeadingProps) {
 
 	return (
 		<section className="">
-			<h1 className="mb-3 text-4xl font-bold md:text-6xl">
+			<h1 className="text-4xl font-bold md:text-6xl">
 				{topAiring[currentAnimeIndex]?.title}
 			</h1>
 			<p className="text-primary text-xl">

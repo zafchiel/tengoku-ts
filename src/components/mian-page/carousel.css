@@ -6,7 +6,7 @@
 	@media (min-width: 768px) {
 		--slide-size: 33%;
 	}
-	@media (min-width: 1300px) {
+	@media (min-width: 1400px) {
 		--slide-size: 25%;
 	}
 }
