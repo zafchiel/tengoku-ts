@@ -104,7 +104,7 @@ export default function EditProgressForm({
 
   useEffect(() => {
     form.reset(progressInfo);
-  }, [progressInfo]);
+  }, [progressInfo, form]);
 
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
