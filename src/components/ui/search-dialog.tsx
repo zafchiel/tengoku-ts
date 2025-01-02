@@ -1,7 +1,13 @@
 "use client";
 
 import { Loader2, Search as SearchIcon } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "./dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
 import { Input } from "./input";
 import { Label } from "./label";
 import { Separator } from "./separator";
@@ -101,6 +107,7 @@ export default function SearchDialog() {
       </DialogTrigger>
 
       <DialogContent className="pr-10 top-[10%] left-1/2 translate-y-0">
+        <DialogTitle>Search for anime</DialogTitle>
         <DialogHeader>
           <form action="/search" role="search">
             <div className="flex gap-2 items-center">
