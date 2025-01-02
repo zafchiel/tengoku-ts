@@ -1,7 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 type GalleryCardProps = {
   src: string;
@@ -16,11 +21,12 @@ export default function GalleryCard(props: GalleryCardProps) {
           {...props}
           width={200}
           height={300}
-          className="rounded-md aspect-[2/3] h-full object-cover hover:scale-105 transition-all duration-300"
+          className="rounded-md aspect-[2/3] max-w-full h-full object-cover hover:scale-105 transition-all duration-300"
           alt={props.alt}
         />
       </DialogTrigger>
       <DialogContent className="pt-10">
+        <DialogTitle className="sr-only">Large image</DialogTitle>
         <Image
           {...props}
           width={600}
