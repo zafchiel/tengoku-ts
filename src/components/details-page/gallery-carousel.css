@@ -1,15 +1,8 @@
-.main__page {
+.gallery__section {
   .embla {
     --slide-height: 19rem;
     --slide-spacing: 1rem;
     --slide-size: 100%;
-
-    @media (min-width: 768px) {
-      --slide-size: 33%;
-    }
-    @media (min-width: 1400px) {
-      --slide-size: 25%;
-    }
   }
   .embla__viewport {
     overflow: hidden;
