@@ -50,6 +50,8 @@ export default function GallerySection({ animeId }: GallerySectionProps) {
   }, [animeId]);
 
   useEffect(() => {
+    // Use IntersectionObserver to fetch recommendations when the section is in view
+    // to prevent rate limitting from Jikan API
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !gallery && !isLoading) {

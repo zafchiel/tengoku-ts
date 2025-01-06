@@ -40,6 +40,8 @@ export default function RecommendationsSection({
   }, [animeId]);
 
   useEffect(() => {
+    // Use IntersectionObserver to fetch recommendations when the section is in view
+    // to prevent rate limitting from Jikan API
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !recommendations && !isLoading) {

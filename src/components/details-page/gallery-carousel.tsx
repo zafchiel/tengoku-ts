@@ -64,18 +64,7 @@ export default function GalleryCarousel({ children }: Props) {
   return (
     <section className="embla">
       <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
-          {/* {slides.map((slide, index) => (
-            <div className="embla__slide" key={slide.thumbnail + index}>
-              <GalleryCard
-                thumbnail={slide.thumbnail}
-                large={slide.large}
-                alt={slide.alt}
-              />
-            </div>
-          ))} */}
-          {children}
-        </div>
+        <div className="embla__container">{children}</div>
       </div>
 
       <div className="embla__controls">
