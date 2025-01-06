@@ -9,6 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
+import GalleryCarousel from "./gallery-carousel";
 
 type RecommendationsSectionProps = {
   animeId: string | number;
@@ -29,7 +30,7 @@ export default function RecommendationsSection({
       const response = await axios.get<{ data: Recommendation[] }>(
         `${JIKAN_API_URL}/anime/${animeId}/recommendations`
       );
-      setRecommendations(response.data.data);
+      setRecommendations(response.data.data.filter((r) => r.votes > 2));
     } catch (error) {
       console.error(error);
       setRecommendations([]);
@@ -64,7 +65,11 @@ export default function RecommendationsSection({
   }, [fetchRecommendations, recommendations, isLoading]);
 
   return (
-    <section id="recommendations" className="scroll-mt-40" ref={sectionRef}>
+    <section
+      id="recommendations"
+      className="gallery__section scroll-mt-40"
+      ref={sectionRef}
+    >
       <h3 className="text-3xl font-semibold">Recommendations</h3>
       <p className="text-muted-foreground">
         These anime were voted as simillar by community
@@ -82,37 +87,36 @@ export default function RecommendationsSection({
           </AlertDescription>
         </Alert>
       ) : (
-        <div className="m-2 gap-4 flex flex-wrap">
+        <GalleryCarousel>
           {recommendations.map((recommendation) => (
-            <Link
-              key={recommendation.url}
-              href={`/anime/${recommendation.entry.mal_id}`}
-            >
-              <div className="relative overflow-hidden rounded-md shadow-md">
-                <Image
-                  width={200}
-                  height={300}
-                  src={recommendation.entry.images.webp.large_image_url}
-                  alt={recommendation.entry.title}
-                  className="rounded-lg aspect-[2/3] hover:scale-105 duration-200 ease-linear"
-                />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
-                  <p className="font-semibold text-lg">
-                    {recommendation.entry.title}
-                  </p>
-                  <div className="flex flex-col text-gray-300">
-                    <p>
-                      Votes:&nbsp;
-                      <span className="font-semibold">
-                        {recommendation.votes}
-                      </span>
+            <div className="embla__slide" key={recommendation.entry.mal_id}>
+              <Link href={`/anime/${recommendation.entry.mal_id}`}>
+                <div className="relative overflow-hidden w-full rounded-md shadow-md">
+                  <Image
+                    width={200}
+                    height={300}
+                    src={recommendation.entry.images.webp.large_image_url}
+                    alt={recommendation.entry.title}
+                    className="rounded-lg w-full aspect-[2/3] hover:scale-105 duration-200 ease-linear"
+                  />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-background to-transparent px-2 pb-1 pt-10">
+                    <p className="font-semibold text-lg">
+                      {recommendation.entry.title}
                     </p>
+                    <div className="flex flex-col text-gray-300">
+                      <p>
+                        Votes:&nbsp;
+                        <span className="font-semibold">
+                          {recommendation.votes}
+                        </span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
-        </div>
+        </GalleryCarousel>
       )}
     </section>
   );

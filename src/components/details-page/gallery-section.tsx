@@ -103,7 +103,17 @@ export default function GallerySection({ animeId }: GallerySectionProps) {
           </AlertDescription>
         </Alert>
       ) : (
-        <GalleryCarousel slides={slides} />
+        <GalleryCarousel>
+          {slides.map((slide, index) => (
+            <div className="embla__slide" key={slide.thumbnail + index}>
+              <GalleryCard
+                thumbnail={slide.thumbnail}
+                large={slide.large}
+                alt={slide.alt}
+              />
+            </div>
+          ))}
+        </GalleryCarousel>
       )}
     </section>
   );
