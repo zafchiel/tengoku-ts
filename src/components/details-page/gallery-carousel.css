@@ -2,7 +2,7 @@
   .embla {
     --slide-height: 19rem;
     --slide-spacing: 1rem;
-    --slide-size: 100%;
+    --slide-size: 33%;
   }
   .embla__viewport {
     overflow: hidden;
@@ -20,14 +20,6 @@
     transform: translate3d(0, 0, 0);
     min-width: 0;
     padding-left: var(--slide-spacing);
-  }
-  .embla__slide--snapped > a {
-    border: 2px solid hsl(var(--primary));
-    border-radius: calc(var(--radius) - 10px);
-    display: block;
-    box-shadow: 0 0 10px 0 hsl(var(--primary) / 0.3);
-    transform: scale(1.05);
-    transition: all 0.3s ease-in-out;
   }
   .embla__controls {
     display: grid;

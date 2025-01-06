@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { JIKAN_API_URL } from "@/lib/constants";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { AlertCircle } from "lucide-react";
@@ -74,6 +74,16 @@ export default function GallerySection({ animeId }: GallerySectionProps) {
     };
   }, [gallery, isLoading, fetchGallery]);
 
+  const slides = useMemo(() => {
+    return (
+      gallery?.map((image) => ({
+        thumbnail: image.webp.image_url,
+        large: image.webp.large_image_url,
+        alt: image.webp.image_url,
+      })) ?? []
+    );
+  }, [gallery]);
+
   return (
     <section
       id="gallery"
@@ -93,18 +103,7 @@ export default function GallerySection({ animeId }: GallerySectionProps) {
           </AlertDescription>
         </Alert>
       ) : (
-        // <div className="m-2 flex flex-wrap gap-4">
-        // 	{gallery.map((image) => (
-        // 		<GalleryCard
-        // 			key={image.webp.image_url}
-        // 			src={image.webp.large_image_url}
-        // 			alt={image.webp.image_url}
-        // 		/>
-        // 	))}
-        // </div>
-        <GalleryCarousel
-          slides={gallery.map((image) => image.webp.large_image_url)}
-        />
+        <GalleryCarousel slides={slides} />
       )}
     </section>
   );

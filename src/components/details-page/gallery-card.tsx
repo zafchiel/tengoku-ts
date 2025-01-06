@@ -9,7 +9,8 @@ import {
 } from "@/components/ui/dialog";
 
 type GalleryCardProps = {
-  src: string;
+  thumbnail: string;
+  large: string;
   alt: string;
 };
 
@@ -18,17 +19,17 @@ export default function GalleryCard(props: GalleryCardProps) {
     <Dialog>
       <DialogTrigger>
         <Image
-          {...props}
-          width={200}
-          height={300}
-          className="rounded-md aspect-[2/3] max-w-full h-full object-cover hover:scale-105 transition-all duration-300"
+          src={props.thumbnail}
+          width={400}
+          height={500}
+          className="rounded-md max-w-full h-full object-cover hover:scale-105 transition-all duration-300"
           alt={props.alt}
         />
       </DialogTrigger>
       <DialogContent className="pt-10">
         <DialogTitle className="sr-only">Large image</DialogTitle>
         <Image
-          {...props}
+          src={props.large}
           width={600}
           height={900}
           className="rounded-md"

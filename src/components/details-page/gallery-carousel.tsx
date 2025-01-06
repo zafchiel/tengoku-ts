@@ -14,14 +14,19 @@ import useEmblaCarousel from "embla-carousel-react";
 import ClassNames from "embla-carousel-class-names";
 import Image from "next/image";
 import "./gallery-carousel.css";
+import GalleryCard from "./gallery-card";
 
 type Props = {
-  slides: string[];
+  slides: {
+    thumbnail: string;
+    large: string;
+    alt: string;
+  }[];
 };
 
 export default function GalleryCarousel({ slides }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
+    { loop: true, align: "start", slidesToScroll: 3 },
     [
       Autoplay({
         stopOnInteraction: false,
@@ -67,8 +72,12 @@ export default function GalleryCarousel({ slides }: Props) {
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {slides.map((slide, index) => (
-            <div className="embla__slide" key={slide + index}>
-              <Image src={slide} alt={slide} width={400} height={500} />
+            <div className="embla__slide" key={slide.thumbnail + index}>
+              <GalleryCard
+                thumbnail={slide.thumbnail}
+                large={slide.large}
+                alt={slide.alt}
+              />
             </div>
           ))}
         </div>
