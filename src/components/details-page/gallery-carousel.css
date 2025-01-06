@@ -61,7 +61,7 @@
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: hsla(var(--muted-foreground) / 0.3);
+      background-color: hsla(var(--primary) / 0.3);
     }
   }
   .embla__button__svg {
